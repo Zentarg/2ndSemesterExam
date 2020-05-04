@@ -15,6 +15,7 @@ namespace WebAPI
         }
 
         public virtual DbSet<Auth> Auths { get; set; }
+        public virtual DbSet<Session> Sessions { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Invoice> Invoices { get; set; }
         public virtual DbSet<InvoiceHasItem> InvoiceHasItems { get; set; }
@@ -43,6 +44,11 @@ namespace WebAPI
 
             modelBuilder.Entity<Auth>()
                 .Property(e => e.PasswordSalt)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Session>()
+                .Property(e => e.Key)
+                .IsFixedLength()
                 .IsUnicode(false);
 
             modelBuilder.Entity<Category>()

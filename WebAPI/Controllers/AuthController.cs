@@ -48,15 +48,15 @@ namespace WebAPI.Controllers
         }
 
 
-        // GET: api/Auths/5
-        [ResponseType(typeof(int))]
+        // GET: api/Auth/Login/username/passwordhash
+        [ResponseType(typeof(string))]
         [Route("api/Auth/Login/{username}/{password}")]
         public IHttpActionResult GetAuth(string username, string password)
         {
-
-
-
-            return Ok(0);
+            string sessionKey = AuthHandler.Login(username, password);
+            if (sessionKey == null)
+                return NotFound();
+            return Ok(sessionKey);
         }
 
         // PUT: api/Auths/5
