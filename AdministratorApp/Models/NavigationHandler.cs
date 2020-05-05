@@ -19,12 +19,14 @@ namespace AdministratorApp.Models
         {
             if (Frame.CanGoBack)
                 Frame.GoBack();
+            CurrentPageName = Frame.CurrentSourcePageType.Name;
         }
 
         public static void NavigateForwards()
         {
             if (Frame.CanGoForward)
                 Frame.GoForward();
+            CurrentPageName = Frame.CurrentSourcePageType.Name;
         }
 
     }

@@ -25,7 +25,7 @@ namespace AdministratorApp.ViewModels
 
         public string CurrentPageName => NavigationHandler.CurrentPageName;
         public bool FrameCanGoBackwards => NavigationHandler.Frame.CanGoBack;
-        public bool FrameCanGoForwards => NavigationHandler.Frame.CanGoBack;
+        public bool FrameCanGoForwards => NavigationHandler.Frame.CanGoForward;
 
 
         public RelayCommand DoToggleHamburger { get; set; }

@@ -36,20 +36,29 @@ namespace AdministratorApp
         private void NavigateFrame(object sender, RoutedEventArgs e)
         {
             NavigationHandler.NavigateToPage(Type.GetType($"{Application.Current.GetType().Namespace}.Views.{(sender as Button).Tag}"));
-            _mainPageVM.OnPropertyChanged(nameof(_mainPageVM.CurrentPageName));
+            UpdateNavigationInformation();
 
         }
 
         private void NavigateBackwards(object sender, RoutedEventArgs e)
         {
             NavigationHandler.NavigateBackwards();
-            _mainPageVM.OnPropertyChanged(nameof(_mainPageVM.FrameCanGoBackwards));
+            UpdateNavigationInformation();
+
         }
 
         private void NavigateForwards(object sender, RoutedEventArgs e)
         {
             NavigationHandler.NavigateForwards();
+            UpdateNavigationInformation();
+        }
+
+        private void UpdateNavigationInformation()
+        {
+            _mainPageVM.OnPropertyChanged(nameof(_mainPageVM.CurrentPageName));
+            _mainPageVM.OnPropertyChanged(nameof(_mainPageVM.FrameCanGoBackwards));
             _mainPageVM.OnPropertyChanged(nameof(_mainPageVM.FrameCanGoForwards));
+
         }
     }
 }
