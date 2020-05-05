@@ -30,18 +30,18 @@ namespace WebAPI.Controllers
         }
 
         // GET: api/Auth/Login/username/passwordhash
-        [ResponseType(typeof(string))]
+        [ResponseType(typeof((int UserID, string SessionKey)))]
         [Route("api/Auth/Login/{username}/{password}")]
         public IHttpActionResult GetAuth(string username, string password)
         {
-            string sessionKey = AuthHandler.Login(username, password, db);
-            if (sessionKey == null)
+            (int UserID, string SessionKey) sessionInformation = AuthHandler.Login(username, password, db);
+            if (sessionInformation.SessionKey == null)
                 return NotFound();
-            return Ok(sessionKey);
+            return Ok(sessionInformation);
         }
 
         // GET: api/Auth/GetUserlevel/sessionkey
-        [ResponseType(typeof(string))]
+        [ResponseType(typeof(int))]
         [Route("api/Auth/GetUserLevel/{sessionKey}")]
         public IHttpActionResult GetUserLevel(string sessionKey)
         {

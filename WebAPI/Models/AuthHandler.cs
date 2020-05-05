@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
 using System.Data.SqlClient;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -23,7 +24,7 @@ namespace WebAPI.Models
         /// <returns>Password Salt.</returns>
         public static string GetSalt(string username, ParknGardenData db)
         {
-            return db.Auths.FirstOrDefault(u => u.Username == username).PasswordSalt;
+            return db.Auths.FirstOrDefault(u => u.Username == username)?.PasswordSalt;
         }
 
         /// <summary>
@@ -54,13 +55,13 @@ namespace WebAPI.Models
         /// <param name="password">Password</param>
         /// <param name="db">DBContext to pull from.</param>
         /// <returns>Session key.</returns>
-        public static string Login(string username, string password, ParknGardenData db)
+        public static (int UserID, string SessionKey) Login(string username, string password, ParknGardenData db)
         {
             string sessionKey = null;
             int userID = -1;
 
-            string passwordHash = db.Auths.FirstOrDefault(u => u.Username == username).PasswordHash;
-            userID = db.Auths.FirstOrDefault(u => u.Username == username).UserID;
+            string passwordHash = db.Auths.FirstOrDefault(u => u.Username == username)?.PasswordHash;
+            userID = db.Auths.FirstOrDefault(u => u.Username == username)?.UserID ?? -1;
             if (password == passwordHash && userID != -1)
             {
                 sessionKey = CreateSessionKey(sessionKeyLength);
@@ -74,7 +75,7 @@ namespace WebAPI.Models
                 db.SaveChanges();
             }
                 
-            return sessionKey;
+            return (UserID: userID, SessionKey: sessionKey);
 
         }
 
@@ -102,7 +103,7 @@ namespace WebAPI.Models
             return db.UserLevels.FirstOrDefault(
                 l => l.ID == db.Users.FirstOrDefault(
                         u => u.ID == db.Sessions.FirstOrDefault(
-                            s => s.SessionKey == sessionKey).UserID).UserLevelID).ID;
+                            s => s.SessionKey == sessionKey).UserID).UserLevelID)?.ID ?? -1;
         }
     }
 }

@@ -364,11 +364,17 @@
     </Page.DataContext>
 
     <Grid>
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="400" Spacing="10">
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+            <ProgressRing Width="170" Height="170" IsActive="{Binding DisplayLoading, Mode=OneWay}"/>
+        </Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="400" Spacing="10" Visibility="{Binding DisplayLoginWindow, Mode=OneWay}">
+            <Grid Background="Red" Visibility="{Binding DisplayErrorWindow}">
+                <TextBlock Text="{Binding ErrorWindowText, Mode=OneWay}" FontSize="25" Width="400" TextWrapping="WrapWholeWords" TextAlignment="Center" Padding="20"/>
+            </Grid>
             <TextBlock HorizontalAlignment="Center" Text="Login" FontSize="35" Margin="0 0 0 20"/>
-            <TextBox Style="{StaticResource LoginTextBoxStyle}" Height="50" PlaceholderText="Username" FontSize="20"/>
-            <PasswordBox Style="{StaticResource LoginPasswordBoxStyle}" Height="50" PlaceholderText="Password" VerticalContentAlignment="Center" FontSize="20"/>
-            <Button Height="50" Width="100" Content="Login" HorizontalAlignment="Right" FontSize="20"/>
+            <TextBox Style="{StaticResource LoginTextBoxStyle}" Height="50" PlaceholderText="Username" FontSize="20" Text="{Binding Username, Mode=TwoWay}"/>
+            <PasswordBox Style="{StaticResource LoginPasswordBoxStyle}" Height="50" PlaceholderText="Password" VerticalContentAlignment="Center" FontSize="20" Password="{Binding Password, Mode=TwoWay}"/>
+            <Button Height="50" Width="100" Content="Login" HorizontalAlignment="Right" FontSize="20" Command="{Binding DoAttemptLogin}"/>
         </StackPanel>
     </Grid>
 </Page>
