@@ -18,45 +18,37 @@ namespace WebAPI.Controllers
     {
         private ParknGardenData db = new ParknGardenData();
 
-        // GET: api/Auths
-        public IQueryable<Auth> GetAuth()
-        {
-            return db.Auths;
-        }
-
-        // GET: api/Auths/5
-        [ResponseType(typeof(Auth))]
-        public IHttpActionResult GetAuth(int id)
-        {
-            Auth auth = db.Auths.Find(id);
-            if (auth == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(auth);
-        }
 
         [ResponseType(typeof(string))]
         [Route("api/Auth/GetSalt/{username}")]
         public IHttpActionResult GetSalt(string username)
         {
-            string salt = AuthHandler.GetSalt(username);
+            string salt = AuthHandler.GetSalt(username, db);
             if (salt == null)
                 return NotFound();
             return Ok(salt);
         }
-
 
         // GET: api/Auth/Login/username/passwordhash
         [ResponseType(typeof(string))]
         [Route("api/Auth/Login/{username}/{password}")]
         public IHttpActionResult GetAuth(string username, string password)
         {
-            string sessionKey = AuthHandler.Login(username, password);
+            string sessionKey = AuthHandler.Login(username, password, db);
             if (sessionKey == null)
                 return NotFound();
             return Ok(sessionKey);
+        }
+
+        // GET: api/Auth/GetUserlevel/sessionkey
+        [ResponseType(typeof(string))]
+        [Route("api/Auth/GetUserLevel/{sessionKey}")]
+        public IHttpActionResult GetUserLevel(string sessionKey)
+        {
+            int userLevel = AuthHandler.GetUserLevel(sessionKey, db);
+            if (userLevel == -1)
+                return NotFound();
+            return Ok(userLevel);
         }
 
         // PUT: api/Auths/5

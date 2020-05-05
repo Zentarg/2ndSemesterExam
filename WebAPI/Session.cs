@@ -10,8 +10,8 @@ namespace WebAPI
     public partial class Session
     {
         [Key]
-        [StringLength(64)]
-        public string Key { get; set; }
+        [StringLength(32)]
+        public string SessionKey { get; set; }
 
         public int UserID { get; set; }
     }

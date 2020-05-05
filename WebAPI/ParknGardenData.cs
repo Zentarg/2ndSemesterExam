@@ -47,7 +47,7 @@ namespace WebAPI
                 .IsUnicode(false);
 
             modelBuilder.Entity<Session>()
-                .Property(e => e.Key)
+                .Property(e => e.SessionKey)
                 .IsFixedLength()
                 .IsUnicode(false);
 

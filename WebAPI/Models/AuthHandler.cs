@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Security.Cryptography;
@@ -11,32 +12,18 @@ namespace WebAPI.Models
 {
     public static class AuthHandler
     {
-        private static string connectionString = ConfigurationManager.ConnectionStrings["ParknGardenData"].ConnectionString;
+        //private static string connectionString = ConfigurationManager.ConnectionStrings["ParknGardenData"].ConnectionString;
         private static Random rd = new Random();
         private static int sessionKeyLength = 32;
         /// <summary>
         /// Gets password salt stored in database, identified by username.
         /// </summary>
-        /// <param name="username">Account Username</param>
+        /// <param name="username">Account Username.</param>
+        /// <param name="db">DBContext to pull from.</param>
         /// <returns>Password Salt.</returns>
-        public static string GetSalt(string username)
+        public static string GetSalt(string username, ParknGardenData db)
         {
-            string query = "SELECT a.passwordSalt from Auth a WHERE a.Username = @username";
-
-            string salt = null;
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                conn.Open();
-                SqlCommand command = new SqlCommand(query, conn);
-                command.Parameters.AddWithValue("@username", username);
-                SqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    salt = reader.GetString(0);
-                }
-            }
-
-            return salt;
+            return db.Auths.FirstOrDefault(u => u.Username == username).PasswordSalt;
         }
 
         /// <summary>
@@ -65,43 +52,28 @@ namespace WebAPI.Models
         /// </summary>
         /// <param name="username">Username</param>
         /// <param name="password">Password</param>
+        /// <param name="db">DBContext to pull from.</param>
         /// <returns>Session key.</returns>
-        public static string Login(string username, string password)
+        public static string Login(string username, string password, ParknGardenData db)
         {
-
-            string query = "SELECT a.userID, a.passwordHash from Auth a WHERE a.Username = @username";
-            string sessionQuery = "INSERT INTO Session (SessionKey, UserID) VALUES (@sessionKey, @userID)";
-
             string sessionKey = null;
+            int userID = -1;
 
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            string passwordHash = db.Auths.FirstOrDefault(u => u.Username == username).PasswordHash;
+            userID = db.Auths.FirstOrDefault(u => u.Username == username).UserID;
+            if (password == passwordHash && userID != -1)
             {
-                int userID = -1;
-                string passwordHash = "";
-                conn.Open();
-                SqlCommand command = new SqlCommand(query, conn);
-                command.Parameters.AddWithValue("@username", username);
-                SqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    userID = reader.GetInt32(0);
-                    passwordHash = reader.GetString(1);
-                }
+                sessionKey = CreateSessionKey(sessionKeyLength);
 
-                if (password == passwordHash && userID != -1)
+                while (Authenticate(sessionKey, db))
                 {
                     sessionKey = CreateSessionKey(sessionKeyLength);
-                    while (Authenticate(sessionKey))
-                    {
-                        sessionKey = CreateSessionKey(sessionKeyLength);
-                    }
-
-                    SqlCommand sessionCommand = new SqlCommand(sessionQuery, conn);
-                    sessionCommand.Parameters.AddWithValue("@sessionKey", sessionKey);
-                    sessionCommand.Parameters.AddWithValue("@userID", userID);
-                    int affectedRows = sessionCommand.ExecuteNonQuery();
                 }
+
+                db.Sessions.Add(new Session(){SessionKey = sessionKey, UserID = userID});
+                db.SaveChanges();
             }
+                
             return sessionKey;
 
         }
@@ -110,18 +82,11 @@ namespace WebAPI.Models
         /// Checks if the session key is valid, and the user is logged in.
         /// </summary>
         /// <param name="sessionKey">Session key.</param>
+        /// <param name="db">DBContext to pull from.</param>
         /// <returns>Boolean depicting whether or not the session key is valid.</returns>
-        public static bool Authenticate(string sessionKey)
+        public static bool Authenticate(string sessionKey, ParknGardenData db)
         {
-            string query = "SELECT * FROM Session WHERE SessionKey = @sessionKey";
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                conn.Open();
-                SqlCommand command = new SqlCommand(query, conn);
-                command.Parameters.AddWithValue("@sessionKey", sessionKey);
-                SqlDataReader reader = command.ExecuteReader();
-                return reader.HasRows;
-            }
+            return db.Sessions.Any(s => s.SessionKey == sessionKey);
         }
 
         /// <summary>
@@ -129,9 +94,15 @@ namespace WebAPI.Models
         /// </summary>
         /// <param name="sessionKey">Session key.</param>
         /// <returns>Returns int corresponding to UserLevel ID in the database.</returns>
-        public static int GetUserLevel(string sessionKey)
+        public static int GetUserLevel(string sessionKey, ParknGardenData db)
         {
-            throw new NotImplementedException("Getting user level not implemented yet.");
+            if (!Authenticate(sessionKey, db))
+                return -1;
+
+            return db.UserLevels.FirstOrDefault(
+                l => l.ID == db.Users.FirstOrDefault(
+                        u => u.ID == db.Sessions.FirstOrDefault(
+                            s => s.SessionKey == sessionKey).UserID).UserLevelID).ID;
         }
     }
 }
