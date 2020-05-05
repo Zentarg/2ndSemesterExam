@@ -46,12 +46,12 @@
         <Grid Grid.Row="0">
             <StackPanel Orientation="Horizontal">
                 <Button Style="{StaticResource MenuButton}" Content="&#xE80F;" Click="NavigateFrame" Tag="HomePage"/>
-                <Button Style="{StaticResource MenuButton}" Content="&#xE76B;" IsEnabled="{Binding FrameCanGoBackwards}"/>
-                <Button Style="{StaticResource MenuButton}" Content="&#xE76C;" IsEnabled="{Binding FrameCanGoForwards}"/>
+                <Button Style="{StaticResource MenuButton}" Content="&#xE76B;" IsEnabled="{Binding FrameCanGoBackwards, Mode=OneWay}" Click="NavigateBackwards"/>
+                <Button Style="{StaticResource MenuButton}" Content="&#xE76C;" IsEnabled="{Binding FrameCanGoForwards, Mode=OneWay}" Click="NavigateForwards"/>
                 <TextBlock VerticalAlignment="Center" Text="{Binding CurrentPageName, Mode=OneWay}" FontSize="30" Margin="20 0 0 0"/>
             </StackPanel>
         </Grid>
-        <SplitView Grid.Row="1" IsPaneOpen="{Binding SplitViewVisible, Mode=OneWay}" OpenPaneLength="250" CompactPaneLength="50" DisplayMode="CompactOverlay">
+        <SplitView Grid.Row="1" IsPaneOpen="{Binding SplitViewVisible, Mode=OneWay}" OpenPaneLength="250" CompactPaneLength="50" DisplayMode="CompactInline">
             <SplitView.Pane>
                 <StackPanel Width="250">
                     <Button Style="{StaticResource HamburgerButton}" Content="&#xE700;" Command="{Binding DoToggleHamburger}"/>
