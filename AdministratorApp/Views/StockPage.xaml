@@ -5,12 +5,12 @@
     xmlns:local="using:AdministratorApp.View"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ViewModel="using:AdministratorApp"
+    xmlns:viewModel="using:AdministratorApp.ViewModels"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <Page.Resources>
-
-    </Page.Resources>
+    <Page.DataContext>
+        <viewModel:StockPageViewModel/>
+    </Page.DataContext>
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -23,7 +23,7 @@
             <RowDefinition Height="35"/>
         </Grid.RowDefinitions>
 
-        <ListView>
+        <ListView Grid.Column="0" Grid.Row="1" ItemsSource="{Binding Stock}" SelectedItem="" SelectionMode="Single">
             <ListViewItem>
                 <DataTemplate>
                     
