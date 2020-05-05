@@ -1,0 +1,68 @@
+﻿<Page
+    x:Class="AdministratorApp.Views.StorePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:AdministratorApp.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:AdministratorApp.ViewModels"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.DataContext>
+        <vm:StorePageVM/>
+    </Page.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0" Orientation="Horizontal">
+        <ListView ItemsSource="{Binding StoreList}" SelectedItem="{Binding SelectedStore, Mode=TwoWay}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontSize="35" Text="{Binding Name, Mode=TwoWay}" Margin="0,20,20,0"/>
+                        <TextBlock FontSize="35" Text="{Binding Address, Mode=TwoWay}" Margin="0,20,20,0"/>
+                        <TextBlock FontSize="35" Text="{Binding Telephone, Mode=TwoWay}" Margin="0,20,20,0"/>
+                        <TextBlock FontSize="35" Text="{Binding Manager, Mode=TwoWay}" Margin="0,20,20,0"/>
+                        </StackPanel>
+                    </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        </StackPanel>
+
+        <Grid Grid.Column="1" BorderBrush="AliceBlue" BorderThickness="2">
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="2*"/>
+        <ColumnDefinition Width="3*"/>
+        <ColumnDefinition Width="2*"/>
+    </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Column="0" Spacing="50" Margin="50,50,0,0">
+                <TextBlock FontSize="35" Height="50" Text="Name"/>
+                <TextBlock FontSize="35" Height="50" Text="Address"/>
+                <TextBlock FontSize="35" Height="50" Text="Telephone"/>
+                <TextBlock FontSize="35" Height="50" Text="Manager"/>
+    </StackPanel>
+    <StackPanel HorizontalAlignment="Left" Grid.Column="1" Spacing="50" Margin="0,50,0,0" >
+        <TextBox FontSize="30" PlaceholderText="Name" Text="{Binding SelectedStore.Name}" Height="50" Width="400"/>
+        <TextBox FontSize="30" PlaceholderText="Address" Text="{Binding SelectedStore.Address}" Height="50" Width="400"/>
+        <TextBox FontSize="30" PlaceholderText="Telephone" Text="{Binding SelectedStore.Telephone}" Height="50" Width="400"/>
+        <TextBox FontSize="30" PlaceholderText="Manager" Text="{Binding SelectedStore.Manager}" Height="50" Width="400"/>
+    </StackPanel>
+            <StackPanel Grid.Column="2">
+                <Button Content="Go To Stock" FontSize="30" HorizontalAlignment="Center" Width="180" Height="70" Margin="0,45,0,0"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.ColumnSpan="3" FlowDirection="RightToLeft" Orientation="Horizontal" Spacing="50" VerticalAlignment="Bottom">
+                <Button Content="Confirm" FontSize="30" Width="180" Height="70" Margin="50,0,0,50"/>
+                <Button Content="Delete" FontSize="30" Width="180" Height="70" Margin="0,0,0,50"/>
+                <Button Content="Cancel" FontSize="30" Width="180" Height="70" Margin="0,0,0,50"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+
+</Page>
