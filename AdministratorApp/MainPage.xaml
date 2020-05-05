@@ -73,7 +73,7 @@
                             <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Invoices"/>
                         </StackPanel>
                     </Button>
-                    <Button Style="{StaticResource HamburgerButton}" Tag="" Click="NavigateFrame">
+                    <Button Style="{StaticResource HamburgerButton}" Tag="EmployeesPage" Click="NavigateFrame">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE700;"/>
                             <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Employees"/>
