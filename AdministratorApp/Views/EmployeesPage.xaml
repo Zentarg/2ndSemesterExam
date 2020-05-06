@@ -33,7 +33,7 @@
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
             <Grid Column="0">
-                <ListView ItemsSource="{Binding Emp}"
+                <ListView ItemsSource="{Binding DictUsers}"
                           SelectedItem="{Binding SelectedEmp, Mode=TwoWay}">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="dc:EmployeesPageVM">

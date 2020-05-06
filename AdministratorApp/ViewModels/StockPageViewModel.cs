@@ -20,7 +20,7 @@ namespace AdministratorApp.ViewModels
 
         public StockPageViewModel()
         {
-            LoadDataAsync();
+            //LoadDataAsync();
         }
 
 
@@ -35,18 +35,18 @@ namespace AdministratorApp.ViewModels
             private set { _items = value; OnPropertyChanged(); }
         }
 
-        public List<Item> Items { 
-            get => Data.AllItems;
-            set { Data.AllItems = value; OnPropertyChanged();}
-        }
+        //public List<Item> Items { 
+        //    get => Data.AllItems;
+        //    set { Data.AllItems = value; OnPropertyChanged();}
+        //}
 
         public Dictionary<int,int> ItemsInStock { get; set; }
 
-        private async Task LoadDataAsync()
-        {
-            await Data.UpdateItems();
-            OnPropertyChanged(nameof(Items));
-        }
+        //private async Task LoadDataAsync()
+        //{
+        //    await Data.UpdateItems();
+        //    OnPropertyChanged(nameof(Items));
+        //}
 
         
 

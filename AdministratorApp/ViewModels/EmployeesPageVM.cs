@@ -32,29 +32,30 @@ namespace AdministratorApp.ViewModels
 
         public EmployeesPageVM()
         {
-            _emp.Add(new User(1,"name1", "email1", 21673, "address1", 1, 25, 50, 200, 0, 1));
-            _emp.Add(new User(2, "name2", "email2", 267318576, "address2", 2, 25, 50, 200, 0, 1));
-            _emp.Add(new User(3,"name3", "email3", 612835, "address3", 3, 25, 50, 200, 0, 1));
-            _emp.Add(new User(4,"name4", "email4", 827, "address4", 4, 25, 50, 200, 0, 1));
-            _emp.Add(new User(5,"name5", "email5", 97123, "address5", 5, 25, 50, 200, 0, 1));
-            roles.Add(1, "Owner");
-            roles.Add(2, "Admin");
-            roles.Add(3, "Manager");
-            roles.Add(4, "Shelf Stocker");
-            roles.Add(5, "Cash Register Worker");
-            _salaries.Add(_emp[0].Id, new Salary(1, 2000, 50));
-            _salaries.Add(_emp[1].Id, new Salary(2, 3000, 60));
-            _salaries.Add(_emp[2].Id, new Salary(3, 2450, 53));
-            _salaries.Add(_emp[3].Id, new Salary(4, 2283, 56));
-            _salaries.Add(_emp[4].Id, new Salary(5, 7298, 48));
+            //_emp.Add(new User(1,"name1", "email1", 21673, "address1", 1, 25, 50, 200, 0, 1));
+            //_emp.Add(new User(2, "name2", "email2", 267318576, "address2", 2, 25, 50, 200, 0, 1));
+            //_emp.Add(new User(3,"name3", "email3", 612835, "address3", 3, 25, 50, 200, 0, 1));
+            //_emp.Add(new User(4,"name4", "email4", 827, "address4", 4, 25, 50, 200, 0, 1));
+            //_emp.Add(new User(5,"name5", "email5", 97123, "address5", 5, 25, 50, 200, 0, 1));
+            //roles.Add(1, "Owner");
+            //roles.Add(2, "Admin");
+            //roles.Add(3, "Manager");
+            //roles.Add(4, "Shelf Stocker");
+            //roles.Add(5, "Cash Register Worker");
+            //_salaries.Add(_emp[0].Id, new Salary(1, 2000, 50));
+            //_salaries.Add(_emp[1].Id, new Salary(2, 3000, 60));
+            //_salaries.Add(_emp[2].Id, new Salary(3, 2450, 53));
+            //_salaries.Add(_emp[3].Id, new Salary(4, 2283, 56));
+            //_salaries.Add(_emp[4].Id, new Salary(5, 7298, 48));
 
-
+            LoadDataAsync();
 
         }
 
-        public List<User> Emp
+        public Dictionary<int, User> DictUsers
         {
-            get { return _emp; }
+            get => Data.AllUsers;
+            set { Data.AllUsers = value; OnPropertyChanged(); }
         }
 
         public User SelectedEmp
@@ -65,8 +66,8 @@ namespace AdministratorApp.ViewModels
                 Address = _sEmp.Address;
                 SelectedRole = null;
                 _userId = _sEmp.Id;
-                _objSalary = Models.CommonMethods.GetSalary(_userId, _salaries);
-                Role = Models.CommonMethods.GetRole(_sEmp.RoleId, roles);
+                _objSalary = CommonMethods.GetSalary(_userId, _salaries);
+                Role = CommonMethods.GetRole(_sEmp.RoleId, roles);
                 Salary = _objSalary.BeforeTax;
                 SalaryWTax = _objSalary.BeforeTax - (_objSalary.BeforeTax * (_objSalary.TaxPercentage / 100));
                 IsEmployeeSelected = true;
@@ -131,11 +132,19 @@ namespace AdministratorApp.ViewModels
             get { return _salaryWTax; }
             set { _salaryWTax = value; OnPropertyChanged(); }
         }
+
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private async Task LoadDataAsync()
+        {
+            await Data.UpdateUsers();
+            OnPropertyChanged(nameof(DictUsers));
+        }
+
     }
 }
