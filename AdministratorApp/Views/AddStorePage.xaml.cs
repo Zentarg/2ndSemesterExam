@@ -20,19 +20,11 @@ namespace AdministratorApp.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class StockPage : Page
+    public sealed partial class AddStorePage : Page
     {
-        public StockPage()
+        public AddStorePage()
         {
             this.InitializeComponent();
-        }
-
-        private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (StockListView.SelectedItem != null)
-            {
-                ItemPanel.Visibility = Visibility.Visible;
-            }
         }
     }
 }
