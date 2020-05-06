@@ -18,42 +18,85 @@ namespace AdministratorApp.ViewModels
         private Item _selectedItem;
         private List<Item> _items;
 
+
         public StockPageViewModel()
         {
             //LoadDataAsync();
         }
 
+        public static Dictionary<int, Dictionary<int, int>> StockHasItems { get => Data.StockHasItems; set => Data.StockHasItems = value; }
 
         public Item SelectedItem
         {
             get => _selectedItem;
             set { _selectedItem = value; OnPropertyChanged(); }
         }
-        public List<Item> Stock
+
+
+
+        public ObservableCollection<Item> Items
         {
-            get => _items;
-            private set { _items = value; OnPropertyChanged(); }
+            get => new ObservableCollection<Item>(Data.AllItems.Values);
         }
 
-        //public List<Item> Items { 
-        //    get => Data.AllItems;
-        //    set { Data.AllItems = value; OnPropertyChanged();}
-        //}
+        public ObservableCollection<Store> Stores
+        {
+            get => new ObservableCollection<Store>(Data.AllStores.Values);
+        }
 
-        public Dictionary<int,int> ItemsInStock { get; set; }
+        public ObservableCollection<Stock> Stocks
+        {
+            get => new ObservableCollection<Stock>(Data.AllStocks.Values);
+        }
 
-        //private async Task LoadDataAsync()
-        //{
-        //    await Data.UpdateItems();
-        //    OnPropertyChanged(nameof(Items));
-        //}
+        public ObservableCollection<KeyValuePair<Item, Dictionary<Store, int>>> ItemsInStocks
+        {
+            get
+            {
+                ObservableCollection<KeyValuePair<Item, Dictionary<Store, int>>> itemsInStocks = new ObservableCollection<KeyValuePair<Item, Dictionary<Store, int>>>();
+                foreach (KeyValuePair<int, Dictionary<int, int>> item in Data.ItemsInStocks)
+                {
+                    itemsInStocks.Add(new KeyValuePair<Item, Dictionary<Store, int>>());
+                    foreach (KeyValuePair<int, int> store in item.Value)
+                    {
+                        itemsInStocks[item.Key].Value.Add(Data.AllStores[store.Key], store.Value);
+                    }
+                }
+
+                return itemsInStocks;
+            }
+        }
+
+
+        /*public Dictionary<int, Item> Items { 
+            get => Data.AllItems.Values.;
+            set { Data.AllItems = value; OnPropertyChanged();}
+        }
+        public Dictionary<int, Store> Stores
+        {
+            get => Data.AllStores;
+            set { Data.AllStores = value; OnPropertyChanged(); }
+        }
+        public Dictionary<int, Stock> Stocks
+        {
+            get => Data.AllStocks;
+            set { Data.AllStocks = value; OnPropertyChanged(); }
+        }*/
+
+
+        private async Task LoadDataAsync()
+        {
+            await Data.UpdateItems();
+            await Data.UpdateStock();
+            await Data.UpdateStore();
+            await Data.UpdateStockHasItems();
+            OnPropertyChanged(nameof(Items));
+            OnPropertyChanged(nameof(Stores));
+            OnPropertyChanged(nameof(Stocks));
+            OnPropertyChanged(nameof(StockHasItems));
+        }
 
         
-
-        private async Task GetProductAmount(int id)
-        {
-            //Amount
-        }
 
 
         public event PropertyChangedEventHandler PropertyChanged;

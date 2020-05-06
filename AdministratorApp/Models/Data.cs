@@ -13,8 +13,8 @@ namespace AdministratorApp.Models
         public static Dictionary<int, Item> AllItems { get; set; } = new Dictionary<int, Item>();
         public static Dictionary<int, Stock> AllStocks { get; set; } = new Dictionary<int, Stock>();
         public static Dictionary<int, Store> AllStores{ get; set; } = new Dictionary<int, Store>();
-        public static Dictionary<int,Dictionary<int,int>> StockHasItems { get; set; } = new Dictionary<int, Dictionary<int, int>>();
-        public static Dictionary<int, User> AllUsers { get; set; } = new Dictionary<int, User>();
+        public static Dictionary<int, Dictionary<int,int>> StockHasItems { get; set; } = new Dictionary<int, Dictionary<int, int>>();
+        public static Dictionary<int, Dictionary<int, int>> ItemsInStocks { get; set; } = new Dictionary<int, Dictionary<int, int>>();
 
         
 
@@ -38,9 +38,9 @@ namespace AdministratorApp.Models
             StockHasItems = await APIHandler<Dictionary<int, Dictionary<int, int>>>.GetOne("StockHasItems");
         }
 
-        public static async Task UpdateUsers()
+        public static async Task UpdateItemsInStocks()
         {
-            AllUsers = await APIHandler<Dictionary<int, User>>.GetOne("Users");
+            ItemsInStocks = await APIHandler<Dictionary<int, Dictionary<int, int>>>.GetOne("ItemsInStocks");
         }
 
     }

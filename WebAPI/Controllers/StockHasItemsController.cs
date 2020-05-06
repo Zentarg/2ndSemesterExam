@@ -19,9 +19,14 @@ namespace WebAPI.Controllers
         private ParknGardenData db = new ParknGardenData();
 
         // GET: api/StockHasItems
-        public IQueryable<StockHasItem> GetStockHasItems()
+        [ResponseType(typeof(Dictionary<int, Dictionary<int, int>>))]
+        public IHttpActionResult GetStockHasItems()
         {
-            return db.StockHasItems;
+            Dictionary<int, Dictionary<int, int>> items = StockHasItemsHandler.StockHasItems(db);
+
+            if (items.Count == 0)
+                return NotFound();
+            return Ok(items);
         }
 
         // GET: api/StockHasItems/5
@@ -38,17 +43,27 @@ namespace WebAPI.Controllers
 
         // GET: api/ItemsInStock/5
         [ResponseType(typeof(Dictionary<int, int>))]
-        [Route("api/ItemsInStock/{itemID}")]
+        [Route("api/ItemsInStocks/{itemID}")]
         public async Task<IHttpActionResult> GetItemInStock(int itemID)
         {
 
-            Dictionary<int, int> items = StockHasItemsHandler.StockHasItems(itemID, db);
+            Dictionary<int, int> items = StockHasItemsHandler.ItemsInStock(itemID, db);
 
             if (items.Count == 0)
                 return NotFound();
             return Ok(items);
         }
+        // GET: api/ItemsInStock
+        [ResponseType(typeof(Dictionary<int, Dictionary<int, int>>))]
+        [Route("api/ItemsInStocks")]
+        public IHttpActionResult GetItemsInStocks()
+        {
+            Dictionary<int, Dictionary<int, int>> items = StockHasItemsHandler.ItemsInStock(db);
 
+            if (items.Count == 0)
+                return NotFound();
+            return Ok(items);
+        }
         // PUT: api/StockHasItems/5
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutStockHasItem(int id, StockHasItem stockHasItem)

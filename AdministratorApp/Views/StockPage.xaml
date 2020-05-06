@@ -39,7 +39,7 @@
         </Grid.RowDefinitions>
 
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Sort by:" FontSize="14" />
+                <TextBlock Text="Sort by:" FontSize="14" Margin="0,0,15,0" />
             </StackPanel>
 
 
@@ -55,9 +55,9 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-            <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Stock[0].Name}"></TextBlock>
+      
 
-        <ScrollViewer Name="ItemPanel" Grid.Column="1" Grid.Row="1" >
+        <ScrollViewer Visibility="Collapsed" Name="ItemPanel" Grid.Column="1" Grid.Row="1" >
             <StackPanel Width="450">
             
                 <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
@@ -67,26 +67,32 @@
 
                 <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
                     <TextBlock Text="Amount:" Margin="0,0,6,0" />
+                    <ListView Width="150" ItemsSource="{Binding ItemsInStocks.}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding }"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                     <Button Style="{StaticResource MenuButton}" Height="35" Width="35" Content="&#xE70D;" Visibility="Collapsed" />
-                    <TextBlock Text="{Binding SelectedItem, Mode=TwoWay}"   />
                     <Button Style="{StaticResource MenuButton}" Height="35" Width="35" Content="&#xE70E;" Visibility="Collapsed"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
                     <TextBlock Text="Type:" Margin="0,0,6,0" />
-                    <TextBlock Text="{Binding Amount, Mode=TwoWay}"   />
+                    <TextBlock Text=""   />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
                     <TextBlock Text="Price:" Margin="0,0,6,0" />
-                    <TextBlock Text="{Binding SelectedItem, Mode=TwoWay}"  />
+                    <TextBlock Text="{Binding SelectedItem.Price, Mode=TwoWay}"  />
+                    <TextBlock Text="Ft" Margin="0,0,6,0" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
                     <TextBlock Text="Discount:" Margin="0,0,6,0" />
-                    <TextBlock Text="{Binding SelectedItem.Name, Mode=TwoWay}"  />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
-                    <TextBlock Text="Store:" Margin="0,0,6,0" />
-                    <TextBlock Text="{Binding SelectedItem, Mode=TwoWay}"  />
+                    <TextBlock Text="{Binding SelectedItem.DiscountPercentage, Mode=TwoWay}"  />
+                    <TextBlock Text="%" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
                     <TextBlock Text="Color:" Margin="0,0,6,0" />
