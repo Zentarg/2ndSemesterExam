@@ -26,5 +26,13 @@ namespace AdministratorApp.Views
         {
             this.InitializeComponent();
         }
+
+        private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (StockListView.SelectedItem != null)
+            {
+                ItemPanel.Visibility = Visibility.Visible;
+            }
+        }
     }
 }

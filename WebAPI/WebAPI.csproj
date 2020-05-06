@@ -170,6 +170,9 @@
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
+    <Compile Include="Controllers\StockHasItemsController.cs" />
+    <Compile Include="Controllers\StocksController.cs" />
+    <Compile Include="Controllers\StoresController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -178,6 +181,7 @@
     <Compile Include="InvoiceHasItem.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="Models\AuthHandler.cs" />
+    <Compile Include="Models\StockHasItemsHandler.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="OrderHasItem.cs" />
     <Compile Include="ParknGardenData.cs" />

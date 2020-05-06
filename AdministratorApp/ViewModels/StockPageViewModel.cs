@@ -6,22 +6,54 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Text.Core;
 using AdministratorApp.Annotations;
-using CommonLibrary;
+using AdministratorApp.Models;
+using CommonLibrary.Models;
 
 namespace AdministratorApp.ViewModels
 {
     public class StockPageViewModel : INotifyPropertyChanged
     {
+        private Item _selectedItem;
+        private List<Item> _items;
 
         public StockPageViewModel()
         {
-            Stock.Add(new Item(1,"Rose",150));
-            Stock.Add(new Item(2, "Lilly", 175));
-            Stock.Add(new Item(3, "Tulip", 225));
+            LoadDataAsync();
         }
 
-        public ObservableCollection<Item> Stock { get; set; } = new ObservableCollection<Item>();
+
+        public Item SelectedItem
+        {
+            get => _selectedItem;
+            set { _selectedItem = value; OnPropertyChanged(); }
+        }
+        public List<Item> Stock
+        {
+            get => _items;
+            private set { _items = value; OnPropertyChanged(); }
+        }
+
+        public List<Item> Items { 
+            get => Data.AllItems;
+            set { Data.AllItems = value; OnPropertyChanged();}
+        }
+
+        public Dictionary<int,int> ItemsInStock { get; set; }
+
+        private async Task LoadDataAsync()
+        {
+            await Data.UpdateItems();
+            OnPropertyChanged(nameof(Items));
+        }
+
+        
+
+        private async Task GetProductAmount(int id)
+        {
+            //Amount
+        }
 
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -128,6 +128,7 @@
     <Compile Include="Models\APIHandler.cs" />
     <Compile Include="Models\AuthHandler.cs" />
     <Compile Include="Models\Constants.cs" />
+    <Compile Include="Models\Data.cs" />
     <Compile Include="Models\NavigationHandler.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
