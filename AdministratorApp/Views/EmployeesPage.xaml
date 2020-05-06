@@ -61,6 +61,9 @@
                             <RowDefinition Height="50"/>
                             <RowDefinition Height="50"/>
                             <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Column="0" Text="Name" VerticalAlignment="Center"/>
                         <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}" PlaceholderText="Enter Name" VerticalAlignment="Center" Width="300" HorizontalAlignment="Left"></TextBox>
@@ -72,16 +75,27 @@
                         <TextBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Telephone}" PlaceholderText="Enter Telephone" HorizontalAlignment="Left" Width="300"/>
 
                         <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Text="Role"/>
-                        <TextBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" PlaceholderText="Enter Role" Width="300" HorizontalAlignment="Left"></TextBox>
+                        <TextBox x:Name="RoleText" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Role}" PlaceholderText="Enter Role" Width="300" HorizontalAlignment="Left"></TextBox>
+                        <TextBlock Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="330,0,0,0" Text="--Or--"></TextBlock>
+                        <ComboBox IsEnabled="{Binding IsEmployeeSelected}" SelectedItem="{Binding SelectedRole, Mode=TwoWay}" ItemsSource="{Binding Roles}" PlaceholderText="Select Role" Grid.Row="3" Grid.Column="1" Margin="400,0,0,0" Width="300" VerticalAlignment="Center"></ComboBox>
 
                         <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Text="Salary"/>
-                        <TextBox Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" PlaceholderText="Enter Salary" Width="300" HorizontalAlignment="Left"></TextBox>
+                        <TextBox Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Salary}" PlaceholderText="Enter Salary" Width="300" HorizontalAlignment="Left"></TextBox>
 
                         <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Text="Salary with Tax"/>
-                        <TextBox Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" PlaceholderText="Enter Salary w/ Tax" Width="300" HorizontalAlignment="Left"></TextBox>
+                        <TextBox Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" Text="{Binding SalaryWTax}" PlaceholderText="Enter Salary w/ Tax" Width="300" HorizontalAlignment="Left"></TextBox>
 
                         <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Text="Works At"/>
                         <TextBox Grid.Row="6" Grid.Column="1" VerticalAlignment="Center" PlaceholderText="Enter Place of Work" Width="300" HorizontalAlignment="Left"></TextBox>
+
+                        <TextBlock Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Text="TAJ Number"/>
+                        <TextBox Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" PlaceholderText="Enter the TAJ Number" Width="300" HorizontalAlignment="Left"></TextBox>
+
+                        <TextBlock Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" Text="Tax Number"/>
+                        <TextBox Grid.Row="8" Grid.Column="1" VerticalAlignment="Center" PlaceholderText="Enter the Tax Number" Width="300" HorizontalAlignment="Left"></TextBox>
+
+                        <TextBlock Grid.Row="9" Grid.Column="0" VerticalAlignment="Center" Text="Working Hours"/>
+                        <TextBox Grid.Row="9" Grid.Column="1" VerticalAlignment="Center" PlaceholderText="Enter the working hours" Width="300" HorizontalAlignment="Left"></TextBox>
                     </Grid>
 
                     <Grid Margin="0,50,0,0">
@@ -103,7 +117,7 @@
 
 
 
-                    <TextBox Text="{Binding SelectedEmp}"/>
+                    
 
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,50,50">

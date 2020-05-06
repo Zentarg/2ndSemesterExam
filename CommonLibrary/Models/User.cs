@@ -5,16 +5,17 @@ using System.Text;
 
 namespace CommonLibrary.Models
 {
-    public class Employee
+    public class User
     {
-        public Employee()
+        public User()
         {
 
         }
 
-        public Employee(string name, string email, int telephone, string address, int roleId, int tajNumber,
+        public User(int id, string name, string email, int telephone, string address, int roleId, int tajNumber,
             int taxNumber, float workingHours, int userLevelId, int storeId)
         {
+            Id = id;
             Name = name;
             Email = email;
             Address = address;
@@ -26,7 +27,7 @@ namespace CommonLibrary.Models
             UserLevelId = userLevelId;
             StoreId = storeId;
         }
-
+        public int Id { get; set; }
         public string Name { get; set; } = "";
         public string Email { get; set; } = "";
         public int Telephone { get; set; }
