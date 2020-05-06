@@ -1,10 +1,12 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using WebAPI.Models;
 
 namespace WebAPI.Controllers
 {
@@ -13,9 +15,14 @@ namespace WebAPI.Controllers
         private ParknGardenData db = new ParknGardenData();
 
         // GET: api/Stocks
-        public IQueryable<Stock> GetStocks()
+        [ResponseType(typeof(Dictionary<int, Dictionary<int, int>>))]
+        public IHttpActionResult GetStocks()
         {
-            return db.Stocks;
+            Dictionary<int, Stock> stocks = StocksHandler.GetAllStocks(db);
+
+            if (stocks.Count == 0)
+                return NotFound();
+            return Ok(stocks);
         }
 
         // GET: api/Stocks/5
