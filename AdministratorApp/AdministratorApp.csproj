@@ -127,6 +127,7 @@
     </Compile>
     <Compile Include="Models\APIHandler.cs" />
     <Compile Include="Models\AuthHandler.cs" />
+    <Compile Include="Models\CommonMethods.cs" />
     <Compile Include="Models\Constants.cs" />
     <Compile Include="Models\Data.cs" />
     <Compile Include="Models\NavigationHandler.cs" />
