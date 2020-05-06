@@ -14,6 +14,7 @@ namespace AdministratorApp.ViewModels
     {
         private Store _store;
         private Store _selectedStore;
+        private bool _isEditing;
 
         public StorePageVM()
         {
@@ -22,9 +23,28 @@ namespace AdministratorApp.ViewModels
         }
 
 
+        public bool IsEditing
+        {
+            get
+            {
+                //if statement for user and admin
+                return _isEditing;
+            }
+            set
+            {
+                _isEditing = value;
+                OnPropertyChanged();
+            }
+        }
+
         public List<Store> StoreList
         {
-            get { return _store.StoreList;}
+            //get { return _store.StoreList;}
+            get {return new List<Store>()
+            {
+                new Store(0,0,0,"John Doe's", "Some place", 84758439, "John Doe"),
+                new Store(1,1,1,"Your Mom", "Your Mom's", 123456789, "Your Dad's")
+            };}
         }
 
         public Store SelectedStore
