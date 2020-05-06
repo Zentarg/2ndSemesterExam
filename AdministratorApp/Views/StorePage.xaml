@@ -47,13 +47,23 @@
                 <TextBlock FontSize="35" Height="50" Text="Address"/>
                 <TextBlock FontSize="35" Height="50" Text="Telephone"/>
                 <TextBlock FontSize="35" Height="50" Text="Manager"/>
-    </StackPanel>
-    <StackPanel HorizontalAlignment="Left" Grid.Column="1" Spacing="50" Margin="0,50,0,0" >
-        <TextBox FontSize="30" PlaceholderText="Name" Text="{Binding SelectedStore.Name}" Height="50" Width="400"/>
-        <TextBox FontSize="30" PlaceholderText="Address" Text="{Binding SelectedStore.Address}" Height="50" Width="400"/>
-        <TextBox FontSize="30" PlaceholderText="Telephone" Text="{Binding SelectedStore.Telephone}" Height="50" Width="400"/>
-        <TextBox FontSize="30" PlaceholderText="Manager" Text="{Binding SelectedStore.Manager}" Height="50" Width="400"/>
-    </StackPanel>
+            </StackPanel>
+
+            <Grid Grid.Column="1" Margin="0,50,0,0">
+                <StackPanel Spacing="50">
+                    <TextBox FontSize="30" PlaceholderText="Name" Text="{Binding SelectedStore.Name}" Height="50" Width="400"/>
+                    <TextBox FontSize="30" PlaceholderText="Address" Text="{Binding SelectedStore.Address}" Height="50" Width="400"/>
+                    <TextBox FontSize="30" PlaceholderText="Telephone" Text="{Binding SelectedStore.Telephone}" Height="50" Width="400"/>
+                    <TextBox FontSize="30" PlaceholderText="Manager" Text="{Binding SelectedStore.Manager}" Height="50" Width="400"/>
+                </StackPanel>
+                <StackPanel Spacing="50">
+                    <TextBlock FontSize="30" Visibility="{Binding IsEditing, Mode=TwoWay}" Text="{Binding SelectedStore.Name}" Height="50" Margin="16,5,0,0"/>
+                    <TextBlock FontSize="30" Visibility="{Binding IsEditing, Mode=TwoWay}" Text="{Binding SelectedStore.Address}" Height="50" Margin="16,0,0,0"/>
+                    <TextBlock FontSize="30" Visibility="{Binding IsEditing, Mode=TwoWay}" Text="{Binding SelectedStore.Telephone}" Height="50" Margin="16,0,0,0"/>
+                    <TextBlock FontSize="30" Visibility="{Binding IsEditing, Mode=TwoWay}" Text="{Binding SelectedStore.Manager}" Height="50" Margin="16,0,0,0"/>
+                </StackPanel>
+            </Grid>
+
             <StackPanel Grid.Column="2">
                 <Button Content="Go To Stock" FontSize="30" HorizontalAlignment="Center" Width="180" Height="70" Margin="0,45,0,0"/>
             </StackPanel>
