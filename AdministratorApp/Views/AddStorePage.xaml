@@ -37,7 +37,7 @@
         <StackPanel Grid.Column="1" Grid.Row="1" Spacing="45" Margin="0,48,0,0" HorizontalAlignment="Left">
             <TextBox PlaceholderText="Name" Text="{Binding Name, Mode=TwoWay}" FontSize="25" Height="45" Width="500"/>
             <TextBox PlaceholderText="Address" Text="{Binding Address, Mode=TwoWay}" FontSize="25" Height="45"/>
-            <TextBox PlaceholderText="Telephone" Text="{Binding Telephone, Mode=TwoWay}" FontSize="25" Height="45"/>
+            <TextBox PlaceholderText="Telephone" Text="{Binding Phone, Mode=TwoWay}" FontSize="25" Height="45"/>
             <TextBox PlaceholderText="Manager" Text="{Binding Manager, Mode=TwoWay}" FontSize="25" Height="45"/>
         </StackPanel>
 

@@ -24,7 +24,7 @@
                     <StackPanel Orientation="Horizontal">
                         <TextBlock FontSize="35" Text="{Binding Name, Mode=TwoWay}" Margin="0,20,20,0"/>
                         <TextBlock FontSize="35" Text="{Binding Address, Mode=TwoWay}" Margin="0,20,20,0"/>
-                        <TextBlock FontSize="35" Text="{Binding Telephone, Mode=TwoWay}" Margin="0,20,20,0"/>
+                        <TextBlock FontSize="35" Text="{Binding Phone, Mode=TwoWay}" Margin="0,20,20,0"/>
                         <TextBlock FontSize="35" Text="{Binding Manager, Mode=TwoWay}" Margin="0,20,20,0"/>
                         </StackPanel>
                     </DataTemplate>
@@ -53,13 +53,13 @@
                 <StackPanel Spacing="50">
                     <TextBox FontSize="30" PlaceholderText="Name" Text="{Binding SelectedStore.Name}" Height="50" Width="400"/>
                     <TextBox FontSize="30" PlaceholderText="Address" Text="{Binding SelectedStore.Address}" Height="50" Width="400"/>
-                    <TextBox FontSize="30" PlaceholderText="Telephone" Text="{Binding SelectedStore.Telephone}" Height="50" Width="400"/>
+                    <TextBox FontSize="30" PlaceholderText="Telephone" Text="{Binding SelectedStore.Phone}" Height="50" Width="400"/>
                     <TextBox FontSize="30" PlaceholderText="Manager" Text="{Binding SelectedStore.Manager}" Height="50" Width="400"/>
                 </StackPanel>
                 <StackPanel Spacing="50">
                     <TextBlock FontSize="30" Visibility="{Binding IsEditing, Mode=TwoWay}" Text="{Binding SelectedStore.Name}" Height="50" Margin="16,5,0,0"/>
                     <TextBlock FontSize="30" Visibility="{Binding IsEditing, Mode=TwoWay}" Text="{Binding SelectedStore.Address}" Height="50" Margin="16,0,0,0"/>
-                    <TextBlock FontSize="30" Visibility="{Binding IsEditing, Mode=TwoWay}" Text="{Binding SelectedStore.Telephone}" Height="50" Margin="16,0,0,0"/>
+                    <TextBlock FontSize="30" Visibility="{Binding IsEditing, Mode=TwoWay}" Text="{Binding SelectedStore.Phone}" Height="50" Margin="16,0,0,0"/>
                     <TextBlock FontSize="30" Visibility="{Binding IsEditing, Mode=TwoWay}" Text="{Binding SelectedStore.Manager}" Height="50" Margin="16,0,0,0"/>
                 </StackPanel>
             </Grid>

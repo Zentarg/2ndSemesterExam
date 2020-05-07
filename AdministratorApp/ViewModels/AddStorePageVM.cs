@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -14,8 +15,11 @@ namespace AdministratorApp.ViewModels
 {
     public class AddStorePageVM : INotifyPropertyChanged
     {
-        private Store _store;
-        private RelayCommand _addStore;
+        ObservableCollection<Store> _stores = new ObservableCollection<Store>();
+        private string _name;
+        private string _address;
+        private int _phone;
+        private string _manager;
 
         public AddStorePageVM()
         {
@@ -24,26 +28,26 @@ namespace AdministratorApp.ViewModels
 
         public string Name
         {
-            get { return _store.Name;}
-            set { _store.Name = value; OnPropertyChanged(); }
+            get { return _name;}
+            set { _name = value; OnPropertyChanged(); }
         }
 
         public string Address
         {
-            get { return _store.Address; }
-            set { _store.Address = value; OnPropertyChanged(); }
+            get { return _address; }
+            set { _address = value; OnPropertyChanged(); }
         }
 
         public int Telephone
         {
-            get { return _store.Telephone; }
-            set { _store.Telephone = value; OnPropertyChanged(); }
+            get { return _phone; }
+            set { _phone = value; OnPropertyChanged(); }
         }
 
         public string Manager
         {
-            get { return _store.Manager; }
-            set { _store.Manager = value; OnPropertyChanged(); }
+            get { return _manager; }
+            set { _manager = value; OnPropertyChanged(); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
