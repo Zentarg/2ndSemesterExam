@@ -33,7 +33,7 @@
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
             <Grid Column="0">
-                <ListView ItemsSource="{Binding DictUsers}"
+                <ListView ItemsSource="{Binding Users}"
                           SelectedItem="{Binding SelectedEmp, Mode=TwoWay}">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="dc:EmployeesPageVM">
@@ -86,16 +86,17 @@
                         <TextBox Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" Text="{Binding SalaryWTax}" PlaceholderText="Enter Salary w/ Tax" Width="300" HorizontalAlignment="Left"></TextBox>
 
                         <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Text="Works At"/>
-                        <TextBox Grid.Row="6" Grid.Column="1" VerticalAlignment="Center" PlaceholderText="Enter Place of Work" Width="300" HorizontalAlignment="Left"></TextBox>
+                        <TextBlock Grid.Row="6" Grid.Column="1" VerticalAlignment="Center" Text="{Binding SelectedStore}"></TextBlock>
+                        <ComboBox Grid.Row="6" Grid.Column="1" VerticalAlignment="Center" Margin="400,0,0,0" IsEnabled="{Binding IsEmployeeSelected}" ItemsSource="{Binding Stores}" PlaceholderText="Select Place of Work" Width="300" HorizontalAlignment="Left"></ComboBox>
 
                         <TextBlock Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Text="TAJ Number"/>
-                        <TextBox Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" PlaceholderText="Enter the TAJ Number" Width="300" HorizontalAlignment="Left"></TextBox>
+                        <TextBox Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" Text="{Binding TajNumber}" PlaceholderText="Enter the TAJ Number" Width="300" HorizontalAlignment="Left"></TextBox>
 
                         <TextBlock Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" Text="Tax Number"/>
-                        <TextBox Grid.Row="8" Grid.Column="1" VerticalAlignment="Center" PlaceholderText="Enter the Tax Number" Width="300" HorizontalAlignment="Left"></TextBox>
+                        <TextBox Grid.Row="8" Grid.Column="1" VerticalAlignment="Center" Text="{Binding TaxNumber}" PlaceholderText="Enter the Tax Number" Width="300" HorizontalAlignment="Left"></TextBox>
 
                         <TextBlock Grid.Row="9" Grid.Column="0" VerticalAlignment="Center" Text="Working Hours"/>
-                        <TextBox Grid.Row="9" Grid.Column="1" VerticalAlignment="Center" PlaceholderText="Enter the working hours" Width="300" HorizontalAlignment="Left"></TextBox>
+                        <TextBox Grid.Row="9" Grid.Column="1" VerticalAlignment="Center"  Text="{Binding WorkingHours}" PlaceholderText="Enter the working hours" Width="300" HorizontalAlignment="Left"></TextBox>
                     </Grid>
 
                     <Grid Margin="0,50,0,0">

@@ -9,7 +9,7 @@ namespace AdministratorApp.Models
 {
     public static class CommonMethods
     {
-        public static string GetRole(int roleId, Dictionary<int, string> roles)
+        public static Role GetRole(int roleId, Dictionary<int, Role> roles)
         {
             return roles[roleId];
         }

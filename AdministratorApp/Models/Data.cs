@@ -17,6 +17,8 @@ namespace AdministratorApp.Models
         public static Dictionary<int, Category> AllCategories { get; set; } = new Dictionary<int, Category>();
         public static Dictionary<int, Dictionary<int,int>> StockHasItems { get; set; } = new Dictionary<int, Dictionary<int, int>>();
         public static Dictionary<int, Dictionary<int, int>> ItemsInStocks { get; set; } = new Dictionary<int, Dictionary<int, int>>();
+        public static Dictionary<int, Salary> AllSalaries { get; set; } = new Dictionary<int, Salary>();
+        public static Dictionary<int, Role> AllRoles { get; set; } = new Dictionary<int, Role>();
 
 
 
@@ -52,6 +54,16 @@ namespace AdministratorApp.Models
         public static async Task UpdateCategories()
         {
             AllCategories = await APIHandler<Dictionary<int, Category>>.GetOne("Categories");
+        }
+
+        public static async Task UpdateSalaries()
+        {
+            AllSalaries = await APIHandler<Dictionary<int, Salary>>.GetOne("Salaries");
+        }
+
+        public static async Task UpdateRoles()
+        {
+            AllRoles = await APIHandler<Dictionary<int, Role>>.GetOne("Roles");
         }
 
     }

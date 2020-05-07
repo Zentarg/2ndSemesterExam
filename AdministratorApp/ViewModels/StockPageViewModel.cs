@@ -22,7 +22,7 @@ namespace AdministratorApp.ViewModels
 
         public StockPageViewModel()
         {
-            //LoadDataAsync();
+            LoadDataAsync();
         }
 
         public static Dictionary<int, Dictionary<int, int>> StockHasItems { get => Data.StockHasItems; set => Data.StockHasItems = value; }
