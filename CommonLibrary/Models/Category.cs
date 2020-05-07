@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CommonLibrary.Models
 {
-    class Category
+    public class Category
     {
         public Category(int id, string name)
         {

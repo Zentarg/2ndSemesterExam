@@ -15,9 +15,10 @@ namespace AdministratorApp.ViewModels
 {
     public class StockPageViewModel : INotifyPropertyChanged
     {
-        private Item _selectedItem;
+        private Tuple<Item, string> _selectedItem;
         private List<Item> _items;
-
+        private float _priceAfterDiscount;
+        
 
         public StockPageViewModel()
         {
@@ -26,17 +27,38 @@ namespace AdministratorApp.ViewModels
 
         public static Dictionary<int, Dictionary<int, int>> StockHasItems { get => Data.StockHasItems; set => Data.StockHasItems = value; }
 
-        public Item SelectedItem
+        public Tuple<Item, string> SelectedItem
         {
             get => _selectedItem;
-            set { _selectedItem = value; OnPropertyChanged(); OnPropertyChanged(nameof(SelectedItemInStocks)); }
+            set { _selectedItem = value; OnPropertyChanged(); OnPropertyChanged(nameof(SelectedItemInStocks)); OnPropertyChanged(nameof(PriceAfterDiscount)); OnPropertyChanged(nameof(SelectedItemCategory)); }
         }
 
 
-
-        public ObservableCollection<Item> Items
+        public float PriceAfterDiscount
         {
-            get => new ObservableCollection<Item>(Data.AllItems.Values);
+            get
+            {
+                if (SelectedItem !=null)
+                { //You can only pay integer amounts in hungary therefore it's rounded to int.
+                    return _priceAfterDiscount = Convert.ToInt32(SelectedItem.Item1.Price * (1 - SelectedItem.Item1.DiscountPercentage / 100)) ;
+                }
+
+                return 0;
+            }
+        }
+        //TUPLE format
+        public ObservableCollection<Tuple<Item, string>> Items
+        {
+            get
+            {
+                ObservableCollection<Tuple<Item, string>> items = new ObservableCollection<Tuple<Item, string>>();
+                foreach (Item item in Data.AllItems.Values)
+                {
+                    items.Add(new Tuple<Item, string>(item, Data.AllCategories[item.CategoryId].Name));
+                }
+
+                return items;
+            }
         }
 
         public ObservableCollection<Store> Stores
@@ -49,6 +71,11 @@ namespace AdministratorApp.ViewModels
             get => new ObservableCollection<Stock>(Data.AllStocks.Values);
         }
 
+        public Category SelectedItemCategory
+        {
+            get => SelectedItem != null ? Data.AllCategories[SelectedItem.Item1.CategoryId] : new Category(-1, "loading");
+        }
+
         public ObservableCollection<KeyValuePair<Stock, int>> SelectedItemInStocks
         {
             get
@@ -57,7 +84,7 @@ namespace AdministratorApp.ViewModels
 
                 if (SelectedItem == null)
                     return stocks;
-                foreach (KeyValuePair<int, int> pair in Data.ItemsInStocks[SelectedItem.Id])
+                foreach (KeyValuePair<int, int> pair in Data.ItemsInStocks[SelectedItem.Item1.Id])
                 {
                     stocks.Add(new KeyValuePair<Stock, int>(Data.AllStocks[pair.Key],pair.Value));
                 }
@@ -107,11 +134,15 @@ namespace AdministratorApp.ViewModels
             await Data.UpdateStock();
             await Data.UpdateStore();
             await Data.UpdateItemsInStocks();
+            await Data.UpdateCategories();
             OnPropertyChanged(nameof(Items));
             OnPropertyChanged(nameof(Stores));
             OnPropertyChanged(nameof(Stocks));
             OnPropertyChanged(nameof(SelectedItemInStocks));
+            OnPropertyChanged(nameof(PriceAfterDiscount));
+            OnPropertyChanged(nameof(SelectedItemCategory));
             SelectedItem = Items[0];
+            
         }
 
         

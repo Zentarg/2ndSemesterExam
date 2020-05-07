@@ -168,6 +168,7 @@
     <Compile Include="Auth.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Controllers\StockHasItemsController.cs" />
@@ -182,6 +183,7 @@
     <Compile Include="InvoiceHasItem.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="Models\AuthHandler.cs" />
+    <Compile Include="Models\CategoriesHandler.cs" />
     <Compile Include="Models\ItemsHandler.cs" />
     <Compile Include="Models\StocksHandler.cs" />
     <Compile Include="Models\StockHasItemsHandler.cs" />
