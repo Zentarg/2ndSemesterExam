@@ -5,6 +5,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Core;
+using Windows.UI.Core.Preview;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using AdministratorApp.Annotations;
@@ -22,6 +24,9 @@ namespace AdministratorApp.ViewModels
         {
             DoToggleHamburger = new RelayCommand(ToggleHamburger);
             DoLogout = new RelayCommand(Logout);
+
+            SystemNavigationManagerPreview.GetForCurrentView().CloseRequested += this.OnCloseRequest;
+
         }
 
         public bool SplitViewVisible { get; set; }
@@ -49,6 +54,11 @@ namespace AdministratorApp.ViewModels
             mainFrame?.Navigate(Type.GetType($"{Application.Current.GetType().Namespace}.LoginPage"));
         }
 
+
+        private void OnCloseRequest(object sender, SystemNavigationCloseRequestedPreviewEventArgs e)
+        {
+            AuthHandler.Logout();
+        }
 
         [NotifyPropertyChangedInvocator]
         public virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
