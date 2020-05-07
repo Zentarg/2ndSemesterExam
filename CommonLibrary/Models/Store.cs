@@ -10,14 +10,14 @@ namespace AdministratorApp.Models
     {
         
 
-        public Store(int id, int administratorId, int managerId, string name, string address, int telephone, string manager)
+        public Store(int id, int administratorId, int managerId, string name, string address, int phone, string manager)
         {
             ID = id;
             AdministratorID = administratorId;
             ManagerID = managerId;
             Name = name;
             Address = address;
-            Telephone = telephone;
+            Phone = phone;
             Manager = manager;
         }
 
@@ -28,9 +28,11 @@ namespace AdministratorApp.Models
         public string Manager { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
-        public int Telephone { get; set; }
- 
-        
+        public int Phone { get; set; }
 
+        public override string ToString()
+        {
+            return $"{Name} {Address} {Phone} {Manager}";
+        }
     }
 }

@@ -121,5 +121,11 @@ namespace WebAPI.Models
                         u => u.ID == db.Sessions.FirstOrDefault(
                             s => s.SessionKey == sessionKey).UserID).UserLevelID)?.ID ?? -1;
         }
+
+        public static string GetUserName(int userID, ParknGardenData db)
+        {
+            var user = db.Auths.FirstOrDefault(u => u.UserID == userID);
+            return user?.Username;
+        }
     }
 }
