@@ -48,6 +48,17 @@ namespace WebAPI.Models
 
         }
 
+        public static Session DeleteSession(string sessionKey, ParknGardenData db)
+        {
+            Session session = db.Sessions.FirstOrDefault(s => s.SessionKey == sessionKey);
+            if (session != null)
+            {
+                db.Sessions.Remove(session);
+                db.SaveChanges();
+            }
+            return session;
+        }
+
         /// <summary>
         /// Logs in the user based on username and password. Creates a session key in database and returns it if the authentication succeeds
         /// </summary>

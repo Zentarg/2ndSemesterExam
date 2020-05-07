@@ -58,10 +58,9 @@
                     <DropDownButton.Flyout>
                         <Flyout>
                             <StackPanel>
-                                <Button>
+                                <Button Command="{Binding DoLogout}">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="Log Out"/>
-                                        <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="" />
                                     </StackPanel>
                                 </Button>
                             </StackPanel>

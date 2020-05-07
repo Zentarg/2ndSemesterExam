@@ -45,6 +45,11 @@ namespace AdministratorApp.Models
             ActiveUser = await APIHandler<User>.GetOne($"Users/{UserID}");
         }
 
+        public static async Task Logout()
+        {
+            await APIHandler<Session>.DeleteOne($"Auth/DeleteSession/{SessionKey}");
+        }
+
 
     }
 }
