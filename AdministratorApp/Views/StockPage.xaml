@@ -57,7 +57,7 @@
         </ListView>
       
 
-        <ScrollViewer Visibility="Collapsed" Name="ItemPanel" Grid.Column="1" Grid.Row="1" >
+        <ScrollViewer Visibility="Visible" Name="ItemPanel" Grid.Column="1" Grid.Row="1" >
             <StackPanel Width="450">
             
                 <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
@@ -67,17 +67,19 @@
 
                 <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
                     <TextBlock Text="Amount:" Margin="0,0,6,0" />
-                    <ListView Width="150" ItemsSource="{Binding ItemsInStocks.}">
+                    <ListView Width="150" ItemsSource="{Binding SelectedItemInStocks}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding }"/>
+                                    <TextBlock Text="{Binding Key.Name}"/>
+                                    <TextBlock Text=": "/>
+                                    <TextBlock Text="{Binding Value}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                    <Button Style="{StaticResource MenuButton}" Height="35" Width="35" Content="&#xE70D;" Visibility="Collapsed" />
-                    <Button Style="{StaticResource MenuButton}" Height="35" Width="35" Content="&#xE70E;" Visibility="Collapsed"/>
+                    <Button Style="{StaticResource MenuButton}" Height="35" Width="35" Content="&#xE70D;" Visibility="Visible" />
+                    <Button Style="{StaticResource MenuButton}" Height="35" Width="35" Content="&#xE70E;" Visibility="Visible"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="15,15,15,0">

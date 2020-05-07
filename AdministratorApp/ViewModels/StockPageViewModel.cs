@@ -29,7 +29,7 @@ namespace AdministratorApp.ViewModels
         public Item SelectedItem
         {
             get => _selectedItem;
-            set { _selectedItem = value; OnPropertyChanged(); }
+            set { _selectedItem = value; OnPropertyChanged(); OnPropertyChanged(nameof(SelectedItemInStocks)); }
         }
 
 
@@ -49,7 +49,24 @@ namespace AdministratorApp.ViewModels
             get => new ObservableCollection<Stock>(Data.AllStocks.Values);
         }
 
-        public ObservableCollection<KeyValuePair<Item, Dictionary<Store, int>>> ItemsInStocks
+        public ObservableCollection<KeyValuePair<Stock, int>> SelectedItemInStocks
+        {
+            get
+            {
+                ObservableCollection<KeyValuePair<Stock, int>> stocks = new ObservableCollection<KeyValuePair<Stock, int>>();
+
+                if (SelectedItem == null)
+                    return stocks;
+                foreach (KeyValuePair<int, int> pair in Data.ItemsInStocks[SelectedItem.Id])
+                {
+                    stocks.Add(new KeyValuePair<Stock, int>(Data.AllStocks[pair.Key],pair.Value));
+                }
+
+                return stocks;
+            }
+        }
+
+        /*public ObservableCollection<KeyValuePair<Item, Dictionary<Store, int>>> ItemsInStocks
         {
             get
             {
@@ -65,7 +82,7 @@ namespace AdministratorApp.ViewModels
 
                 return itemsInStocks;
             }
-        }
+        }*/
 
 
         /*public Dictionary<int, Item> Items { 
@@ -89,11 +106,12 @@ namespace AdministratorApp.ViewModels
             await Data.UpdateItems();
             await Data.UpdateStock();
             await Data.UpdateStore();
-            await Data.UpdateStockHasItems();
+            await Data.UpdateItemsInStocks();
             OnPropertyChanged(nameof(Items));
             OnPropertyChanged(nameof(Stores));
             OnPropertyChanged(nameof(Stocks));
-            OnPropertyChanged(nameof(StockHasItems));
+            OnPropertyChanged(nameof(SelectedItemInStocks));
+            SelectedItem = Items[0];
         }
 
         
