@@ -176,6 +176,7 @@
     <Compile Include="Controllers\StockHasItemsController.cs" />
     <Compile Include="Controllers\StocksController.cs" />
     <Compile Include="Controllers\StoresController.cs" />
+    <Compile Include="Controllers\UserLevelsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -193,6 +194,7 @@
     <Compile Include="Models\StockHasItemsHandler.cs" />
     <Compile Include="Models\UserHandler.cs" />
     <Compile Include="Models\StoresHandler.cs" />
+    <Compile Include="Models\UserLevelHandler.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="OrderHasItem.cs" />
     <Compile Include="ParknGardenData.cs" />

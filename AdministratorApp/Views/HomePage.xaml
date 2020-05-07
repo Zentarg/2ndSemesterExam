@@ -8,7 +8,52 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <Page.Resources>
+        <Style x:Key="ButtonIcon" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
+            <Setter Property="FontSize" Value="150" />
+            <Setter Property="TextAlignment" Value="Center" />
+        </Style>
+        <Style x:Key="ButtonText" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Aloe Vera" />
+            <Setter Property="FontSize" Value="25" />
+            <Setter Property="Margin" Value="0 10 0 0" />
+            <Setter Property="TextAlignment" Value="Center" />
+        </Style>
+    </Page.Resources>
 
+    <Grid>
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel Spacing="100">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="100">
+                    <Button Width="300">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xE188;" />
+                            <TextBlock Style="{StaticResource ButtonText}"  Text="Stock"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Width="300">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xE188;" />
+                            <TextBlock Style="{StaticResource ButtonText}"  Text="Stock"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="100">
+                    <Button Width="300">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xE188;" />
+                            <TextBlock Style="{StaticResource ButtonText}"  Text="Stock"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Width="300">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xE188;" />
+                            <TextBlock Style="{StaticResource ButtonText}"  Text="Stock"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>

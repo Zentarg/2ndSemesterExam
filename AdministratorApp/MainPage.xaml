@@ -22,7 +22,7 @@
         </Style>
         <Style x:Key="HamburgerButton" TargetType="Button">
             <Setter Property="Height" Value="50" />
-            <Setter Property="Width" Value="250" />
+            <Setter Property="Width" Value="260" />
             <Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
             <Setter Property="FontSize" Value="30" />
             <Setter Property="HorizontalContentAlignment" Value="Left"></Setter>
@@ -71,33 +71,63 @@
         </Grid>
         <SplitView Grid.Row="1" IsPaneOpen="{Binding SplitViewVisible, Mode=OneWay}" OpenPaneLength="250" CompactPaneLength="50" DisplayMode="CompactInline">
             <SplitView.Pane>
-                <StackPanel Width="250">
-                    <Button Style="{StaticResource HamburgerButton}" Content="&#xE700;" Command="{Binding DoToggleHamburger}"/>
-                    <Button Style="{StaticResource HamburgerButton}" Tag="StockPage" Click="NavigateFrame">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE700;"/>
-                            <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Stock"/>
-                        </StackPanel>
-                    </Button>
-                    <Button Style="{StaticResource HamburgerButton}" Tag="StorePage" Click="NavigateFrame">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE700;"/>
-                            <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Stores"/>
-                        </StackPanel>
-                    </Button>
-                    <Button Style="{StaticResource HamburgerButton}" Tag="InvoicesPage" Click="NavigateFrame">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE700;"/>
-                            <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Invoices"/>
-                        </StackPanel>
-                    </Button>
-                    <Button Style="{StaticResource HamburgerButton}" Tag="EmployeesPage" Click="NavigateFrame">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE700;"/>
-                            <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Employees"/>
-                        </StackPanel>
-                    </Button>
-                </StackPanel>
+                <Grid Width="260">
+                    <StackPanel Visibility="{Binding DontShowAdministratorFunctions}">
+                        <Button Style="{StaticResource HamburgerButton}" Content="&#xE700;" Command="{Binding DoToggleHamburger}"/>
+                        <Button Style="{StaticResource HamburgerButton}" Tag="StockPage" Click="NavigateFrame">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE700;"/>
+                                <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Stock"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource HamburgerButton}" Tag="StorePage" Click="NavigateFrame">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE700;"/>
+                                <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Stores"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource HamburgerButton}" Tag="InvoicesPage" Click="NavigateFrame">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE700;"/>
+                                <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Create Invoice"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                    <StackPanel Visibility="{Binding ShowAdministratorFunctions}">
+                        <Button Style="{StaticResource HamburgerButton}" Content="&#xE700;" Command="{Binding DoToggleHamburger}"/>
+                        <Button Style="{StaticResource HamburgerButton}" Tag="StockPage" Click="NavigateFrame">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE700;"/>
+                                <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Stock"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource HamburgerButton}" Tag="StorePage" Click="NavigateFrame">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE700;"/>
+                                <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Stores"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource HamburgerButton}" Tag="EmployeesPage" Click="NavigateFrame">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE716;"/>
+                                <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Employees"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource HamburgerButton}" Tag="SuppliersPage" Click="NavigateFrame">
+                            <StackPanel Orientation="Horizontal" Margin="3,0,-3,0">
+                                <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE707;"/>
+                                <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Suppliers"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource HamburgerButton}" Tag="RequestsPage" Click="NavigateFrame">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE700;"/>
+                                <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Requests"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+
+                </Grid>
             </SplitView.Pane>
             <SplitView.Content>
                 <Frame x:Name="MainFrame">

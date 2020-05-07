@@ -14,6 +14,14 @@ namespace AdministratorApp.Models
         public static int UserID { get; set; }
         public static string SessionKey { get; set; }
         public static User ActiveUser { get; set; }
+        public static string ActiveUserRoleName { get; set; }
+        public static Constants.AccessLevels ActiveUserAccessLevel { get; set; }
+        public static string ActiveUserLevelName { get; set; }
+        public static Store ActiveUserStore { get; set; }
+
+        public static bool ShowAdministratorFunctions =>
+            ActiveUserAccessLevel == Constants.AccessLevels.Administrator ||
+            ActiveUserAccessLevel == Constants.AccessLevels.Owner;
 
         public static string EncryptPassword(string input, string salt)
         {
@@ -43,6 +51,11 @@ namespace AdministratorApp.Models
         public static async Task InitializeAuth()
         {
             ActiveUser = await APIHandler<User>.GetOne($"Users/{UserID}");
+            ActiveUserRoleName = (await APIHandler<Role>.GetOne($"Roles/{ActiveUser.RoleId}")).Name;
+            ActiveUserAccessLevel = (Constants.AccessLevels) ActiveUser.UserLevelId;
+            ActiveUserLevelName = (await APIHandler<UserLevel>.GetOne($"UserLevels/{ActiveUser.UserLevelId}")).Name;
+            ActiveUserStore = await APIHandler<Store>.GetOne($"Stores/{ActiveUser.StoreId}");
+
         }
 
         public static async Task Logout()

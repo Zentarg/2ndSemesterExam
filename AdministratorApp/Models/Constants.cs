@@ -10,6 +10,9 @@ namespace AdministratorApp.Models
     {
         public const string LOGIN_ERROR = "The credentials did not match any existing accounts.";
 
+        public enum AccessLevels {
+            Employee = 0, Manager = 1, Administrator = 2, Owner = 3
+        }
 
-    }
+}
 }

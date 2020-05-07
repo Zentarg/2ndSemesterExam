@@ -35,7 +35,8 @@ namespace AdministratorApp.ViewModels
         public bool FrameCanGoBackwards => NavigationHandler.Frame.CanGoBack;
         public bool FrameCanGoForwards => NavigationHandler.Frame.CanGoForward;
         public User ActiveUser => AuthHandler.ActiveUser;
-
+        public bool ShowAdministratorFunctions => AuthHandler.ShowAdministratorFunctions;
+        public bool DontShowAdministratorFunctions => !ShowAdministratorFunctions;
 
         public RelayCommand DoToggleHamburger { get; set; }
         public RelayCommand DoLogout { get; set; }

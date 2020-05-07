@@ -13,7 +13,6 @@ namespace WebAPI.Models
 {
     public static class AuthHandler
     {
-        //private static string connectionString = ConfigurationManager.ConnectionStrings["ParknGardenData"].ConnectionString;
         private static Random rd = new Random();
         private static int sessionKeyLength = 32;
         /// <summary>
@@ -48,6 +47,12 @@ namespace WebAPI.Models
 
         }
 
+        /// <summary>
+        /// Deletes session from db, with the sesseionKey specified.
+        /// </summary>
+        /// <param name="sessionKey">SessionKey of the session to be deleted.</param>
+        /// <param name="db">DBContext to use.</param>
+        /// <returns>The session that was deleted.</returns>
         public static Session DeleteSession(string sessionKey, ParknGardenData db)
         {
             Session session = db.Sessions.FirstOrDefault(s => s.SessionKey == sessionKey);
