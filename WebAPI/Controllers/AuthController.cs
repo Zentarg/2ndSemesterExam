@@ -51,6 +51,20 @@ namespace WebAPI.Controllers
             return Ok(userLevel);
         }
 
+        // GET: api/Auth/GetUserName
+        [ResponseType(typeof(string))]
+        [Route("api/Auth/GetUserName/{userID}")]
+        public IHttpActionResult GetUserName(int userID)
+        {
+            string userName = AuthHandler.GetUserName(userID, db);
+            if (userName == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(userName);
+        }
+
         // DELETE: api/Auth/DeleteSession/sessionkey
         [ResponseType(typeof(Session))]
         [Route("api/Auth/DeleteSession/{sessionKey}")]

@@ -34,27 +34,11 @@ namespace AdministratorApp.ViewModels
         private float _taxNumber;
         private float _workingHours;
         private string _selectedStore;
+        private string _userName;
 
         public EmployeesPageVM()
         {
-            //_emp.Add(new User(1,"name1", "email1", 21673, "address1", 1, 25, 50, 200, 0, 1));
-            //_emp.Add(new User(2, "name2", "email2", 267318576, "address2", 2, 25, 50, 200, 0, 1));
-            //_emp.Add(new User(3,"name3", "email3", 612835, "address3", 3, 25, 50, 200, 0, 1));
-            //_emp.Add(new User(4,"name4", "email4", 827, "address4", 4, 25, 50, 200, 0, 1));
-            //_emp.Add(new User(5,"name5", "email5", 97123, "address5", 5, 25, 50, 200, 0, 1));
-            //roles.Add(1, "Owner");
-            //roles.Add(2, "Admin");
-            //roles.Add(3, "Manager");
-            //roles.Add(4, "Shelf Stocker");
-            //roles.Add(5, "Cash Register Worker");
-            //_salaries.Add(_emp[0].Id, new Salary(1, 2000, 50));
-            //_salaries.Add(_emp[1].Id, new Salary(2, 3000, 60));
-            //_salaries.Add(_emp[2].Id, new Salary(3, 2450, 53));
-            //_salaries.Add(_emp[3].Id, new Salary(4, 2283, 56));
-            //_salaries.Add(_emp[4].Id, new Salary(5, 7298, 48));
-
             LoadDataAsync();
-
         }
 
         public Dictionary<int, User> DictUsers
@@ -64,6 +48,13 @@ namespace AdministratorApp.ViewModels
                 OnPropertyChanged(); }
         }
 
+        public string UserName
+        {
+            get { return _userName; }
+            set
+            {
+                _userName = value; OnPropertyChanged(); }
+        }
         public Dictionary<int, Salary> DictSalaries
         {
             get { return Data.AllSalaries; }
@@ -111,6 +102,7 @@ namespace AdministratorApp.ViewModels
                 TaxNumber = _sEmp.TAXNumber;
                 WorkingHours = _sEmp.WorkingHours;
                 SelectedStore = DictStore[_sEmp.StoreId].Name;
+                GetUserName(_userId);
                 OnPropertyChanged();}
             get { return _sEmp; }
         }
@@ -228,5 +220,9 @@ namespace AdministratorApp.ViewModels
             OnPropertyChanged(nameof(DictUsers));
         }
 
+        private async void GetUserName(int userID)
+        {
+            UserName = await APIHandler<string>.GetOne($"auth/getusername/{userID}");
+        }
     }
 }
