@@ -51,6 +51,17 @@ namespace WebAPI.Controllers
             return Ok(userLevel);
         }
 
+        // DELETE: api/Auth/DeleteSession/sessionkey
+        [ResponseType(typeof(Session))]
+        [Route("api/Auth/DeleteSession/{sessionKey}")]
+        public IHttpActionResult DeleteSession(string sessionKey)
+        {
+            Session session = AuthHandler.DeleteSession(sessionKey, db);
+            if (session == null)
+                return NotFound();
+            return Ok(session);
+        }
+
         // PUT: api/Auths/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutAuth(int id, Auth auth)

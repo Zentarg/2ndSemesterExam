@@ -62,6 +62,31 @@ namespace AdministratorApp.Models
             }
         }
 
+        public static async Task<T> DeleteOne(string apiString)
+        {
+            HttpClientHandler handler = new HttpClientHandler() { UseDefaultCredentials = true };
+            using (HttpClient client = new HttpClient(handler))
+            {
+                client.BaseAddress = new Uri(url);
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                try
+                {
+                    var response = await client.DeleteAsync(apiString);
+                    response.EnsureSuccessStatusCode();
+                    string data = await response.Content.ReadAsStringAsync();
+                    T item = JsonConvert.DeserializeObject<T>(data);
+                    return item;
+                }
+                catch (Exception e)
+                {
+                    return default(T);
+                }
+
+            }
+        }
+
 
     }
 }
