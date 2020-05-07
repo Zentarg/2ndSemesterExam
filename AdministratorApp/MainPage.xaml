@@ -50,6 +50,25 @@
                 <Button Style="{StaticResource MenuButton}" Content="&#xE76C;" IsEnabled="{Binding FrameCanGoForwards, Mode=OneWay}" Click="NavigateForwards"/>
                 <TextBlock VerticalAlignment="Center" Text="{Binding CurrentPageName, Mode=OneWay}" FontSize="30" Margin="20 0 0 0"/>
             </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <DropDownButton>
+                    <TextBlock Text="{Binding ActiveUser.Name}">
+
+                    </TextBlock>
+                    <DropDownButton.Flyout>
+                        <Flyout>
+                            <StackPanel>
+                                <Button>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Log Out"/>
+                                        <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="" />
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </Flyout>
+                    </DropDownButton.Flyout>
+                </DropDownButton>
+            </StackPanel>
         </Grid>
         <SplitView Grid.Row="1" IsPaneOpen="{Binding SplitViewVisible, Mode=OneWay}" OpenPaneLength="250" CompactPaneLength="50" DisplayMode="CompactInline">
             <SplitView.Pane>

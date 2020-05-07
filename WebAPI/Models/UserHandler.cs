@@ -21,5 +21,11 @@ namespace WebAPI.Models
             return users;
 
         }
+
+        public static User GetOneUser(int userID, ParknGardenData db)
+        {
+            return db.Users.FirstOrDefault(u => u.ID == userID);
+        }
+
     }
 }

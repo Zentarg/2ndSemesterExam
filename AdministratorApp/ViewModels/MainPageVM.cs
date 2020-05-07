@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using AdministratorApp.Annotations;
 using AdministratorApp.Models;
+using CommonLibrary.Models;
 using GalaSoft.MvvmLight.Command;
 
 namespace AdministratorApp.ViewModels
@@ -26,6 +27,7 @@ namespace AdministratorApp.ViewModels
         public string CurrentPageName => NavigationHandler.CurrentPageName;
         public bool FrameCanGoBackwards => NavigationHandler.Frame.CanGoBack;
         public bool FrameCanGoForwards => NavigationHandler.Frame.CanGoForward;
+        public User ActiveUser => AuthHandler.ActiveUser;
 
 
         public RelayCommand DoToggleHamburger { get; set; }

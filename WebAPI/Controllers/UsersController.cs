@@ -34,12 +34,9 @@ namespace WebAPI.Controllers
         [ResponseType(typeof(User))]
         public IHttpActionResult GetUser(int id)
         {
-            User user = db.Users.Find(id);
+            User user = UserHandler.GetOneUser(id, db);
             if (user == null)
-            {
                 return NotFound();
-            }
-
             return Ok(user);
         }
 

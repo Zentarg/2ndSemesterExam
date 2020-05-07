@@ -50,6 +50,7 @@ namespace AdministratorApp.ViewModels
                 {
                     AuthHandler.UserID = sessionTuple.UserID;
                     AuthHandler.SessionKey = sessionTuple.SessionKey;
+                    await AuthHandler.InitializeAuth();
                     Frame mainFrame = Window.Current.Content as Frame;
                     mainFrame?.Navigate(Type.GetType($"{Application.Current.GetType().Namespace}.MainPage"));
                 }

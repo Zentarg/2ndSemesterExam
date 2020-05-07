@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using CommonLibrary.Models;
 
 namespace AdministratorApp.Models
 {
@@ -12,6 +13,7 @@ namespace AdministratorApp.Models
 
         public static int UserID { get; set; }
         public static string SessionKey { get; set; }
+        public static User ActiveUser { get; set; }
 
         public static string EncryptPassword(string input, string salt)
         {
@@ -38,6 +40,10 @@ namespace AdministratorApp.Models
             return sb.ToString();
         }
 
+        public static async Task InitializeAuth()
+        {
+            ActiveUser = await APIHandler<User>.GetOne($"Users/{UserID}");
+        }
 
 
     }
