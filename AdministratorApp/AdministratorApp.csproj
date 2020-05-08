@@ -146,6 +146,9 @@
     <Compile Include="Views\AddStorePage.xaml.cs">
       <DependentUpon>AddStorePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\CreateEmployeePage.xaml.cs">
+      <DependentUpon>CreateEmployeePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EmployeesPage.xaml.cs">
       <DependentUpon>EmployeesPage.xaml</DependentUpon>
     </Compile>
@@ -243,6 +246,10 @@
     <Page Include="Views\AddStorePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CreateEmployeePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EmployeesPage.xaml">
       <SubType>Designer</SubType>

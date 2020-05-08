@@ -12,7 +12,6 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using AdministratorApp.Models;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -21,16 +20,11 @@ namespace AdministratorApp.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class EmployeesPage : Page
+    public sealed partial class CreateEmployeePage : Page
     {
-        public EmployeesPage()
+        public CreateEmployeePage()
         {
             this.InitializeComponent();
-        }
-
-        private void NavigateFrame(object sender, RoutedEventArgs e)
-        {
-            NavigationHandler.NavigateToPage(Type.GetType($"{Application.Current.GetType().Namespace}.Views.{(sender as Button).Tag}"));
         }
     }
 }
