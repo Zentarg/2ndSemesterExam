@@ -24,41 +24,26 @@ namespace AdministratorApp
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private MainPageVM _mainPageVM;
 
         public MainPage()
         {
             this.InitializeComponent();
             NavigationHandler.Frame = MainFrame;
-            _mainPageVM = DataContext as MainPageVM;
         }
 
         private void NavigateFrame(object sender, RoutedEventArgs e)
         {
             NavigationHandler.NavigateToPage(Type.GetType($"{Application.Current.GetType().Namespace}.Views.{(sender as Button).Tag}"));
-            UpdateNavigationInformation();
-
         }
 
         private void NavigateBackwards(object sender, RoutedEventArgs e)
         {
             NavigationHandler.NavigateBackwards();
-            UpdateNavigationInformation();
-
         }
 
         private void NavigateForwards(object sender, RoutedEventArgs e)
         {
             NavigationHandler.NavigateForwards();
-            UpdateNavigationInformation();
-        }
-
-        private void UpdateNavigationInformation()
-        {
-            _mainPageVM.OnPropertyChanged(nameof(_mainPageVM.CurrentPageName));
-            _mainPageVM.OnPropertyChanged(nameof(_mainPageVM.FrameCanGoBackwards));
-            _mainPageVM.OnPropertyChanged(nameof(_mainPageVM.FrameCanGoForwards));
-
         }
     }
 }

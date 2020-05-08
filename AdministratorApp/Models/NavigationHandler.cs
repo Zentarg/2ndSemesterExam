@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using Windows.UI.Xaml.Controls;
 
 namespace AdministratorApp.Models
 {
-    public static class NavigationHandler
+    public class NavigationHandler
     {
 
         public static Frame Frame { get; set; }
@@ -13,6 +14,7 @@ namespace AdministratorApp.Models
         {
             Frame.Navigate(page);
             CurrentPageName = page.Name;
+            OnNavigationOccured();
         }
 
         public static void NavigateBackwards()
@@ -20,6 +22,7 @@ namespace AdministratorApp.Models
             if (Frame.CanGoBack)
                 Frame.GoBack();
             CurrentPageName = Frame.CurrentSourcePageType.Name;
+            OnNavigationOccured();
         }
 
         public static void NavigateForwards()
@@ -27,6 +30,14 @@ namespace AdministratorApp.Models
             if (Frame.CanGoForward)
                 Frame.GoForward();
             CurrentPageName = Frame.CurrentSourcePageType.Name;
+            OnNavigationOccured();
+        }
+
+        public static event EventHandler NavigationOccured = delegate{};
+
+        public static void OnNavigationOccured()
+        {
+            NavigationOccured?.Invoke(null, EventArgs.Empty);
         }
 
     }

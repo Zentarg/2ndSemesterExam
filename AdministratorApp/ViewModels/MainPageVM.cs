@@ -13,6 +13,7 @@ using AdministratorApp.Annotations;
 using AdministratorApp.Models;
 using CommonLibrary.Models;
 using GalaSoft.MvvmLight.Command;
+using Newtonsoft.Json.Serialization;
 
 namespace AdministratorApp.ViewModels
 {
@@ -26,7 +27,7 @@ namespace AdministratorApp.ViewModels
             DoLogout = new RelayCommand(Logout);
 
             SystemNavigationManagerPreview.GetForCurrentView().CloseRequested += this.OnCloseRequest;
-
+            NavigationHandler.NavigationOccured += UpdateNavigationButtons;
         }
 
         public bool SplitViewVisible { get; set; }
@@ -40,6 +41,13 @@ namespace AdministratorApp.ViewModels
 
         public RelayCommand DoToggleHamburger { get; set; }
         public RelayCommand DoLogout { get; set; }
+
+        public void UpdateNavigationButtons(object sender, EventArgs args)
+        {
+            this.OnPropertyChanged(nameof(CurrentPageName));
+            this.OnPropertyChanged(nameof(FrameCanGoBackwards));
+            this.OnPropertyChanged(nameof(FrameCanGoForwards));
+        }
 
         public void ToggleHamburger()
         {
