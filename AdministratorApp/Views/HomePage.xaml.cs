@@ -32,15 +32,5 @@ namespace AdministratorApp.Views
         {
             NavigationHandler.NavigateToPage(Type.GetType($"{Application.Current.GetType().Namespace}.Views.{(sender as Button).Tag}"));
         }
-
-        private void NavigateBackwards(object sender, RoutedEventArgs e)
-        {
-            NavigationHandler.NavigateBackwards();
-        }
-
-        private void NavigateForwards(object sender, RoutedEventArgs e)
-        {
-            NavigationHandler.NavigateForwards();
-        }
     }
 }

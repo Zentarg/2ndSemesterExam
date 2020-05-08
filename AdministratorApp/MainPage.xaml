@@ -19,6 +19,7 @@
             <Setter Property="Width" Value="50" />
             <Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
             <Setter Property="FontSize" Value="30" />
+            <Setter Property="Background" Value="#FF323232" />
         </Style>
         <Style x:Key="HamburgerButton" TargetType="Button">
             <Setter Property="Height" Value="50" />
@@ -26,6 +27,7 @@
             <Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
             <Setter Property="FontSize" Value="30" />
             <Setter Property="HorizontalContentAlignment" Value="Left"></Setter>
+            <Setter Property="Background" Value="#FF323232" />
         </Style>
         <Style x:Key="HamburgerButtonIcon" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
@@ -43,7 +45,7 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
+        <Grid Grid.Row="0" Background="#FF323232">
             <StackPanel Orientation="Horizontal">
                 <Button Style="{StaticResource MenuButton}" Content="&#xE80F;" Click="NavigateFrame" Tag="HomePage"/>
                 <Button Style="{StaticResource MenuButton}" Content="&#xE76B;" IsEnabled="{Binding FrameCanGoBackwards, Mode=OneWay}" Click="NavigateBackwards"/>
@@ -69,7 +71,7 @@
                 </DropDownButton>
             </StackPanel>
         </Grid>
-        <SplitView Grid.Row="1" IsPaneOpen="{Binding SplitViewVisible, Mode=OneWay}" OpenPaneLength="250" CompactPaneLength="50" DisplayMode="CompactInline">
+        <SplitView Grid.Row="1" IsPaneOpen="{Binding SplitViewVisible, Mode=OneWay}" OpenPaneLength="250" CompactPaneLength="50" DisplayMode="CompactInline" PaneBackground="#FF323232">
             <SplitView.Pane>
                 <Grid Width="260">
                     <StackPanel Visibility="{Binding DontShowAdministratorFunctions}">
