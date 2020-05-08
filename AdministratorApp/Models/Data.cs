@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,7 @@ namespace AdministratorApp.Models
         public static Dictionary<int, Dictionary<int, int>> ItemsInStocks { get; set; } = new Dictionary<int, Dictionary<int, int>>();
         public static Dictionary<int, Salary> AllSalaries { get; set; } = new Dictionary<int, Salary>();
         public static Dictionary<int, Role> AllRoles { get; set; } = new Dictionary<int, Role>();
+        public static Dictionary<int, UserLevel> AllLevels { get; set; } = new Dictionary<int, UserLevel>();
 
 
 
@@ -66,6 +68,24 @@ namespace AdministratorApp.Models
             AllRoles = await APIHandler<Dictionary<int, Role>>.GetOne("Roles");
         }
 
+        public static async Task<ObservableCollection<UserLevel>> UpdateUserLevels()
+        {
+            AllLevels = await APIHandler<Dictionary<int, UserLevel>>.GetOne("UserLevels");
+            ObservableCollection<UserLevel> userLevels =  new ObservableCollection<UserLevel>();
+            foreach (UserLevel uL in Data.AllLevels.Values)
+            {
+                if (AuthHandler.ActiveUser.UserLevelId != uL.Id)
+                {
+                    userLevels.Add(uL);
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return userLevels;
+        }
     }
 
 

@@ -27,5 +27,21 @@ namespace WebAPI.Models
             return db.Roles.FirstOrDefault(r => r.ID == roleID);
         }
 
+        public static Role PostRole(ParknGardenData db, Role role)
+        {
+            bool checkRole(Role r) => r.Name.ToLower() == role.Name.ToLower();
+            bool roleExists = db.Roles.Any(checkRole);
+
+            if (!roleExists)
+            {
+                Role newRole = db.Roles.Add(role);
+                db.SaveChanges();
+                return newRole;
+            }
+
+            Role returnRole = db.Roles.FirstOrDefault(checkRole);
+            return returnRole;
+        }
+
     }
 }

@@ -86,10 +86,9 @@ namespace WebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Roles.Add(role);
-            db.SaveChanges();
+            Role postedRole = RolesHandler.PostRole(db, role);
 
-            return CreatedAtRoute("DefaultApi", new { id = role.ID }, role);
+            return CreatedAtRoute("DefaultApi", new { id = postedRole.ID }, postedRole);
         }
 
         // DELETE: api/Roles/5

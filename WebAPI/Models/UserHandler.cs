@@ -27,5 +27,20 @@ namespace WebAPI.Models
             return db.Users.FirstOrDefault(u => u.ID == userID);
         }
 
+        public static User PostUser(ParknGardenData db, User user)
+        {
+            bool userEmailInUse = db.Users.Any(u => u.Email == user.Email);
+
+            if (!userEmailInUse)
+            {
+                User newUser = db.Users.Add(user);
+                db.SaveChanges();
+                return newUser;
+            }
+
+            user.ID = -1;
+            return user;
+        }
+
     }
 }

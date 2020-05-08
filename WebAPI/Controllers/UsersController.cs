@@ -84,10 +84,9 @@ namespace WebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Users.Add(user);
-            db.SaveChanges();
+            User postedUser = UserHandler.PostUser(db, user);
 
-            return CreatedAtRoute("DefaultApi", new { id = user.ID }, user);
+            return CreatedAtRoute("DefaultApi", new { id = postedUser.ID }, postedUser);
         }
 
         // DELETE: api/Users/5

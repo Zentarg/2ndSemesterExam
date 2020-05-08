@@ -11,7 +11,7 @@ namespace CommonLibrary.Models
         {
 
         }
-
+        //For GET requests
         public User(int id, string name, string email, int phone, string address, int roleId, int tajNumber,
             int taxNumber, float workingHours, int userLevelId, int storeId)
         {
@@ -27,6 +27,36 @@ namespace CommonLibrary.Models
             UserLevelId = userLevelId;
             StoreId = storeId;
         }
+        //For POST requests with a new role
+        public User(string name, string email, int phone, string address, int tajNumber,
+            int taxNumber, float workingHours, int userLevelId, int storeId)
+        {
+            Name = name;
+            Email = email;
+            Address = address;
+            Phone = phone;
+            TAJNumber = tajNumber;
+            TAXNumber = taxNumber;
+            WorkingHours = workingHours;
+            UserLevelId = userLevelId;
+            StoreId = storeId;
+        }
+        //For POST requests with an existing role
+        public User(string name, string email, int phone, string address, int roleId, int tajNumber,
+            int taxNumber, float workingHours, int userLevelId, int storeId)
+        {
+            Name = name;
+            Email = email;
+            Address = address;
+            Phone = phone;
+            RoleId = roleId;
+            TAJNumber = tajNumber;
+            TAXNumber = taxNumber;
+            WorkingHours = workingHours;
+            UserLevelId = userLevelId;
+            StoreId = storeId;
+        }
+
         public int Id { get; set; }
         public string Name { get; set; } = "";
         public string Email { get; set; } = "";

@@ -135,6 +135,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AddItemViewModel.cs" />
     <Compile Include="ViewModels\AddStorePageVM.cs" />
+    <Compile Include="ViewModels\CreateEmployeeVM.cs" />
     <Compile Include="ViewModels\EmployeesPageVM.cs" />
     <Compile Include="ViewModels\HomePageVM.cs" />
     <Compile Include="ViewModels\LoginPageVM.cs" />
