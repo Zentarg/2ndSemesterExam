@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using AdministratorApp.Models;
 using CommonLibrary.Models;
+using GalaSoft.MvvmLight.Command;
 
 namespace AdministratorApp.ViewModels
 {
@@ -35,10 +36,13 @@ namespace AdministratorApp.ViewModels
         private float _workingHours;
         private string _selectedStore;
         private string _userName;
+        private string _email;
+        private RelayCommand _showUserName;
 
         public EmployeesPageVM()
         {
             LoadDataAsync();
+
         }
 
         public Dictionary<int, User> DictUsers
@@ -103,6 +107,7 @@ namespace AdministratorApp.ViewModels
                 WorkingHours = _sEmp.WorkingHours;
                 SelectedStore = DictStore[_sEmp.StoreId].Name;
                 GetUserName(_userId);
+                Email = _sEmp.Email;
                 OnPropertyChanged();}
             get { return _sEmp; }
         }
@@ -192,6 +197,12 @@ namespace AdministratorApp.ViewModels
         {
             get { return _selectedStore; }
             set { _selectedStore = value; OnPropertyChanged(); }
+        }
+
+        public string Email
+        {
+            get { return _email; }
+            set { _email = value; OnPropertyChanged(); }
         }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
