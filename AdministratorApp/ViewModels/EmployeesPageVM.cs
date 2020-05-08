@@ -43,6 +43,7 @@ namespace AdministratorApp.ViewModels
         {
             LoadDataAsync();
             DoShowUserName = new RelayCommand(GetUserName);
+            DoCancel = new RelayCommand(Cancel);
         }
 
         public Dictionary<int, User> DictUsers
@@ -53,6 +54,7 @@ namespace AdministratorApp.ViewModels
         }
 
         public RelayCommand DoShowUserName { get; set; }
+        public RelayCommand DoCancel { get; set; }
         public string UserName
         {
             get { return _userName; }
@@ -93,22 +95,25 @@ namespace AdministratorApp.ViewModels
         public User SelectedEmp
         {
             set { _sEmp = value;
-                Name = _sEmp.Name;
-                Telephone = _sEmp.Phone;
-                Address = _sEmp.Address;
-                SelectedRole = null;
-                _userId = _sEmp.Id;
-                _objSalary = CommonMethods.GetSalary(_userId, DictSalaries);
-                Role = CommonMethods.GetRole(_sEmp.RoleId, DictRoles).Name;
-                Salary = _objSalary.BeforeTax;
-                SalaryWTax = _objSalary.BeforeTax - (_objSalary.BeforeTax * (_objSalary.TaxPercentage / 100));
-                IsEmployeeSelected = true;
-                TajNumber = _sEmp.TAJNumber;
-                TaxNumber = _sEmp.TAXNumber;
-                WorkingHours = _sEmp.WorkingHours;
-                SelectedStore = DictStore[_sEmp.StoreId].Name;
-                Email = _sEmp.Email;
-                UserName = "";
+                if (_sEmp != null)
+                {
+                    Name = _sEmp.Name;
+                    Telephone = _sEmp.Phone;
+                    Address = _sEmp.Address;
+                    SelectedRole = null;
+                    _userId = _sEmp.Id;
+                    _objSalary = CommonMethods.GetSalary(_userId, DictSalaries);
+                    Role = CommonMethods.GetRole(_sEmp.RoleId, DictRoles).Name;
+                    Salary = _objSalary.BeforeTax;
+                    SalaryWTax = _objSalary.BeforeTax - (_objSalary.BeforeTax * (_objSalary.TaxPercentage / 100));
+                    IsEmployeeSelected = true;
+                    TajNumber = _sEmp.TAJNumber;
+                    TaxNumber = _sEmp.TAXNumber;
+                    WorkingHours = _sEmp.WorkingHours;
+                    SelectedStore = DictStore[_sEmp.StoreId].Name;
+                    Email = _sEmp.Email;
+                    UserName = "";
+                }
                 OnPropertyChanged();}
             get { return _sEmp; }
         }
@@ -238,6 +243,28 @@ namespace AdministratorApp.ViewModels
             {
                 UserName = await APIHandler<string>.GetOne($"auth/getusername/{_userId}");
             }
+        }
+
+        public void Cancel()
+        {
+            Name = "";
+            Telephone = 0;
+            Address = "";
+            SelectedRole = null;
+            _userId = 0;
+            _objSalary = null;
+            Role = null;
+            Salary = 0;
+            SalaryWTax = 0;
+            IsEmployeeSelected = false;
+            TajNumber = 0;
+            TaxNumber = 0;
+            WorkingHours = 0;
+            SelectedStore = "";
+            Email = "";
+            UserName = "";
+            SelectedEmp = null;
+            SelectedStore = null;
         }
     }
 }
