@@ -30,19 +30,19 @@ namespace AdministratorApp.ViewModels
         private string _selectedRole = "";
         private float _salary;
         private float _salaryWTax;
-        private int _userId;
+        private int _userId = -1;
         private float _tajNumber;
         private float _taxNumber;
         private float _workingHours;
         private string _selectedStore;
         private string _userName;
         private string _email;
-        private RelayCommand _showUserName;
+        
 
         public EmployeesPageVM()
         {
             LoadDataAsync();
-
+            DoShowUserName = new RelayCommand(GetUserName);
         }
 
         public Dictionary<int, User> DictUsers
@@ -52,6 +52,7 @@ namespace AdministratorApp.ViewModels
                 OnPropertyChanged(); }
         }
 
+        public RelayCommand DoShowUserName { get; set; }
         public string UserName
         {
             get { return _userName; }
@@ -106,8 +107,8 @@ namespace AdministratorApp.ViewModels
                 TaxNumber = _sEmp.TAXNumber;
                 WorkingHours = _sEmp.WorkingHours;
                 SelectedStore = DictStore[_sEmp.StoreId].Name;
-                GetUserName(_userId);
                 Email = _sEmp.Email;
+                UserName = "";
                 OnPropertyChanged();}
             get { return _sEmp; }
         }
@@ -231,9 +232,12 @@ namespace AdministratorApp.ViewModels
             OnPropertyChanged(nameof(DictUsers));
         }
 
-        private async void GetUserName(int userID)
+        private async void GetUserName()
         {
-            UserName = await APIHandler<string>.GetOne($"auth/getusername/{userID}");
+            if (_userId != -1)
+            {
+                UserName = await APIHandler<string>.GetOne($"auth/getusername/{_userId}");
+            }
         }
     }
 }
