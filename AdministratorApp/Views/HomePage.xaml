@@ -35,7 +35,7 @@
                     <Button Width="300">
                         <StackPanel>
                             <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xE188;" />
-                            <TextBlock Style="{StaticResource ButtonText}"  Text="Stock"/>
+                            <TextBlock Style="{StaticResource ButtonText}"  Text="Stores"/>
                         </StackPanel>
                     </Button>
                 </StackPanel>
@@ -43,13 +43,13 @@
                     <Button Width="300">
                         <StackPanel>
                             <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xE188;" />
-                            <TextBlock Style="{StaticResource ButtonText}"  Text="Stock"/>
+                            <TextBlock Style="{StaticResource ButtonText}"  Text="Create Invoice Sale"/>
                         </StackPanel>
                     </Button>
                     <Button Width="300">
                         <StackPanel>
                             <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xE188;" />
-                            <TextBlock Style="{StaticResource ButtonText}"  Text="Stock"/>
+                            <TextBlock Style="{StaticResource ButtonText}"  Text="Create Invoice Order"/>
                         </StackPanel>
                     </Button>
                 </StackPanel>
