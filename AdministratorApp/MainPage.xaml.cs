@@ -29,6 +29,7 @@ namespace AdministratorApp
         {
             this.InitializeComponent();
             NavigationHandler.Frame = MainFrame;
+            NavigationHandler.NavigateToPage(Type.GetType($"{Application.Current.GetType().Namespace}.Views.HomePage"));
         }
 
         private void NavigateFrame(object sender, RoutedEventArgs e)

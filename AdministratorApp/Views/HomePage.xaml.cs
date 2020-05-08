@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using AdministratorApp.Models;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -25,6 +26,21 @@ namespace AdministratorApp.Views
         public HomePage()
         {
             this.InitializeComponent();
+        }
+
+        private void NavigateFrame(object sender, RoutedEventArgs e)
+        {
+            NavigationHandler.NavigateToPage(Type.GetType($"{Application.Current.GetType().Namespace}.Views.{(sender as Button).Tag}"));
+        }
+
+        private void NavigateBackwards(object sender, RoutedEventArgs e)
+        {
+            NavigationHandler.NavigateBackwards();
+        }
+
+        private void NavigateForwards(object sender, RoutedEventArgs e)
+        {
+            NavigationHandler.NavigateForwards();
         }
     }
 }
