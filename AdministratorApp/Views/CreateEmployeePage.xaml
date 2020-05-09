@@ -47,12 +47,12 @@
                 <TextBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Email, Mode=TwoWay}" PlaceholderText="Enter Email Address" HorizontalAlignment="Left" Width="300"/>
 
                 <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Text="Role"/>
-                <TextBox x:Name="RoleText" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Role}" PlaceholderText="Enter Role" Width="300" HorizontalAlignment="Left"></TextBox>
+                <TextBox x:Name="RoleText" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Role, Mode=TwoWay}" PlaceholderText="Enter Role" Width="300" HorizontalAlignment="Left"></TextBox>
                 <TextBlock Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Margin="330,0,0,0" Text="--Or--"></TextBlock>
                 <ComboBox  SelectedItem="{Binding SelectedRole, Mode=TwoWay}" ItemsSource="{Binding Roles}" PlaceholderText="Select Role" Grid.Row="4" Grid.Column="1" Margin="400,0,0,0" Width="300" VerticalAlignment="Center"></ComboBox>
 
                 <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Text="Account Type"/>
-                <ComboBox Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" SelectedItem="{Binding SelectedUserLevel}" ItemsSource="{Binding AccountTypes}" PlaceholderText="Select An Account Type" Width="300" HorizontalAlignment="Left"></ComboBox>
+                <ComboBox Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" SelectedItem="{Binding SelectedUserLevel, Mode=TwoWay}" ItemsSource="{Binding AccountTypes}" PlaceholderText="Select An Account Type" Width="300" HorizontalAlignment="Left"></ComboBox>
 
                 <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Text="Salary"/>
                 <TextBox Grid.Row="6" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Salary, Mode=TwoWay}" PlaceholderText="Enter Salary" Width="300" HorizontalAlignment="Left"></TextBox>
@@ -61,7 +61,7 @@
                 <TextBox Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" Text="{Binding SalaryWTax, Mode=TwoWay}" PlaceholderText="Enter Salary w/ Tax" Width="300" HorizontalAlignment="Left"></TextBox>
 
                 <TextBlock Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" Text="Works At"/>
-                <ComboBox Grid.Row="8" Grid.Column="1" VerticalAlignment="Center"  ItemsSource="{Binding Stores}" SelectedItem="{Binding SelectedStore}" PlaceholderText="Select Place of Work" Width="300" HorizontalAlignment="Left"></ComboBox>
+                <ComboBox Grid.Row="8" Grid.Column="1" VerticalAlignment="Center"  ItemsSource="{Binding Stores}" SelectedItem="{Binding SelectedStore, Mode=TwoWay}" PlaceholderText="Select Place of Work" Width="300" HorizontalAlignment="Left"></ComboBox>
 
                 <TextBlock Grid.Row="9" Grid.Column="0" VerticalAlignment="Center" Text="TAJ Number"/>
                 <TextBox Grid.Row="9" Grid.Column="1" VerticalAlignment="Center" Text="{Binding TajNumber, Mode=TwoWay}" PlaceholderText="Enter the TAJ Number" Width="300" HorizontalAlignment="Left"></TextBox>
@@ -98,7 +98,7 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,50,50">
             <Button Content="Cancel" Click="NavigateFrame" Tag="EmployeesPage" Margin="0,0,10,0"/>
-            <Button Content="Confirm"/>
+            <Button Content="Confirm" Command="{Binding DoConfirm}"/>
         </StackPanel>
     </Grid>
 </Page>

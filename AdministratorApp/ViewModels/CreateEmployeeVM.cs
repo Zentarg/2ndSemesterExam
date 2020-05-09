@@ -43,6 +43,7 @@ namespace AdministratorApp.ViewModels
         public CreateEmployeeVM()
         {
             LoadDataAsync();
+            DoConfirm = new RelayCommand(CreateUser);
         }
 
         public RelayCommand DoConfirm { get; set; }
@@ -87,8 +88,10 @@ namespace AdministratorApp.ViewModels
         public string Role
         {
             get { return _role; }
-            set { _role = value;
-                SelectedRole = null; OnPropertyChanged(); }
+            set {
+                _role = value;
+                ClearRoleSelectOrText();
+                OnPropertyChanged(); }
         }
 
         public ObservableCollection<Store> Stores
@@ -116,8 +119,9 @@ namespace AdministratorApp.ViewModels
             get { return _selectedRole; }
             set
             {
-                
-                _selectedRole = value; Role = ""; OnPropertyChanged();
+                _selectedRole = value;
+                ClearRoleSelectOrText();
+                OnPropertyChanged();
             }
         }
 
@@ -177,18 +181,28 @@ namespace AdministratorApp.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public void CreateUser()
+        public async void CreateUser()
         {
             if (SelectedRole == null)
             {
                 Role newRole = new Role(0, Role);
+                Role postedRole = await APIHandler<Role>.PostOne("Roles", newRole);
 
-                _tempUser = new User(Name, Email, Telephone, Address, TajNumber, TaxNumber, TaxNumber, SelectedUserLevel.Id, SelectedStore.ID);
-                
+                _tempUser = new User(Name, Email, Telephone, Address, postedRole.Id, TajNumber, TaxNumber, WorkingHours, SelectedUserLevel.Id, SelectedStore.ID);
+                User postedUser = await APIHandler<User>.PostOne("Users", _tempUser);
+
+                Salary salary = new Salary(postedUser.Id, Salary, (SalaryWTax/Salary) * 100);
+                Salary postedSalary = await APIHandler<Salary>.PostOne("Salaries", salary);
+
+
             }
             else
             {
-                _tempUser = new User(Name, Email, Telephone, Address, SelectedRole.Id, TajNumber,  TaxNumber, TaxNumber, SelectedUserLevel.Id, SelectedStore.ID);
+                _tempUser = new User(Name, Email, Telephone, Address, SelectedRole.Id, TajNumber,  TaxNumber, WorkingHours, SelectedUserLevel.Id, SelectedStore.ID);
+                Task<User> postedUser = APIHandler<User>.PostOne("Users", _tempUser);
+
+                Salary salary = new Salary(postedUser.Id, Salary, (SalaryWTax / Salary) * 100);
+                Salary postedSalary = await APIHandler<Salary>.PostOne("Salaries", salary);
             }
 
         }
@@ -207,8 +221,23 @@ namespace AdministratorApp.ViewModels
             {
                 Stores.Add(s);
             }
+        }
 
-            
+        public void ClearRoleSelectOrText()
+        {
+            if (SelectedRole != null)
+            {
+                if (Role != "")
+                {
+                    SelectedRole = null;
+                }
+                
+            }
+
+            else if (Role != "" )
+            {
+                Role = "";
+            }
         }
     }
 }
