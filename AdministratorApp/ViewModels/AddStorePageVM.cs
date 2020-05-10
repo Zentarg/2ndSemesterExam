@@ -16,15 +16,19 @@ namespace AdministratorApp.ViewModels
     public class AddStorePageVM : INotifyPropertyChanged
     {
         ObservableCollection<Store> _stores = new ObservableCollection<Store>();
-        private string _name;
-        private string _address;
-        private int _phone;
-        private string _manager;
+        private string _name = "";
+        private string _address = "";
+        private int _phone = 0;
+        private string _manager = "";
 
         public AddStorePageVM()
         {
-            
+            DoCreate = new RelayCommand(Create);
+            DoCancel = new RelayCommand(Cancel);
         }
+
+        public RelayCommand DoCreate { get; set; }
+        public RelayCommand DoCancel { get; set; }
 
         public string Name
         {
@@ -38,7 +42,7 @@ namespace AdministratorApp.ViewModels
             set { _address = value; OnPropertyChanged(); }
         }
 
-        public int Telephone
+        public int Phone
         {
             get { return _phone; }
             set { _phone = value; OnPropertyChanged(); }
@@ -48,6 +52,24 @@ namespace AdministratorApp.ViewModels
         {
             get { return _manager; }
             set { _manager = value; OnPropertyChanged(); }
+        }
+
+
+        private void Create()
+        {
+            if (Name != null && Address != null && Phone>=00000001 && Manager != null)
+            {
+                // Add to database
+               _stores.Add(new Store(Name, Address, Phone, Manager));
+            }
+        }
+
+        private void Cancel()
+        {
+            Name = "";
+            Address = "";
+            Phone = 0;
+            Manager = "";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
