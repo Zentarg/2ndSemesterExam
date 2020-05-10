@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
+using System.Data.Entity.Core.Mapping;
+using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
 using System.Diagnostics.Tracing;
 using System.Linq;
@@ -126,6 +128,18 @@ namespace WebAPI.Models
         {
             var user = db.Auths.FirstOrDefault(u => u.UserID == userID);
             return user?.Username;
+        }
+
+        public static bool CheckUserName(string userName, ParknGardenData db)
+        {
+            if (db.Auths.FirstOrDefault(u => u.Username == userName) == null)
+                return false;
+            return true;
+        }
+
+        public static void PostNewAuth(Auth auth, ParknGardenData db)
+        {
+            db.Auths.Add(auth);
         }
     }
 }

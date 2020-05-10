@@ -7,6 +7,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebAPI;
@@ -65,6 +66,16 @@ namespace WebAPI.Controllers
             return Ok(userName);
         }
 
+        // GET: api/Auth/CheckUserName
+        [ResponseType(typeof(bool))]
+        [Route("api/Auth/CheckUserName/{userName}")]
+        public IHttpActionResult GetUserNameExists(string userName)
+        {
+            if (AuthHandler.CheckUserName(userName, db))
+                return Ok(true);
+            return NotFound();
+        }
+
         // DELETE: api/Auth/DeleteSession/sessionkey
         [ResponseType(typeof(Session))]
         [Route("api/Auth/DeleteSession/{sessionKey}")]
@@ -111,20 +122,19 @@ namespace WebAPI.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Auths
+        // POST: api/Auths/PostAuth
+        [Route("api/Auth/PostAuth")]
         [ResponseType(typeof(Auth))]
-        public IHttpActionResult PostAuth(Auth auth)
+        public async Task<IHttpActionResult> PostAuth(Auth auth)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            db.Auths.Add(auth);
-
+            AuthHandler.PostNewAuth(auth, db);
             try
             {
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {

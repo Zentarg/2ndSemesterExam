@@ -14,5 +14,8 @@ namespace AdministratorApp.Models
             Employee = 0, Manager = 1, Administrator = 2, Owner = 3
         }
 
-}
+        public enum RoleErrors { OK = 0, ROLE_EXISTS = 1, INCORRECT_FORMAT }
+
+        public const string AllowedCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890ÁÉÍÓÖŐÚÜŰáéíóöőúüű";
+    }
 }
