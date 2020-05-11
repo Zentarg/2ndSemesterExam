@@ -43,7 +43,6 @@ namespace AdministratorApp.ViewModels
             Store store = Stores.FirstOrDefault(s => s.Name == StoreName);
             StoreID = store.ID;
             Item newItem = new Item(0,Name,Price,Comment,PictureUrl,Barcode,Color,Size,CategoryID,Discount);
-
         }
 
 
