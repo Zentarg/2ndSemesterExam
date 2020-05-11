@@ -1,4 +1,5 @@
-﻿using AdministratorApp.Annotations;
+﻿using System;
+using AdministratorApp.Annotations;
 using AdministratorApp.Models;
 using GalaSoft.MvvmLight.Command;
 using System.Collections.ObjectModel;
@@ -6,6 +7,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using AdministratorApp.Views;
 
 namespace AdministratorApp.ViewModels
 {
@@ -26,11 +30,15 @@ namespace AdministratorApp.ViewModels
         {
 
             LoadDataAsync();
+
+            GoToStockPage = new RelayCommand(StockPage);
             DoConfirm = new RelayCommand(Confirm);
             DoDelete = new RelayCommand(Delete);
             DoCancel = new RelayCommand(Cancel);
+
         }
 
+        public RelayCommand GoToStockPage { get; set; }
         public RelayCommand DoConfirm { get; set; }
         public RelayCommand DoDelete { get; set; }
         public RelayCommand DoCancel { get; set; }
@@ -76,20 +84,27 @@ namespace AdministratorApp.ViewModels
 
         public ObservableCollection<Store> StoreList
         {
-            //get
-            //{
-            //    ObservableCollection<Store> stores = new ObservableCollection<Store>();
-            //    //Dictionary<int, Store> dictionary = new Dictionary<int, Store>(Data.AllStores);
-            //    foreach (Store store in Data.AllStores.Values)
-            //    {
-            //        stores.Add(store);
-            //    }
-            //    return stores;
-
-            //}
             get
             {
+                //Dictionary<int, Store> dictionary = new Dictionary<int, Store>(Data.AllStores);
+
+                ObservableCollection<Store> stores = new ObservableCollection<Store>(Data.AllStores.Values);
+                
+
+                if (stores.Count > 0)
+                {
+                    if (stores[0].ID == 0)
+                    {
+                        stores.RemoveAt(0);
+                    }
+                }
                 return stores;
+
+                //}
+                //get
+                //{
+                //    return stores;
+                //}
             }
         }
 
@@ -153,6 +168,13 @@ namespace AdministratorApp.ViewModels
             Address = "";
             Phone = 0;
             Manager = "";
+            NavigationHandler.NavigateBackwards();
+        }
+
+        private async void StockPage()
+        {
+            Frame mainFrame = Window.Current.Content as Frame;
+            mainFrame?.Navigate(Type.GetType($"{Application.Current.GetType().Namespace}.Views.StoreStockPage"));
         }
 
         private async Task LoadDataAsync()
