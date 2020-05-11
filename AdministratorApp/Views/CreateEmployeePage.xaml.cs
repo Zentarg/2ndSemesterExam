@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text.RegularExpressions;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -31,6 +32,25 @@ namespace AdministratorApp.Views
         private void NavigateFrame(object sender, RoutedEventArgs e)
         {
             NavigationHandler.NavigateToPage(Type.GetType($"{Application.Current.GetType().Namespace}.Views.{(sender as Button).Tag}"));
+        }
+
+        private void OpenCreateNewRoleContentDialog(object sender, RoutedEventArgs e)
+        {
+            CreateNewRoleContentDialog cNRCD = new CreateNewRoleContentDialog();
+            cNRCD.ShowAsync();
+        }
+
+
+        private void OnlyNumberTextBox(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
+        {
+            args.Cancel = args.NewText.Any(c => !char.IsDigit(c));
+        }
+
+        private void OnlyFloatTextBox(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
+        {
+            string allowedChars = "1234567890.";
+            Regex r = new Regex("^-{0,1}\\d+\\.{0,1}\\d*$");
+            args.Cancel = args.NewText.Any(c => !allowedChars.Contains(c));
         }
     }
 }

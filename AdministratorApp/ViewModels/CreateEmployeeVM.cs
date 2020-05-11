@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Mime;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Services.TargetedContent;
 using AdministratorApp.Annotations;
 using AdministratorApp.Models;
+using AdministratorApp.Views;
 using CommonLibrary.Models;
 using GalaSoft.MvvmLight.Command;
 
@@ -18,17 +20,14 @@ namespace AdministratorApp.ViewModels
     {
         private User _tempUser = new User();
         private ObservableCollection<Store> _stores = new ObservableCollection<Store>();
-        private ObservableCollection<Role> _roles = new ObservableCollection<Role>();
         private ObservableCollection<UserLevel> _accountTypes = new ObservableCollection<UserLevel>();
 
-        private Salary _objSalary;
         private UserLevel _selectedUserLevel;
         private Store _selectedStore;
 
         private string _name = "";
         private string _address = "";
         private int _telephone = 0;
-        private string _role = "";
         private Role _selectedRole;
         private float _salary;
         private float _salaryWTax;
@@ -37,21 +36,21 @@ namespace AdministratorApp.ViewModels
         private float _workingHours;
         private string _userName;
         private string _email;
-
-        private int _userId = -1;
+        private string _password = "********";
+        private string _errorText = "";
 
         public CreateEmployeeVM()
         {
             LoadDataAsync();
+            DoConfirm = new RelayCommand(CreateUser);
+            DoGenerateUserName = new RelayCommand(GenerateUserName);
+            DoGeneratePassword = new RelayCommand(GeneratePassword);
         }
 
         public RelayCommand DoConfirm { get; set; }
-
-        public Dictionary<int, Role> DictRoles
-        {
-            get { return Data.AllRoles; }
-            set { Data.AllRoles = value; OnPropertyChanged(); }
-        }
+        public RelayCommand DoGenerateUserName { get; set; }
+        public RelayCommand DoGeneratePassword { get; set; }
+        public string Salt { get; set; }
 
         public Dictionary<int, Store> DictStore
         {
@@ -65,6 +64,12 @@ namespace AdministratorApp.ViewModels
             {
                 _userName = value; OnPropertyChanged();
             }
+        }
+
+        public string Password
+        {
+            get { return _password; }
+            set { _password = value; OnPropertyChanged(); }
         }
 
         public string Name
@@ -84,25 +89,13 @@ namespace AdministratorApp.ViewModels
             get { return _telephone; }
         }
 
-        public string Role
-        {
-            get { return _role; }
-            set { _role = value;
-                SelectedRole = null; OnPropertyChanged(); }
-        }
-
         public ObservableCollection<Store> Stores
         {
             get { return _stores; }
             set { _stores = value; OnPropertyChanged(); }
         }
 
-        public ObservableCollection<Role> Roles
-        {
-            get { return _roles; }
-            set { _roles = value; OnPropertyChanged(); }
-
-        }
+        public ObservableCollection<Role> Roles => Data.RolesList;
 
         public ObservableCollection<UserLevel> AccountTypes
         {
@@ -116,8 +109,9 @@ namespace AdministratorApp.ViewModels
             get { return _selectedRole; }
             set
             {
-                
-                _selectedRole = value; Role = ""; OnPropertyChanged();
+                _selectedRole = value;
+                OnPropertyChanged();
+                CheckTextFields();
             }
         }
 
@@ -169,6 +163,12 @@ namespace AdministratorApp.ViewModels
             set { _email = value; OnPropertyChanged(); }
         }
 
+        public string ErrorText
+        {
+            get { return _errorText; }
+            set { _errorText = value; OnPropertyChanged();}
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
@@ -177,38 +177,119 @@ namespace AdministratorApp.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public void CreateUser()
+        public async void CreateUser()
         {
-            if (SelectedRole == null)
+            if (CheckTextFields())
             {
-                Role newRole = new Role(0, Role);
-
-                _tempUser = new User(Name, Email, Telephone, Address, TajNumber, TaxNumber, TaxNumber, SelectedUserLevel.Id, SelectedStore.ID);
-                
+                if (!string.IsNullOrEmpty(UserName) && Password != "********")
+                {
+                    _tempUser = new User(Name, Email, Telephone, Address, SelectedRole.Id, TajNumber, TaxNumber, WorkingHours, SelectedUserLevel.Id, SelectedStore.ID);
+                    User postedUser = await APIHandler<User>.PostOne("Users", _tempUser);
+                    if (postedUser.Id != -1)
+                    {
+                        Salary salary = new Salary(postedUser.Id, Salary, (SalaryWTax / Salary) * 100);
+                        Salary postedSalary = await APIHandler<Salary>.PostOne("Salaries", salary);
+                        string encryptedPassword = AuthHandler.EncryptPassword(Password, Salt);
+                        Auth posteAuth = await APIHandler<Auth>.PostOne("Auth/PostAuth", new Auth(UserName, encryptedPassword, Salt, postedUser.Id));
+                        NavigationHandler.NavigateToPage(typeof(EmployeesPage));
+                    }
+                    else
+                        ErrorText = "The provided email is in use,\nplease specify a different one.";
+                }
+                else 
+                    ErrorText = "A password and username\nmust be generated before\nconfirming.";
             }
             else
-            {
-                _tempUser = new User(Name, Email, Telephone, Address, SelectedRole.Id, TajNumber,  TaxNumber, TaxNumber, SelectedUserLevel.Id, SelectedStore.ID);
-            }
+                ErrorText = "All text fields must be filled\nand all selections must be\nmade.";
 
         }
+
 
         public async void LoadDataAsync()
         {
             await Data.UpdateRoles();
             await Data.UpdateStore();
             AccountTypes = await Data.UpdateUserLevels();
-            foreach (Role r in DictRoles.Values)
-            {
-                Roles.Add(r);
-            }
+            
 
             foreach (Store s in DictStore.Values)
             {
                 Stores.Add(s);
             }
+        }
 
+        public async void GenerateUserName()
+        {
+            string userNameWTag = "";
+            if (!string.IsNullOrEmpty(Name))
+            { 
+                string[] strings = Name.Split("");
+                string userNameBase = "";
+                if (strings[0].Length > 4)
+                {
+                    userNameBase = strings[0].Substring(0, 4);
+                }
+                else
+                {
+                    userNameBase = strings[0];
+                }
+
+                userNameWTag = userNameBase + GenerateTag();
+            }
             
+            if (await APIHandler<bool>.GetOne($"Auth/GetUserNameExists/{userNameWTag}"))
+                GenerateUserName();
+            UserName = userNameWTag.ToLower();
+        }
+
+        public string GenerateTag()
+        {
+            Random numberGenerator = new Random();
+            int randomInt = numberGenerator.Next(0, 10000);
+            string identifier = randomInt.ToString();
+
+            for (int i = 4; i > identifier.Length; i = i)
+            {
+                identifier = "0" + identifier;
+            }
+
+            return identifier;
+        }
+
+        public void GeneratePassword()
+        {
+            Password = RandomStringGenerator(8);
+            Salt = RandomStringGenerator(16);
+        }
+
+        public string RandomStringGenerator(int length)
+        {
+            Random randomString = new Random();
+            const string allowedChars = "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz0123456789";
+
+            char[] chars = new char[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                chars[i] = allowedChars[randomString.Next(0, allowedChars.Length)];
+            }
+            return new string(chars);
+        }
+
+        public bool CheckTextFields()
+        {
+            bool expression = (!string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Address) &&
+                               !string.IsNullOrEmpty(Email) &&
+                               Telephone != 0 && SelectedRole != null && SelectedUserLevel != null &&
+                               SelectedStore != null &&
+                               Salary != 0 && SalaryWTax != 0 && TajNumber != 0 && TaxNumber != 0 &&
+                               WorkingHours != 0);
+            if (expression)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
