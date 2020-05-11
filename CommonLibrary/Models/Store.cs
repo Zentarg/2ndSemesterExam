@@ -8,7 +8,19 @@ namespace AdministratorApp.Models
 {
     public class Store
     {
-        
+        public Store()
+        {
+            
+        }
+
+        //For creating new stores
+        public Store(string name, string address, int phone, string manager)
+        {
+            Name = name;
+            Address = address;
+            Phone = phone;
+            Manager = manager;
+        }
 
         public Store(int id, int administratorId, int managerId, string name, string address, int phone, string manager)
         {
@@ -30,9 +42,5 @@ namespace AdministratorApp.Models
         public string Address { get; set; }
         public int Phone { get; set; }
 
-        public override string ToString()
-        {
-            return $"{Name} {Address} {Phone} {Manager}";
-        }
     }
 }
