@@ -83,6 +83,6 @@ namespace AdministratorApp.ViewModels
             return "";
         }
 
-        
+
     }
 }

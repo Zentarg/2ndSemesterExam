@@ -40,6 +40,20 @@ namespace WebAPI.Controllers
             return Ok(user);
         }
 
+        // GET: api/Users/FilterById/id
+        [ResponseType(typeof(Dictionary<int, User>))]
+        [Route("api/Users/FilterByUserLevelId/{id}")]
+        public IHttpActionResult GetUsersByLevelId(int id)
+        {
+            Dictionary<int, User> users = UserHandler.GetUsersByUserLevel(db, id);
+            if (users.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(users);
+        }
+
         // PUT: api/Users/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutUser(int id, User user)

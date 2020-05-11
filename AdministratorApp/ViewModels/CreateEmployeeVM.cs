@@ -21,6 +21,7 @@ namespace AdministratorApp.ViewModels
         private User _tempUser = new User();
         private ObservableCollection<Store> _stores = new ObservableCollection<Store>();
         private ObservableCollection<UserLevel> _accountTypes = new ObservableCollection<UserLevel>();
+        private ObservableCollection<Role> _roles = new ObservableCollection<Role>();
 
         private UserLevel _selectedUserLevel;
         private Store _selectedStore;
@@ -45,18 +46,32 @@ namespace AdministratorApp.ViewModels
             DoConfirm = new RelayCommand(CreateUser);
             DoGenerateUserName = new RelayCommand(GenerateUserName);
             DoGeneratePassword = new RelayCommand(GeneratePassword);
+            DoUpdateComboBoxRoles = new RelayCommand(UpdateRoleComboBox);
         }
 
         public RelayCommand DoConfirm { get; set; }
         public RelayCommand DoGenerateUserName { get; set; }
         public RelayCommand DoGeneratePassword { get; set; }
+        public RelayCommand DoUpdateComboBoxRoles { get; set; }
         public string Salt { get; set; }
+
+        public ObservableCollection<Role> Roles
+        {
+            get
+            {
+                return _roles;
+            }
+            set
+            {
+                _roles = value;
+                OnPropertyChanged();
+            }
+        }
 
         public Dictionary<int, Store> DictStore
         {
             get { return Data.AllStores; }
         }
-
         public string UserName
         {
             get { return _userName; }
@@ -95,7 +110,6 @@ namespace AdministratorApp.ViewModels
             set { _stores = value; OnPropertyChanged(); }
         }
 
-        public ObservableCollection<Role> Roles => Data.RolesList;
 
         public ObservableCollection<UserLevel> AccountTypes
         {
@@ -210,70 +224,12 @@ namespace AdministratorApp.ViewModels
             await Data.UpdateRoles();
             await Data.UpdateStore();
             AccountTypes = await Data.UpdateUserLevels();
-            
+            Roles = new ObservableCollection<Role>(Data.AllRoles.Values);
 
             foreach (Store s in DictStore.Values)
             {
                 Stores.Add(s);
             }
-        }
-
-        public async void GenerateUserName()
-        {
-            string userNameWTag = "";
-            if (!string.IsNullOrEmpty(Name))
-            { 
-                string[] strings = Name.Split("");
-                string userNameBase = "";
-                if (strings[0].Length > 4)
-                {
-                    userNameBase = strings[0].Substring(0, 4);
-                }
-                else
-                {
-                    userNameBase = strings[0];
-                }
-
-                userNameWTag = userNameBase + GenerateTag();
-            }
-            
-            if (await APIHandler<bool>.GetOne($"Auth/GetUserNameExists/{userNameWTag}"))
-                GenerateUserName();
-            UserName = userNameWTag.ToLower();
-        }
-
-        public string GenerateTag()
-        {
-            Random numberGenerator = new Random();
-            int randomInt = numberGenerator.Next(0, 10000);
-            string identifier = randomInt.ToString();
-
-            for (int i = 4; i > identifier.Length; i = i)
-            {
-                identifier = "0" + identifier;
-            }
-
-            return identifier;
-        }
-
-        public void GeneratePassword()
-        {
-            Password = RandomStringGenerator(8);
-            Salt = RandomStringGenerator(16);
-        }
-
-        public string RandomStringGenerator(int length)
-        {
-            Random randomString = new Random();
-            const string allowedChars = "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz0123456789";
-
-            char[] chars = new char[length];
-
-            for (int i = 0; i < length; i++)
-            {
-                chars[i] = allowedChars[randomString.Next(0, allowedChars.Length)];
-            }
-            return new string(chars);
         }
 
         public bool CheckTextFields()
@@ -290,6 +246,23 @@ namespace AdministratorApp.ViewModels
             }
 
             return false;
+        }
+
+        public void GeneratePassword()
+        {
+            Password = AuthHandler.GenerateString(8);
+            Salt = AuthHandler.GenerateString(16);
+        }
+
+        public async void GenerateUserName()
+        {
+            UserName = await AuthHandler.GenerateUserName(Name);
+        }
+
+        public async void UpdateRoleComboBox()
+        {
+            await Data.UpdateRoles();
+            OnPropertyChanged(nameof(Roles));
         }
     }
 }
