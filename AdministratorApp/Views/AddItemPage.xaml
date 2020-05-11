@@ -5,9 +5,13 @@
     xmlns:local="using:AdministratorApp.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModel="using:AdministratorApp.ViewModels"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.DataContext>
+        <viewModel:AddItemViewModel/>
+    </Page.DataContext>
     <Page.Resources>
         <Style x:Key="NormalTextBlock" TargetType="TextBlock">
             <Setter Property="FontWeight" Value="Normal"/>
@@ -37,22 +41,22 @@
 
             <StackPanel Margin="30,25,0,15" Orientation="Horizontal" VerticalAlignment="Center">
                 <TextBlock Style="{StaticResource NormalTextBlock}" Margin="0,5,33,0" Text="Name: "/>
-                <TextBox  Style="{StaticResource NormalTextBox}" PlaceholderText="e.g. Roses"/>
+                <TextBox  Style="{StaticResource NormalTextBox}" PlaceholderText="e.g. Roses" Text="{Binding Name, Mode=TwoWay}"/>
             </StackPanel>
 
             <StackPanel Margin="30,25,0,15" Orientation="Horizontal" VerticalAlignment="Center">
                 <TextBlock Style="{StaticResource NormalTextBlock}" Margin="0,5,43,0" Text="Price: "/>
-                <TextBox  Style="{StaticResource NormalTextBox}" PlaceholderText="e.g. 450Ft."/>
+                <TextBox  Style="{StaticResource NormalTextBox}" PlaceholderText="e.g. 450Ft." Text="{Binding Price, Mode=TwoWay}"/>
             </StackPanel>
 
             <StackPanel Margin="30,25,0,15" Orientation="Horizontal" VerticalAlignment="Center">
                 <TextBlock Style="{StaticResource NormalTextBlock}" Margin="0,5,15,0" Text="Discount: "/>
-                <TextBox  Style="{StaticResource NormalTextBox}" PlaceholderText="e.g. 0%"/>
+                    <TextBox  Style="{StaticResource NormalTextBox}" PlaceholderText="e.g. 0%" Text="{Binding Discount, Mode=TwoWay}"/>
             </StackPanel>
 
             <StackPanel Margin="30,25,0,15" Orientation="Horizontal" VerticalAlignment="Center">
                 <TextBlock Style="{StaticResource NormalTextBlock}" Margin="0,5,42,0" Text="Store: "/>
-                <ComboBox  Width="275" PlaceholderText="Budapest-Allee"/>
+                <ComboBox  Width="275" PlaceholderText="Budapest-Allee" ItemsSource="{Binding Stores.Count}"/>
             </StackPanel>
 
             <StackPanel Margin="30,25,0,15" Orientation="Horizontal" VerticalAlignment="Center">
