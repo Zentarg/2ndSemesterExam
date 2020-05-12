@@ -170,6 +170,7 @@
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InvoicesController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SalariesController.cs" />
@@ -187,6 +188,7 @@
     <Compile Include="Item.cs" />
     <Compile Include="Models\AuthHandler.cs" />
     <Compile Include="Models\CategoriesHandler.cs" />
+    <Compile Include="Models\InvoiceController.cs" />
     <Compile Include="Models\ItemsHandler.cs" />
     <Compile Include="Models\RolesHandler.cs" />
     <Compile Include="Models\SalaryHandler.cs" />

@@ -11,6 +11,7 @@ namespace AdministratorApp.Models
 {
     public static class Data
     {
+        public static int OwnerID = 3;
         public static Dictionary<int, Item> AllItems { get; set; } = new Dictionary<int, Item>();
         public static Dictionary<int, Stock> AllStocks { get; set; } = new Dictionary<int, Stock>();
         public static Dictionary<int, Store> AllStores{ get; set; } = new Dictionary<int, Store>();
@@ -71,6 +72,7 @@ namespace AdministratorApp.Models
         public static async Task<ObservableCollection<UserLevel>> UpdateUserLevels()
         {
             AllLevels = await APIHandler<Dictionary<int, UserLevel>>.GetOne("UserLevels");
+            OwnerID = AllLevels.FirstOrDefault(l => l.Value.Name == "Owner").Value.Id;
             ObservableCollection<UserLevel> userLevels =  new ObservableCollection<UserLevel>();
             foreach (UserLevel uL in Data.AllLevels.Values)
             {
