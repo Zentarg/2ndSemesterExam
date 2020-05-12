@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using AdministratorApp.Views;
+using CommonLibrary.Models;
 
 namespace AdministratorApp.ViewModels
 {
@@ -23,12 +24,10 @@ namespace AdministratorApp.ViewModels
         private int _phone = 0;
         private string _manager = "";
 
-        ObservableCollection<Store> stores = new ObservableCollection<Store>(){                    new Store("John Doe's", "Some place", 84758439, "John Doe"),
-            new Store("Your Mom", "Your Mom's", 123456789, "Your Dad's")};
+        //ObservableCollection<Store> stores = new ObservableCollection<Store>(){ new Store("John Doe's", "Some place", 84758439, "John Doe"), new Store("Your Mom","Your Mom's", 123456789, "Your Dad's")};
 
         public StorePageVM()
         {
-
             LoadDataAsync();
 
             GoToStockPage = new RelayCommand(StockPage);
@@ -108,6 +107,29 @@ namespace AdministratorApp.ViewModels
             }
         }
 
+        public ObservableCollection<User> AllUsers
+        {
+            get
+            {
+                ObservableCollection<User> users = new ObservableCollection<User>(Data.AllUsers.Values);
+                return users;
+            }
+        }
+
+        public ObservableCollection<string> AllUserNames
+        {
+            get
+            {
+                ObservableCollection<string> userNames = new ObservableCollection<string>();
+                foreach (User user in AllUsers)
+                {
+                    userNames.Add(user.Name);
+                }
+
+                return userNames;
+            }
+        }
+
         public Store SelectedStore
         {
             get
@@ -139,14 +161,11 @@ namespace AdministratorApp.ViewModels
                 _selectedStore.Manager = Manager;
 
                 var item = StoreList.SingleOrDefault(s => s.Name == Name && s.Address == Address && s.Phone == Phone && s.Manager == Manager);
-                StoreList.Remove(item);
-                StoreList.Add(new Store(Name, Address, Phone, Manager));
+                APIHandler<Store>.PostOne("Stores", item);
 
-                //var item = StoreList.SingleOrDefault(s => s.Name == Name && s.Address == Address && s.Phone == Phone && s.Manager == Manager);
-                //item.Name = Name;
-                //item.Address = Address;
-                //item.Phone = Phone;
-                //item.Manager = Manager;
+                //StoreList.Remove(item);
+                //StoreList.Add(new Store(Name, Address, Phone, Manager));
+
 
                 OnPropertyChanged(nameof(StoreList));
             }
@@ -175,11 +194,13 @@ namespace AdministratorApp.ViewModels
         {
             Frame mainFrame = Window.Current.Content as Frame;
             mainFrame?.Navigate(Type.GetType($"{Application.Current.GetType().Namespace}.Views.StoreStockPage"));
+            RuntimeDataHandler.SelectedStore = SelectedStore;
         }
 
         private async Task LoadDataAsync()
         {
             await Data.UpdateStore();
+            await Data.UpdateUsers();
             OnPropertyChanged(nameof(StoreList));
         }
 

@@ -13,48 +13,51 @@
     </Page.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0" Orientation="Horizontal">
-        <ListView ItemsSource="{Binding StoreList, Mode=TwoWay}" SelectedItem="{Binding SelectedStore, Mode=TwoWay}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock FontSize="30" Text="{Binding Name}" Margin="0,20,20,0"/>
-                        <TextBlock FontSize="30" Text="{Binding Address}" Margin="0,20,20,0"/>
-                        <TextBlock FontSize="30" Text="{Binding Phone}" Margin="0,20,20,0"/>
-                        <TextBlock FontSize="30" Text="{Binding Manager}" Margin="0,20,20,0"/>
+            <ListView ItemsSource="{Binding StoreList, Mode=TwoWay}" SelectedItem="{Binding SelectedStore, Mode=TwoWay}" Width="auto">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontSize="30" Text="{Binding Name}" Margin="0,20,20,0"/>
+                            <TextBlock FontSize="30" Text="{Binding Address}" Margin="0,20,20,0"/>
+                            <TextBlock FontSize="30" Text="{Binding Phone}" Margin="0,20,20,0"/>
+                            <TextBlock FontSize="30" Text="{Binding Manager}" Margin="0,20,20,0"/>
                         </StackPanel>
                     </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackPanel>
 
-        <Grid Grid.Column="1" BorderBrush="AliceBlue" BorderThickness="2">
-    <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="2*"/>
-        <ColumnDefinition Width="3*"/>
-        <ColumnDefinition Width="2*"/>
-    </Grid.ColumnDefinitions>
+        <Grid Grid.Column="1" BorderBrush="AliceBlue" BorderThickness="2" HorizontalAlignment="Center" Width="768">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="5*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <StackPanel Grid.Column="0" Spacing="50" Margin="50,50,0,0">
-                <TextBlock FontSize="30" Height="45" Text="Name"/>
-                <TextBlock FontSize="30" Height="45" Text="Address"/>
-                <TextBlock FontSize="30" Height="45" Text="Telephone"/>
-                <TextBlock FontSize="30" Height="45" Text="Manager"/>
+
+            <StackPanel Grid.Column="0" Spacing="35" Margin="50,50,0,0">
+                <TextBlock FontSize="25" Height="45" Text="Name"/>
+                <TextBlock FontSize="25" Height="45" Text="Address"/>
+                <TextBlock FontSize="25" Height="45" Text="Telephone"/>
+                <TextBlock FontSize="25" Height="45" Text="Manager"/>
             </StackPanel>
 
-            <Grid Grid.Column="1" Margin="0,50,55,0">
-                <StackPanel Spacing="45">
-                    <TextBox FontSize="30" PlaceholderText="Name" Text="{Binding Name, Mode=TwoWay}" Height="50" Width="300"/>
-                    <TextBox FontSize="30" PlaceholderText="Address" Text="{Binding Address, Mode=TwoWay}" Height="50" Width="300"/>
-                    <TextBox FontSize="30" PlaceholderText="Telephone" Text="{Binding Phone, Mode=TwoWay}" Height="50" Width="300"/>
-                    <TextBox FontSize="30" PlaceholderText="Manager" Text="{Binding Manager, Mode=TwoWay}" Height="50" Width="300"/>
+            <Grid Grid.Column="1" Margin="0,50,0,0" HorizontalAlignment="Left">
+                <StackPanel Spacing="35">
+                    <TextBox FontSize="25" PlaceholderText="Name" Text="{Binding Name, Mode=TwoWay}" Height="45" Width="225"/>
+                    <TextBox FontSize="25" PlaceholderText="Address" Text="{Binding Address, Mode=TwoWay}" Height="45" Width="225"/>
+                    <TextBox FontSize="25" PlaceholderText="Telephone" Text="{Binding Phone, Mode=TwoWay}" Height="45" Width="225"/>
+                    <ComboBox ItemsSource="{Binding AllUserNames}" Width="auto">
+
+                    </ComboBox>
                 </StackPanel>
                 <StackPanel Spacing="45">
                     <TextBlock FontSize="25" Visibility="{Binding IsEditing, Mode=TwoWay}" Text="{Binding Name}" Height="50" Margin="16,5,0,0"/>
@@ -64,13 +67,15 @@
                 </StackPanel>
             </Grid>
 
-            <StackPanel Grid.Column="2">
-                <Button Content="Go To Stock" Command="{Binding GoToStockPage}" FontSize="25" HorizontalAlignment="Center" Width="150" Height="60" Margin="0,45,0,0"/>
+            <StackPanel Grid.Column="2" HorizontalAlignment="Left" Margin="16,16,0,0" Grid.RowSpan="2" Width="218" Height="897" VerticalAlignment="Top">
+                <Button Content="Go To Stock" Command="{Binding GoToStockPage}" FontSize="20" HorizontalAlignment="Center" Width="125" Height="60" Margin="0,45,0,0"/>
             </StackPanel>
-            <StackPanel Grid.Row="1" Grid.ColumnSpan="3" FlowDirection="RightToLeft" Orientation="Horizontal" Spacing="50" VerticalAlignment="Bottom">
-                <Button Content="Confirm" Command="{Binding DoConfirm}" FontSize="25" Width="150" Height="60" Margin="50,0,0,50"/>
-                <Button Content="Delete" Command="{Binding DoDelete}" FontSize="25" Width="150" Height="60" Margin="0,0,0,50"/>
-                <Button Content="Cancel" Command="{Binding DoCancel}" FontSize="25" Width="150" Height="60" Margin="0,0,0,50"/>
+
+
+            <StackPanel Grid.Row="1" Grid.ColumnSpan="3" FlowDirection="RightToLeft" Orientation="Horizontal" Spacing="35" VerticalAlignment="Top" Margin="2,71,-2,0">
+                <Button Content="Confirm" Command="{Binding DoConfirm}" FontSize="20" Width="125" Height="60" Margin="50,0,0,50"/>
+                <Button Content="Delete" Command="{Binding DoDelete}" FontSize="20" Width="125" Height="60" Margin="0,0,0,50"/>
+                <Button Content="Cancel" Command="{Binding DoCancel}" FontSize="20" Width="125" Height="60" Margin="0,0,0,50"/>
             </StackPanel>
         </Grid>
     </Grid>
