@@ -56,5 +56,12 @@ namespace WebAPI.Models
 
             return users;
         }
+
+        public static void DeleteOneUser(ParknGardenData db, User user)
+        {
+
+            db.Users.Remove(user);
+            db.SaveChanges();
+        }
     }
 }

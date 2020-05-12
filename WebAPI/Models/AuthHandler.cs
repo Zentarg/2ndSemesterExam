@@ -141,5 +141,11 @@ namespace WebAPI.Models
         {
             db.Auths.Add(auth);
         }
+
+        public static void DeleteUserAuth(ParknGardenData db, Auth auth)
+        {
+            db.Auths.Remove(auth);
+            db.SaveChanges();
+        }
     }
 }

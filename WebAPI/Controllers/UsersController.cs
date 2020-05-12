@@ -103,19 +103,25 @@ namespace WebAPI.Controllers
             return CreatedAtRoute("DefaultApi", new { id = postedUser.ID }, postedUser);
         }
 
-        // DELETE: api/Users/5
+        // DELETE: api/Users/DeleteUser/id
+        [Route("api/Users/DeleteUser/{id}")]
         [ResponseType(typeof(User))]
         public IHttpActionResult DeleteUser(int id)
         {
+            
             User user = db.Users.Find(id);
             if (user == null)
             {
                 return NotFound();
             }
 
-            db.Users.Remove(user);
-            db.SaveChanges();
+            if (user.ID != 0)
+            {
+                UserHandler.DeleteOneUser(db, user);
+                return Ok(user);
+            }
 
+            user.ID = -1;
             return Ok(user);
         }
 
