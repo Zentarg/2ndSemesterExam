@@ -5,9 +5,15 @@
     xmlns:local="using:AdministratorApp.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModel="using:AdministratorApp.ViewModels"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-<Page.Resources>
+
+    <Page.DataContext>
+        <viewModel:StoreStockPageVM/>
+    </Page.DataContext>
+
+    <Page.Resources>
     <Style x:Key="MenuButton" TargetType="ToggleButton">
         <Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
         <Setter Property="FontSize" Value="15" />
@@ -64,10 +70,10 @@
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="#"/>
-                        <TextBlock Text="{Binding Item1.Id}"  Margin="0,0,35,0"/>
-                        <TextBlock Text="{Binding Item1.Name}"  Margin="0,0,75,0"/>
-                        <TextBlock Text="{Binding Item2}"  Margin="0,0,45,0" />
-                        <TextBlock Text="{Binding Item1.Price}"  Margin="0,0,1,0"/>
+                        <TextBlock Text="{Binding Key.Id}"  Margin="0,0,35,0"/>
+                        <TextBlock Text="{Binding Key.Name}"  Margin="0,0,75,0"/>
+                        <TextBlock Text="{Binding Value}"  Margin="0,0,45,0" />
+                        <TextBlock Text="{Binding Key.Price}"  Margin="0,0,1,0"/>
                         <TextBlock Text="Ft."/>
                     </StackPanel>
                 </DataTemplate>

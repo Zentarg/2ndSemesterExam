@@ -3,48 +3,158 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
+using AdministratorApp.Annotations;
 using AdministratorApp.Models;
 using CommonLibrary.Models;
 using GalaSoft.MvvmLight.Command;
 
 namespace AdministratorApp.ViewModels
 {
-    class AddItemViewModel 
+    public class AddItemViewModel : INotifyPropertyChanged
     {
+        private string _name;
+        private float _price;
+        private int _discount;
+        private Category _category;
+        private int _categoryID;
+        private string _color;
+        private string _size;
+        private string _comment; 
+        private string _pictureUrl = "https://lh3.googleusercontent.com/proxy/H7RfYt-nkhjZ4iyB1bGL4gbUbG5rizq9dEMHT7V3_LB8CxT1kAnGIJf-eBzFemJdl7VzVlh_9ZhYZtoYidLd393lUIFvjmKuOjag2WziBrDZrKDCMr8YzNNI1CKWKpD_xBSKhWA";
+        private int _barcode;
+
         public AddItemViewModel()
         {
+            LoadDataAsync();
             AddItemCommand = new RelayCommand(AddItem);
+            CancelCommand = new RelayCommand(NavigateBack);
         }
 
-        public ObservableCollection<Store> Stores
+        public RelayCommand CancelCommand { get; set; }
+
+        public ObservableCollection<Stock> Stocks
         {
-            get => new ObservableCollection<Store>(Data.AllStores.Values);
+            get => new ObservableCollection<Stock>(Data.AllStocks.Values);
         }
-
-        public string Name { get; set; }
-        public float Price { get; set; }
-        public int Discount { get; set; }
-        public string StoreName { get; set; }
-        public int StoreID { get; set; }
-        public int Category { get; set; }
-        public int CategoryID { get; set; }
-        public string Color { get; set; }
-        public string Size { get; set; }
-        public string Comment { set; get; }
-        public string PictureUrl { get; set; }
-        public int Barcode { get; set; }
-
-        public RelayCommand AddItemCommand;
-
-        public void AddItem()
+        public ObservableCollection<Category> Categories
         {
-            Store store = Stores.FirstOrDefault(s => s.Name == StoreName);
-            StoreID = store.ID;
-            Item newItem = new Item(0,Name,Price,Comment,PictureUrl,Barcode,Color,Size,CategoryID,Discount);
+            get => new ObservableCollection<Category>(Data.AllCategories.Values);
         }
 
+        public string Name { get => _name;
+            set{ _name = value; OnPropertyChanged();} }
+        public float Price
+        {
+            get => _price;
+            set { _price = value; OnPropertyChanged(); }
+        }
+        public int Discount
+        {
+            get => _discount;
+            set { _discount = value; OnPropertyChanged(); }
+        }
+
+        public Category Category
+        {
+            get => _category;
+            set { _category = value; OnPropertyChanged(); }
+        }
+        public int CategoryID
+        {
+            get => _categoryID;
+            set { _categoryID = value; OnPropertyChanged(); }
+        }
+        public string Color
+        {
+            get => _color;
+            set { _color = value; OnPropertyChanged(); }
+        }
+        public string Size
+        {
+            get => _size;
+            set { _size = value; OnPropertyChanged(); }
+        }
+        public string Comment
+        {
+            get => _comment;
+            set { _comment = value; OnPropertyChanged(); }
+        }
+        public string PictureUrl
+        {
+            get => _pictureUrl;
+            set { _pictureUrl = value; OnPropertyChanged(); }
+        }
+        public int Barcode
+        {
+            get => _barcode;
+            set { _barcode = value; OnPropertyChanged(); }
+        }
+        public RelayCommand AddItemCommand { get; }
+
+        private async void AddItem()
+        {
+
+            try
+            {
+                if (CheckTextFields())
+                {
+                    Item newItem = new Item(Name, Price, Comment, PictureUrl, Barcode, Color, Size, CategoryID, Discount);
+                    await APIHandler<Item>.PostOne("Items", newItem);
+                    ContentDialog dialog = new ContentDialog()
+                    {
+                        Title = "Item successfully added!",
+                        Content = $"{Name} was successfully added to the database!",
+                        PrimaryButtonText = "Ok"
+                    };
+                    await dialog.ShowAsync();
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+        }
+
+        public bool CheckTextFields()
+        {
+            bool expression = (!string.IsNullOrEmpty(Name) &&
+                               Category!=null && !string.IsNullOrEmpty(Color) &&
+                               !string.IsNullOrEmpty(Size) &&
+                               Price != 0 && Barcode != 0);
+            if (expression)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public async void LoadDataAsync()
+        {
+            await Data.UpdateStock();
+            await Data.UpdateCategories();
+        }
+
+        private void NavigateBack()
+        {
+            NavigationHandler.NavigateBackwards();
+        }
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
 
     }

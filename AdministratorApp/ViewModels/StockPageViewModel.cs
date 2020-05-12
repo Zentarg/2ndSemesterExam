@@ -9,7 +9,9 @@ using System.Threading.Tasks;
 using Windows.UI.Text.Core;
 using AdministratorApp.Annotations;
 using AdministratorApp.Models;
+using AdministratorApp.Views;
 using CommonLibrary.Models;
+using GalaSoft.MvvmLight.Command;
 
 namespace AdministratorApp.ViewModels
 {
@@ -18,19 +20,38 @@ namespace AdministratorApp.ViewModels
         private Tuple<Item, string> _selectedItem;
         private List<Item> _items;
         private float _priceAfterDiscount;
-        
+
 
         public StockPageViewModel()
         {
             LoadDataAsync();
+            GoToAddItem = new RelayCommand(NavigateToAddItemPage);
+            DeselectItemCommand = new RelayCommand(DeselectItem);
+            NavigateToAddItemToStockCommand = new RelayCommand(NavigateToAddItemToStock);
         }
 
-        public static Dictionary<int, Dictionary<int, int>> StockHasItems { get => Data.StockHasItems; set => Data.StockHasItems = value; }
+        public RelayCommand DeselectItemCommand { get; }
+
+        public RelayCommand GoToAddItem { get; }
+        public RelayCommand NavigateToAddItemToStockCommand { get; }
+
+        public static Dictionary<int, Dictionary<int, int>> StockHasItems
+        {
+            get => Data.StockHasItems;
+            set => Data.StockHasItems = value;
+        }
 
         public Tuple<Item, string> SelectedItem
         {
             get => _selectedItem;
-            set { _selectedItem = value; OnPropertyChanged(); OnPropertyChanged(nameof(SelectedItemInStocks)); OnPropertyChanged(nameof(PriceAfterDiscount)); OnPropertyChanged(nameof(SelectedItemCategory)); }
+            set
+            {
+                _selectedItem = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(SelectedItemInStocks));
+                OnPropertyChanged(nameof(PriceAfterDiscount));
+                OnPropertyChanged(nameof(SelectedItemCategory));
+            }
         }
 
 
@@ -38,14 +59,17 @@ namespace AdministratorApp.ViewModels
         {
             get
             {
-                if (SelectedItem !=null)
-                { //You can only pay integer amounts in hungary therefore it's rounded to int.
-                    return _priceAfterDiscount = Convert.ToInt32(SelectedItem.Item1.Price * (1 - SelectedItem.Item1.DiscountPercentage / 100)) ;
+                if (SelectedItem != null)
+                {
+                    //You can only pay integer amounts in hungary therefore it's rounded to int.
+                    return _priceAfterDiscount =
+                        Convert.ToInt32(SelectedItem.Item1.Price * (1 - SelectedItem.Item1.DiscountPercentage / 100));
                 }
 
                 return 0;
             }
         }
+
         //TUPLE format
         public ObservableCollection<Tuple<Item, string>> Items
         {
@@ -73,20 +97,23 @@ namespace AdministratorApp.ViewModels
 
         public Category SelectedItemCategory
         {
-            get => SelectedItem != null ? Data.AllCategories[SelectedItem.Item1.CategoryId] : new Category(-1, "loading");
+            get => SelectedItem != null
+                ? Data.AllCategories[SelectedItem.Item1.CategoryId]
+                : new Category(-1, "loading");
         }
 
         public ObservableCollection<KeyValuePair<Stock, int>> SelectedItemInStocks
         {
             get
             {
-                ObservableCollection<KeyValuePair<Stock, int>> stocks = new ObservableCollection<KeyValuePair<Stock, int>>();
+                ObservableCollection<KeyValuePair<Stock, int>> stocks =
+                    new ObservableCollection<KeyValuePair<Stock, int>>();
 
                 if (SelectedItem == null)
                     return stocks;
                 foreach (KeyValuePair<int, int> pair in Data.ItemsInStocks[SelectedItem.Item1.Id])
                 {
-                    stocks.Add(new KeyValuePair<Stock, int>(Data.AllStocks[pair.Key],pair.Value));
+                    stocks.Add(new KeyValuePair<Stock, int>(Data.AllStocks[pair.Key], pair.Value));
                 }
 
                 return stocks;
@@ -127,6 +154,14 @@ namespace AdministratorApp.ViewModels
             set { Data.AllStocks = value; OnPropertyChanged(); }
         }*/
 
+        private void DeselectItem()
+        {
+            SelectedItem = null;
+        }
+
+
+
+
 
         private async Task LoadDataAsync()
         {
@@ -143,6 +178,16 @@ namespace AdministratorApp.ViewModels
             OnPropertyChanged(nameof(SelectedItemCategory));
             SelectedItem = Items[0];
             
+        }
+
+        private void NavigateToAddItemToStock()
+        {
+            NavigationHandler.NavigateToPage(typeof(AddItemToStockPage));
+        }
+
+        private void NavigateToAddItemPage()
+        {
+            NavigationHandler.NavigateToPage(typeof(AddItemPage));
         }
 
         

@@ -192,6 +192,7 @@
     <Compile Include="Models\SalaryHandler.cs" />
     <Compile Include="Models\StocksHandler.cs" />
     <Compile Include="Models\StockHasItemsHandler.cs" />
+    <Compile Include="Models\StoreHasStockHandler.cs" />
     <Compile Include="Models\UserHandler.cs" />
     <Compile Include="Models\StoresHandler.cs" />
     <Compile Include="Models\UserLevelHandler.cs" />

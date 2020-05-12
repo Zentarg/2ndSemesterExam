@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CommonLibrary.Models
 {
-    class StockHasItems
+   public class StockHasItems
     {
         public StockHasItems(int stockId, int itemId, int amount)
         {
