@@ -22,7 +22,6 @@ namespace AdministratorApp.Models
         public static Dictionary<int, Role> AllRoles { get; set; } = new Dictionary<int, Role>();
         public static Dictionary<int, UserLevel> AllLevels { get; set; } = new Dictionary<int, UserLevel>();
         
-        public static ObservableCollection<Role> RolesList { get; set; } = new ObservableCollection<Role>();
 
 
         public static async Task UpdateItems()
@@ -67,7 +66,6 @@ namespace AdministratorApp.Models
         public static async Task UpdateRoles()
         {
             AllRoles = await APIHandler<Dictionary<int, Role>>.GetOne("Roles");
-            RolesList = new ObservableCollection<Role>(AllRoles.Values);
         }
 
         public static async Task<ObservableCollection<UserLevel>> UpdateUserLevels()

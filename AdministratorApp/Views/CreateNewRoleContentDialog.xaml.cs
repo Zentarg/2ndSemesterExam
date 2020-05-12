@@ -23,10 +23,12 @@ namespace AdministratorApp.Views
     public sealed partial class CreateNewRoleContentDialog : ContentDialog
     {
         private CreateNewRoleVM vm;
+        private CreateEmployeeVM vm2;
         public CreateNewRoleContentDialog()
         {
             this.InitializeComponent();
             vm = DataContext as CreateNewRoleVM;
+            
         }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)

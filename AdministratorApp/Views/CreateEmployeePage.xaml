@@ -48,7 +48,7 @@
 
                 <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Text="Role"/>
                 <TextBlock Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Margin="330,0,0,0" Text="--Or--"></TextBlock>
-                <ComboBox  SelectedItem="{Binding SelectedRole, Mode=TwoWay}" ItemsSource="{Binding Roles}" PlaceholderText="Select Role" Grid.Row="4" Grid.Column="1" Margin="0,0,0,0" Width="300" VerticalAlignment="Center"></ComboBox>
+                <ComboBox SelectedItem="{Binding SelectedRole, Mode=TwoWay}" ItemsSource="{Binding Roles, Mode=TwoWay}" PlaceholderText="Select Role" Grid.Row="4" Grid.Column="1" Margin="0,0,0,0" Width="300" VerticalAlignment="Center"></ComboBox>
                 <Button Content="Create New Role" Margin="400,0,0,0" Grid.Column="1" Grid.Row="4" Click="OpenCreateNewRoleContentDialog"></Button>
 
                 <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Text="Account Type"/>
