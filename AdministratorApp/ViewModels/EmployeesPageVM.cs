@@ -32,12 +32,14 @@ namespace AdministratorApp.ViewModels
         private float _salary;
         private float _salaryWTax;
         private int _userId = -1;
-        private float _tajNumber;
-        private float _taxNumber;
+        private int _tajNumber;
+        private int _taxNumber;
         private float _workingHours;
         private string _selectedStore;
         private string _userName;
         private string _email;
+        private bool _showEdit = false;
+        private bool _showNormal = true;
 
         private string _feedbackText = "";
 
@@ -47,6 +49,8 @@ namespace AdministratorApp.ViewModels
             DoShowUserName = new RelayCommand(GetUserName);
             DoCancel = new RelayCommand(Cancel);
             DoDelete = new RelayCommand(DeleteUser);
+            DoShowEdit = new RelayCommand(ShowEditMethod);
+            DoCancelEdit = new RelayCommand(CancelEditMethod);
         }
 
         public Dictionary<int, User> DictUsers
@@ -59,6 +63,8 @@ namespace AdministratorApp.ViewModels
         public RelayCommand DoShowUserName { get; set; }
         public RelayCommand DoCancel { get; set; }
         public RelayCommand DoDelete { get; set; }
+        public RelayCommand DoShowEdit { get; set; }
+        public RelayCommand DoCancelEdit { get; set; }
         public string UserName
         {
             get { return _userName; }
@@ -179,13 +185,13 @@ namespace AdministratorApp.ViewModels
             set { _salaryWTax = value; OnPropertyChanged(); }
         }
 
-        public float TajNumber
+        public int TajNumber
         {
             get { return _tajNumber; }
             set { _tajNumber = value; OnPropertyChanged();}
         }
 
-        public float TaxNumber
+        public int TaxNumber
         {
             get { return _taxNumber; }
             set { _taxNumber = value; OnPropertyChanged();}
@@ -215,6 +221,17 @@ namespace AdministratorApp.ViewModels
             set { _feedbackText = value; OnPropertyChanged(); }
         }
 
+        public bool ShowEdit
+        {
+            get { return _showEdit; }
+            set { _showEdit = value; OnPropertyChanged(); }
+        }
+
+        public bool ShowNormal
+        {
+            get { return _showNormal; }
+            set { _showNormal = value; OnPropertyChanged(); }
+        }
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -274,6 +291,18 @@ namespace AdministratorApp.ViewModels
             VMHandler.EmployeesPageVm = this;
             DeleteUserConfirmationContentDialog deleteUserConfirmationContentDialog = new DeleteUserConfirmationContentDialog();
             await deleteUserConfirmationContentDialog.ShowAsync();
+        }
+
+        public void ShowEditMethod()
+        {
+            ShowEdit = true;
+            ShowNormal = false;
+        }
+
+        public void CancelEditMethod()
+        {
+            ShowEdit = false;
+            ShowNormal = true;
         }
     }
 }
