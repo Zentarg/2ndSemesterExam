@@ -26,5 +26,21 @@ namespace AdministratorApp.Views
         {
             this.InitializeComponent();
         }
+
+        private void ConfirmIsVisible_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(Name.Text) && !string.IsNullOrEmpty(Address.Text) && !string.IsNullOrEmpty(Phone.Text) && Manager.SelectedItem != null)
+                ConfirmButton.IsEnabled = true;
+            else ConfirmButton.IsEnabled = false;
+        }
+
+
+        private void Manager_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(Name.Text) && !string.IsNullOrEmpty(Address.Text) && !string.IsNullOrEmpty(Phone.Text) && Manager.SelectedItem != null)
+                ConfirmButton.IsEnabled = true;
+            else ConfirmButton.IsEnabled = false;
+        }
+
     }
 }

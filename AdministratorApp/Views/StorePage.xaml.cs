@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -25,6 +26,26 @@ namespace AdministratorApp.Views
         public StorePage()
         {
             this.InitializeComponent();
+        }
+
+        private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (StoreListView.SelectedItem != null)
+            {
+                DeleteButton.IsEnabled = true;
+                ConfirmButton.IsEnabled = true;
+            }
+            else
+            {
+                DeleteButton.IsEnabled = false;
+                ConfirmButton.IsEnabled = false;
+            }
+
+        }
+
+        private void CancelButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            StoreListView.SelectedItem = null;
         }
     }
 }

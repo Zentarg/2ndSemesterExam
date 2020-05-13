@@ -1,7 +1,8 @@
-﻿using System;
-using AdministratorApp.Annotations;
+﻿using AdministratorApp.Annotations;
 using AdministratorApp.Models;
+using CommonLibrary.Models;
 using GalaSoft.MvvmLight.Command;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -9,8 +10,6 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using AdministratorApp.Views;
-using CommonLibrary.Models;
 
 namespace AdministratorApp.ViewModels
 {
@@ -18,13 +17,15 @@ namespace AdministratorApp.ViewModels
     {
         private Store _store = new Store();
         private Store _selectedStore = new Store();
+        private ObservableCollection<Store> _allStores = new ObservableCollection<Store>();
+        private ObservableCollection<string> _managers = new ObservableCollection<string>();
+        private User _selectedManager;
+
         private bool _isEditing = false;
         private string _name = "";
         private string _address = "";
         private int _phone = 0;
-        private string _manager = "";
 
-        //ObservableCollection<Store> stores = new ObservableCollection<Store>(){ new Store("John Doe's", "Some place", 84758439, "John Doe"), new Store("Your Mom","Your Mom's", 123456789, "Your Dad's")};
 
         public StorePageVM()
         {
@@ -60,12 +61,6 @@ namespace AdministratorApp.ViewModels
             set { _phone = value; OnPropertyChanged(); }
         }
 
-        public string Manager
-        {
-            get { return _manager; }
-            set { _manager = value; OnPropertyChanged(); }
-        }
-
         public bool IsEditing
         {
             get
@@ -85,10 +80,7 @@ namespace AdministratorApp.ViewModels
         {
             get
             {
-                //Dictionary<int, Store> dictionary = new Dictionary<int, Store>(Data.AllStores);
-
                 ObservableCollection<Store> stores = new ObservableCollection<Store>(Data.AllStores.Values);
-                
 
                 if (stores.Count > 0)
                 {
@@ -97,36 +89,24 @@ namespace AdministratorApp.ViewModels
                         stores.RemoveAt(0);
                     }
                 }
+
                 return stores;
-
-                //}
-                //get
-                //{
-                //    return stores;
-                //}
             }
         }
 
-        public ObservableCollection<User> AllUsers
+        public ObservableCollection<User> AllManagers
         {
             get
             {
-                ObservableCollection<User> users = new ObservableCollection<User>(Data.AllUsers.Values);
-                return users;
-            }
-        }
-
-        public ObservableCollection<string> AllUserNames
-        {
-            get
-            {
-                ObservableCollection<string> userNames = new ObservableCollection<string>();
-                foreach (User user in AllUsers)
+                ObservableCollection<User> managers = new ObservableCollection<User>();
+                foreach (User user in Data.AllUsers.Values)
                 {
-                    userNames.Add(user.Name);
+                    if (user.UserLevelId == 1)
+                    {
+                        managers.Add(user);
+                    }
                 }
-
-                return userNames;
+                return managers;
             }
         }
 
@@ -144,23 +124,29 @@ namespace AdministratorApp.ViewModels
                     Name = _selectedStore.Name;
                     Address = _selectedStore.Address;
                     Phone = _selectedStore.Phone;
-                    Manager = _selectedStore.Manager;
                 }
                 OnPropertyChanged();
             }
         }
 
+        public User SelectedManager
+        {
+            get { return _selectedManager; }
+            set { _selectedManager = value; OnPropertyChanged(); }
+        }
+
+
         private async void Confirm()
         {
-            if (Name != null && Address != null && Phone >= 00000001 && Manager != null)
+            if (Name != null && Address != null && Phone >= 00000001)
             {
 
                 _selectedStore.Name = Name;
                 _selectedStore.Address = Address;
                 _selectedStore.Phone = Phone;
-                _selectedStore.Manager = Manager;
 
-                var item = StoreList.SingleOrDefault(s => s.Name == Name && s.Address == Address && s.Phone == Phone && s.Manager == Manager);
+                //needs PUT request from APIHandler
+                var item = StoreList.SingleOrDefault(s => s.Name == Name && s.Address == Address && s.Phone == Phone);
                 APIHandler<Store>.PostOne("Stores", item);
 
                 //StoreList.Remove(item);
@@ -175,8 +161,7 @@ namespace AdministratorApp.ViewModels
         {
             if (SelectedStore != null)
             {
-                StoreList.Remove(SelectedStore);
-                OnPropertyChanged(nameof(StoreList));
+                await APIHandler<Store>.DeleteOne("Stores");
                 Cancel();
             }
         }
@@ -186,26 +171,29 @@ namespace AdministratorApp.ViewModels
             Name = "";
             Address = "";
             Phone = 0;
-            Manager = "";
-            NavigationHandler.NavigateBackwards();
+            SelectedManager = null;
+            //NavigationHandler.NavigateBackwards();
         }
 
-        private async void StockPage()
+        private void StockPage()
         {
             Frame mainFrame = Window.Current.Content as Frame;
             mainFrame?.Navigate(Type.GetType($"{Application.Current.GetType().Namespace}.Views.StoreStockPage"));
+            //RuntimeDataHandler.SelectedStore = SelectedStore;
         }
 
         private async Task LoadDataAsync()
         {
-            await Data.UpdateStore();
             await Data.UpdateUsers();
+            await Data.UpdateStore();
+
             OnPropertyChanged(nameof(StoreList));
+            OnPropertyChanged(nameof(AllManagers));
         }
 
         public override string ToString()
         {
-            return $"{Name} {Address} {Phone} {Manager}";
+            return $"{Name} {Address} {Phone} {SelectedManager.Name}";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

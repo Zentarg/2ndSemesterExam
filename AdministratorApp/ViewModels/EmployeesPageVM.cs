@@ -19,7 +19,7 @@ namespace AdministratorApp.ViewModels
         ObservableCollection<User> _users = new ObservableCollection<User>();
         private User _sEmp =  new User();
         private ObservableCollection<string> _stores = new ObservableCollection<string>();
-        private ObservableCollection<string> _roles = new ObservableCollection<string>();
+        private ObservableCollection<Role> _roles = new ObservableCollection<Role>();
         private Salary _objSalary;
 
         private string _name = "";
@@ -71,12 +71,6 @@ namespace AdministratorApp.ViewModels
             set { Data.AllSalaries = value; OnPropertyChanged(); }
         }
 
-        public Dictionary<int, Role> DictRoles
-        {
-            get { return Data.AllRoles; }
-            set { Data.AllRoles = value; OnPropertyChanged(); }
-        }
-
         public Dictionary<int, Store> DictStore
         {
             get { return Data.AllStores; }
@@ -106,7 +100,7 @@ namespace AdministratorApp.ViewModels
                     SelectedRole = null;
                     _userId = _sEmp.Id;
                     _objSalary = CommonMethods.GetSalary(_userId, DictSalaries);
-                    Role = CommonMethods.GetRole(_sEmp.RoleId, DictRoles).Name;
+                    Role = CommonMethods.GetRole(_sEmp.RoleId, Data.AllRoles).Name;
                     Salary = _objSalary.BeforeTax;
                     SalaryWTax = _objSalary.BeforeTax - (_objSalary.BeforeTax * (_objSalary.TaxPercentage / 100));
                     IsEmployeeSelected = true;
@@ -150,7 +144,7 @@ namespace AdministratorApp.ViewModels
             set { _stores = value; OnPropertyChanged(); }
         }
 
-        public ObservableCollection<string> Roles
+        public ObservableCollection<Role> Roles
         {
             get { return _roles; }
             set { _roles = value; OnPropertyChanged(); }
@@ -233,10 +227,7 @@ namespace AdministratorApp.ViewModels
             await Data.UpdateSalaries();
             await Data.UpdateRoles();
             await Data.UpdateStore();
-            foreach (Role r in DictRoles.Values)
-            {
-                Roles.Add(r.Name);
-            }
+            Roles = new ObservableCollection<Role>(Data.AllRoles.Values);
 
             foreach (Store s in DictStore.Values)
             {
@@ -287,32 +278,28 @@ namespace AdministratorApp.ViewModels
                     {
                         if (AuthHandler.ActiveUser.UserLevelId > SelectedEmp.UserLevelId)
                         {
-                            SetErrorTextOnDelete(Constants.UserDeleteErorrs.OK);
                             //Auth auth = await APIHandler<Auth>.DeleteOne($"Auths/DeleteUserAuth/{id}");
                             //Salary salary = await APIHandler<Salary>.DeleteOne($"Salaries/DeleteSalary/{id}");
                             User user = await APIHandler<User>.DeleteOne($"Users/DeleteUser/{id}");
+                            ErrorText = CommonMethods.SetErrorTextOnDelete(user.Id == -1 
+                                ? Constants.UserDeleteErorrs.DELETE_ID_0
+                                : Constants.UserDeleteErorrs.OK);
                             Cancel();
                             await LoadDataAsync();
                         }
+                        else
+                            ErrorText = CommonMethods.SetErrorTextOnDelete(Constants.UserDeleteErorrs.LOW_ACCESS_LEVEL);
                     }
-                    
+                    else
+                        ErrorText = CommonMethods.SetErrorTextOnDelete(Constants.UserDeleteErorrs.DELETE_OWNER);
                 }
                 else
-                    SetErrorTextOnDelete(Constants.UserDeleteErorrs.USER_LOGGED_IN);
+                    ErrorText = CommonMethods.SetErrorTextOnDelete(Constants.UserDeleteErorrs.USER_LOGGED_IN);
             }
             else
-                SetErrorTextOnDelete(Constants.UserDeleteErorrs.NO_SELECTED_USER);
+                ErrorText = CommonMethods.SetErrorTextOnDelete(Constants.UserDeleteErorrs.NO_SELECTED_USER);
         }
 
-        public void SetErrorTextOnDelete(Constants.UserDeleteErorrs errors)
-        {
-            if (errors == Constants.UserDeleteErorrs.NO_SELECTED_USER)
-                ErrorText = "You must first select a user\nbefore trying to delete one";
-            if (errors == Constants.UserDeleteErorrs.USER_LOGGED_IN)
-                ErrorText = "You cannot delete a logged\nin user";
-            else
-                ErrorText = "";
 
-        }
     }
 }

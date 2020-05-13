@@ -18,5 +18,22 @@ namespace AdministratorApp.Models
         {
             return salaries[userId];
         }
+
+        public static string SetErrorTextOnDelete(Constants.UserDeleteErorrs errors)
+        {
+            if (errors == Constants.UserDeleteErorrs.NO_SELECTED_USER)
+                return "You must first select a user\nbefore trying to delete one";
+            if (errors == Constants.UserDeleteErorrs.USER_LOGGED_IN)
+                return "You cannot delete a logged\nin user";
+            if (errors == Constants.UserDeleteErorrs.DELETE_OWNER)
+                return "You cannot delete the owner\nin the system";
+            if (errors == Constants.UserDeleteErorrs.LOW_ACCESS_LEVEL)
+                return "You cannot delete users who\nhave the same or higher access level";
+            if (errors == Constants.UserDeleteErorrs.DELETE_ID_0)
+                return "You cannot delete the dummy\nuser from the system";
+            else
+                return "";
+
+        }
     }
 }
