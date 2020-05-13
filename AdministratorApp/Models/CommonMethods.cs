@@ -16,7 +16,14 @@ namespace AdministratorApp.Models
 
         public static Salary GetSalary(int userId, Dictionary<int, Salary> salaries)
         {
-            return salaries[userId];
+            try
+            {
+                return salaries[userId];
+            }
+            catch (Exception e)
+            {
+                return new Salary(userId, 0, 0);
+            }
         }
 
         public static string SetErrorTextOnDelete(Constants.UserDeleteErorrs errors)
@@ -31,8 +38,7 @@ namespace AdministratorApp.Models
                 return "You cannot delete users who\nhave the same or higher access level";
             if (errors == Constants.UserDeleteErorrs.DELETE_ID_0)
                 return "You cannot delete the dummy\nuser from the system";
-            else
-                return "";
+            return "";
 
         }
     }

@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Store.Preview.InstallControl;
 using Windows.Media.Streaming.Adaptive;
 using CommonLibrary.Models;
 
@@ -22,6 +23,7 @@ namespace AdministratorApp.Models
         public static Dictionary<int, Salary> AllSalaries { get; set; } = new Dictionary<int, Salary>();
         public static Dictionary<int, Role> AllRoles { get; set; } = new Dictionary<int, Role>();
         public static Dictionary<int, UserLevel> AllLevels { get; set; } = new Dictionary<int, UserLevel>();
+        public static User SelectedUser { get; set; }
         
 
 

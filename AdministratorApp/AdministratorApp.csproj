@@ -139,6 +139,7 @@
     <Compile Include="ViewModels\AddStorePageVM.cs" />
     <Compile Include="ViewModels\CreateEmployeeVM.cs" />
     <Compile Include="ViewModels\CreateNewRoleVM.cs" />
+    <Compile Include="ViewModels\DeleteUserConfirmationVM.cs" />
     <Compile Include="ViewModels\EmployeesPageVM.cs" />
     <Compile Include="ViewModels\HomePageVM.cs" />
     <Compile Include="ViewModels\LoginPageVM.cs" />
@@ -160,6 +161,9 @@
     </Compile>
     <Compile Include="Views\CreateNewRoleContentDialog.xaml.cs">
       <DependentUpon>CreateNewRoleContentDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DeleteUserConfirmationContentDialog.xaml.cs">
+      <DependentUpon>DeleteUserConfirmationContentDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EmployeesPage.xaml.cs">
       <DependentUpon>EmployeesPage.xaml</DependentUpon>
@@ -268,6 +272,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CreateNewRoleContentDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DeleteUserConfirmationContentDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
