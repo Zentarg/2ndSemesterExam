@@ -6,6 +6,13 @@ namespace CommonLibrary.Models
 {
     public class Category
     {
+        public Category() { }
+        public Category( string name)
+        {
+
+            Name = name;
+        }
+
         public Category(int id, string name)
         {
             ID = id;

@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using AdministratorApp.ViewModels;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -22,8 +23,10 @@ namespace AdministratorApp.Views
     /// </summary>
     public sealed partial class AddItemPage : Page
     {
+
         public AddItemPage()
-        {
+        { 
+
             this.InitializeComponent();
         }
 
@@ -35,6 +38,14 @@ namespace AdministratorApp.Views
         private void FilterNonNumeric_OnBeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
         {
             args.Cancel = args.NewText.Any(c => !char.IsDigit(c));
+        }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+
+                CreateNewCategoryDialog createNewCategoryDialog = new CreateNewCategoryDialog(vm);
+                createNewCategoryDialog.ShowAsync();
+            
         }
     }
 }

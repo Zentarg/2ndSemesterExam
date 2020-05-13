@@ -138,6 +138,7 @@
     <Compile Include="ViewModels\AddItemViewModel.cs" />
     <Compile Include="ViewModels\AddStorePageVM.cs" />
     <Compile Include="ViewModels\CreateEmployeeVM.cs" />
+    <Compile Include="ViewModels\CreateNewCategoryVM.cs" />
     <Compile Include="ViewModels\CreateNewRoleVM.cs" />
     <Compile Include="ViewModels\EmployeesPageVM.cs" />
     <Compile Include="ViewModels\HomePageVM.cs" />
@@ -156,6 +157,9 @@
     </Compile>
     <Compile Include="Views\CreateEmployeePage.xaml.cs">
       <DependentUpon>CreateEmployeePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CreateNewCategoryDialog.xaml.cs">
+      <DependentUpon>CreateNewCategoryDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CreateNewRoleContentDialog.xaml.cs">
       <DependentUpon>CreateNewRoleContentDialog.xaml</DependentUpon>
@@ -265,6 +269,10 @@
     <Page Include="Views\CreateEmployeePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CreateNewCategoryDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\CreateNewRoleContentDialog.xaml">
       <SubType>Designer</SubType>
