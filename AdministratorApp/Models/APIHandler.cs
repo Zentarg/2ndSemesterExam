@@ -112,5 +112,31 @@ namespace AdministratorApp.Models
                 }
             }
         }
+
+        public static async Task<T> PutOne(string apiString, T objectToPut)
+        {
+            HttpClientHandler handler = new HttpClientHandler() { UseDefaultCredentials = true };
+            using (HttpClient client = new HttpClient(handler))
+            {
+                client.BaseAddress = new Uri(url);
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                try
+                {
+                    string item = JsonConvert.SerializeObject(objectToPut);
+                    StringContent content = new StringContent(item, Encoding.UTF8, "application/json");
+                    var response = await client.PutAsync(apiString, content);
+                    response.EnsureSuccessStatusCode();
+                    string returnData = await response.Content.ReadAsStringAsync();
+                    T returnItem = JsonConvert.DeserializeObject<T>(returnData);
+                    return returnItem;
+                }
+                catch (Exception ex)
+                {
+                    return default(T);
+                }
+            }
+        }
     }
 }

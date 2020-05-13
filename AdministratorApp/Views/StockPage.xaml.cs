@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using AdministratorApp.ViewModels;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -22,9 +23,11 @@ namespace AdministratorApp.Views
     /// </summary>
     public sealed partial class StockPage : Page
     {
+        private StockPageViewModel _vm;
         public StockPage()
         {
             this.InitializeComponent();
+            _vm = DataContext as StockPageViewModel;
         }
 
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
