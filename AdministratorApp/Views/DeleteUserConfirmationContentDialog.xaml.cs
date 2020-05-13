@@ -20,32 +20,32 @@ using CommonLibrary.Models;
 
 namespace AdministratorApp.Views
 {
-    public sealed partial class CreateNewRoleContentDialog : ContentDialog
+    public sealed partial class DeleteUserConfirmationContentDialog : ContentDialog
     {
-        private CreateNewRoleVM vm;
-        public CreateNewRoleContentDialog()
+        private DeleteUserConfirmationVM vm;
+        public DeleteUserConfirmationContentDialog()
         {
             this.InitializeComponent();
-            vm = DataContext as CreateNewRoleVM;
-            
+            vm = DataContext as DeleteUserConfirmationVM;
         }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
         }
 
-        private async void ContentDialog_OnConfirmClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private async void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            var error = vm.CheckRoleForErrors();
-            ErrorTextBlock.Text = vm.SetErrorText(error);
-            if (error == Constants.RoleErrors.OK)
+            Constants.UserDeleteErorrs error = vm.ErrorCheck();
+            ErrorTextBlock.Text = CommonMethods.SetErrorTextOnDelete(error);
+            if (error == Constants.UserDeleteErorrs.OK)
             {
-                await APIHandler<Role>.PostOne("Roles", new Role(0, EnterRoleBox.Text));
-                await Data.UpdateRoles();
-                VMHandler.CreateEmployeeVm.LoadDataAsync();
+                User user = await APIHandler<User>.DeleteOne($"Users/DeleteUser/{vm.SelectedEmp.Id}");
+                await VMHandler.EmployeesPageVm.LoadDataAsync();
+                VMHandler.EmployeesPageVm.FeedBackText = $"{user.Name} has been deleted";
                 args.Cancel = false;
             }
-            args.Cancel = true;
+            else
+                args.Cancel = true;
         }
     }
 }

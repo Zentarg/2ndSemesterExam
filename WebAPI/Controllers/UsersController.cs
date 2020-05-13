@@ -109,7 +109,9 @@ namespace WebAPI.Controllers
         public IHttpActionResult DeleteUser(int id)
         {
             
-            User user = db.Users.Find(id);
+            User user = db.Users.FirstOrDefault(u => u.ID == id);
+            User returnUser = user;
+            
             if (user == null)
             {
                 return NotFound();
@@ -118,9 +120,10 @@ namespace WebAPI.Controllers
             if (user.ID != 0)
             {
                 UserHandler.DeleteOneUser(db, user);
-                return Ok(user);
+                returnUser.StoreID = 0;
+                return Ok(returnUser);
             }
-
+            
             user.ID = -1;
             return Ok(user);
         }
