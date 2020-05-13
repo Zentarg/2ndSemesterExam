@@ -43,6 +43,7 @@ namespace AdministratorApp.Views
             {
                 await APIHandler<Role>.PostOne("Roles", new Role(0, EnterRoleBox.Text));
                 await Data.UpdateRoles();
+                VMHandler.CreateEmployeeVm.LoadDataAsync();
                 args.Cancel = false;
             }
             args.Cancel = true;

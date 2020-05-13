@@ -145,6 +145,7 @@
     <Compile Include="ViewModels\MainPageVM.cs" />
     <Compile Include="ViewModels\StorePageVM.cs" />
     <Compile Include="ViewModels\StoreStockPageVM.cs" />
+    <Compile Include="Models\VMHandler.cs" />
     <Compile Include="Views\AddItemPage.xaml.cs">
       <DependentUpon>AddItemPage.xaml</DependentUpon>
     </Compile>

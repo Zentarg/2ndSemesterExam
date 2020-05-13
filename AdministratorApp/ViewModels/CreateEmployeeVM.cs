@@ -16,7 +16,7 @@ using GalaSoft.MvvmLight.Command;
 
 namespace AdministratorApp.ViewModels
 {
-    class CreateEmployeeVM : INotifyPropertyChanged
+    public class CreateEmployeeVM : INotifyPropertyChanged
     {
         private User _tempUser = new User();
         private ObservableCollection<Store> _stores = new ObservableCollection<Store>();
@@ -47,6 +47,7 @@ namespace AdministratorApp.ViewModels
             DoGenerateUserName = new RelayCommand(GenerateUserName);
             DoGeneratePassword = new RelayCommand(GeneratePassword);
             DoUpdateComboBoxRoles = new RelayCommand(UpdateRoleComboBox);
+            VMHandler.CreateEmployeeVm = this;
         }
 
         public RelayCommand DoConfirm { get; set; }
