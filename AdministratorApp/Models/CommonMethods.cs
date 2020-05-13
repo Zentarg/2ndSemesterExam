@@ -35,5 +35,24 @@ namespace AdministratorApp.Models
                 return "";
 
         }
+
+        /// <summary>
+        /// Filters a list specified by string. The item object inside the list needs to have a .ToString() method corresponding to what the user is searching for.
+        /// </summary>
+        /// <param name="list">The list to filter.</param>
+        /// <param name="filterBy">The string each item has to contain.</param>
+        /// <returns>A filtered list.</returns>
+        public static List<T> FilterListByString<T>(List<T> list, string filterBy)
+        {
+            List<T> returnList = new List<T>();
+            foreach (T item in list)
+            {
+                if (item.ToString().ToLower().Contains(filterBy.ToLower()))
+                    returnList.Add(item);
+            }
+
+            return returnList;
+            //return list.FindAll(delegate(T i) { return i.ToString().ToLower().Contains(filterBy.ToLower()); });
+        }
     }
 }
