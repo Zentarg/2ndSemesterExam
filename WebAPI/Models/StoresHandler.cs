@@ -23,5 +23,13 @@ namespace WebAPI.Models
 
         }
 
+        public static void DeleteOneStore(ParknGardenData db, Store store)
+        {
+            if (store.ID != 0)
+            {
+                db.Stores.Remove(store);
+                db.SaveChanges();
+            }
+        }
     }
 }

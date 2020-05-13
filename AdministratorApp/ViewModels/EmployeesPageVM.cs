@@ -9,12 +9,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using AdministratorApp.Models;
+using AdministratorApp.Views;
 using CommonLibrary.Models;
 using GalaSoft.MvvmLight.Command;
 
 namespace AdministratorApp.ViewModels
 {
-    class EmployeesPageVM : INotifyPropertyChanged
+    public class EmployeesPageVM : INotifyPropertyChanged
     {
         ObservableCollection<User> _users = new ObservableCollection<User>();
         private User _sEmp =  new User();
@@ -38,7 +39,7 @@ namespace AdministratorApp.ViewModels
         private string _userName;
         private string _email;
 
-        private string _errorText = "You must first select a user\nbefore trying to delete one";
+        private string _feedbackText = "";
 
         public EmployeesPageVM()
         {
@@ -208,10 +209,10 @@ namespace AdministratorApp.ViewModels
             set { _email = value; OnPropertyChanged(); }
         }
 
-        public string ErrorText
+        public string FeedBackText
         {
-            get { return _errorText; }
-            set { _errorText = value; OnPropertyChanged(); }
+            get { return _feedbackText; }
+            set { _feedbackText = value; OnPropertyChanged(); }
         }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -221,7 +222,7 @@ namespace AdministratorApp.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private async Task LoadDataAsync()
+        public async Task LoadDataAsync()
         {
             await Data.UpdateUsers();
             await Data.UpdateSalaries();
@@ -269,37 +270,10 @@ namespace AdministratorApp.ViewModels
 
         public async void DeleteUser()
         {
-            int id = SelectedEmp.Id;
-            if (SelectedEmp != null)
-            {
-                if (SelectedEmp.Id != AuthHandler.UserID)
-                {
-                    if (SelectedEmp.UserLevelId != Data.OwnerID)
-                    {
-                        if (AuthHandler.ActiveUser.UserLevelId > SelectedEmp.UserLevelId)
-                        {
-                            //Auth auth = await APIHandler<Auth>.DeleteOne($"Auths/DeleteUserAuth/{id}");
-                            //Salary salary = await APIHandler<Salary>.DeleteOne($"Salaries/DeleteSalary/{id}");
-                            User user = await APIHandler<User>.DeleteOne($"Users/DeleteUser/{id}");
-                            ErrorText = CommonMethods.SetErrorTextOnDelete(user.Id == -1 
-                                ? Constants.UserDeleteErorrs.DELETE_ID_0
-                                : Constants.UserDeleteErorrs.OK);
-                            Cancel();
-                            await LoadDataAsync();
-                        }
-                        else
-                            ErrorText = CommonMethods.SetErrorTextOnDelete(Constants.UserDeleteErorrs.LOW_ACCESS_LEVEL);
-                    }
-                    else
-                        ErrorText = CommonMethods.SetErrorTextOnDelete(Constants.UserDeleteErorrs.DELETE_OWNER);
-                }
-                else
-                    ErrorText = CommonMethods.SetErrorTextOnDelete(Constants.UserDeleteErorrs.USER_LOGGED_IN);
-            }
-            else
-                ErrorText = CommonMethods.SetErrorTextOnDelete(Constants.UserDeleteErorrs.NO_SELECTED_USER);
+            Data.SelectedUser = SelectedEmp;
+            VMHandler.EmployeesPageVm = this;
+            DeleteUserConfirmationContentDialog deleteUserConfirmationContentDialog = new DeleteUserConfirmationContentDialog();
+            await deleteUserConfirmationContentDialog.ShowAsync();
         }
-
-
     }
 }

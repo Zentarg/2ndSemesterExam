@@ -23,12 +23,12 @@ namespace AdministratorApp.Views
     public sealed partial class CreateNewCategoryDialog : ContentDialog
     {
         private CreateNewCategoryVM viewModel;
-        private AddItemViewModel mainViewModel;
-        public CreateNewCategoryDialog(AddItemViewModel aivm)
+
+        public CreateNewCategoryDialog()
         {
             this.InitializeComponent();
             viewModel = DataContext as CreateNewCategoryVM;
-            mainViewModel = aivm;
+
         }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -43,9 +43,8 @@ namespace AdministratorApp.Views
                 {
                     Category c =  await APIHandler<Category>.PostOne("categories", new Category(EnterCategoryBox.Text));
                     await Data.UpdateCategories();
-                    mainViewModel.LoadDataAsync();
-                    mainViewModel.Category = c;
-                    
+                    VMHandler.AddItemViewModel.LoadDataAsync();
+                    VMHandler.AddItemViewModel.Category = c;
                     args.Cancel = false;
                 }
                 else args.Cancel = true;

@@ -138,17 +138,12 @@ namespace AdministratorApp.ViewModels
 
         private async void Confirm()
         {
-            if (Name != null && Address != null && Phone >= 00000001)
+            if (CheckTextFields())
             {
 
-                _selectedStore.Name = Name;
-                _selectedStore.Address = Address;
-                _selectedStore.Phone = Phone;
-
-                //needs PUT request from APIHandler
-                var item = StoreList.SingleOrDefault(s => s.Name == Name && s.Address == Address && s.Phone == Phone);
-                APIHandler<Store>.PostOne("Stores", item);
-
+                var item = new Store(Name, Address, Phone, SelectedManager.Id);
+                await APIHandler<Store>.PutOne("Stores/PutStore/" + SelectedStore.ID, item);
+                
                 //StoreList.Remove(item);
                 //StoreList.Add(new Store(Name, Address, Phone, Manager));
 
@@ -161,7 +156,9 @@ namespace AdministratorApp.ViewModels
         {
             if (SelectedStore != null)
             {
-                await APIHandler<Store>.DeleteOne("Stores");
+                await APIHandler<Store>.DeleteOne("Stores/DeleteStore/" + SelectedStore.ID);
+                Data.AllStores.Remove(SelectedStore.ID);
+                OnPropertyChanged(nameof(StoreList));
                 Cancel();
             }
         }
@@ -189,6 +186,18 @@ namespace AdministratorApp.ViewModels
 
             OnPropertyChanged(nameof(StoreList));
             OnPropertyChanged(nameof(AllManagers));
+        }
+
+        public bool CheckTextFields()
+        {
+            bool expression = !string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Address) &&
+                               !string.IsNullOrEmpty(Phone.ToString()) && !string.IsNullOrEmpty(SelectedManager.Id.ToString());
+            if (expression)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public override string ToString()
