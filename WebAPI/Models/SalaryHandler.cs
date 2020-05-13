@@ -26,5 +26,11 @@ namespace WebAPI.Models
         {
             return db.Salaries.FirstOrDefault(s => s.UserID == userID);
         }
+
+        public static void DeleteOneSalary(ParknGardenData db, Salary salary)
+        {
+            db.Salaries.Remove(salary);
+            db.SaveChanges();
+        }
     }
 }

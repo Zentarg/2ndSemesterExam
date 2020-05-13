@@ -151,7 +151,8 @@ namespace WebAPI.Controllers
             return CreatedAtRoute("DefaultApi", new { id = auth.UserID }, auth);
         }
 
-        // DELETE: api/Auths/5
+        // DELETE: api/Auths/DeleteUserAuth/id
+        [Route("api/Auths/DeleteUserAuth/{id}")]
         [ResponseType(typeof(Auth))]
         public IHttpActionResult DeleteAuth(int id)
         {
@@ -161,9 +162,13 @@ namespace WebAPI.Controllers
                 return NotFound();
             }
 
-            db.Auths.Remove(auth);
-            db.SaveChanges();
+            if (auth.UserID != 0)
+            {
+                AuthHandler.DeleteUserAuth(db, auth);
+                return Ok(auth);
+            }
 
+            auth.UserID = -1;
             return Ok(auth);
         }
 

@@ -134,6 +134,7 @@
     <Compile Include="Models\RuntimeDataHandler.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\AddItemToStockVM.cs" />
     <Compile Include="ViewModels\AddItemViewModel.cs" />
     <Compile Include="ViewModels\AddStorePageVM.cs" />
     <Compile Include="ViewModels\CreateEmployeeVM.cs" />
@@ -143,8 +144,12 @@
     <Compile Include="ViewModels\LoginPageVM.cs" />
     <Compile Include="ViewModels\MainPageVM.cs" />
     <Compile Include="ViewModels\StorePageVM.cs" />
+    <Compile Include="ViewModels\StoreStockPageVM.cs" />
     <Compile Include="Views\AddItemPage.xaml.cs">
       <DependentUpon>AddItemPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddItemToStockPage.xaml.cs">
+      <DependentUpon>AddItemToStockPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AddStorePage.xaml.cs">
       <DependentUpon>AddStorePage.xaml</DependentUpon>
@@ -246,6 +251,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\AddItemPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddItemToStockPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

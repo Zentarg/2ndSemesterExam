@@ -37,13 +37,15 @@ namespace AdministratorApp.ViewModels
         private string _selectedStore;
         private string _userName;
         private string _email;
-        
+
+        private string _errorText = "You must first select a user\nbefore trying to delete one";
 
         public EmployeesPageVM()
         {
             LoadDataAsync();
             DoShowUserName = new RelayCommand(GetUserName);
             DoCancel = new RelayCommand(Cancel);
+            DoDelete = new RelayCommand(DeleteUser);
         }
 
         public Dictionary<int, User> DictUsers
@@ -55,6 +57,7 @@ namespace AdministratorApp.ViewModels
 
         public RelayCommand DoShowUserName { get; set; }
         public RelayCommand DoCancel { get; set; }
+        public RelayCommand DoDelete { get; set; }
         public string UserName
         {
             get { return _userName; }
@@ -211,6 +214,12 @@ namespace AdministratorApp.ViewModels
             set { _email = value; OnPropertyChanged(); }
         }
 
+        public string ErrorText
+        {
+            get { return _errorText; }
+            set { _errorText = value; OnPropertyChanged(); }
+        }
+
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -267,5 +276,43 @@ namespace AdministratorApp.ViewModels
             SelectedStore = null;
         }
 
+        public async void DeleteUser()
+        {
+            int id = SelectedEmp.Id;
+            if (SelectedEmp != null)
+            {
+                if (SelectedEmp.Id != AuthHandler.UserID)
+                {
+                    if (SelectedEmp.UserLevelId != Data.OwnerID)
+                    {
+                        if (AuthHandler.ActiveUser.UserLevelId > SelectedEmp.UserLevelId)
+                        {
+                            SetErrorTextOnDelete(Constants.UserDeleteErorrs.OK);
+                            //Auth auth = await APIHandler<Auth>.DeleteOne($"Auths/DeleteUserAuth/{id}");
+                            //Salary salary = await APIHandler<Salary>.DeleteOne($"Salaries/DeleteSalary/{id}");
+                            User user = await APIHandler<User>.DeleteOne($"Users/DeleteUser/{id}");
+                            Cancel();
+                            await LoadDataAsync();
+                        }
+                    }
+                    
+                }
+                else
+                    SetErrorTextOnDelete(Constants.UserDeleteErorrs.USER_LOGGED_IN);
+            }
+            else
+                SetErrorTextOnDelete(Constants.UserDeleteErorrs.NO_SELECTED_USER);
+        }
+
+        public void SetErrorTextOnDelete(Constants.UserDeleteErorrs errors)
+        {
+            if (errors == Constants.UserDeleteErorrs.NO_SELECTED_USER)
+                ErrorText = "You must first select a user\nbefore trying to delete one";
+            if (errors == Constants.UserDeleteErorrs.USER_LOGGED_IN)
+                ErrorText = "You cannot delete a logged\nin user";
+            else
+                ErrorText = "";
+
+        }
     }
 }

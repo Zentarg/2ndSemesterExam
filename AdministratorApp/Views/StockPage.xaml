@@ -20,11 +20,21 @@
             <Setter Property="Width" Value="75" />
             <Setter Property="Background" Value="#00000000"/>
         </Style>
+        <Style x:Key="ArrowButton" TargetType="Button">
+            <Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="Height" Value="45" />
+            <Setter Property="Width" Value="75" />
+            <Setter Property="Background" Value="#00000000"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+        </Style>
 
         <Style x:Key="BasicTextBox" TargetType="TextBox">
-            <Setter Property="Height" Value="35"/>
+            <Setter Property="Height" Value="auto"/>
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Width" Value="175" />
+            <Setter Property="Width" Value="Auto" />
+            <Setter Property="MaxWidth" Value="175"/>
+            <Setter Property="MaxLength" Value="35"/>
         </Style>
 
         <Style x:Key="ItemPropertiesHeaderTextBlock" TargetType="TextBlock">
@@ -42,7 +52,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="35"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
             <StackPanel Orientation="Horizontal">
@@ -72,8 +82,7 @@
                         <TextBlock Text="{Binding Item1.Id}"  Margin="0,0,35,0"/>
                         <TextBlock Text="{Binding Item1.Name}"  Margin="0,0,75,0"/>
                         <TextBlock Text="{Binding Item2}"  Margin="0,0,45,0" />
-                        <TextBlock Text="{Binding Item1.Price}"  Margin="0,0,1,0"/>
-                        <TextBlock Text="Ft."/>
+                        <TextBlock Text="{Binding Item1.Price}"/> 
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -81,7 +90,9 @@
       
 
         <ScrollViewer Visibility="Visible" Name="ItemPanel" Grid.Column="1" Grid.Row="1" >
-            <StackPanel Width="450">
+
+            <StackPanel>
+                <StackPanel Width="450"  Name="SimpleItemDisplay" Visibility="Visible">
             
                 <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
                     <TextBlock Text="Name:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
@@ -105,7 +116,7 @@
                     </ListView>
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
+                <StackPanel  Orientation="Horizontal" Margin="15,15,15,0">
                     <TextBlock Text="Type:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
                     <TextBlock Text="{Binding SelectedItemCategory.Name}"   />
                 </StackPanel>
@@ -136,16 +147,187 @@
                     <TextBlock Text="Barcode:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
                     <TextBlock Text="{Binding SelectedItem.Item1.Barcode, Mode=TwoWay}" />
                 </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
+                        <TextBlock Text="Comment:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
+                    <TextBlock Text="{Binding SelectedItem.Item1.Comment, Mode=TwoWay}"  Height="Auto" MaxHeight="250" />
+                </StackPanel>
+
                 <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
                     <TextBlock Text="Picture:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
                     <Image Source="{Binding SelectedItem.Item1.PictureSource, Mode=TwoWay}" MaxWidth="250" MaxHeight="250" />
                 </StackPanel>
-                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,25,0,0">
-                    <Button Width="75" Height="35" Content="Edit" HorizontalAlignment="Right" Margin="25,0,25,0"/>
-                    <Button Width="75" Height="35" Content="Close" HorizontalAlignment="Right" Margin="0,0,25,0"/>
+
+
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,25,0,0">
+                    <Button Width="75" Height="35" Content="Edit" HorizontalAlignment="Right" Margin="25,0,25,0" Name="EditButton" Click="EditButton_OnClick" />
+                    <Button Width="75" Height="35" Content="Close" HorizontalAlignment="Right" Margin="0,0,25,0" Command="{Binding DeselectItemCommand}"/>
+                </StackPanel>
+            </StackPanel>
+
+
+<!-- Editable part/-->
+
+
+                <StackPanel Width="450" Name="EditableItemDisplay" Visibility="Collapsed" >
+
+                <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
+                    <TextBlock Text="Name:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
+                        <TextBox Text="{Binding SelectedItem.Item1.Name, Mode=TwoWay}"  Style="{StaticResource BasicTextBox}" />
                 </StackPanel>
 
+                <StackPanel Margin="15,15,5,0">
+                    <TextBlock Text="Amount:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
+                    <ListView Width="350"  ItemsSource="{Binding SelectedItemInStocks}" HorizontalAlignment="Left" SelectionMode="None">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text=">" Margin="10,0,5,0"/>
+                                    <TextBlock Text="{Binding Key.Name}"/>
+                                    <TextBlock Text=" = " Margin="5,0,5,0"/>
+                                    <Button Name="IncreaseAmount"  Style="{StaticResource ArrowButton}" Height="35" Width="35" Content="&#xE70E;"  />
+                                        <TextBox Text="{Binding Value}"  Style="{StaticResource BasicTextBox}"/>
+                                    <Button Name="DecreaseAmount"  Style="{StaticResource ArrowButton}" Height="35" Width="35" Content="&#xE70D;"  />
+                                    <TextBlock Text="pcs." Margin="3,0,0,0"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
+                    <TextBlock Text="Type:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
+                        <TextBox Text="{Binding SelectedItemCategory.Name}"   Style="{StaticResource BasicTextBox}"  />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
+                    <TextBlock Text="Price:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
+                        <TextBox Text="{Binding SelectedItem.Item1.Price, Mode=TwoWay}"  Style="{StaticResource BasicTextBox}"  />
+                    <TextBlock Text="Ft" Margin="0,0,6,0" />
+
+                    <TextBlock Text="(" Margin="10,0,0,0" />
+                    <TextBlock Text="{Binding PriceAfterDiscount, Mode=TwoWay}" FontWeight="Bold" />
+                    <TextBlock Text="Ft)" Margin="0,0,0,0" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
+                    <TextBlock Text="Discount:" Style="{StaticResource ItemPropertiesHeaderTextBlock}"/>
+                        <TextBox Text="{Binding SelectedItem.Item1.DiscountPercentage, Mode=TwoWay}"   Style="{StaticResource BasicTextBox}"/>
+                    <TextBlock Text="%" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
+                    <TextBlock Text="Color:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
+                        <TextBox Text="{Binding SelectedItem.Item1.Color, Mode=TwoWay}"  Style="{StaticResource BasicTextBox}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
+                    <TextBlock Text="Size:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
+                        <TextBox Text="{Binding SelectedItem.Item1.Size, Mode=TwoWay}"  Style="{StaticResource BasicTextBox}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
+                    <TextBlock Text="Barcode:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
+                        <TextBox Text="{Binding SelectedItem.Item1.Barcode, Mode=TwoWay}" Style="{StaticResource BasicTextBox}" />
+                </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
+                        <TextBlock Text="Comment:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
+                        <TextBox Text="{Binding SelectedItem.Item1.Comment, Mode=TwoWay}"  Height="Auto" MaxHeight="250" />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
+                    <TextBlock Text="Picture:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
+                    <Image Source="{Binding SelectedItem.Item1.PictureSource, Mode=TwoWay}" MaxWidth="250" MaxHeight="250" />
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,25,0,0">
+                    <Button Width="75" Height="35" Content="Close" HorizontalAlignment="Right" Margin="25,0,25,0" Click="ButtonBase_OnClick">
+                        <Button.Resources>
+                        <ResourceDictionary>
+                            <ResourceDictionary.ThemeDictionaries>
+                                <ResourceDictionary x:Key="Dark">
+                                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#FF6262"/>
+                                    <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#CD5252"/>
+                                </ResourceDictionary>
+                                <ResourceDictionary x:Key="Light">
+                                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#FF6262"/>
+                                    <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#CD5252"/>
+                                </ResourceDictionary>
+                            </ResourceDictionary.ThemeDictionaries>
+                        </ResourceDictionary>
+                    </Button.Resources>
+
+                </Button>
+                        <Button Width="75" Height="35" Content="Save" HorizontalAlignment="Right" Margin="0,0,25,0">
+                            <Button.Resources>
+                                <ResourceDictionary>
+                                    <ResourceDictionary.ThemeDictionaries>
+                                        <ResourceDictionary x:Key="Dark">
+                                            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#8BD285"/>
+                                            <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#769F72"/>
+                                        </ResourceDictionary>
+                                        <ResourceDictionary x:Key="Light">
+                                            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#8BD285"/>
+                                            <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#769F72"/>
+                                        </ResourceDictionary>
+                                    </ResourceDictionary.ThemeDictionaries>
+                                </ResourceDictionary>
+                            </Button.Resources>
+                        </Button>
+                    </StackPanel>
+
             </StackPanel>
-            </ScrollViewer>
+            </StackPanel>
+
+
+        </ScrollViewer>
+
+
+            <StackPanel Grid.Row="3"  Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,5,5,5" Orientation="Horizontal">
+            <TextBlock Foreground="#0CBF0E" Text="Add new item" VerticalAlignment="Center"/>
+            <Button Command="{Binding GoToAddItem}" Foreground="#0CBF0E" Background="Transparent" Content="&#xE82E;" FontFamily="Segoe mdl2 assets" Width="50" Height="50" FontSize="30">
+                <Button.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.ThemeDictionaries>
+                            <ResourceDictionary x:Key="Dark">
+                                <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent"/>
+                                <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
+                                <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
+                                <SolidColorBrush x:Key="ButtonForegroundPressed" Color="#198D1A"/>
+                                <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="Green"/>
+                            </ResourceDictionary>
+                            <ResourceDictionary x:Key="Light">
+                                <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent"/>
+                                <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
+                                <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="Green"/>
+                                <SolidColorBrush x:Key="ButtonForegroundPressed" Color="#198D1A"/>
+                                <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
+                            </ResourceDictionary>
+                        </ResourceDictionary.ThemeDictionaries>
+                    </ResourceDictionary>
+                </Button.Resources>
+            </Button>
+
+            <TextBlock Foreground="#1275FF" Text="Add item to stock" VerticalAlignment="Center" Margin="25,0,0,0"/>
+            <Button Command="{Binding NavigateToAddItemToStockCommand}" Foreground="#1275FF" Background="Transparent" Content="&#xECC8;" FontFamily="Segoe mdl2 assets" Width="50" Height="50" FontSize="30">
+                <Button.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.ThemeDictionaries>
+                            <ResourceDictionary x:Key="Dark">
+                                <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent"/>
+                                <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
+                                <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
+                                <SolidColorBrush x:Key="ButtonForegroundPressed" Color="#6FABFF"/>
+                                <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="#547DB6"/>
+                            </ResourceDictionary>
+                            <ResourceDictionary x:Key="Light">
+                                <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent"/>
+                                <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
+                                <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="#6FABFF"/>
+                                <SolidColorBrush x:Key="ButtonForegroundPressed" Color="#547DB6"/>
+                                <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
+                            </ResourceDictionary>
+                        </ResourceDictionary.ThemeDictionaries>
+                    </ResourceDictionary>
+                </Button.Resources>
+            </Button>
+        </StackPanel>
+
     </Grid>
 </Page>

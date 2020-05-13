@@ -34,5 +34,18 @@ namespace AdministratorApp.Views
                 ItemPanel.Visibility = Visibility.Visible;
             }
         }
+
+        private void EditButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            SimpleItemDisplay.Visibility = Visibility.Collapsed;
+            EditableItemDisplay.Visibility = Visibility.Visible;
+        }
+
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            SimpleItemDisplay.Visibility = Visibility.Visible;
+            EditableItemDisplay.Visibility = Visibility.Collapsed;
+        }
     }
 }

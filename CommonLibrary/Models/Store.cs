@@ -26,7 +26,6 @@ namespace AdministratorApp.Models
         public Store(int id, int administratorId, int managerId, string name, string address, int phone, string manager)
         {
             ID = id;
-            AdministratorID = administratorId;
             ManagerID = managerId;
             Name = name;
             Address = address;
@@ -36,7 +35,6 @@ namespace AdministratorApp.Models
 
 
         public int ID { get; set; }
-        public int AdministratorID { get; set; }
         public int ManagerID { get; set; }
         public string Manager { get; set; }
         public string Name { get; set; }

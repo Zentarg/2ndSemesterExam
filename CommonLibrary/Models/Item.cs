@@ -5,11 +5,24 @@ namespace CommonLibrary.Models
 {
     public class Item
     {
-
-
+        public Item() { }
+        //General Item
         public Item(int id, string name, float price, string comment , string pictureSource , int barcode , string color, string size, int categoryId, float discountPercentage)
         {
             Id = id;
+            Name = name;
+            Price = price;
+            Comment = comment;
+            PictureSource = pictureSource;
+            Barcode = barcode;
+            Color = color;
+            Size = size;
+            CategoryId = categoryId;
+            DiscountPercentage = discountPercentage;
+        }
+        //Item for post without ID
+        public Item( string name, float price, string comment, string pictureSource, int barcode, string color, string size, int categoryId, float discountPercentage)
+        {
             Name = name;
             Price = price;
             Comment = comment;
@@ -34,7 +47,7 @@ namespace CommonLibrary.Models
 
         public override string ToString()
         {
-            return $"#{Id} - {Name},{Price}";
+            return $"#{Id} - {Name}, {Price}Ft.";
         }
     }
 }

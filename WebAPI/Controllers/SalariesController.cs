@@ -107,7 +107,8 @@ namespace WebAPI.Controllers
             return CreatedAtRoute("DefaultApi", new { id = salary.UserID }, salary);
         }
 
-        // DELETE: api/Salaries/5
+        // DELETE: api/Salaries/DeleteSalary/id
+        [Route("api/Salaries/DeleteSalary/{id}")]
         [ResponseType(typeof(Salary))]
         public IHttpActionResult DeleteSalary(int id)
         {
@@ -117,9 +118,13 @@ namespace WebAPI.Controllers
                 return NotFound();
             }
 
-            db.Salaries.Remove(salary);
-            db.SaveChanges();
+            if (salary.UserID != 0)
+            {
+                SalaryHandler.DeleteOneSalary(db, salary);
+                return Ok(salary);
+            }
 
+            salary.UserID = -1;
             return Ok(salary);
         }
 

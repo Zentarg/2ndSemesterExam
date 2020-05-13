@@ -126,11 +126,15 @@
                     
 
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,50,50">
-                    <Button IsEnabled="{Binding IsEmployeeSelected}" Content="Delete" Margin="0,0,10,0"/>
-                    <Button Content="Cancel" Command="{Binding DoCancel}" IsEnabled="{Binding IsEmployeeSelected}" Margin="0,0,10,0"/>
-                    <Button IsEnabled="{Binding IsEmployeeSelected}" Content="Confirm"/>
+                <StackPanel VerticalAlignment="Bottom">
+                    <TextBlock Width="180" Text="{Binding ErrorText}" HorizontalAlignment="Right" Margin="0,0,50,15"></TextBlock>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,50,50">
+                        <Button Command="{Binding DoDelete}" IsEnabled="{Binding IsEmployeeSelected}" Content="Delete" Margin="0,0,10,0"/>
+                        <Button Content="Cancel" Command="{Binding DoCancel}" IsEnabled="{Binding IsEmployeeSelected}" Margin="0,0,10,0"/>
+                        <Button IsEnabled="{Binding IsEmployeeSelected}" Content="Confirm"/>
+                    </StackPanel>
                 </StackPanel>
+                
                 
             </Grid>
             

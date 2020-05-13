@@ -12,6 +12,7 @@
     <Page.DataContext>
         <viewModel:AddItemViewModel/>
     </Page.DataContext>
+
     <Page.Resources>
         <Style x:Key="NormalTextBlock" TargetType="TextBlock">
             <Setter Property="FontWeight" Value="Normal"/>
@@ -55,14 +56,9 @@
             </StackPanel>
 
             <StackPanel Margin="30,25,0,15" Orientation="Horizontal" VerticalAlignment="Center">
-                <TextBlock Style="{StaticResource NormalTextBlock}" Margin="0,5,42,0" Text="Store: "/>
-                <ComboBox  Width="275" PlaceholderText="Budapest-Allee" ItemsSource="{Binding Stores.Count}"/>
-            </StackPanel>
-
-            <StackPanel Margin="30,25,0,15" Orientation="Horizontal" VerticalAlignment="Center">
-                <TextBlock Style="{StaticResource NormalTextBlock}" Margin="0,4,46,0" Text="Type: "/>
+                <TextBlock Style="{StaticResource NormalTextBlock}"  Margin="0,4,15,0" Text="Category: "/>
                 <StackPanel Orientation="Vertical">
-                    <ComboBox  Width="275" PlaceholderText="Flower" />
+                        <ComboBox  Width="275"  PlaceholderText="{Binding Categories[0]}" SelectedItem="{Binding Category, Mode=TwoWay}" ItemsSource="{Binding Categories}" />
                     <TextBlock Text="--- Or ---" HorizontalAlignment="Center" Margin="0,10,0,10"/>
                     <TextBox  Style="{StaticResource NormalTextBox}" PlaceholderText="e.g. Plant"/>
                 </StackPanel>
@@ -70,18 +66,18 @@
 
             <StackPanel Margin="30,25,0,15" Orientation="Horizontal" VerticalAlignment="Center">
                 <TextBlock Style="{StaticResource NormalTextBlock}" Margin="0,5,41,0" Text="Color: "/>
-                <TextBox  Style="{StaticResource NormalTextBox}" PlaceholderText="e.g. Red"/>
+                <TextBox  Style="{StaticResource NormalTextBox}" Text="{Binding Color, Mode=TwoWay}" PlaceholderText="e.g. Red"/>
             </StackPanel>
             <StackPanel Margin="30,25,0,15" Orientation="Horizontal" VerticalAlignment="Center">
                 <TextBlock Style="{StaticResource NormalTextBlock}" Margin="0,5,50,0" Text="Size: "/>
-                <TextBox  Style="{StaticResource NormalTextBox}" PlaceholderText="e.g. Medium"/>
+                    <TextBox  Style="{StaticResource NormalTextBox}"  PlaceholderText="e.g. Medium" Text="{Binding Size, Mode=TwoWay}"/>
             </StackPanel>
             <StackPanel Margin="30,25,0,15" Orientation="Horizontal" VerticalAlignment="Center">
                 <TextBlock Style="{StaticResource NormalTextBlock}" Margin="0,5,20,0" Text="Barcode: "/>
-                <TextBox  Style="{StaticResource NormalTextBox}" PlaceholderText="e.g. 1111-1111-1111"/>
+                    <TextBox  Style="{StaticResource NormalTextBox}" PlaceholderText="e.g. 1111-1111-1111" Text="{Binding Barcode, Mode=TwoWay}"/>
             </StackPanel>
             <StackPanel Margin="30,25,0,15" Orientation="Horizontal" VerticalAlignment="Center">
-                <TextBlock Style="{StaticResource NormalTextBlock}" FontSize="15" Margin="0,5,3,0" Text="Description: "/>
+                <TextBlock Style="{StaticResource NormalTextBlock}" FontSize="15" Margin="0,5,14,0" Text="Comment: "/>
                 <RichEditBox Width="275" Height="125"  PlaceholderText="This item is really popular!"/>
             </StackPanel>
 
@@ -89,14 +85,17 @@
         </ScrollViewer>
 
         <StackPanel Grid.Column="1" VerticalAlignment="Top" Margin="25,45,0,20">
-            <TextBlock Style="{StaticResource NormalTextBlock}" Margin="0,5,0,0" Text="Image: "/>
-            <Image Width="300" Height="300" Source="../Assets/LockScreenLogo.png" HorizontalAlignment="Left"/>
-            <Button Width="300" Height="45" Content="Add Image"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Style="{StaticResource NormalTextBlock}" Margin="0,0,6,0" Text="Image: "/>
+                <TextBox Width="300" FontSize="13" Text="{Binding PictureUrl, Mode=TwoWay}" PlaceholderText="flower.jpg" />
+            </StackPanel>
+            <Image Width="300" Stretch="Fill" Height="300" Source="{Binding PictureUrl, Mode=TwoWay}" Margin="55,5,0,0" HorizontalAlignment="Left"/>
         </StackPanel>
+
         <StackPanel Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,20,45,45">
             <StackPanel Orientation="Horizontal">
 
-                <Button Content="Cancel" Width="90" Height="45" Margin="0,0,45,0"  Background="#FF6262" >
+                <Button Content="Cancel" Width="90" Height="45" Margin="0,0,45,0" Command="{Binding CancelCommand}"  Background="#FF6262" >
                     <Button.Resources>
                         <ResourceDictionary>
                             <ResourceDictionary.ThemeDictionaries>
@@ -113,7 +112,7 @@
                     </Button.Resources>
                 </Button>
 
-                <Button Content="Confirm" Width="90" Height="45"  FontWeight="Bold" Background="#8BD285" >
+                <Button Content="Confirm" Width="90" Height="45"  FontWeight="Bold" Background="#8BD285" Command="{Binding AddItemCommand}">
                     <Button.Resources>
                         <ResourceDictionary>
                         <ResourceDictionary.ThemeDictionaries>
