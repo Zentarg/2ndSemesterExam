@@ -26,5 +26,15 @@ namespace AdministratorApp.Views
         {
             this.InitializeComponent();
         }
+
+        private void TextBox_OnBeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void FilterNonNumeric_OnBeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
+        {
+            args.Cancel = args.NewText.Any(c => !char.IsDigit(c));
+        }
     }
 }
