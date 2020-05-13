@@ -43,6 +43,7 @@ namespace WebAPI.Controllers
         }
 
         // PUT: api/Stores/5
+        [Route("api/Stores/PutStore/{id}")]
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutStore(int id, Store store)
         {
@@ -92,7 +93,8 @@ namespace WebAPI.Controllers
             return CreatedAtRoute("DefaultApi", new { id = store.ID }, store);
         }
 
-        // DELETE: api/Stores/5
+        // DELETE: api/Stores/DeleteStore/5
+        [Route("api/Stores/DeleteStore/{id}")]
         [ResponseType(typeof(Store))]
         public async Task<IHttpActionResult> DeleteStore(int id)
         {
@@ -102,10 +104,11 @@ namespace WebAPI.Controllers
                 return NotFound();
             }
 
-            db.Stores.Remove(store);
+            StoresHandler.DeleteOneStore(db, store);
             await db.SaveChangesAsync();
 
             return Ok(store);
+
         }
 
         protected override void Dispose(bool disposing)
