@@ -45,6 +45,7 @@ namespace AdministratorApp.Views
                     await Data.UpdateCategories();
                     mainViewModel.LoadDataAsync();
                     mainViewModel.Category = c;
+                    
                     args.Cancel = false;
                 }
                 else args.Cancel = true;
