@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.UserDataTasks;
 using Windows.UI.Xaml.Controls;
 using AdministratorApp.Annotations;
 using AdministratorApp.Models;
@@ -26,6 +27,7 @@ namespace AdministratorApp.ViewModels
         private string _comment; 
         private string _pictureUrl = "https://lh3.googleusercontent.com/proxy/H7RfYt-nkhjZ4iyB1bGL4gbUbG5rizq9dEMHT7V3_LB8CxT1kAnGIJf-eBzFemJdl7VzVlh_9ZhYZtoYidLd393lUIFvjmKuOjag2WziBrDZrKDCMr8YzNNI1CKWKpD_xBSKhWA";
         private int _barcode;
+        private string _errorMessage;
 
         public AddItemViewModel()
         {
@@ -36,14 +38,13 @@ namespace AdministratorApp.ViewModels
 
         public RelayCommand CancelCommand { get; set; }
 
-        public ObservableCollection<Stock> Stocks
-        {
-            get => new ObservableCollection<Stock>(Data.AllStocks.Values);
-        }
+
         public ObservableCollection<Category> Categories
         {
             get => new ObservableCollection<Category>(Data.AllCategories.Values);
         }
+
+        public ObservableCollection<Item> Items { get => new ObservableCollection<Item>(Data.AllItems.Values);}
 
         public string Name { get => _name;
             set{ _name = value; OnPropertyChanged();} }
@@ -93,6 +94,12 @@ namespace AdministratorApp.ViewModels
             get => _barcode;
             set { _barcode = value; OnPropertyChanged(); }
         }
+
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            set { _errorMessage = value; OnPropertyChanged(); }
+        }
         public RelayCommand AddItemCommand { get; }
 
         private async void AddItem()
@@ -102,16 +109,39 @@ namespace AdministratorApp.ViewModels
             {
                 if (CheckTextFields())
                 {
-                    Item newItem = new Item(Name, Price, Comment, PictureUrl, Barcode, Color, Size, CategoryID, Discount);
-                    await APIHandler<Item>.PostOne("Items", newItem);
-                    ContentDialog dialog = new ContentDialog()
+                    if (Price > 0)
                     {
-                        Title = "Item successfully added!",
-                        Content = $"{Name} was successfully added to the database!",
-                        PrimaryButtonText = "Ok"
-                    };
-                    await dialog.ShowAsync();
+
+                        if (Discount <= 100)
+                        {
+                            if (CheckIfNameAlreadyExist())
+                            {
+
+
+                                Item newItem = new Item(Name, Price, Comment, PictureUrl, Barcode, Color, Size,
+                                    CategoryID,
+                                    Discount);
+                                await APIHandler<Item>.PostOne("Items", newItem);
+                                ContentDialog dialog = new ContentDialog()
+                                {
+                                    Title = "Item successfully added!",
+                                    Content = $"{Name} was successfully added to the database!",
+                                    PrimaryButtonText = "Ok"
+                                };
+
+                                await dialog.ShowAsync();
+                                await Data.UpdateItems();
+                                OnPropertyChanged(nameof(Items));
+                            }
+                            else ErrorMessage = $"Item with the name {Name} already exist!";
+
+
+                        }
+                        else ErrorMessage = "Discount cannot be more than 100%!";
+                    }
+                    else ErrorMessage = "Price cannot be zero!";
                 }
+                else ErrorMessage = "Name, category, color, size, price and barcode must be given!";
 
             }
             catch (Exception e)
@@ -120,6 +150,18 @@ namespace AdministratorApp.ViewModels
                 throw;
             }
 
+        }
+
+        public bool CheckIfNameAlreadyExist()
+        {
+            foreach (var item in Items)
+            {
+                if (item.Name == Name)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public bool CheckTextFields()
@@ -137,9 +179,9 @@ namespace AdministratorApp.ViewModels
         }
 
         public async void LoadDataAsync()
-        {
-            await Data.UpdateStock();
+        { 
             await Data.UpdateCategories();
+            await Data.UpdateItems();
         }
 
         private void NavigateBack()

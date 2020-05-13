@@ -71,7 +71,9 @@ namespace AdministratorApp.ViewModels
         {
             if (CheckTextFields())
             {
-                ErrorMessage = "";
+                if (Amount>0)
+                {
+                    ErrorMessage = "";
                 await APIHandler<StockHasItems>.PostOne("stockhasitems", new StockHasItems(SelectedStock.StockID, SelectedItem.Id, Amount));
                 ContentDialog dialog = new ContentDialog()
                 {
@@ -81,6 +83,11 @@ namespace AdministratorApp.ViewModels
                 };
                 await dialog.ShowAsync();
                 ClearBoxes();
+                }
+                else
+                {
+                    ErrorMessage = "The amount cannot be 0 or negative.";
+                }
             }
             else
             ErrorMessage = "All the fields have to be filled out.";

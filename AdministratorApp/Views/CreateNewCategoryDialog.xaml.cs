@@ -20,15 +20,15 @@ using CommonLibrary.Models;
 
 namespace AdministratorApp.Views
 {
-    public sealed partial class CreateNewRoleContentDialog : ContentDialog
+    public sealed partial class CreateNewCategoryDialog : ContentDialog
     {
-        private CreateNewRoleVM vm;
-        private CreateEmployeeVM vm2;
-        public CreateNewRoleContentDialog()
+        private CreateNewCategoryVM viewModel;
+        private AddItemViewModel mainViewModel;
+        public CreateNewCategoryDialog(AddItemViewModel aivm)
         {
             this.InitializeComponent();
-            vm = DataContext as CreateNewRoleVM;
-            
+            viewModel = DataContext as CreateNewCategoryVM;
+            mainViewModel = aivm;
         }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -37,16 +37,25 @@ namespace AdministratorApp.Views
 
         private async void ContentDialog_OnConfirmClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            var error = vm.CheckRoleForErrors();
-            ErrorTextBlock.Text = vm.SetErrorText(error);
-            if (error == Constants.RoleErrors.OK)
+            try
             {
-                await APIHandler<Role>.PostOne("Roles", new Role(0, EnterRoleBox.Text));
-                await Data.UpdateRoles();
-                VMHandler.CreateEmployeeVm.LoadDataAsync();
-                args.Cancel = false;
+                if (viewModel.CheckErrors())
+                {
+                    Category c =  await APIHandler<Category>.PostOne("categories", new Category(EnterCategoryBox.Text));
+                    await Data.UpdateCategories();
+                    mainViewModel.LoadDataAsync();
+                    mainViewModel.Category = c;
+                    
+                    args.Cancel = false;
+                }
+                else args.Cancel = true;
             }
-            args.Cancel = true;
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
         }
     }
 }
