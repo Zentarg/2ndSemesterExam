@@ -68,5 +68,10 @@ namespace CommonLibrary.Models
         public float WorkingHours { get; set; }
         public int UserLevelId { get; set; }
         public int StoreId { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Name}";
+        }
     }
 }

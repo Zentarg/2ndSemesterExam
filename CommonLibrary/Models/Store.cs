@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommonLibrary.Models;
 
 namespace AdministratorApp.Models
 {
@@ -14,12 +15,12 @@ namespace AdministratorApp.Models
         }
 
         //For creating new stores
-        public Store(string name, string address, int phone, string manager)
+        public Store(string name, string address, int phone, int managerID)
         {
             Name = name;
             Address = address;
             Phone = phone;
-            Manager = manager;
+            ManagerID = managerID;
         }
 
         public Store(int id, int administratorId, int managerId, string name, string address, int phone, string manager)
