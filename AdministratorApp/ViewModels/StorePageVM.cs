@@ -178,9 +178,9 @@ namespace AdministratorApp.ViewModels
 
         private void StockPage()
         {
+            RuntimeDataHandler.SelectedStore = SelectedStore;
             Frame mainFrame = Window.Current.Content as Frame;
             mainFrame?.Navigate(Type.GetType($"{Application.Current.GetType().Namespace}.Views.StoreStockPage"));
-            //RuntimeDataHandler.SelectedStock = SelectedStore;
         }
 
         private async Task LoadDataAsync()
