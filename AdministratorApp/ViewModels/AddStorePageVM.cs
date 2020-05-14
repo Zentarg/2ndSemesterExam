@@ -104,7 +104,7 @@ namespace AdministratorApp.ViewModels
         {
             if (CheckTextFields())
             { 
-                _store = new Store(Name, Address, Phone, SelectedManager.Id,StoreId);
+                _store = new Store() { Name = Name, Address = Address, Phone = Phone, ManagerID = SelectedManager.Id, ID = StoreId };
                 var item = AllStores.FirstOrDefault(s =>
                     s.Name == Name && s.Address == Address && s.Phone == Phone && s.ManagerID == SelectedManager.Id);
 

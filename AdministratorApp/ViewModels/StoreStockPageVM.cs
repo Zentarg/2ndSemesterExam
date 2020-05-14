@@ -37,7 +37,7 @@ namespace AdministratorApp.ViewModels
                 {
                     items.Add(new KeyValuePair<Item, int>(Data.AllItems[product.Key], product.Value ));
                 }
-
+                
                 return items;
             }
         }

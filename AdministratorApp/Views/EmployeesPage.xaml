@@ -132,8 +132,8 @@
                         <Button Grid.Row="0" Grid.Column="1" Visibility="{Binding ShowNormal}" Margin="300,0,0,0" Content="Show Username" Width="150" Command="{Binding DoShowUserName}" IsEnabled="{Binding IsEmployeeSelected}"></Button>
 
                         <TextBlock Grid.Column="0" Grid.Row="1" Visibility="{Binding ShowNormal}"  Text="Password" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Row="1" Grid.Column="1" Visibility="{Binding ShowNormal}"  Text="**********" VerticalAlignment="Center" Width="300" HorizontalAlignment="Left"></TextBlock>
-                        <Button Grid.Row="1" Grid.Column="1" Content="Generate" Visibility="{Binding ShowNormal}" Margin="300,0,0,0" Width="150" IsEnabled="{Binding IsEmployeeSelected}"></Button>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Visibility="{Binding ShowNormal}"  Text="{Binding Password}"  VerticalAlignment="Center" Width="300" HorizontalAlignment="Left"></TextBlock>
+                        <Button Grid.Row="1" Grid.Column="1" Content="Generate" Visibility="{Binding ShowNormal}" Margin="300,0,0,0" Width="150" IsEnabled="{Binding IsEmployeeSelected}" Command="{Binding DoGenerateAuth}"></Button>
                     </Grid>
 
 
@@ -141,23 +141,26 @@
                     
 
                 </StackPanel>
-                <StackPanel VerticalAlignment="Bottom">
-                    <TextBlock Width="180" Text="{Binding FeedBackText}" HorizontalAlignment="Right" Margin="0,0,50,15"></TextBlock>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,50,50">
-                        <Button Command="{Binding DoDelete}" IsEnabled="{Binding IsEmployeeSelected}" Visibility="{Binding ShowNormal}" Content="Delete" Margin="0,0,10,0" Width="75"/>
-                        <Button Content="Deselect" Command="{Binding DoCancel}" Visibility="{Binding ShowNormal}" IsEnabled="{Binding IsEmployeeSelected}" Margin="0,0,10,0" Width="75"/>
-                        <Button IsEnabled="{Binding IsEmployeeSelected}" Visibility="{Binding ShowNormal}" Command="{Binding DoShowEdit}" Content="Edit" Width="75"/>
+                <Grid VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Width="180" Text="{Binding FeedBackText}" HorizontalAlignment="Right" Margin="0,0,50,15"></TextBlock>
+                    <StackPanel Grid.Row="1" VerticalAlignment="Bottom">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,50,50">
+                            <Button Command="{Binding DoDelete}" IsEnabled="{Binding IsEmployeeSelected}" Visibility="{Binding ShowNormal}" Content="Delete" Margin="0,0,10,0" Width="75"/>
+                            <Button Content="Deselect" Command="{Binding DoCancel}" Visibility="{Binding ShowNormal}" IsEnabled="{Binding IsEmployeeSelected}" Margin="0,0,10,0" Width="75"/>
+                            <Button IsEnabled="{Binding IsEmployeeSelected}" Visibility="{Binding ShowNormal}" Command="{Binding DoShowEdit}" Content="Edit" Width="75"/>
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
-                <StackPanel VerticalAlignment="Bottom">
-
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,50,50">
-                        <Button Content="Cancel" Visibility="{Binding ShowEdit}" Command="{Binding DoCancelEdit}" IsEnabled="{Binding IsEmployeeSelected}" Margin="0,0,10,0" Width="75"/>
-                        <Button IsEnabled="{Binding IsEmployeeSelected}" Command="{Binding DoConfirmEdit}" Visibility="{Binding ShowEdit}" Content="Confirm" Width="75"/>
+                    <StackPanel Grid.Row="1" VerticalAlignment="Bottom">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,50,50">
+                            <Button Content="Cancel" Visibility="{Binding ShowEdit}" Command="{Binding DoCancelEdit}" IsEnabled="{Binding IsEmployeeSelected}" Margin="0,0,10,0" Width="75"/>
+                            <Button IsEnabled="{Binding IsEmployeeSelected}" Command="{Binding DoConfirmEdit}" Visibility="{Binding ShowEdit}" Content="Confirm" Width="75"/>
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
-                
-                
+                </Grid>
             </Grid>
             
         </Grid>

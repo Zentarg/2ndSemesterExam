@@ -113,7 +113,7 @@ namespace AdministratorApp.Models
             }
         }
 
-        public static async Task<T> PutOne(string apiString, T objectToPut)
+        public static async Task<HttpResponseMessage> PutOne(string apiString, T objectToPut)
         {
             HttpClientHandler handler = new HttpClientHandler() { UseDefaultCredentials = true };
             using (HttpClient client = new HttpClient(handler))
@@ -128,13 +128,13 @@ namespace AdministratorApp.Models
                     StringContent content = new StringContent(item, Encoding.UTF8, "application/json");
                     var response = await client.PutAsync(apiString, content);
                     response.EnsureSuccessStatusCode();
-                    string returnData = await response.Content.ReadAsStringAsync();
-                    T returnItem = JsonConvert.DeserializeObject<T>(returnData);
-                    return returnItem;
+                    //string returnData = await response.Content.ReadAsStringAsync();
+                    //T returnItem = JsonConvert.DeserializeObject<T>(returnData);
+                    return response;
                 }
                 catch (Exception ex)
                 {
-                    return default(T);
+                    return default(HttpResponseMessage);
                 }
             }
         }

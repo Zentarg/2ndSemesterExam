@@ -42,6 +42,7 @@ namespace WebAPI.Models
             return user;
         }
 
+
         public static Dictionary<int, User> GetUsersByUserLevel(ParknGardenData db, int id)
         {
             Dictionary<int, User> users = new Dictionary<int, User>();

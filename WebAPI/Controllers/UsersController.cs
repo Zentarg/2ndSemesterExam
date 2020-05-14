@@ -6,6 +6,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebAPI;
@@ -54,9 +55,10 @@ namespace WebAPI.Controllers
             return Ok(users);
         }
 
-        // PUT: api/Users/5
+        // PUT: api/Users/UpdateUser/id
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutUser(int id, User user)
+        [Route("api/Users/UpdateUser/{id}")]
+        public async Task<IHttpActionResult> PutUser(int id, User user)
         {
             if (!ModelState.IsValid)
             {
@@ -72,7 +74,7 @@ namespace WebAPI.Controllers
 
             try
             {
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {

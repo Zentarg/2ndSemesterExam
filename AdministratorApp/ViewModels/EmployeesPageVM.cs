@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
@@ -21,6 +22,7 @@ namespace AdministratorApp.ViewModels
         private ObservableCollection<UserLevel> _accountTypes = new ObservableCollection<UserLevel>();
         private ObservableCollection<Store> _stores = new ObservableCollection<Store>();
         private ObservableCollection<Role> _roles = new ObservableCollection<Role>();
+        ObservableCollection<User> _users = new ObservableCollection<User>();
         private Salary _objSalary;
         private UserLevel _initialUserLevel;
         private UserLevel _selectedUserLevel;
@@ -49,8 +51,7 @@ namespace AdministratorApp.ViewModels
         private bool _showNormal = true;
         private bool _showUserLevelEdit = false;
         private bool _showUserLevelNormal = true;
-        
-
+        private string _password = "********";
         private string _feedbackText = "";
 
         public EmployeesPageVM()
@@ -62,14 +63,8 @@ namespace AdministratorApp.ViewModels
             DoShowEdit = new RelayCommand(ShowEditMethod);
             DoCancelEdit = new RelayCommand(CancelEditMethod);
             DoConfirmEdit = new RelayCommand(ConfirmEditMethod);
+            DoGenerateAuth = new RelayCommand(GeneratePassword);
             VMHandler.EmployeesPageVm = this;
-        }
-
-        public Dictionary<int, User> DictUsers
-        {
-            get { return Data.AllUsers; }
-            set { Data.AllUsers = value; 
-                OnPropertyChanged(); }
         }
 
         public RelayCommand DoShowUserName { get; set; }
@@ -78,6 +73,7 @@ namespace AdministratorApp.ViewModels
         public RelayCommand DoShowEdit { get; set; }
         public RelayCommand DoCancelEdit { get; set; }
         public RelayCommand DoConfirmEdit { get; set; }
+        public RelayCommand DoGenerateAuth { get; set; }
         public string UserName
         {
             get { return _userName; }
@@ -91,18 +87,14 @@ namespace AdministratorApp.ViewModels
             set { Data.AllSalaries = value; OnPropertyChanged(); }
         }
 
-        public Dictionary<int, Store> DictStore
-        {
-            get { return Data.AllStores; }
-        }
 
         public ObservableCollection<User> Users
         {
             get
             {
-                ObservableCollection<User> users = new ObservableCollection<User>(Data.AllUsers.Values);
-                return users;
+                return _users;
             }
+            set { _users = value; OnPropertyChanged(); }
         }
 
         public User SelectedEmp
@@ -133,10 +125,11 @@ namespace AdministratorApp.ViewModels
                         TajNumber = _sEmp.TAJNumber;
                         TaxNumber = _sEmp.TAXNumber;
                         WorkingHours = _sEmp.WorkingHours;
-                        InitialStore = DictStore[_sEmp.StoreId];
+                        InitialStore = Data.AllStores[_sEmp.StoreId];
                         Email = _sEmp.Email;
                         UserName = "";
                         FeedBackText = "";
+                        Password = "********";
                     }
                     
                 }
@@ -289,6 +282,12 @@ namespace AdministratorApp.ViewModels
             set { _accountTypes = value; OnPropertyChanged(); }
         }
 
+        public string Password
+        {
+            get { return _password; }
+            set { _password = value; OnPropertyChanged(); }
+        }
+
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -302,15 +301,15 @@ namespace AdministratorApp.ViewModels
             await Data.UpdateSalaries();
             await Data.UpdateRoles();
             await Data.UpdateStore();
-            Roles = new ObservableCollection<Role>(Data.AllRoles.Values);
             AccountTypes = await Data.UpdateUserLevels();
-            foreach (Store s in DictStore.Values)
+            Roles = new ObservableCollection<Role>(Data.AllRoles.Values);
+            Users = new ObservableCollection<User>(Data.AllUsers.Values);
+            foreach (Store s in Data.AllStores.Values)
             {
                 Stores.Add(s);
             }
-            OnPropertyChanged(nameof(Users));
-            OnPropertyChanged(nameof(DictUsers));
         }
+
 
         public async Task LoadRolesAsync()
         {
@@ -325,6 +324,16 @@ namespace AdministratorApp.ViewModels
                 UserName = await APIHandler<string>.GetOne($"auth/getusername/{_userId}");
             }
         }
+        private async Task<string> GetUserNameForPassword()
+        {
+            if (_userId != -1)
+            {
+                return await APIHandler<string>.GetOne($"auth/getusername/{_userId}");
+            }
+
+            return "";
+        }
+
 
         public void Cancel()
         {
@@ -335,6 +344,8 @@ namespace AdministratorApp.ViewModels
             _userId = 0;
             _objSalary = null;
             InitialRole = null;
+            InitialStore = null;
+            InitialUserLevel = null;
             Salary = 0;
             SalaryWTax = 0;
             IsEmployeeSelected = false;
@@ -346,7 +357,7 @@ namespace AdministratorApp.ViewModels
             UserName = "";
             SelectedEmp = null;
             SelectedStore = null;
-            FeedBackText = "";
+            Password = "********";
         }
 
         public async void DeleteUser()
@@ -388,10 +399,7 @@ namespace AdministratorApp.ViewModels
 
         public void CancelEditMethod()
         {
-            ShowEdit = false;
-            ShowNormal = true;
-            ShowUserLevelNormal = true;
-            ShowUserLevelEdit = false;
+            CloseEdit();
             FeedBackText = "";
         }
 
@@ -404,6 +412,41 @@ namespace AdministratorApp.ViewModels
             VMHandler.EmployeesPageVm = this;
             ConfrimEditUserContentDialog cEUCD = new ConfrimEditUserContentDialog();
             await cEUCD.ShowAsync();
+        }
+
+        public void CloseEdit()
+        {
+            ShowEdit = false;
+            ShowNormal = true;
+            ShowUserLevelNormal = true;
+            ShowUserLevelEdit = false;
+        }
+
+        public async void GeneratePassword()
+        {
+            Password = AuthHandler.GenerateString(8);
+            string Salt = AuthHandler.GenerateString(16);
+            string encryptedPassword = AuthHandler.EncryptPassword(Password, Salt);
+            string username = await GetUserNameForPassword();
+            if (string.IsNullOrEmpty(username))
+            {
+                string generatedUsername = await AuthHandler.GenerateUserName(Name);
+                var posteAuth = await PostAuth(generatedUsername, encryptedPassword, Salt);
+            }
+            else
+            {
+                var posteAuth = await PutAuth(username, encryptedPassword, Salt);
+            }
+        }
+
+        public async Task<HttpResponseMessage> PutAuth(string username, string encryptedPassword, string salt)
+        {
+            return await APIHandler<Auth>.PutOne($"Auth/PutAuth/{SelectedEmp.Id}", new Auth(username, encryptedPassword, salt, SelectedEmp.Id));
+        }
+
+        public async Task<Auth> PostAuth(string username, string encryptedPassword, string salt)
+        {
+            return await APIHandler<Auth>.PostOne("Auth/PostAuth", new Auth(username, encryptedPassword, salt, SelectedEmp.Id));
         }
     }
 }
