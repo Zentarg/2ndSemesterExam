@@ -43,14 +43,25 @@ namespace AdministratorApp.Views
 
         }
 
-        private void CancelButton_OnClick(object sender, RoutedEventArgs e)
+        private void DeselectButton_OnClick(object sender, RoutedEventArgs e)
         {
             StoreListView.SelectedItem = null;
         }
 
         private void EditButton_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            SimpleStackPanel.Visibility = Visibility.Collapsed;
+            EditableStackPanel.Visibility = Visibility.Visible;
+            EditButton.Visibility = Visibility.Collapsed;
+            EditableButtons.Visibility = Visibility.Visible;
+        }
+
+        private void CancelButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            SimpleStackPanel.Visibility = Visibility.Visible;
+            EditableStackPanel.Visibility = Visibility.Collapsed;
+            EditButton.Visibility = Visibility.Visible;
+            EditableButtons.Visibility = Visibility.Collapsed;
         }
     }
 }
