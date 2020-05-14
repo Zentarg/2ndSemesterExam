@@ -49,8 +49,9 @@ namespace AdministratorApp.ViewModels
         private bool _showNormal = true;
         private bool _showUserLevelEdit = false;
         private bool _showUserLevelNormal = true;
-        
 
+
+        private string _filterString = "";
         private string _feedbackText = "";
 
         public EmployeesPageVM()
@@ -101,6 +102,31 @@ namespace AdministratorApp.ViewModels
             get
             {
                 ObservableCollection<User> users = new ObservableCollection<User>(Data.AllUsers.Values);
+                return users;
+            }
+        }
+
+        public string FilterString
+        {
+            get => _filterString;
+            set
+            {
+                _filterString = value;
+                OnPropertyChanged(nameof(FilteredUsers));
+            }
+        }
+
+        public ObservableCollection<User> FilteredUsers
+        {
+            get
+            {
+                ObservableCollection<User> users = new ObservableCollection<User>();
+
+                foreach (User user in CommonMethods.FilterListByString(Data.AllUsers.Values.ToList(), FilterString))
+                {
+                    users.Add(user);
+                }
+
                 return users;
             }
         }

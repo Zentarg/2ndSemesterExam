@@ -20,11 +20,12 @@
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <Grid Row="0">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text ="Sort By:" FontSize="20" VerticalAlignment="Center" Margin="15,0,0,0"></TextBlock>
-                <TextBlock Text ="Name" FontSize="20" VerticalAlignment="Center" Margin="15,0,0,0"></TextBlock>
-                <TextBlock Text ="Address" FontSize="20" VerticalAlignment="Center" Margin="15,0,0,0"></TextBlock>
-                <TextBlock Text ="Telephone" FontSize="20" VerticalAlignment="Center" Margin="15,0,0,0"></TextBlock>
+            <StackPanel Orientation="Horizontal" Spacing="15">
+                <TextBlock Text ="Sort By:" FontSize="20" VerticalAlignment="Center"/>
+                <TextBlock Text ="Name" FontSize="20" VerticalAlignment="Center"/>
+                <TextBlock Text ="Address" FontSize="20" VerticalAlignment="Center"/>
+                <TextBlock Text ="Telephone" FontSize="20" VerticalAlignment="Center"/>
+                <TextBox PlaceholderText="Search..." Width="250" Height="30" Text="{Binding FilterString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
         </Grid>
         <Grid Row="1">
@@ -33,7 +34,7 @@
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
             <Grid Column="0">
-                <ListView ItemsSource="{Binding Users}"
+                <ListView ItemsSource="{Binding FilteredUsers}"
                           SelectedItem="{Binding SelectedEmp, Mode=TwoWay}" IsEnabled="{Binding ShowNormal}">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="dc:EmployeesPageVM">
