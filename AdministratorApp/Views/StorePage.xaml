@@ -17,8 +17,9 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0" Orientation="Horizontal">
-            <ListView x:Name="StoreListView" ItemsSource="{Binding StoreList, Mode=TwoWay}" SelectedItem="{Binding SelectedStore, Mode=TwoWay}" SelectionChanged="Selector_OnSelectionChanged" Width="auto">
+        <StackPanel Grid.Column="0">
+            <TextBox Height="30" PlaceholderText="Search..." Text="{Binding FilterString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <ListView x:Name="StoreListView" ItemsSource="{Binding FilteredStores, Mode=TwoWay}" SelectedItem="{Binding SelectedStore, Mode=TwoWay}" SelectionChanged="Selector_OnSelectionChanged" Width="auto">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Top">

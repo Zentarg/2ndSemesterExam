@@ -3,6 +3,7 @@ using AdministratorApp.Models;
 using CommonLibrary.Models;
 using GalaSoft.MvvmLight.Command;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -20,6 +21,8 @@ namespace AdministratorApp.ViewModels
         private ObservableCollection<Store> _allStores = new ObservableCollection<Store>();
         private ObservableCollection<string> _managers = new ObservableCollection<string>();
         private User _selectedManager;
+
+        private string _filterString = "";
 
         private bool _isEditing = false;
         private string _name = "";
@@ -43,6 +46,33 @@ namespace AdministratorApp.ViewModels
         public RelayCommand DoConfirm { get; set; }
         public RelayCommand DoDelete { get; set; }
         public RelayCommand DoCancel { get; set; }
+
+        public string FilterString
+        {
+            get => _filterString;
+            set
+            {
+                _filterString = value;
+                OnPropertyChanged(nameof(FilteredStores));
+            }
+        }
+
+        public ObservableCollection<Store> FilteredStores
+        {
+            get
+            {
+                ObservableCollection<Store> stores = new ObservableCollection<Store>();
+
+                foreach (Store store in CommonMethods.FilterListByString(Data.AllStores.Values.ToList(), FilterString))
+                {
+                    if (store.ID != 0)
+                        stores.Add(store);
+                }
+
+                return stores;
+            }
+
+        }
 
         public string Name
         {
@@ -202,7 +232,7 @@ namespace AdministratorApp.ViewModels
             await Data.UpdateUsers();
             await Data.UpdateStore();
 
-            OnPropertyChanged(nameof(StoreList));
+            OnPropertyChanged(nameof(FilteredStores));
             OnPropertyChanged(nameof(AllManagers));
         }
 
