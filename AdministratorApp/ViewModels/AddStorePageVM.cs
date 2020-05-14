@@ -23,6 +23,7 @@ namespace AdministratorApp.ViewModels
         private string _name = "";
         private string _address = "";
         private int _phone = 0;
+        private int _storeId = 0;
         private string _errorText = "";
 
         public AddStorePageVM()
@@ -51,6 +52,11 @@ namespace AdministratorApp.ViewModels
         {
             get { return _phone; }
             set { _phone = value; OnPropertyChanged(); }
+        }
+        public int StoreId
+        {
+            get { return _storeId; }
+            set { _storeId = value; OnPropertyChanged(); }
         }
 
         public string ErrorText
@@ -98,7 +104,7 @@ namespace AdministratorApp.ViewModels
         {
             if (CheckTextFields())
             { 
-                _store = new Store(Name, Address, Phone, SelectedManager.Id);
+                _store = new Store(Name, Address, Phone, SelectedManager.Id,StoreId);
                 var item = AllStores.FirstOrDefault(s =>
                     s.Name == Name && s.Address == Address && s.Phone == Phone && s.ManagerID == SelectedManager.Id);
 

@@ -18,13 +18,15 @@ namespace AdministratorApp.ViewModels
 
         public StoreStockPageVM()
         {
-            LoadDataAsync();
-            SelectedStock = RuntimeDataHandler.SelectedStock;
+            LoadDataAsync().Wait();
 
         }
 
         //public Stock SelectedStock { get => RuntimeDataHandler.SelectedStock; }
-        public Stock SelectedStock { get; set; }
+        public Stock SelectedStock
+        {
+            get { return  Data.AllStocks.Values.FirstOrDefault(x => x.StockID == RuntimeDataHandler.SelectedStore.StockId); }
+        }
 
 
         public ObservableCollection<KeyValuePair<Item,int>> Items {
@@ -47,6 +49,8 @@ namespace AdministratorApp.ViewModels
             await Data.UpdateStock();
             OnPropertyChanged(nameof(SelectedStock));
         }
+
+
 
 
         public event PropertyChangedEventHandler PropertyChanged;
