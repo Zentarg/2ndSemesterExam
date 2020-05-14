@@ -32,6 +32,7 @@ namespace AdministratorApp.ViewModels
         public AddItemViewModel()
         {
             LoadDataAsync();
+            VMHandler.AddItemViewModel = this;
             AddItemCommand = new RelayCommand(AddItem);
             CancelCommand = new RelayCommand(NavigateBack);
         }
@@ -182,6 +183,9 @@ namespace AdministratorApp.ViewModels
         { 
             await Data.UpdateCategories();
             await Data.UpdateItems();
+            OnPropertyChanged(nameof(Categories));
+            OnPropertyChanged(nameof(Items));
+
         }
 
         private void NavigateBack()

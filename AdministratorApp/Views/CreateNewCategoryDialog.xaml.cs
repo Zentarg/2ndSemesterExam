@@ -42,9 +42,9 @@ namespace AdministratorApp.Views
                 if (viewModel.CheckErrors())
                 {
                     Category c =  await APIHandler<Category>.PostOne("categories", new Category(EnterCategoryBox.Text));
-                    await Data.UpdateCategories();
                     VMHandler.AddItemViewModel.LoadDataAsync();
                     VMHandler.AddItemViewModel.Category = c;
+                    
                     args.Cancel = false;
                 }
                 else args.Cancel = true;

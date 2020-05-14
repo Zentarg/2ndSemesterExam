@@ -19,6 +19,7 @@ namespace AdministratorApp.ViewModels
         public StoreStockPageVM()
         {
             LoadDataAsync();
+            SelectedStock = RuntimeDataHandler.SelectedStock;
 
         }
 
