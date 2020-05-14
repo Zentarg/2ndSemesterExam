@@ -34,10 +34,10 @@ namespace AdministratorApp.Views
             NavigationHandler.NavigateToPage(Type.GetType($"{Application.Current.GetType().Namespace}.Views.{(sender as Button).Tag}"));
         }
 
-        private void OpenCreateNewRoleContentDialog(object sender, RoutedEventArgs e)
+        private async void OpenCreateNewRoleContentDialog(object sender, RoutedEventArgs e)
         {
             CreateNewRoleContentDialog cNRCD = new CreateNewRoleContentDialog();
-            cNRCD.ShowAsync();
+            await cNRCD.ShowAsync();
         }
 
 

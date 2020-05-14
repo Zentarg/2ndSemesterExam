@@ -44,5 +44,11 @@ namespace AdministratorApp.Views
             bool checkForDots = (args.NewText.IndexOf('.') != args.NewText.LastIndexOf('.'));
             args.Cancel = args.NewText.Any(c => !allowedChars.Contains(c)) || checkForDots;
         }
+
+        private async void OpenCreateNewRoleContentDialog(object sender, RoutedEventArgs e)
+        {
+            CreateNewRoleContentDialog cNRCD = new CreateNewRoleContentDialog();
+            await cNRCD.ShowAsync();
+        }
     }
 }

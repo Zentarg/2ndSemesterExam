@@ -24,6 +24,8 @@ namespace AdministratorApp.Models
         public static Dictionary<int, Role> AllRoles { get; set; } = new Dictionary<int, Role>();
         public static Dictionary<int, UserLevel> AllLevels { get; set; } = new Dictionary<int, UserLevel>();
         public static User SelectedUser { get; set; }
+        public static User EditedUser { get; set; }
+        public static Salary EditedSalary { get; set; }
         
 
 

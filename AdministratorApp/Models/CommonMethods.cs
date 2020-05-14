@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Media.Streaming.Adaptive;
 using CommonLibrary.Models;
 
 namespace AdministratorApp.Models
@@ -24,6 +25,16 @@ namespace AdministratorApp.Models
             {
                 return new Salary(userId, 0, 0);
             }
+        }
+
+        public static UserLevel GetUserLevel(int userLevelId, Dictionary<int, UserLevel> userLevels)
+        {
+            return userLevels[userLevelId];
+        }
+
+        public static Store GetStore(int storeId, Dictionary<int, Store> stores)
+        {
+            return stores[storeId];
         }
 
         public static string SetErrorTextOnDelete(Constants.UserDeleteErorrs errors)

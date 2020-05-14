@@ -116,7 +116,6 @@ namespace AdministratorApp.ViewModels
         {
             get { return _accountTypes; }
             set { _accountTypes = value; OnPropertyChanged(); }
-
         }
 
         public Role SelectedRole
@@ -220,7 +219,7 @@ namespace AdministratorApp.ViewModels
         }
 
 
-        public async void LoadDataAsync()
+        public async Task LoadDataAsync()
         {
             await Data.UpdateRoles();
             await Data.UpdateStore();
