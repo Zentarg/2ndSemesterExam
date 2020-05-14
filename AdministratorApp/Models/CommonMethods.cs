@@ -45,6 +45,7 @@ namespace AdministratorApp.Models
         /// <summary>
         /// Filters a list specified by string. The item object inside the list needs to have a .ToString() method corresponding to what the user is searching for.
         /// </summary>
+        /// <typeparam name="T">The object type to use and return.</typeparam>
         /// <param name="list">The list to filter.</param>
         /// <param name="filterBy">The string each item has to contain.</param>
         /// <returns>A filtered list.</returns>
@@ -60,5 +61,29 @@ namespace AdministratorApp.Models
             return returnList;
             //return list.FindAll(delegate(T i) { return i.ToString().ToLower().Contains(filterBy.ToLower()); });
         }
+
+        /// <summary>
+        /// Filters a list specified by a category.
+        /// </summary>
+        /// <typeparam name="T">The object type to use and return.</typeparam>
+        /// <param name="list">The list to filter (Contains a tuple of the T object, and the int ID of the category.</param>
+        /// <param name="categoryList">The list of categories each item has to contain.</param>
+        /// <returns>A list filtered by categories.</returns>
+        public static List<T> FilterListByCategories<T>(List<Tuple<T, int>> list, List<Category> categoryList)
+        {
+            List<T> returnList = new List<T>();
+            foreach (Tuple<T, int> tuple in list)
+            {
+                foreach (Category category in categoryList)
+                {
+                    if (category.ID == tuple.Item2)
+                        returnList.Add(tuple.Item1);
+                }
+
+            }
+
+            return returnList;
+        }
+
     }
 }

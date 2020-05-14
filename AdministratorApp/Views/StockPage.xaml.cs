@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -13,6 +14,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using AdministratorApp.ViewModels;
+using CommonLibrary.Models;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -49,6 +51,18 @@ namespace AdministratorApp.Views
         {
             SimpleItemDisplay.Visibility = Visibility.Visible;
             EditableItemDisplay.Visibility = Visibility.Collapsed;
+        }
+
+        private void CategoriesGrid_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            List<Category> selectedCategories = new List<Category>();
+            foreach (object item in (sender as GridView).SelectedItems)
+            {
+                selectedCategories.Add(item as Category);
+                Debug.WriteLine(item);
+            }
+
+            _vm.SelectedCategories = selectedCategories;
         }
     }
 }
