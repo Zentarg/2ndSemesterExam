@@ -48,9 +48,9 @@ namespace AdministratorApp.Views
 
         private void OnlyFloatTextBox(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
         {
-            string allowedChars = "1234567890.";
-            //Regex r = new Regex("^-{0,1}\\d+\\.{0,1}\\d*$");
-            args.Cancel = args.NewText.Any(c => !allowedChars.Contains(c));
+            string allowedChars = "-1234567890.";
+            bool checkForDots = (args.NewText.IndexOf('.') != args.NewText.LastIndexOf('.'));
+            args.Cancel = args.NewText.Any(c => !allowedChars.Contains(c)) || checkForDots;
         }
     }
 }

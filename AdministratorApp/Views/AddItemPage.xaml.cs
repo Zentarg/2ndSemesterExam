@@ -43,8 +43,8 @@ namespace AdministratorApp.Views
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
 
-                CreateNewCategoryDialog createNewCategoryDialog = new CreateNewCategoryDialog();
-                createNewCategoryDialog.ShowAsync();
+                //CreateNewCategoryDialog createNewCategoryDialog = new CreateNewCategoryDialog();
+                //createNewCategoryDialog.ShowAsync();
             
         }
     }

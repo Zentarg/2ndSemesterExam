@@ -67,40 +67,48 @@
                             <RowDefinition Height="50"/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Column="0" Text="Name" VerticalAlignment="Center"/>
-                        <TextBox IsEnabled="{Binding IsEmployeeSelected}" Grid.Row="0" Grid.Column="1" Text="{Binding Name}" PlaceholderText="Enter Name" VerticalAlignment="Center" Width="300" HorizontalAlignment="Left"></TextBox>
+                        <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="12,0,0,4"/>
+                        <TextBox IsEnabled="{Binding IsEmployeeSelected}" Visibility="{Binding ShowEdit}" Grid.Row="0" Grid.Column="1" Text="{Binding Name, Mode=TwoWay}" PlaceholderText="Enter Name" VerticalAlignment="Center" Width="300" HorizontalAlignment="Left"></TextBox>
 
                         <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Address"/>
-                        <TextBox IsEnabled="{Binding IsEmployeeSelected}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Address}" PlaceholderText="Enter Address" Width="300" HorizontalAlignment="Left"></TextBox>
+                        <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Address}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="12,0,0,4"/>
+                        <TextBox IsEnabled="{Binding IsEmployeeSelected}" Visibility="{Binding ShowEdit}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Address, Mode=TwoWay}" PlaceholderText="Enter Address" Width="300" HorizontalAlignment="Left"></TextBox>
 
                         <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="Telephone" HorizontalAlignment="Left"/>
-                        <TextBox IsEnabled="{Binding IsEmployeeSelected}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Telephone}" PlaceholderText="Enter Telephone" HorizontalAlignment="Left" Width="300"/>
+                        <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Telephone}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="12,0,0,4"/>
+                        <TextBox BeforeTextChanging="OnlyNumberTextBox" Visibility="{Binding ShowEdit}" IsEnabled="{Binding IsEmployeeSelected}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Telephone, Mode=TwoWay}" PlaceholderText="Enter Telephone" HorizontalAlignment="Left" Width="300"/>
 
                         <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Text="Email" HorizontalAlignment="Left"/>
-                        <TextBox IsEnabled="{Binding IsEmployeeSelected}" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Email}" PlaceholderText="Enter Email Address" HorizontalAlignment="Left" Width="300"/>
+                        <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding Email}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="12,0,0,4"/>
+                        <TextBox IsEnabled="{Binding IsEmployeeSelected}" Visibility="{Binding ShowEdit}" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Email, Mode=TwoWay}" PlaceholderText="Enter Email Address" HorizontalAlignment="Left" Width="300"/>
 
                         <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Text="Role"/>
-                        <TextBox IsEnabled="{Binding IsEmployeeSelected}" x:Name="RoleText" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Role}" PlaceholderText="Enter Role" Width="300" HorizontalAlignment="Left"></TextBox>
-                        <TextBlock Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Margin="330,0,0,0" Text="--Or--"></TextBlock>
-                        <ComboBox IsEnabled="{Binding IsEmployeeSelected}" SelectedItem="{Binding SelectedRole, Mode=TwoWay}" ItemsSource="{Binding Roles}" PlaceholderText="Select Role" Grid.Row="4" Grid.Column="1" Margin="400,0,0,0" Width="300" VerticalAlignment="Center"></ComboBox>
+                        <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding Role}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="12,0,0,4"/>
+                        <ComboBox IsEnabled="{Binding IsEmployeeSelected}" Visibility="{Binding ShowEdit}" SelectedItem="{Binding SelectedRole, Mode=TwoWay}" ItemsSource="{Binding Roles}" PlaceholderText="Select Role" Grid.Row="4" Grid.Column="1" Margin="400,0,0,0" Width="300" VerticalAlignment="Center"></ComboBox>
 
                         <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Text="Salary"/>
-                        <TextBox IsEnabled="{Binding IsEmployeeSelected}" Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Salary}" PlaceholderText="Enter Salary" Width="300" HorizontalAlignment="Left"></TextBox>
+                        <TextBlock Grid.Column="1" Grid.Row="5" Text="{Binding Salary}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="12,0,0,4"/>
+                        <TextBox BeforeTextChanging="OnlyFloatTextBox" Visibility="{Binding ShowEdit}" IsEnabled="{Binding IsEmployeeSelected}" Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Salary, Mode=TwoWay}" PlaceholderText="Enter Salary" Width="300" HorizontalAlignment="Left"></TextBox>
 
                         <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Text="Salary with Tax"/>
-                        <TextBox IsEnabled="{Binding IsEmployeeSelected}" Grid.Row="6" Grid.Column="1" VerticalAlignment="Center" Text="{Binding SalaryWTax}" PlaceholderText="Enter Salary w/ Tax" Width="300" HorizontalAlignment="Left"></TextBox>
+                        <TextBlock Grid.Column="1" Grid.Row="6" Text="{Binding SalaryWTax}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="12,0,0,4"/>
+                        <TextBox BeforeTextChanging="OnlyFloatTextBox" Visibility="{Binding ShowEdit}" IsEnabled="{Binding IsEmployeeSelected}" Grid.Row="6" Grid.Column="1" VerticalAlignment="Center" Text="{Binding SalaryWTax, Mode=TwoWay}" PlaceholderText="Enter Salary w/ Tax" Width="300" HorizontalAlignment="Left"></TextBox>
 
                         <TextBlock Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Text="Works At"/>
-                        <TextBlock Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" Text="{Binding SelectedStore}"></TextBlock>
-                        <ComboBox Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" Margin="400,0,0,0" IsEnabled="{Binding IsEmployeeSelected}" ItemsSource="{Binding Stores}" PlaceholderText="Select Place of Work" Width="300" HorizontalAlignment="Left"></ComboBox>
+                        <TextBlock Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" Text="{Binding SelectedStore}" Margin="12,0,0,4"></TextBlock>
+                        <ComboBox SelectedItem="{Binding SelectedStore}" Visibility="{Binding ShowEdit}"  Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" Margin="400,0,0,0" IsEnabled="{Binding IsEmployeeSelected}" ItemsSource="{Binding Stores}" PlaceholderText="Select Place of Work" Width="300" HorizontalAlignment="Left"></ComboBox>
 
                         <TextBlock Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" Text="TAJ Number"/>
-                        <TextBox IsEnabled="{Binding IsEmployeeSelected}" Grid.Row="8" Grid.Column="1" VerticalAlignment="Center" Text="{Binding TajNumber}" PlaceholderText="Enter the TAJ Number" Width="300" HorizontalAlignment="Left"></TextBox>
+                        <TextBlock Grid.Column="1" Grid.Row="8" Text="{Binding TajNumber}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="12,0,0,4"/>
+                        <TextBox BeforeTextChanging="OnlyNumberTextBox" Visibility="{Binding ShowEdit}" IsEnabled="{Binding IsEmployeeSelected}" Grid.Row="8" Grid.Column="1" VerticalAlignment="Center" Text="{Binding TajNumber, Mode=TwoWay}" PlaceholderText="Enter the TAJ Number" Width="300" HorizontalAlignment="Left"></TextBox>
 
                         <TextBlock Grid.Row="9" Grid.Column="0" VerticalAlignment="Center" Text="Tax Number"/>
-                        <TextBox IsEnabled="{Binding IsEmployeeSelected}" Grid.Row="9" Grid.Column="1" VerticalAlignment="Center" Text="{Binding TaxNumber}" PlaceholderText="Enter the Tax Number" Width="300" HorizontalAlignment="Left"></TextBox>
+                        <TextBlock Grid.Column="1" Grid.Row="9" Text="{Binding TaxNumber}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="12,0,0,4"/>
+                        <TextBox BeforeTextChanging="OnlyNumberTextBox" Visibility="{Binding ShowEdit}" IsEnabled="{Binding IsEmployeeSelected}" Grid.Row="9" Grid.Column="1" VerticalAlignment="Center" Text="{Binding TaxNumber, Mode=TwoWay}" PlaceholderText="Enter the Tax Number" Width="300" HorizontalAlignment="Left"></TextBox>
 
                         <TextBlock Grid.Row="10" Grid.Column="0" VerticalAlignment="Center" Text="Working Hours"/>
-                        <TextBox IsEnabled="{Binding IsEmployeeSelected}" Grid.Row="10" Grid.Column="1" VerticalAlignment="Center"  Text="{Binding WorkingHours}" PlaceholderText="Enter the working hours" Width="300" HorizontalAlignment="Left"></TextBox>
+                        <TextBlock Grid.Column="1" Grid.Row="10" Text="{Binding WorkingHours}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="12,0,0,4"/>
+                        <TextBox BeforeTextChanging="OnlyFloatTextBox" Visibility="{Binding ShowEdit}" IsEnabled="{Binding IsEmployeeSelected}" Grid.Row="10" Grid.Column="1" VerticalAlignment="Center"  Text="{Binding WorkingHours, Mode=TwoWay}" PlaceholderText="Enter the working hours" Width="300" HorizontalAlignment="Left"></TextBox>
                     </Grid>
 
                     <Grid Margin="0,50,0,0">
@@ -129,9 +137,16 @@
                 <StackPanel VerticalAlignment="Bottom">
                     <TextBlock Width="180" Text="{Binding FeedBackText}" HorizontalAlignment="Right" Margin="0,0,50,15"></TextBlock>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,50,50">
-                        <Button Command="{Binding DoDelete}" IsEnabled="{Binding IsEmployeeSelected}" Content="Delete" Margin="0,0,10,0"/>
-                        <Button Content="Cancel" Command="{Binding DoCancel}" IsEnabled="{Binding IsEmployeeSelected}" Margin="0,0,10,0"/>
-                        <Button IsEnabled="{Binding IsEmployeeSelected}" Content="Confirm"/>
+                        <Button Command="{Binding DoDelete}" IsEnabled="{Binding IsEmployeeSelected}" Visibility="{Binding ShowNormal}" Content="Delete" Margin="0,0,10,0" Width="75"/>
+                        <Button Content="Deselect" Command="{Binding DoCancel}" Visibility="{Binding ShowNormal}" IsEnabled="{Binding IsEmployeeSelected}" Margin="0,0,10,0" Width="75"/>
+                        <Button IsEnabled="{Binding IsEmployeeSelected}" Visibility="{Binding ShowNormal}" Command="{Binding DoShowEdit}" Content="Edit" Width="75"/>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel VerticalAlignment="Bottom">
+
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,50,50">
+                        <Button Content="Cancel" Visibility="{Binding ShowEdit}" Command="{Binding DoCancelEdit}" IsEnabled="{Binding IsEmployeeSelected}" Margin="0,0,10,0" Width="75"/>
+                        <Button IsEnabled="{Binding IsEmployeeSelected}"  Visibility="{Binding ShowEdit}" Content="Confirm" Width="75"/>
                     </StackPanel>
                 </StackPanel>
                 

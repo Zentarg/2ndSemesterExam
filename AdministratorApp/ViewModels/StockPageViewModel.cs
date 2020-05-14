@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -20,7 +21,7 @@ namespace AdministratorApp.ViewModels
         private Tuple<Item, string> _selectedItem;
         private List<Item> _items;
         private float _priceAfterDiscount;
-
+        private string _filterString = "";
 
         public StockPageViewModel()
         {
@@ -54,6 +55,25 @@ namespace AdministratorApp.ViewModels
             }
         }
 
+        public string FilterString
+        {
+            get { return _filterString; }
+            set { _filterString = value; OnPropertyChanged(nameof(FilteredItems)); }
+        }
+
+        public ObservableCollection<Tuple<Item, string>> FilteredItems
+        {
+            get
+            {
+                ObservableCollection<Tuple<Item, string>> items = new ObservableCollection<Tuple<Item, string>>();
+                List<Item> filteredList = CommonMethods.FilterListByString(Data.AllItems.Values.ToList(), FilterString);
+                foreach (Item item in filteredList)
+                {
+                    items.Add(new Tuple<Item, string>(item, Data.AllCategories.Count != 0 ? Data.AllCategories[item.CategoryId].Name : "No Category." ));
+                }
+                return items;
+            }
+        }
 
         public float PriceAfterDiscount
         {
@@ -70,20 +90,7 @@ namespace AdministratorApp.ViewModels
             }
         }
 
-        //TUPLE format
-        public ObservableCollection<Tuple<Item, string>> Items
-        {
-            get
-            {
-                ObservableCollection<Tuple<Item, string>> items = new ObservableCollection<Tuple<Item, string>>();
-                foreach (Item item in Data.AllItems.Values)
-                {
-                    items.Add(new Tuple<Item, string>(item, Data.AllCategories[item.CategoryId].Name));
-                }
-
-                return items;
-            }
-        }
+        
 
         public ObservableCollection<Store> Stores
         {
@@ -165,18 +172,18 @@ namespace AdministratorApp.ViewModels
 
         private async Task LoadDataAsync()
         {
+            await Data.UpdateCategories();
             await Data.UpdateItems();
             await Data.UpdateStock();
             await Data.UpdateStore();
             await Data.UpdateItemsInStocks();
-            await Data.UpdateCategories();
-            OnPropertyChanged(nameof(Items));
+            OnPropertyChanged(nameof(SelectedItemCategory));
+            OnPropertyChanged(nameof(FilteredItems));
             OnPropertyChanged(nameof(Stores));
             OnPropertyChanged(nameof(Stocks));
             OnPropertyChanged(nameof(SelectedItemInStocks));
             OnPropertyChanged(nameof(PriceAfterDiscount));
-            OnPropertyChanged(nameof(SelectedItemCategory));
-            SelectedItem = Items[0];
+            SelectedItem = FilteredItems[0];
             
         }
 

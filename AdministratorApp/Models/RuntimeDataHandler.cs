@@ -11,6 +11,7 @@ namespace AdministratorApp.Models
     {
 
         public static Stock SelectedStock { get; set; }
+        public static Store SelectedStore { get; set; }
 
     }
 }
