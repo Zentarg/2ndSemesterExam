@@ -24,7 +24,23 @@ namespace AdministratorApp.Views
     {
         public StoreStockPage()
         {
-            this.InitializeComponent();
+            this.InitializeComponent(); 
+            ItemPanel.Visibility = Visibility.Collapsed;
         }
+
+        private void StockListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (StockListView.SelectedItem != null)
+            {
+                ItemPanel.Visibility = Visibility.Visible;
+            }
+            else ItemPanel.Visibility = Visibility.Collapsed;
+
+
+
+        }
+
+
+
     }
 }
