@@ -47,5 +47,10 @@ namespace AdministratorApp.Views
         {
             StoreListView.SelectedItem = null;
         }
+
+        private void EditButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

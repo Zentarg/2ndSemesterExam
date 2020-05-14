@@ -140,15 +140,19 @@ namespace AdministratorApp.ViewModels
         {
             if (CheckTextFields())
             {
+                Data.AllStores[SelectedStore.ID].Name = Name;
+                Data.AllStores[SelectedStore.ID].Address = Address;
+                Data.AllStores[SelectedStore.ID].Phone = Phone;
+                Data.AllStores[SelectedStore.ID].ManagerID = SelectedManager.Id;
 
-                var item = new Store(Name, Address, Phone, SelectedManager.Id);
-                await APIHandler<Store>.PutOne("Stores/PutStore/" + SelectedStore.ID, item);
-                
+                await APIHandler<Store>.PutOne("Stores/PutStore/" + SelectedStore.ID, Data.AllStores[SelectedStore.ID]);
+
+                SelectedStore = null;
+
+                OnPropertyChanged(nameof(StoreList));
                 //StoreList.Remove(item);
                 //StoreList.Add(new Store(Name, Address, Phone, Manager));
 
-
-                OnPropertyChanged(nameof(StoreList));
             }
         }
 
@@ -176,7 +180,7 @@ namespace AdministratorApp.ViewModels
         {
             Frame mainFrame = Window.Current.Content as Frame;
             mainFrame?.Navigate(Type.GetType($"{Application.Current.GetType().Namespace}.Views.StoreStockPage"));
-            //RuntimeDataHandler.SelectedStore = SelectedStore;
+            //RuntimeDataHandler.SelectedStock = SelectedStore;
         }
 
         private async Task LoadDataAsync()
@@ -202,7 +206,7 @@ namespace AdministratorApp.ViewModels
 
         public override string ToString()
         {
-            return $"{Name} {Address} {Phone} {SelectedManager.Name}";
+            return $"{Name} {Address} {Phone}";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
