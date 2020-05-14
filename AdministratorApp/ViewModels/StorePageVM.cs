@@ -25,7 +25,8 @@ namespace AdministratorApp.ViewModels
         private string _name = "";
         private string _address = "";
         private int _phone = 0;
-
+        private int _managerID = 0;
+        private string _manager = "";
 
         public StorePageVM()
         {
@@ -59,6 +60,18 @@ namespace AdministratorApp.ViewModels
         {
             get { return _phone; }
             set { _phone = value; OnPropertyChanged(); }
+        }
+
+        public string Manager
+        {
+            get { return _manager; }
+            set { _manager = value; OnPropertyChanged(); }
+        }
+
+        public int ManagerID
+        {
+            get { return _managerID; }
+            set { _managerID = value; OnPropertyChanged(); }
         }
 
         public bool IsEditing
@@ -124,6 +137,8 @@ namespace AdministratorApp.ViewModels
                     Name = _selectedStore.Name;
                     Address = _selectedStore.Address;
                     Phone = _selectedStore.Phone;
+                    ManagerID = Data.AllStores[SelectedStore.ID].ManagerID;
+                    Manager = Data.AllUsers[ManagerID].Name;
                 }
                 OnPropertyChanged();
             }
@@ -134,7 +149,6 @@ namespace AdministratorApp.ViewModels
             get { return _selectedManager; }
             set { _selectedManager = value; OnPropertyChanged(); }
         }
-
 
         private async void Confirm()
         {

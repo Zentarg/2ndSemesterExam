@@ -51,17 +51,17 @@
             </StackPanel>
 
             <Grid Grid.Column="1" Margin="10,50,0,0" HorizontalAlignment="Left">
-                <StackPanel Spacing="40">
-                    <TextBox FontSize="22" PlaceholderText="Name" Text="{Binding Name, Mode=TwoWay}" Height="40" Width="250"/>
-                    <TextBox FontSize="22" PlaceholderText="Address" Text="{Binding Address, Mode=TwoWay}" Height="40" Width="250"/>
-                    <TextBox FontSize="22" PlaceholderText="Phone" Text="{Binding Phone, Mode=TwoWay}" Height="40" Width="250"/>
-                    <ComboBox FontSize="22" ItemsSource="{Binding AllManagers, Mode=TwoWay}" SelectedItem="{Binding SelectedManager, Mode=TwoWay}" Height="40" Width="250" />
+                <StackPanel Name="EditableStackPanel" Visibility="Collapsed" Spacing="40" Width="250">
+                    <TextBox x:Name="TboxName" FontSize="22" PlaceholderText="Name" Text="{Binding Name, Mode=TwoWay}" Height="40" Width="250"/>
+                    <TextBox x:Name="TboxAddress" FontSize="22" PlaceholderText="Address" Text="{Binding Address, Mode=TwoWay}" Height="40" Width="250"/>
+                    <TextBox x:Name="TboxPhone" FontSize="22" PlaceholderText="Phone" Text="{Binding Phone, Mode=TwoWay}" Height="40" Width="250"/>
+                    <ComboBox x:Name="CboxManager" FontSize="22" ItemsSource="{Binding AllManagers, Mode=TwoWay}" SelectedItem="{Binding SelectedManager, Mode=TwoWay}" Height="40" Width="250" />
                 </StackPanel>
-                <StackPanel Spacing="42">
-                    <TextBlock FontSize="22" Text="{Binding Name}" Height="40" Margin="0,0,0,0"/>
-                    <TextBlock FontSize="22" Text="{Binding Address}" Height="40" Margin="0,0,0,0"/>
-                    <TextBlock FontSize="22" Text="{Binding Phone}" Height="40" Margin="0,0,0,0"/>
-                    <TextBlock FontSize="22" Text="{Binding }" Height="40" Margin="0,0,0,0"/>
+                <StackPanel Name="SimpleStackPanel" Visibility="Visible" Spacing="42" Width="250">
+                    <TextBlock x:Name="TblockName" FontSize="22" Text="{Binding Name}" Height="40" Margin="0,0,0,0"/>
+                    <TextBlock x:Name="TblockAddress" FontSize="22" Text="{Binding Address}" Height="40" Margin="0,0,0,0"/>
+                    <TextBlock x:Name="TblockPhone" FontSize="22" Text="{Binding Phone}" Height="40" Margin="0,0,0,0"/>
+                    <TextBlock x:Name="TblockManager" FontSize="22" Text="{Binding Manager}" Height="40" Margin="0,0,0,0"/>
                 </StackPanel>
             </Grid>
 
@@ -69,13 +69,17 @@
                 <Button Content="Go To Stock" Command="{Binding GoToStockPage}" FontSize="20" HorizontalAlignment="Center" Width="125" Height="60" Margin="0,45,0,0"/>
             </StackPanel>
 
+            <Grid Row="1" ColumnSpan="3">
 
-            <StackPanel Grid.Row="1" Grid.ColumnSpan="3" FlowDirection="RightToLeft" Orientation="Horizontal" Spacing="35" Margin="0,0,0,0">
-                <Button x:Name="ConfirmButton" Content="Confirm" Command="{Binding DoConfirm}" IsEnabled="False" FontSize="20" Width="100" Height="50" Margin="50,0,0,0"/>
-                <Button x:Name="DeleteButton" Content="Delete" Command="{Binding DoDelete}" IsEnabled="false" FontSize="20" Width="100" Height="50" Margin="0,0,0,0"/>
-                <Button x:Name="EditButton" Content="Edit" Click="EditButton_OnClick" FontSize="20" Width="100" Height="50"/>
-                <Button x:Name="CancelButton" Click="CancelButton_OnClick" Content="Cancel" Command="{Binding DoCancel}" FontSize="20" Width="100" Height="50" Margin="0,0,0,0"/>
+                <Button x:Name="EditButton" HorizontalAlignment="Right" Grid.ColumnSpan="3" Visibility="Visible" Content="Edit" Click="EditButton_OnClick" FontSize="20" Width="100" Height="50" Margin="0,0,50,0"/>
+            <StackPanel Name="EditableButtons" Visibility="Collapsed" FlowDirection="RightToLeft" Orientation="Horizontal" Spacing="35">
+                <Button x:Name="ConfirmButton" Content="Confirm" Command="{Binding DoConfirm}" FontSize="20" Width="100" Height="50" Margin="50,0,0,0"/>
+                <Button x:Name="DeleteButton" Content="Delete" Command="{Binding DoDelete}" FontSize="20" Width="100" Height="50"/>
+                <Button x:Name="CancelButton" Content="Cancel" Click="CancelButton_OnClick" FontSize="20" Width="100" Height="50"/>
+                <Button x:Name="DeselectButton" Click="DeselectButton_OnClick" Content="Deselect" Visibility="Collapsed" Command="{Binding DoCancel}" FontSize="20" Width="100" Height="50"/>
             </StackPanel>
+
+            </Grid>
         </Grid>
     </Grid>
 
