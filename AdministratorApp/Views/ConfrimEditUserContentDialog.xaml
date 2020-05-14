@@ -112,6 +112,7 @@
                     <TextBlock Grid.Column="3" Grid.Row="11" Text="{Binding AfterEdit.WorkingHours}" VerticalAlignment="Center"/>
 
                 </Grid>
+                <TextBlock x:Name="FeedBackTextBlock" Text="SampleText" VerticalAlignment="Bottom"></TextBlock>
             </StackPanel>
         </ScrollViewer>
     </Grid>

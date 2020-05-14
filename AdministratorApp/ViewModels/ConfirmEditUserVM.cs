@@ -10,11 +10,10 @@ namespace AdministratorApp.ViewModels
 {
     public class ConfirmEditUserVM
     {
-        private User _beforeEdit;
-        private User _afterEdit;
 
         public ConfirmEditUserVM()
         {
+            LoadDataAsync();
             BeforeEdit = Data.SelectedUser;
             AfterEdit = Data.EditedUser;
             RoleBefore = CommonMethods.GetRole(BeforeEdit.RoleId, Data.AllRoles);
@@ -48,6 +47,34 @@ namespace AdministratorApp.ViewModels
             await Data.UpdateUserLevels();
             await Data.UpdateStore();
             await Data.UpdateSalaries();
+        }
+
+        public Constants.EmailCheckErrors IsEmailInUse()
+        {
+            if (AfterEdit.Email == BeforeEdit.Email)
+                if (Data.AllUsers.Values.Any(u => u.Email == BeforeEdit.Email))
+                    return Constants.EmailCheckErrors.EMAIL_NOT_EDITED;
+
+            if (AfterEdit.Email != BeforeEdit.Email)
+                if (Data.AllUsers.Values.Any(u => u.Email == AfterEdit.Email))
+                    return Constants.EmailCheckErrors.EMAIL_IN_USE;
+
+            return Constants.EmailCheckErrors.OK;
+        }
+
+        public Constants.PutErrors CanUserUpdate()
+        {
+            if (IsEmailInUse() == Constants.EmailCheckErrors.EMAIL_NOT_EDITED || IsEmailInUse() == Constants.EmailCheckErrors.OK)
+            {
+                return Constants.PutErrors.OK;
+            }
+            return Constants.PutErrors.CONTENT_DID_NOT_PUT;
+        }
+
+        public async Task PutUser()
+        {
+            await APIHandler<Salary>.PutOne($"Salaries/UpdateSalary/{BeforeEdit.Id}", SalaryAfter);
+            await APIHandler<User>.PutOne($"Users/UpdateUser/{BeforeEdit.Id}", AfterEdit);
         }
     }
 }

@@ -87,8 +87,9 @@ namespace WebAPI.Controllers
             return Ok(session);
         }
 
-        // PUT: api/Auths/5
+        // PUT: api/Auth/PutAuth/id
         [ResponseType(typeof(void))]
+        [Route("api/Auth/PutAuth/{id}")]
         public IHttpActionResult PutAuth(int id, Auth auth)
         {
             if (!ModelState.IsValid)

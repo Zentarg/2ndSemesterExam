@@ -11,7 +11,7 @@ namespace AdministratorApp.Models
     {
         public Store()
         {
-            
+
         }
 
         //For creating new stores
@@ -47,6 +47,6 @@ namespace AdministratorApp.Models
         public override string ToString()
         {
             return Name;
-        }
+        } 
     }
 }
