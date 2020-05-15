@@ -43,7 +43,7 @@ namespace AdministratorApp.Views
                 VMHandler.EmployeesPageVm.FeedBackText = "User updated successfully";
                 VMHandler.EmployeesPageVm.CloseEdit();
                 VMHandler.EmployeesPageVm.Cancel();
-                await VMHandler.EmployeesPageVm.LoadDataAsync();
+                VMHandler.EmployeesPageVm.LoadDataAsync();
                 args.Cancel = false;
             }
             else

@@ -7,6 +7,7 @@ using System.Net.Mime;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Security.Authentication.Web.Provider;
 using Windows.Services.TargetedContent;
 using AdministratorApp.Annotations;
 using AdministratorApp.Models;
@@ -206,6 +207,7 @@ namespace AdministratorApp.ViewModels
                         string encryptedPassword = AuthHandler.EncryptPassword(Password, Salt);
                         Auth posteAuth = await APIHandler<Auth>.PostOne("Auth/PostAuth", new Auth(UserName, encryptedPassword, Salt, postedUser.Id));
                         NavigationHandler.NavigateToPage(typeof(EmployeesPage));
+                        VMHandler.EmployeesPageVm.FeedBackText = $"The user {postedUser.Name} \nwas created successfully";
                     }
                     else
                         ErrorText = "The provided email is in use,\nplease specify a different one.";

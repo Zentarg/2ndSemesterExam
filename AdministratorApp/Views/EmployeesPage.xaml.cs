@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.UserDataTasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -40,9 +41,9 @@ namespace AdministratorApp.Views
 
         private void OnlyFloatTextBox(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
         {
-            string allowedChars = "-1234567890.";
-            bool checkForDots = (args.NewText.IndexOf('.') != args.NewText.LastIndexOf('.'));
-            args.Cancel = args.NewText.Any(c => !allowedChars.Contains(c)) || checkForDots;
+            if (!string.IsNullOrEmpty(args.NewText))
+                if (!float.TryParse(args.NewText, out float f))
+                    args.Cancel = true;
         }
 
         private async void OpenCreateNewRoleContentDialog(object sender, RoutedEventArgs e)

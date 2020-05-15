@@ -40,7 +40,7 @@ namespace AdministratorApp.Views
             if (error == Constants.UserDeleteErorrs.OK)
             {
                 User user = await APIHandler<User>.DeleteOne($"Users/DeleteUser/{vm.SelectedEmp.Id}");
-                await VMHandler.EmployeesPageVm.LoadDataAsync();
+                VMHandler.EmployeesPageVm.LoadDataAsync();
                 VMHandler.EmployeesPageVm.FeedBackText = $"{user.Name} has been deleted";
                 args.Cancel = false;
             }

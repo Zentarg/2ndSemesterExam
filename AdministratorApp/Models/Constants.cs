@@ -19,6 +19,6 @@ namespace AdministratorApp.Models
         public enum EmailCheckErrors {OK = 0, EMAIL_NOT_EDITED = 1, EMAIL_IN_USE = 2}
         public enum PutErrors {OK = 0, CONTENT_DID_NOT_PUT = 1, API_UNREACHABLE = 2}
 
-        public const string AllowedCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890ÁÉÍÓÖŐÚÜŰáéíóöőúüű";
+        public const string AllowedCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890ÁÉÍÓÖŐÚÜŰáéíóöőúüű ";
     }
 }

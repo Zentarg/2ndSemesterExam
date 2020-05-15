@@ -94,7 +94,7 @@ namespace AdministratorApp.ViewModels
         public ObservableCollection<User> Users
         {
             get
-            {
+            { 
                 return _users;
             }
             set { _users = value; OnPropertyChanged(); }
@@ -336,6 +336,7 @@ namespace AdministratorApp.ViewModels
             {
                 Stores.Add(s);
             }
+            OnPropertyChanged(nameof(FilteredUsers));
         }
 
 
