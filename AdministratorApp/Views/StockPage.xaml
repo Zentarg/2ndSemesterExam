@@ -197,15 +197,23 @@
 
                 <StackPanel Width="450" Name="EditableItemDisplay" Visibility="Collapsed" >
 
-                <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
-                    <TextBlock Text="Name:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
+
+
+                    <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
+                        <TextBlock Text="ID  #" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
+                        <TextBlock Text="{Binding SelectedItem.Item1.Id, Mode=TwoWay}" Style="{StaticResource ItemPropertiesHeaderTextBlock}" Margin="0,0,0,0" />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
+                   
+                        <TextBlock Text="Name:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
                         <TextBox Text="{Binding SelectedItem.Item1.Name, Mode=TwoWay}"  Style="{StaticResource BasicTextBox}" />
-                </StackPanel>
+                     </StackPanel>
 
                 <StackPanel Margin="15,15,5,0" HorizontalAlignment="Left">
                         <TextBlock Text="**Amount:" HorizontalAlignment="Left" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
   
-<ListView Width="350"  ItemsSource="{Binding SelectedItemInStocks}" HorizontalAlignment="Left" SelectionMode="None">
+                <ListView Width="350"  ItemsSource="{Binding SelectedItemInStocks}" HorizontalAlignment="Left" SelectionMode="None">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -223,8 +231,8 @@
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
-                    <TextBlock Text="Type:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
-                        <TextBox Text="{Binding SelectedItemCategory.Name}"   Style="{StaticResource BasicTextBox}"  />
+                    <TextBlock Text="Category:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
+                        <ComboBox ItemsSource="{Binding AllCategories}" SelectedItem="{Binding SelectedItemCategory,Mode=TwoWay}"  />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
                     <TextBlock Text="**Price:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
@@ -270,12 +278,15 @@
                     <StackPanel HorizontalAlignment="Left" Margin="10,30,10,0">
                         <TextBlock Text="** Accepts only numeric input." FontSize="10"/>
                     </StackPanel>
+                    <StackPanel HorizontalAlignment="Left" Margin="10,10,10,0">
+                        <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" FontSize="13"/>
+                    </StackPanel>
 
 
-                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,25,0,0">
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,25,0,0">
 
 
-                        <Button Width="55" Height="35" Content="&#xE74D;" FontFamily="Segoe mdl2 assets" HorizontalAlignment="Right" FontSize="20"  Background="#FF6262" Margin="25,0,140,0" Click="ButtonBase_OnClick">
+                        <Button Width="55" Name="DeleteButton" Height="35" Content="&#xE74D;" FontFamily="Segoe mdl2 assets" HorizontalAlignment="Right" FontSize="20"  Background="#FF6262" Margin="25,0,140,0" Command="{Binding DeleteItemCommand}">
                         <Button.Resources>
                         <ResourceDictionary>
                             <ResourceDictionary.ThemeDictionaries>
@@ -310,7 +321,7 @@
                         </ResourceDictionary>
                     </Button.Resources>
                     </Button>
-                        <Button Width="75" Height="35" Content="Save" HorizontalAlignment="Right" Margin="0,0,25,0">
+                        <Button Width="75" Height="35" Content="Save" Name="SaveButton" Click="SaveButton_OnClick"  HorizontalAlignment="Right" Margin="0,0,25,0">
                             <Button.Resources>
                                 <ResourceDictionary>
                                     <ResourceDictionary.ThemeDictionaries>

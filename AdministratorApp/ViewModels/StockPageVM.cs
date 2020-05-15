@@ -22,19 +22,27 @@ namespace AdministratorApp.ViewModels
         private Tuple<Item, string> _selectedItem;
         private List<Item> _items;
         private float _priceAfterDiscount;
+        private string _errorMessage;
         private string _filterString = "";
         private List<Category> _selectedCategories = new List<Category>();
 
         public StockPageVM()
         {
             LoadDataAsync();
+            VMHandler.StockPageVm = this;
             GoToAddItem = new RelayCommand(NavigateToAddItemPage);
             DeselectItemCommand = new RelayCommand(DeselectItem);
+            DeleteItemCommand=new RelayCommand(DeleteItem);
             NavigateToAddItemToStockCommand = new RelayCommand(NavigateToAddItemToStock);
         }
 
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            set { _errorMessage = value; OnPropertyChanged(); }
+        }
+        public RelayCommand DeleteItemCommand { get; }
         public RelayCommand DeselectItemCommand { get; }
-
         public RelayCommand GoToAddItem { get; }
         public RelayCommand NavigateToAddItemToStockCommand { get; }
 
@@ -65,7 +73,11 @@ namespace AdministratorApp.ViewModels
         public string FilterString
         {
             get { return _filterString; }
-            set { _filterString = value; OnPropertyChanged(nameof(FilteredItems)); }
+            set
+            {
+                _filterString = value;
+                OnPropertyChanged(nameof(FilteredItems));
+            }
         }
 
         public ObservableCollection<Tuple<Item, string>> FilteredItems
@@ -84,12 +96,14 @@ namespace AdministratorApp.ViewModels
                         itemsToFilter.Add(new Tuple<Item, int>(item, item.CategoryId));
                     }
 
-                    filteredList = CommonMethods.FilterListByString(CommonMethods.FilterListByCategories(itemsToFilter, SelectedCategories), FilterString);
+                    filteredList = CommonMethods.FilterListByString(
+                        CommonMethods.FilterListByCategories(itemsToFilter, SelectedCategories), FilterString);
                 }
 
                 foreach (Item item in filteredList)
                 {
-                    items.Add(new Tuple<Item, string>(item, Data.AllCategories.Count != 0 ? Data.AllCategories[item.CategoryId].Name : "No Category." ));
+                    items.Add(new Tuple<Item, string>(item,
+                        Data.AllCategories.Count != 0 ? Data.AllCategories[item.CategoryId].Name : "No Category."));
                 }
 
                 return items;
@@ -111,7 +125,7 @@ namespace AdministratorApp.ViewModels
             }
         }
 
-        
+
 
         public ObservableCollection<Store> Stores
         {
@@ -128,6 +142,10 @@ namespace AdministratorApp.ViewModels
             get => SelectedItem != null
                 ? Data.AllCategories[SelectedItem.Item1.CategoryId]
                 : new Category(-1, "loading");
+            set
+            {
+                Data.AllCategories[SelectedItem.Item1.CategoryId] = value ; OnPropertyChanged();
+            }
         }
 
         public List<Category> SelectedCategories
@@ -149,12 +167,21 @@ namespace AdministratorApp.ViewModels
 
                 if (SelectedItem == null)
                     return stocks;
-                foreach (KeyValuePair<int, int> pair in Data.ItemsInStocks[SelectedItem.Item1.Id])
+                if (Data.ItemsInStocks.ContainsKey(SelectedItem.Item1.Id))
+                { foreach (KeyValuePair<int, int> pair in Data.ItemsInStocks[SelectedItem.Item1.Id])
                 {
                     stocks.Add(new KeyValuePair<Stock, int>(Data.AllStocks[pair.Key], pair.Value));
                 }
 
-                return stocks;
+ 
+                    return stocks;
+                }
+
+                return new ObservableCollection<KeyValuePair<Stock, int>>()
+                {
+                    new KeyValuePair<Stock, int>(
+                        new Stock(0, "This item has not been placed to any store yet.      "), 0)
+                };
             }
         }
 
@@ -197,6 +224,62 @@ namespace AdministratorApp.ViewModels
             SelectedItem = null;
         }
 
+        public async Task<bool> SaveEdit()
+        {
+            try
+            {
+                if (CheckFields())
+                {
+                    if (SelectedItem.Item1.DiscountPercentage <= 100)
+                    {
+                        await APIHandler<Item>.PutOne($"items/{SelectedItem.Item1.Id}",
+                            new Item(SelectedItem.Item1.Id, SelectedItem.Item1.Name, SelectedItem.Item1.Price,
+                                SelectedItem.Item1.Comment, SelectedItem.Item1.PictureSource,
+                                SelectedItem.Item1.Barcode,
+                                SelectedItem.Item1.Color, SelectedItem.Item1.Size, SelectedItemCategory.ID,
+                                SelectedItem.Item1.DiscountPercentage));
+                        await LoadDataAsync();
+                        return true;
+                    }
+                    else ErrorMessage = "Discount cannot be more than 100%";
+
+                    return false;
+                }
+
+               else ErrorMessage = "All required fields must be filled out!"; return false;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        private bool CheckFields()
+        {
+            bool Experssion = !string.IsNullOrEmpty(SelectedItem.Item1.Name) && SelectedItem.Item1.Price != 0 &&
+                              SelectedItem.Item1.Barcode != 0 && !string.IsNullOrEmpty(SelectedItem.Item1.Color) &&
+                              !string.IsNullOrEmpty(SelectedItem.Item1.Size);
+
+            if (Experssion)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public async void DeleteItem()
+        {
+            if (SelectedItem != null)
+            {
+                await APIHandler<Item>.DeleteOne($"items/{SelectedItem.Item1.Id}");
+                await Data.UpdateItems();
+                OnPropertyChanged(nameof(FilteredItems));
+                SelectedItem = FilteredItems[0];
+            }
+
+        }
 
 
 
@@ -228,6 +311,8 @@ namespace AdministratorApp.ViewModels
         {
             NavigationHandler.NavigateToPage(typeof(AddItemPage));
         }
+
+        
 
         
 
