@@ -84,5 +84,13 @@ namespace AdministratorApp.Views
 
 
         }
+
+        private async void DeleteButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            _viewModel.DeleteItem();
+            EditableItemDisplay.Visibility = Visibility.Collapsed;
+            SimpleItemDisplay.Visibility = Visibility.Visible;
+
+        }
     }
 }

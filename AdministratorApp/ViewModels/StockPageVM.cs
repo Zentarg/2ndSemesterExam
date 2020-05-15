@@ -32,7 +32,7 @@ namespace AdministratorApp.ViewModels
             VMHandler.StockPageVm = this;
             GoToAddItem = new RelayCommand(NavigateToAddItemPage);
             DeselectItemCommand = new RelayCommand(DeselectItem);
-
+            DeleteItemCommand=new RelayCommand(DeleteItem);
             NavigateToAddItemToStockCommand = new RelayCommand(NavigateToAddItemToStock);
         }
 
@@ -41,6 +41,7 @@ namespace AdministratorApp.ViewModels
             get => _errorMessage;
             set { _errorMessage = value; OnPropertyChanged(); }
         }
+        public RelayCommand DeleteItemCommand { get; }
         public RelayCommand DeselectItemCommand { get; }
         public RelayCommand GoToAddItem { get; }
         public RelayCommand NavigateToAddItemToStockCommand { get; }
@@ -166,12 +167,21 @@ namespace AdministratorApp.ViewModels
 
                 if (SelectedItem == null)
                     return stocks;
-                foreach (KeyValuePair<int, int> pair in Data.ItemsInStocks[SelectedItem.Item1.Id])
+                if (Data.ItemsInStocks.ContainsKey(SelectedItem.Item1.Id))
+                { foreach (KeyValuePair<int, int> pair in Data.ItemsInStocks[SelectedItem.Item1.Id])
                 {
                     stocks.Add(new KeyValuePair<Stock, int>(Data.AllStocks[pair.Key], pair.Value));
                 }
 
-                return stocks;
+ 
+                    return stocks;
+                }
+
+                return new ObservableCollection<KeyValuePair<Stock, int>>()
+                {
+                    new KeyValuePair<Stock, int>(
+                        new Stock(0, "This item has not been placed to any store yet.      "), 0)
+                };
             }
         }
 
@@ -259,6 +269,17 @@ namespace AdministratorApp.ViewModels
             return false;
         }
 
+        public async void DeleteItem()
+        {
+            if (SelectedItem != null)
+            {
+                await APIHandler<Item>.DeleteOne($"items/{SelectedItem.Item1.Id}");
+                await Data.UpdateItems();
+                OnPropertyChanged(nameof(FilteredItems));
+                SelectedItem = FilteredItems[0];
+            }
+
+        }
 
 
 

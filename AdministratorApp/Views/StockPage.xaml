@@ -286,7 +286,7 @@
                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,25,0,0">
 
 
-                        <Button Width="55" Height="35" Content="&#xE74D;" FontFamily="Segoe mdl2 assets" HorizontalAlignment="Right" FontSize="20"  Background="#FF6262" Margin="25,0,140,0" Click="ButtonBase_OnClick">
+                        <Button Width="55" Name="DeleteButton" Height="35" Content="&#xE74D;" FontFamily="Segoe mdl2 assets" HorizontalAlignment="Right" FontSize="20"  Background="#FF6262" Margin="25,0,140,0" Command="{Binding DeleteItemCommand}">
                         <Button.Resources>
                         <ResourceDictionary>
                             <ResourceDictionary.ThemeDictionaries>
