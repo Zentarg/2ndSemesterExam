@@ -8,11 +8,11 @@ namespace CommonLibrary.Models
     {
         public Stock(int stockId, string name)
         {
-            StockID = stockId;
+            ID = stockId;
             Name = name;
         }
 
-        public int StockID { get; set; }
+        public int ID { get; set; }
         public string Name { get; set; }
 
         public override string ToString()
