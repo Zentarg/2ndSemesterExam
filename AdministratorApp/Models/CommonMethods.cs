@@ -70,7 +70,26 @@ namespace AdministratorApp.Models
             }
 
             return returnList;
-            //return list.FindAll(delegate(T i) { return i.ToString().ToLower().Contains(filterBy.ToLower()); });
+        }
+
+        /// <summary>
+        /// Filters a list specified by string. The item object inside the list needs to have a .ToString() method corresponding to what the user is searching for.
+        /// </summary>
+        /// <typeparam name="T">The object type to use and return.</typeparam>
+        /// <param name="list">The list of tuple containing item to filter, and string to add to said items ToString().</param>
+        /// <param name="filterBy">The string each item has to contain.</param>
+        /// <returns>A filtered list.</returns>
+        public static List<T> FilterListByString<T>(List<Tuple<T, string>> list, string filterBy)
+        {
+            List<T> returnList = new List<T>();
+            foreach (Tuple<T, string> item in list)
+            {
+                string stringToCheck = item.Item1 + " " + item.Item2;
+                if (stringToCheck.ToLower().Contains(filterBy.ToLower()))
+                    returnList.Add(item.Item1);
+            }
+
+            return returnList;
         }
 
         /// <summary>

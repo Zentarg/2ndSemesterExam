@@ -78,14 +78,31 @@ namespace AdministratorApp.ViewModels
             {
                 ObservableCollection<Tuple<Invoice, string, string>> invoices = new ObservableCollection<Tuple<Invoice, string, string>>();
                 List<Invoice> filteredList = new List<Invoice>();
+                List<Tuple<Invoice, string>> listToFilter = new List<Tuple<Invoice, string>>();
+
+
                 if (SelectedStores.Count == 0)
-                    filteredList = CommonMethods.FilterListByString(Data.AllInvoices.Values.Where(i => i.InvoiceStatusID == (int) Constants.InvoiceStatus.Open).ToList(), FilterString);
+                {
+                    foreach (KeyValuePair<int, Invoice> pair in Data.AllInvoices
+                        .Where(i => i.Value.InvoiceStatusID == (int) Constants.InvoiceStatus.Open).ToList())
+                    {
+                        listToFilter.Add(
+                            new Tuple<Invoice, string>(pair.Value, Data.AllUsers[pair.Value.AuthorID].Name));
+                    }
+
+                    filteredList = CommonMethods.FilterListByString(listToFilter, FilterString);
+                }
                 else
                 {
                     List<Tuple<Invoice, int>> invoicesToFilter = new List<Tuple<Invoice, int>>();
                     foreach (Invoice invoice in Data.AllInvoices.Values.Where(i => i.InvoiceStatusID == (int)Constants.InvoiceStatus.Open).ToList())
                     {
                         invoicesToFilter.Add(new Tuple<Invoice, int>(invoice, invoice.StoreID));
+                    }
+
+                    foreach (Tuple<Invoice, int> pair in invoicesToFilter)
+                    {
+                        listToFilter.Add(new Tuple<Invoice, string>(pair.Item1, Data.AllUsers[pair.Item1.AuthorID].Name));
                     }
 
                     filteredList = CommonMethods.FilterListByString(CommonMethods.FilterListByStores(invoicesToFilter, SelectedStores), FilterString);
