@@ -74,7 +74,7 @@ namespace AdministratorApp.ViewModels
                 if (Amount>0)
                 {
                     ErrorMessage = "";
-                await APIHandler<StockHasItems>.PostOne("stockhasitems", new StockHasItems(SelectedStock.StockID, SelectedItem.Id, Amount));
+                await APIHandler<StockHasItems>.PostOne("stockhasitems", new StockHasItems(SelectedStock.ID, SelectedItem.Id, Amount));
                 ContentDialog dialog = new ContentDialog()
                 {
                     Title = "Item successfully added!",

@@ -17,6 +17,7 @@ namespace AdministratorApp.ViewModels
         ObservableCollection<string> _managers = new ObservableCollection<string>();
         ObservableCollection<User> _users = new ObservableCollection<User>();
         private User _selectedManager;
+        private Stock _selectedStock;
 
         Store _store = new Store();
 
@@ -85,40 +86,42 @@ namespace AdministratorApp.ViewModels
         {
             get
             {
-                return _stores;
+                return new ObservableCollection<Store>(Data.AllStores.Values);
             }
-            set { _stores = value; OnPropertyChanged(); }
+        }
+
+        public ObservableCollection<Stock> AllStocks
+        {
+            get { return new ObservableCollection<Stock>(Data.AllStocks.Values);}
         }
 
         public User SelectedManager
         {
             get { return _selectedManager; }
-            set
-            {
-                _selectedManager = value;
-                OnPropertyChanged();
-            }
+            set { _selectedManager = value; OnPropertyChanged(); }
+        }
+
+        public Stock SelectedStock
+        {
+            get { return _selectedStock; }
+            set { _selectedStock = value; OnPropertyChanged(); }
         }
 
         private async void Create()
         {
             if (CheckTextFields())
             { 
-                _store = new Store() { Name = Name, Address = Address, Phone = Phone, ManagerID = SelectedManager.Id, ID = StoreId };
-                var item = AllStores.FirstOrDefault(s =>
-                    s.Name == Name && s.Address == Address && s.Phone == Phone && s.ManagerID == SelectedManager.Id);
+                _store = new Store(Name, Address, Phone, SelectedManager.Id, SelectedStock.ID);
+                var item = AllStores.SingleOrDefault(s =>
+                    s.Name == Name && s.Address == Address && s.Phone == Phone && s.ManagerID == SelectedManager.Id && s.StockId == SelectedStock.ID);
 
                 if (item == null)
                 {
                     ErrorText = "";
-                    //Store postedStore = await APIHandler<Store>.PostOne("Stores", _store);
+                    Store postedStore = await APIHandler<Store>.PostOne("Stores", _store);
                 }
+
                 else ErrorText = "Store already exists";
-
-                //if (item.Name == Name && item.Address == Address && item.Phone == Phone && item.ManagerID == SelectedManager.Id)
-
-                //var item = AllStores.FirstOrDefault(s => s.Name == Name && s.Address == Address && s.Phone == Phone && s.ManagerID == SelectedManager.Id);
-
             }
         }
 
@@ -128,15 +131,15 @@ namespace AdministratorApp.ViewModels
             Address = "";
             Phone = 0;
             SelectedManager = null;
+            SelectedStock = null;
             ErrorText = "";
-            //NavigationHandler.NavigateBackwards();
         }
 
         public bool CheckTextFields()
         {
             bool expression = !string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Address) &&
                                !string.IsNullOrEmpty(Phone.ToString()) &&
-                               !string.IsNullOrEmpty(SelectedManager.Id.ToString());
+                               !string.IsNullOrEmpty(SelectedManager.Id.ToString()) && !string.IsNullOrEmpty(SelectedStock.ID.ToString());
             if (expression)
             {
                 return true;
@@ -149,9 +152,12 @@ namespace AdministratorApp.ViewModels
         {
             await Data.UpdateUsers();
             await Data.UpdateStore();
-            AllStores = new ObservableCollection<Store>(Data.AllStores.Values);
+            await Data.UpdateStock();
+
+            
             OnPropertyChanged(nameof(AllManagers));
             OnPropertyChanged(nameof(AllStores));
+            OnPropertyChanged(nameof(AllStocks));
         }
 
 

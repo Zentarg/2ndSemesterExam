@@ -32,6 +32,7 @@
             <TextBlock FontSize="25" Text="Address"/>
             <TextBlock FontSize="25" Text="Telephone"/>
             <TextBlock FontSize="25" Text="Manager"/>
+            <TextBlock FontSize="25" Text="Stock"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Grid.Row="1" Spacing="29" Margin="0,45,0,0" HorizontalAlignment="Left">
@@ -39,6 +40,7 @@
             <TextBox x:Name="Address" PlaceholderText="Address" Text="{Binding Address, Mode=TwoWay}" FontSize="25" Height="45" TextChanged="ConfirmIsVisible_OnTextChanged"/>
             <TextBox x:Name="Phone" PlaceholderText="Telephone" Text="{Binding Phone, Mode=TwoWay}" FontSize="25" Height="45" TextChanged="ConfirmIsVisible_OnTextChanged"/>
             <ComboBox x:Name="Manager" FontSize="20" ItemsSource="{Binding AllManagers, Mode=TwoWay}" SelectedItem="{Binding SelectedManager, Mode=TwoWay}" SelectionChanged="Manager_OnSelectionChanged" Height="40" Width="400" />
+            <ComboBox x:Name="Stock" FontSize="20" ItemsSource="{Binding AllStocks, Mode=TwoWay}" SelectedItem="{Binding SelectedStock, Mode=TwoWay}" SelectionChanged="Manager_OnSelectionChanged" Height="40" Width="400" Margin="0,5,0,0" />
             <TextBlock FontSize="25" Foreground="Red" Text="{Binding ErrorText, Mode=TwoWay}"/>
         </StackPanel>
 

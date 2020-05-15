@@ -21,15 +21,18 @@ namespace AdministratorApp.ViewModels
         private ObservableCollection<Store> _allStores = new ObservableCollection<Store>();
         private ObservableCollection<string> _managers = new ObservableCollection<string>();
         private User _selectedManager;
+        private Stock _selectedStock;
 
         private string _filterString = "";
 
-        private bool _isEditing = false;
         private string _name = "";
         private string _address = "";
         private int _phone = 0;
         private int _managerID = 0;
         private string _manager = "";
+        private int _stockID = 0;
+        private string _stock = "";
+        private string _errorText = "";
 
         public StorePageVM()
         {
@@ -104,20 +107,23 @@ namespace AdministratorApp.ViewModels
             set { _managerID = value; OnPropertyChanged(); }
         }
 
-        public bool IsEditing
+        public string Stock
         {
-            get
-            {
-                //if statement for user and admin
-                return _isEditing;
-            }
-            set
-            {
-                _isEditing = value;
-                OnPropertyChanged();
-            }
+            get { return _stock; }
+            set { _stock = value; OnPropertyChanged(); }
         }
 
+        public int StockID
+        {
+            get { return _stockID; }
+            set { _stockID = value; OnPropertyChanged(); }
+        }
+
+        public string ErrorText
+        {
+            get { return _errorText; }
+            set { _errorText = value; OnPropertyChanged(); }
+        }
 
         public ObservableCollection<Store> StoreList
         {
@@ -153,6 +159,11 @@ namespace AdministratorApp.ViewModels
             }
         }
 
+        public ObservableCollection<Stock> AllStocks
+        {
+            get { return new ObservableCollection<Stock>(Data.AllStocks.Values);}
+        }
+
         public Store SelectedStore
         {
             get
@@ -169,6 +180,8 @@ namespace AdministratorApp.ViewModels
                     Phone = _selectedStore.Phone;
                     ManagerID = Data.AllStores[SelectedStore.ID].ManagerID;
                     Manager = Data.AllUsers[ManagerID].Name;
+                    StockID = Data.AllStores[SelectedStore.ID].StockId;
+                    Stock = Data.AllStocks[StockID].Name;
                 }
                 OnPropertyChanged();
             }
@@ -180,6 +193,12 @@ namespace AdministratorApp.ViewModels
             set { _selectedManager = value; OnPropertyChanged(); }
         }
 
+        public Stock SelectedStock
+        {
+            get { return _selectedStock; }
+            set { _selectedStock = value; OnPropertyChanged(); }
+        }
+
         private async void Confirm()
         {
             if (CheckTextFields())
@@ -188,16 +207,16 @@ namespace AdministratorApp.ViewModels
                 Data.AllStores[SelectedStore.ID].Address = Address;
                 Data.AllStores[SelectedStore.ID].Phone = Phone;
                 Data.AllStores[SelectedStore.ID].ManagerID = SelectedManager.Id;
+                Data.AllStores[SelectedStore.ID].StockId = SelectedStock.ID;
 
                 await APIHandler<Store>.PutOne("Stores/PutStore/" + SelectedStore.ID, Data.AllStores[SelectedStore.ID]);
 
                 SelectedStore = null;
-
+                ErrorText = "Information has been changed.";
                 OnPropertyChanged(nameof(StoreList));
-                //StoreList.Remove(item);
-                //StoreList.Add(new Store(Name, Address, Phone, Manager));
-
             }
+            else 
+                ErrorText = "All text fields must be filled\nand all selections must be made.";
         }
 
         private async void Delete()
@@ -217,7 +236,8 @@ namespace AdministratorApp.ViewModels
             Address = "";
             Phone = 0;
             SelectedManager = null;
-            //NavigationHandler.NavigateBackwards();
+            SelectedStock = null;
+            ErrorText = "";
         }
 
         private void StockPage()
@@ -231,15 +251,17 @@ namespace AdministratorApp.ViewModels
         {
             await Data.UpdateUsers();
             await Data.UpdateStore();
+            await Data.UpdateStock();
 
             OnPropertyChanged(nameof(FilteredStores));
             OnPropertyChanged(nameof(AllManagers));
+            OnPropertyChanged(nameof(AllStocks));
         }
 
         public bool CheckTextFields()
         {
-            bool expression = !string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Address) &&
-                               !string.IsNullOrEmpty(Phone.ToString()) && !string.IsNullOrEmpty(SelectedManager.Id.ToString());
+            bool expression = (!string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Address) &&
+                               !string.IsNullOrEmpty(Phone.ToString()) && SelectedManager != null && SelectedStock != null);
             if (expression)
             {
                 return true;
