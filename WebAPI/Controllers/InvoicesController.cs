@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebAPI;
+using WebAPI.Models;
 
 namespace WebAPI.Controllers
 {
@@ -19,9 +20,26 @@ namespace WebAPI.Controllers
         private ParknGardenData db = new ParknGardenData();
 
         // GET: api/Invoices
-        public IQueryable<Invoice> GetInvoices()
+        [ResponseType(typeof(Dictionary<int, Invoice>))]
+        public IHttpActionResult GetInvoices()
         {
-            return db.Invoices;
+            return Ok(InvoiceHandler.GetAllInvoices(db));
+        }
+
+        // GET: api/InvoicesFromStores
+        [ResponseType(typeof(Dictionary<int, List<int>>))]
+        [Route("api/InvoicesFromStores")]
+        public IHttpActionResult GetInvoicesFromStore()
+        {
+            return Ok(InvoiceHandler.GetAllInvoiceIDsFromStores(db));
+        }
+
+        // GET: api/InvoicesHasItems
+        [ResponseType(typeof(Dictionary<int, KeyValuePair<int, int>>))]
+        [Route("api/InvoicesHasItems")]
+        public IHttpActionResult GetInvoicesHasItems()
+        {
+            return Ok(InvoiceHandler.GetAllInvoicesHasItems(db));
         }
 
         // GET: api/Invoices/5

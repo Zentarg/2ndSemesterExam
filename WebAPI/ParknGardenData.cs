@@ -32,6 +32,7 @@ namespace WebAPI
         public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserLevel> UserLevels { get; set; }
+        public virtual DbSet<InvoiceStatu> InvoiceStatus { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -70,11 +71,6 @@ namespace WebAPI
                 .HasMany(e => e.InvoiceHasItems)
                 .WithRequired(e => e.Invoice)
                 .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Invoice>()
-                .HasMany(e => e.Stores)
-                .WithMany(e => e.Invoices)
-                .Map(m => m.ToTable("StoreHasInvoice").MapLeftKey("InvoiceID").MapRightKey("StoreID"));
 
             modelBuilder.Entity<Item>()
                 .Property(e => e.Name)
@@ -211,6 +207,10 @@ namespace WebAPI
                 .HasMany(e => e.Users)
                 .WithRequired(e => e.UserLevel)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<InvoiceStatu>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
         }
     }
 }

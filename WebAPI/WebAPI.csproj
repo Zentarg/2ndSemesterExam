@@ -185,10 +185,11 @@
     </Compile>
     <Compile Include="Invoice.cs" />
     <Compile Include="InvoiceHasItem.cs" />
+    <Compile Include="InvoiceStatu.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="Models\AuthHandler.cs" />
     <Compile Include="Models\CategoriesHandler.cs" />
-    <Compile Include="Models\InvoiceController.cs" />
+    <Compile Include="Models\InvoiceHandler.cs" />
     <Compile Include="Models\ItemsHandler.cs" />
     <Compile Include="Models\RolesHandler.cs" />
     <Compile Include="Models\SalaryHandler.cs" />

@@ -74,10 +74,10 @@ namespace AdministratorApp.Models
         }
 
         /// <summary>
-        /// Filters a list specified by a category.
+        /// Filters a list specified by a list of categories.
         /// </summary>
         /// <typeparam name="T">The object type to use and return.</typeparam>
-        /// <param name="list">The list to filter (Contains a tuple of the T object, and the int ID of the category.</param>
+        /// <param name="list">The list to filter (Contains a tuple of the T object, and the int ID of the category.)</param>
         /// <param name="categoryList">The list of categories each item has to contain.</param>
         /// <returns>A list filtered by categories.</returns>
         public static List<T> FilterListByCategories<T>(List<Tuple<T, int>> list, List<Category> categoryList)
@@ -91,6 +91,28 @@ namespace AdministratorApp.Models
                         returnList.Add(tuple.Item1);
                 }
 
+            }
+
+            return returnList;
+        }
+
+        /// <summary>
+        /// Filters a list specified by a list of stores.
+        /// </summary>
+        /// <typeparam name="T">The object type to use and return.</typeparam>
+        /// <param name="list">The list to filter (Contains a tuple of the T object, and the int ID of the store.)</param>
+        /// <param name="storeList">The list of stores each item has to contain.</param>
+        /// <returns>A list filtered by stores.</returns>
+        public static List<T> FilterListByStores<T>(List<Tuple<T, int>> list, List<Store> storeList)
+        {
+            List<T> returnList = new List<T>();
+            foreach (Tuple<T, int> tuple in list)
+            {
+                foreach (Store store in storeList)
+                {
+                    if (store.ID == tuple.Item2)
+                        returnList.Add(tuple.Item1);
+                }
             }
 
             return returnList;

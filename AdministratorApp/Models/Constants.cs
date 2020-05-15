@@ -14,6 +14,11 @@ namespace AdministratorApp.Models
             Employee = 0, Manager = 1, Administrator = 2, Owner = 3
         }
 
+        public enum InvoiceStatus
+        {
+            Open = 0, Accepted = 1, Denied = 2
+        }
+
         public enum RoleErrors { OK = 0, ROLE_EXISTS = 1, INCORRECT_FORMAT = 2 }
         public enum UserDeleteErorrs { OK = 0, USER_LOGGED_IN = 1, NO_SELECTED_USER = 2, DELETE_OWNER = 3, LOW_ACCESS_LEVEL = 4, DELETE_ID_0 = 5 }
         public enum EmailCheckErrors {OK = 0, EMAIL_NOT_EDITED = 1, EMAIL_IN_USE = 2}

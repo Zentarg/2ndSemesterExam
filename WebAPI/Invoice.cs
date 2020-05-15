@@ -13,7 +13,6 @@ namespace WebAPI
         public Invoice()
         {
             InvoiceHasItems = new HashSet<InvoiceHasItem>();
-            Stores = new HashSet<Store>();
         }
 
         public int ID { get; set; }
@@ -29,10 +28,14 @@ namespace WebAPI
 
         public virtual User User { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<InvoiceHasItem> InvoiceHasItems { get; set; }
+        public int StoreID { get; set; }
+
+        public int InvoiceStatusID { get; set; }
+
+        [StringLength(255)]
+        public string AdminComment { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Store> Stores { get; set; }
+        public virtual ICollection<InvoiceHasItem> InvoiceHasItems { get; set; }
     }
 }
