@@ -34,13 +34,13 @@
         <Style x:Key="BasicTextBox" TargetType="TextBox">
             <Setter Property="Height" Value="auto"/>
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Width" Value="Auto" />
-            <Setter Property="MaxWidth" Value="175"/>
+            <Setter Property="Width" Value="125" />
             <Setter Property="MaxLength" Value="35"/>
         </Style>
 
         <Style x:Key="ItemPropertiesHeaderTextBlock" TargetType="TextBlock">
             <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Width" Value="75" />
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="Margin" Value="0,0,6,0"/>
         </Style>
@@ -124,9 +124,10 @@
                     <TextBlock Text="{Binding SelectedItem.Item1.Name, Mode=TwoWay}" FontSize="18" />
                 </StackPanel>
 
-                <StackPanel Margin="15,15,5,0">
-                    <TextBlock Text="Amount:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
-                    <ListView Width="350"  ItemsSource="{Binding SelectedItemInStocks}" HorizontalAlignment="Left" SelectionMode="None">
+                    <StackPanel Margin="15,15,5,0" HorizontalAlignment="Left">
+                        <TextBlock Text="Amount:" HorizontalAlignment="Left"  Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
+
+                    <ListView Width="350"  ItemsSource="{Binding SelectedItemInStocks}" SelectionMode="None">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -201,9 +202,10 @@
                         <TextBox Text="{Binding SelectedItem.Item1.Name, Mode=TwoWay}"  Style="{StaticResource BasicTextBox}" />
                 </StackPanel>
 
-                <StackPanel Margin="15,15,5,0">
-                    <TextBlock Text="Amount:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
-                    <ListView Width="350"  ItemsSource="{Binding SelectedItemInStocks}" HorizontalAlignment="Left" SelectionMode="None">
+                <StackPanel Margin="15,15,5,0" HorizontalAlignment="Left">
+                        <TextBlock Text="**Amount:" HorizontalAlignment="Left" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
+  
+<ListView Width="350"  ItemsSource="{Binding SelectedItemInStocks}" HorizontalAlignment="Left" SelectionMode="None">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -211,7 +213,7 @@
                                     <TextBlock Text="{Binding Key.Name}"/>
                                     <TextBlock Text=" = " Margin="5,0,5,0"/>
                                     <Button Name="IncreaseAmount"  Style="{StaticResource ArrowButton}" Height="35" Width="35" Content="&#xE70E;"  />
-                                        <TextBox Text="{Binding Value}"  Style="{StaticResource BasicTextBox}"/>
+                                        <TextBox Text="{Binding Value}"  Style="{StaticResource BasicTextBox}" BeforeTextChanging="FilterNonNumeric_OnBeforeTextChanging" Width="75" HorizontalContentAlignment="Center" IsEnabled="True" />
                                     <Button Name="DecreaseAmount"  Style="{StaticResource ArrowButton}" Height="35" Width="35" Content="&#xE70D;"  />
                                     <TextBlock Text="pcs." Margin="3,0,0,0"/>
                                 </StackPanel>
@@ -225,8 +227,8 @@
                         <TextBox Text="{Binding SelectedItemCategory.Name}"   Style="{StaticResource BasicTextBox}"  />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
-                    <TextBlock Text="Price:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
-                        <TextBox Text="{Binding SelectedItem.Item1.Price, Mode=TwoWay}"  Style="{StaticResource BasicTextBox}"  />
+                    <TextBlock Text="**Price:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
+                        <TextBox Text="{Binding SelectedItem.Item1.Price, Mode=TwoWay}"  Style="{StaticResource BasicTextBox}" BeforeTextChanging="FilterNonNumeric_OnBeforeTextChanging"   />
                     <TextBlock Text="Ft" Margin="0,0,6,0" />
 
                     <TextBlock Text="(" Margin="10,0,0,0" />
@@ -235,8 +237,8 @@
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
-                    <TextBlock Text="Discount:" Style="{StaticResource ItemPropertiesHeaderTextBlock}"/>
-                        <TextBox Text="{Binding SelectedItem.Item1.DiscountPercentage, Mode=TwoWay}"   Style="{StaticResource BasicTextBox}"/>
+                    <TextBlock Text="**Discount:" Style="{StaticResource ItemPropertiesHeaderTextBlock}"/>
+                        <TextBox Text="{Binding SelectedItem.Item1.DiscountPercentage, Mode=TwoWay}"   Style="{StaticResource BasicTextBox}" BeforeTextChanging="FilterNonNumeric_OnBeforeTextChanging" />
                     <TextBlock Text="%" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
@@ -249,20 +251,31 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
                     <TextBlock Text="Barcode:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
-                        <TextBox Text="{Binding SelectedItem.Item1.Barcode, Mode=TwoWay}" Style="{StaticResource BasicTextBox}" />
+                        <TextBox Text="{Binding SelectedItem.Item1.Barcode, Mode=TwoWay}" Style="{StaticResource BasicTextBox}"  Width="250"  BeforeTextChanging="FilterNonNumeric_OnBeforeTextChanging"/>
                 </StackPanel>
 
                     <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
                         <TextBlock Text="Comment:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
-                        <TextBox Text="{Binding SelectedItem.Item1.Comment, Mode=TwoWay}"  Height="Auto" MaxHeight="250" />
+                        <TextBox Text="{Binding SelectedItem.Item1.Comment, Mode=TwoWay}" Width="250" />
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical">
+
+                    <StackPanel Orientation="Horizontal" Margin="15,15,15,0" HorizontalAlignment="Left">
+                          <TextBlock Text="Picture:" HorizontalAlignment="Left" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
+                          <TextBox Text="{Binding SelectedItem.Item1.PictureSource, Mode=TwoWay}"  Width="250" />
+                    </StackPanel>
+                        <Image Source="{Binding SelectedItem.Item1.PictureSource, Mode=TwoWay}" MaxWidth="250" MaxHeight="250" />
                     </StackPanel>
 
-                    <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
-                    <TextBlock Text="Picture:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
-                    <Image Source="{Binding SelectedItem.Item1.PictureSource, Mode=TwoWay}" MaxWidth="250" MaxHeight="250" />
-                </StackPanel>
+                    <StackPanel HorizontalAlignment="Left" Margin="10,30,10,0">
+                        <TextBlock Text="** Accepts only numeric input." FontSize="10"/>
+                    </StackPanel>
+
+
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,25,0,0">
-                    <Button Width="75" Height="35" Content="Close" HorizontalAlignment="Right" Margin="25,0,25,0" Click="ButtonBase_OnClick">
+
+
+                        <Button Width="55" Height="35" Content="&#xE74D;" FontFamily="Segoe mdl2 assets" HorizontalAlignment="Right" FontSize="20"  Background="#FF6262" Margin="25,0,140,0" Click="ButtonBase_OnClick">
                         <Button.Resources>
                         <ResourceDictionary>
                             <ResourceDictionary.ThemeDictionaries>
@@ -277,8 +290,26 @@
                             </ResourceDictionary.ThemeDictionaries>
                         </ResourceDictionary>
                     </Button.Resources>
+                    </Button>
 
-                </Button>
+
+
+                        <Button Width="75" Height="35" Content="Close" HorizontalAlignment="Right" Margin="25,0,25,0" Click="ButtonBase_OnClick">
+                        <Button.Resources>
+                        <ResourceDictionary>
+                            <ResourceDictionary.ThemeDictionaries>
+                                <ResourceDictionary x:Key="Dark">
+                                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#FF6262"/>
+                                    <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#CD5252"/>
+                                </ResourceDictionary>
+                                <ResourceDictionary x:Key="Light">
+                                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#FF6262"/>
+                                    <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#CD5252"/>
+                                </ResourceDictionary>
+                            </ResourceDictionary.ThemeDictionaries>
+                        </ResourceDictionary>
+                    </Button.Resources>
+                    </Button>
                         <Button Width="75" Height="35" Content="Save" HorizontalAlignment="Right" Margin="0,0,25,0">
                             <Button.Resources>
                                 <ResourceDictionary>

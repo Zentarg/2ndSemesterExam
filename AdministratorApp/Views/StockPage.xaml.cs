@@ -64,5 +64,10 @@ namespace AdministratorApp.Views
 
             _vm.SelectedCategories = selectedCategories;
         }
+
+        private void FilterNonNumeric_OnBeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
+        {
+            args.Cancel = args.NewText.Any(c => !char.IsDigit(c));
+        }
     }
 }

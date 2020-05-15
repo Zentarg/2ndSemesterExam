@@ -81,7 +81,7 @@
             </StackPanel>
             <StackPanel Margin="30,25,0,15" Orientation="Horizontal" VerticalAlignment="Center">
                 <TextBlock Style="{StaticResource NormalTextBlock}" FontSize="15" Margin="0,5,14,0" Text="Comment: "/>
-                <RichEditBox Width="275" Height="125"  PlaceholderText="This item is really popular!"/>
+                <TextBox Width="275" Height="125" Text="{Binding Comment, Mode=TwoWay}"  PlaceholderText="This item is really popular!"/>
             </StackPanel>
 
             </StackPanel>
