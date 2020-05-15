@@ -137,6 +137,7 @@
     <Compile Include="ViewModels\AddItemToStockVM.cs" />
     <Compile Include="ViewModels\AddItemViewModel.cs" />
     <Compile Include="ViewModels\AddStorePageVM.cs" />
+    <Compile Include="ViewModels\ConfirmEditUserVM.cs" />
     <Compile Include="ViewModels\CreateEmployeeVM.cs" />
     <Compile Include="ViewModels\CreateNewCategoryVM.cs" />
     <Compile Include="ViewModels\CreateNewRoleVM.cs" />
@@ -145,6 +146,7 @@
     <Compile Include="ViewModels\HomePageVM.cs" />
     <Compile Include="ViewModels\LoginPageVM.cs" />
     <Compile Include="ViewModels\MainPageVM.cs" />
+    <Compile Include="ViewModels\RequestsVM.cs" />
     <Compile Include="ViewModels\StorePageVM.cs" />
     <Compile Include="ViewModels\StoreStockPageVM.cs" />
     <Compile Include="Models\VMHandler.cs" />
@@ -156,6 +158,9 @@
     </Compile>
     <Compile Include="Views\AddStorePage.xaml.cs">
       <DependentUpon>AddStorePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConfrimEditUserContentDialog.xaml.cs">
+      <DependentUpon>ConfrimEditUserContentDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CreateEmployeePage.xaml.cs">
       <DependentUpon>CreateEmployeePage.xaml</DependentUpon>
@@ -174,6 +179,9 @@
     </Compile>
     <Compile Include="Views\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RequestsPage.xaml.cs">
+      <DependentUpon>RequestsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StockPage.xaml.cs">
       <DependentUpon>StockPage.xaml</DependentUpon>
@@ -271,6 +279,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\ConfrimEditUserContentDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\CreateEmployeePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -292,6 +304,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\HomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RequestsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Text.Core;
@@ -22,6 +23,7 @@ namespace AdministratorApp.ViewModels
         private List<Item> _items;
         private float _priceAfterDiscount;
         private string _filterString = "";
+        private List<Category> _selectedCategories = new List<Category>();
 
         public StockPageViewModel()
         {
@@ -40,6 +42,11 @@ namespace AdministratorApp.ViewModels
         {
             get => Data.StockHasItems;
             set => Data.StockHasItems = value;
+        }
+
+        public ObservableCollection<Category> AllCategories
+        {
+            get => new ObservableCollection<Category>(Data.AllCategories.Values);
         }
 
         public Tuple<Item, string> SelectedItem
@@ -66,11 +73,25 @@ namespace AdministratorApp.ViewModels
             get
             {
                 ObservableCollection<Tuple<Item, string>> items = new ObservableCollection<Tuple<Item, string>>();
-                List<Item> filteredList = CommonMethods.FilterListByString(Data.AllItems.Values.ToList(), FilterString);
+                List<Item> filteredList = new List<Item>();
+                if (SelectedCategories.Count == 0)
+                    filteredList = CommonMethods.FilterListByString(Data.AllItems.Values.ToList(), FilterString);
+                else
+                {
+                    List<Tuple<Item, int>> itemsToFilter = new List<Tuple<Item, int>>();
+                    foreach (Item item in Data.AllItems.Values)
+                    {
+                        itemsToFilter.Add(new Tuple<Item, int>(item, item.CategoryId));
+                    }
+
+                    filteredList = CommonMethods.FilterListByString(CommonMethods.FilterListByCategories(itemsToFilter, SelectedCategories), FilterString);
+                }
+
                 foreach (Item item in filteredList)
                 {
                     items.Add(new Tuple<Item, string>(item, Data.AllCategories.Count != 0 ? Data.AllCategories[item.CategoryId].Name : "No Category." ));
                 }
+
                 return items;
             }
         }
@@ -107,6 +128,16 @@ namespace AdministratorApp.ViewModels
             get => SelectedItem != null
                 ? Data.AllCategories[SelectedItem.Item1.CategoryId]
                 : new Category(-1, "loading");
+        }
+
+        public List<Category> SelectedCategories
+        {
+            get { return _selectedCategories; }
+            set
+            {
+                _selectedCategories = value;
+                OnPropertyChanged(nameof(FilteredItems));
+            }
         }
 
         public ObservableCollection<KeyValuePair<Stock, int>> SelectedItemInStocks
@@ -178,6 +209,7 @@ namespace AdministratorApp.ViewModels
             await Data.UpdateStore();
             await Data.UpdateItemsInStocks();
             OnPropertyChanged(nameof(SelectedItemCategory));
+            OnPropertyChanged(nameof(AllCategories));
             OnPropertyChanged(nameof(FilteredItems));
             OnPropertyChanged(nameof(Stores));
             OnPropertyChanged(nameof(Stocks));

@@ -11,7 +11,7 @@ namespace AdministratorApp.Models
     {
         public Store()
         {
-            
+
         }
 
         //For creating new stores
@@ -44,5 +44,9 @@ namespace AdministratorApp.Models
         public int Phone { get; set; }
         public int StockId { get; set; }
 
+        public override string ToString()
+        {
+            return Name;
+        } 
     }
 }

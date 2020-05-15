@@ -6,6 +6,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebAPI;
@@ -42,9 +43,10 @@ namespace WebAPI.Controllers
             return Ok(salary);
         }
 
-        // PUT: api/Salaries/5
+        // PUT: api/Salaries/UpdateSalary/id
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutSalary(int id, Salary salary)
+        [Route("api/Salaries/UpdateSalary/{id}")]
+        public async Task<IHttpActionResult> PutSalary(int id, Salary salary)
         {
             if (!ModelState.IsValid)
             {
@@ -60,7 +62,7 @@ namespace WebAPI.Controllers
 
             try
             {
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {

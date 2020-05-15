@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Devices.Perception.Provider;
 using Windows.UI.Xaml;
 using AdministratorApp.Models;
 using AdministratorApp.Views;
@@ -17,30 +19,42 @@ namespace AdministratorApp.ViewModels
 {
     public class EmployeesPageVM : INotifyPropertyChanged
     {
-        ObservableCollection<User> _users = new ObservableCollection<User>();
-        private User _sEmp =  new User();
-        private ObservableCollection<string> _stores = new ObservableCollection<string>();
+        private ObservableCollection<UserLevel> _accountTypes = new ObservableCollection<UserLevel>();
+        private ObservableCollection<Store> _stores = new ObservableCollection<Store>();
         private ObservableCollection<Role> _roles = new ObservableCollection<Role>();
+        ObservableCollection<User> _users = new ObservableCollection<User>();
         private Salary _objSalary;
+        private UserLevel _initialUserLevel;
+        private UserLevel _selectedUserLevel;
+        private Role _selectedRole;
+        private Role _role;
+        private Store _selectedStore;
+        private Store _initialStore;
+        private User _sEmp = new User();
 
         private string _name = "";
         private string _address = "";
         private int _telephone = 0;
-        private string _role = "";
+        
         private bool _IES = false;
-        private string _selectedRole = "";
+
         private float _salary;
         private float _salaryWTax;
         private int _userId = -1;
         private int _tajNumber;
         private int _taxNumber;
         private float _workingHours;
-        private string _selectedStore;
+
         private string _userName;
         private string _email;
         private bool _showEdit = false;
         private bool _showNormal = true;
+        private bool _showUserLevelEdit = false;
+        private bool _showUserLevelNormal = true;
 
+
+        private string _filterString = "";
+        private string _password = "********";
         private string _feedbackText = "";
 
         public EmployeesPageVM()
@@ -51,13 +65,9 @@ namespace AdministratorApp.ViewModels
             DoDelete = new RelayCommand(DeleteUser);
             DoShowEdit = new RelayCommand(ShowEditMethod);
             DoCancelEdit = new RelayCommand(CancelEditMethod);
-        }
-
-        public Dictionary<int, User> DictUsers
-        {
-            get { return Data.AllUsers; }
-            set { Data.AllUsers = value; 
-                OnPropertyChanged(); }
+            DoConfirmEdit = new RelayCommand(ConfirmEditMethod);
+            DoGenerateAuth = new RelayCommand(GeneratePassword);
+            VMHandler.EmployeesPageVm = this;
         }
 
         public RelayCommand DoShowUserName { get; set; }
@@ -65,6 +75,8 @@ namespace AdministratorApp.ViewModels
         public RelayCommand DoDelete { get; set; }
         public RelayCommand DoShowEdit { get; set; }
         public RelayCommand DoCancelEdit { get; set; }
+        public RelayCommand DoConfirmEdit { get; set; }
+        public RelayCommand DoGenerateAuth { get; set; }
         public string UserName
         {
             get { return _userName; }
@@ -78,45 +90,76 @@ namespace AdministratorApp.ViewModels
             set { Data.AllSalaries = value; OnPropertyChanged(); }
         }
 
-        public Dictionary<int, Store> DictStore
-        {
-            get { return Data.AllStores; }
-        }
 
         public ObservableCollection<User> Users
         {
             get
             {
-                ObservableCollection<User> users = new ObservableCollection<User>(Data.AllUsers.Values);
-                return users;
+                return _users;
             }
+            set { _users = value; OnPropertyChanged(); }
+        }
+
+        public string FilterString
+        {
+            get => _filterString;
             set
             {
-                _users = value; OnPropertyChanged();
+                _filterString = value;
+                OnPropertyChanged(nameof(FilteredUsers));
+            }
+        }
+
+        public ObservableCollection<User> FilteredUsers
+        {
+            get
+            {
+                ObservableCollection<User> users = new ObservableCollection<User>();
+
+                foreach (User user in CommonMethods.FilterListByString(Data.AllUsers.Values.ToList(), FilterString))
+                {
+                    users.Add(user);
+                }
+
+                return users;
             }
         }
 
         public User SelectedEmp
         {
-            set { _sEmp = value;
+            set
+            {
+                User temp = _sEmp;
+                _sEmp = value;
                 if (_sEmp != null)
                 {
-                    Name = _sEmp.Name;
-                    Telephone = _sEmp.Phone;
-                    Address = _sEmp.Address;
-                    SelectedRole = null;
-                    _userId = _sEmp.Id;
-                    _objSalary = CommonMethods.GetSalary(_userId, DictSalaries);
-                    Role = CommonMethods.GetRole(_sEmp.RoleId, Data.AllRoles).Name;
-                    Salary = _objSalary.BeforeTax;
-                    SalaryWTax = _objSalary.BeforeTax - (_objSalary.BeforeTax * (_objSalary.TaxPercentage / 100));
-                    IsEmployeeSelected = true;
-                    TajNumber = _sEmp.TAJNumber;
-                    TaxNumber = _sEmp.TAXNumber;
-                    WorkingHours = _sEmp.WorkingHours;
-                    SelectedStore = DictStore[_sEmp.StoreId].Name;
-                    Email = _sEmp.Email;
-                    UserName = "";
+                    if (ShowEdit == false)
+                    {
+                        if (ShowEdit)
+                            if (temp != _sEmp)
+                                SelectedEmp = temp;
+                        Name = _sEmp.Name;
+                        Telephone = _sEmp.Phone;
+                        Address = _sEmp.Address;
+                        SelectedRole = null;
+                        _userId = _sEmp.Id;
+                        _objSalary = CommonMethods.GetSalary(_userId, DictSalaries);
+                        InitialRole = CommonMethods.GetRole(_sEmp.RoleId, Data.AllRoles);
+                        InitialUserLevel = CommonMethods.GetUserLevel(_sEmp.UserLevelId, Data.AllLevels);
+
+                        Salary = _objSalary.BeforeTax;
+                        SalaryWTax = _objSalary.BeforeTax - (_objSalary.BeforeTax * (_objSalary.TaxPercentage / 100));
+                        IsEmployeeSelected = true;
+                        TajNumber = _sEmp.TAJNumber;
+                        TaxNumber = _sEmp.TAXNumber;
+                        WorkingHours = _sEmp.WorkingHours;
+                        InitialStore = Data.AllStores[_sEmp.StoreId];
+                        Email = _sEmp.Email;
+                        UserName = "";
+                        FeedBackText = "";
+                        Password = "********";
+                    }
+                    
                 }
                 OnPropertyChanged();}
             get { return _sEmp; }
@@ -139,13 +182,13 @@ namespace AdministratorApp.ViewModels
             get { return _telephone; }
         }
 
-        public string Role
+        public Role InitialRole
         {
             get { return _role; }
             set { _role = value; OnPropertyChanged(); }
         }
 
-        public ObservableCollection<string> Stores
+        public ObservableCollection<Store> Stores
         {
             get { return _stores; }
             set { _stores = value; OnPropertyChanged(); }
@@ -164,13 +207,11 @@ namespace AdministratorApp.ViewModels
             set { _IES = value; OnPropertyChanged(); }
         }
 
-        public string SelectedRole
+        public Role SelectedRole
         {
             get { return _selectedRole; }
             set
-            {
-                Role = value;
-                _selectedRole = value; OnPropertyChanged(); }
+            { _selectedRole = value; OnPropertyChanged(); }
         }
 
         public float Salary
@@ -203,7 +244,7 @@ namespace AdministratorApp.ViewModels
             set { _workingHours = value; OnPropertyChanged();}
         }
 
-        public string SelectedStore
+        public Store SelectedStore
         {
             get { return _selectedStore; }
             set { _selectedStore = value; OnPropertyChanged(); }
@@ -232,6 +273,49 @@ namespace AdministratorApp.ViewModels
             get { return _showNormal; }
             set { _showNormal = value; OnPropertyChanged(); }
         }
+
+        public bool ShowUserLevelEdit
+        {
+            get { return _showUserLevelEdit; }
+            set { _showUserLevelEdit = value; OnPropertyChanged(); }
+        }
+
+        public bool ShowUserLevelNormal
+        {
+            get { return _showUserLevelNormal; }
+            set { _showUserLevelNormal = value; OnPropertyChanged(); }
+        }
+
+        public UserLevel InitialUserLevel
+        {
+            get { return _initialUserLevel; }
+            set { _initialUserLevel = value; OnPropertyChanged(); }
+        }
+
+        public UserLevel SelectedUserLevel
+        {
+            get { return _selectedUserLevel; }
+            set { _selectedUserLevel = value; OnPropertyChanged(); }
+        }
+
+        public Store InitialStore
+        {
+            get { return _initialStore; }
+            set { _initialStore = value; OnPropertyChanged(); }
+        }
+
+        public ObservableCollection<UserLevel> AccountTypes
+        {
+            get { return _accountTypes; }
+            set { _accountTypes = value; OnPropertyChanged(); }
+        }
+
+        public string Password
+        {
+            get { return _password; }
+            set { _password = value; OnPropertyChanged(); }
+        }
+
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -245,14 +329,20 @@ namespace AdministratorApp.ViewModels
             await Data.UpdateSalaries();
             await Data.UpdateRoles();
             await Data.UpdateStore();
+            AccountTypes = await Data.UpdateUserLevels();
             Roles = new ObservableCollection<Role>(Data.AllRoles.Values);
-
-            foreach (Store s in DictStore.Values)
+            Users = new ObservableCollection<User>(Data.AllUsers.Values);
+            foreach (Store s in Data.AllStores.Values)
             {
-                Stores.Add(s.Name);
+                Stores.Add(s);
             }
-            OnPropertyChanged(nameof(Users));
-            OnPropertyChanged(nameof(DictUsers));
+        }
+
+
+        public async Task LoadRolesAsync()
+        {
+            await Data.UpdateRoles();
+            Roles = new ObservableCollection<Role>(Data.AllRoles.Values);
         }
 
         private async void GetUserName()
@@ -262,6 +352,16 @@ namespace AdministratorApp.ViewModels
                 UserName = await APIHandler<string>.GetOne($"auth/getusername/{_userId}");
             }
         }
+        private async Task<string> GetUserNameForPassword()
+        {
+            if (_userId != -1)
+            {
+                return await APIHandler<string>.GetOne($"auth/getusername/{_userId}");
+            }
+
+            return "";
+        }
+
 
         public void Cancel()
         {
@@ -271,18 +371,21 @@ namespace AdministratorApp.ViewModels
             SelectedRole = null;
             _userId = 0;
             _objSalary = null;
-            Role = null;
+            InitialRole = null;
+            InitialStore = null;
+            InitialUserLevel = null;
             Salary = 0;
             SalaryWTax = 0;
             IsEmployeeSelected = false;
             TajNumber = 0;
             TaxNumber = 0;
             WorkingHours = 0;
-            SelectedStore = "";
+            SelectedStore = null;
             Email = "";
             UserName = "";
             SelectedEmp = null;
             SelectedStore = null;
+            Password = "********";
         }
 
         public async void DeleteUser()
@@ -295,14 +398,83 @@ namespace AdministratorApp.ViewModels
 
         public void ShowEditMethod()
         {
-            ShowEdit = true;
-            ShowNormal = false;
+            if (SelectedEmp.UserLevelId < AuthHandler.ActiveUser.UserLevelId)
+            {
+                ShowEdit = true;
+                ShowUserLevelEdit = true;
+                ShowNormal = false;
+                ShowUserLevelNormal = false;
+                SelectedStore = InitialStore;
+                SelectedRole = InitialRole;
+                SelectedUserLevel = InitialUserLevel;
+                FeedBackText = "";
+            }
+
+            if (SelectedEmp.Id == AuthHandler.ActiveUser.Id)
+            {
+                ShowEdit = true;
+                ShowUserLevelEdit = false;
+                ShowUserLevelNormal = true;
+                SelectedUserLevel = InitialUserLevel;
+                ShowNormal = false;
+                SelectedStore = InitialStore;
+                SelectedRole = InitialRole;
+                FeedBackText = "";
+            }
+            if (SelectedEmp.UserLevelId >= AuthHandler.ActiveUser.UserLevelId && SelectedEmp.Id != AuthHandler.ActiveUser.Id)
+                FeedBackText = "You cannot edit data for\nusers with the same or\nhigher access level";
         }
 
         public void CancelEditMethod()
         {
+            CloseEdit();
+            FeedBackText = "";
+        }
+
+        public async void ConfirmEditMethod()
+        {
+            FeedBackText = "";
+            Data.SelectedUser = SelectedEmp;
+            Data.EditedUser = new User(SelectedEmp.Id, Name, Email, Telephone, Address, SelectedRole.Id, TajNumber, TaxNumber, WorkingHours, SelectedUserLevel.Id, SelectedStore.ID);
+            Data.EditedSalary = new Salary(SelectedEmp.Id, Salary, (SalaryWTax / Salary) * 100);
+            VMHandler.EmployeesPageVm = this;
+            ConfrimEditUserContentDialog cEUCD = new ConfrimEditUserContentDialog();
+            await cEUCD.ShowAsync();
+        }
+
+        public void CloseEdit()
+        {
             ShowEdit = false;
             ShowNormal = true;
+            ShowUserLevelNormal = true;
+            ShowUserLevelEdit = false;
+        }
+
+        public async void GeneratePassword()
+        {
+            Password = AuthHandler.GenerateString(8);
+            string Salt = AuthHandler.GenerateString(16);
+            string encryptedPassword = AuthHandler.EncryptPassword(Password, Salt);
+            string username = await GetUserNameForPassword();
+            if (string.IsNullOrEmpty(username))
+            {
+                string generatedUsername = await AuthHandler.GenerateUserName(Name);
+                var posteAuth = await PostAuth(generatedUsername, encryptedPassword, Salt);
+            }
+            else
+            {
+                var posteAuth = await PutAuth(username, encryptedPassword, Salt);
+            }
+        }
+
+        public async Task<HttpResponseMessage> PutAuth(string username, string encryptedPassword, string salt)
+        {
+            return await APIHandler<Auth>.PutOne($"Auth/PutAuth/{SelectedEmp.Id}", new Auth(username, encryptedPassword, salt, SelectedEmp.Id));
+        }
+
+        public async Task<Auth> PostAuth(string username, string encryptedPassword, string salt)
+        {
+            return await APIHandler<Auth>.PostOne("Auth/PostAuth", new Auth(username, encryptedPassword, salt, SelectedEmp.Id));
         }
     }
 }
