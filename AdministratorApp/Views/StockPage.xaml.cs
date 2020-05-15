@@ -26,9 +26,11 @@ namespace AdministratorApp.Views
     public sealed partial class StockPage : Page
     {
         private StockPageVM _vm;
+        private StockPageVM _viewModel;
         public StockPage()
         {
             this.InitializeComponent();
+            _viewModel = VMHandler.StockPageVm;
             _vm = DataContext as StockPageVM;
         }
 
@@ -68,6 +70,19 @@ namespace AdministratorApp.Views
         private void FilterNonNumeric_OnBeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
         {
             args.Cancel = args.NewText.Any(c => !char.IsDigit(c));
+        }
+
+        private async void SaveButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            bool SaveWasSuccessful = await _viewModel.SaveEdit();
+            if (SaveWasSuccessful)
+            {
+                EditableItemDisplay.Visibility = Visibility.Collapsed;
+                SimpleItemDisplay.Visibility = Visibility.Visible;
+
+            }
+
+
         }
     }
 }
