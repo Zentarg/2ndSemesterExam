@@ -8,7 +8,6 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Text.Core;
-using Windows.UI.WebUI;
 using AdministratorApp.Annotations;
 using AdministratorApp.Models;
 using AdministratorApp.Views;
@@ -24,21 +23,16 @@ namespace AdministratorApp.ViewModels
         private float _priceAfterDiscount;
         private string _filterString = "";
 
-
         public StockPageViewModel()
         {
             LoadDataAsync();
             GoToAddItem = new RelayCommand(NavigateToAddItemPage);
             DeselectItemCommand = new RelayCommand(DeselectItem);
             NavigateToAddItemToStockCommand = new RelayCommand(NavigateToAddItemToStock);
-            NavigateToWarehouseCommand = new RelayCommand(NavigateToWarehouse);
-            EditItemCommand = new RelayCommand(EditItem);
         }
 
         public RelayCommand DeselectItemCommand { get; }
-        public RelayCommand DeleteItemCommand { get; }
-        public RelayCommand EditItemCommand { get; }
-        public RelayCommand NavigateToWarehouseCommand { get; }
+
         public RelayCommand GoToAddItem { get; }
         public RelayCommand NavigateToAddItemToStockCommand { get; }
 
@@ -133,7 +127,6 @@ namespace AdministratorApp.ViewModels
             }
         }
 
-
         /*public ObservableCollection<KeyValuePair<Item, Dictionary<Store, int>>> ItemsInStocks
         {
             get
@@ -173,12 +166,6 @@ namespace AdministratorApp.ViewModels
             SelectedItem = null;
         }
 
-        private async void EditItem()
-        {
-          
-          await  APIHandler<Item>.PutOne("items", new Item(SelectedItem.Item1.Id,SelectedItem.Item1.Name, SelectedItem.Item1.Price, SelectedItem.Item1.Comment, SelectedItem.Item1.PictureSource, SelectedItem.Item1.Barcode, SelectedItem.Item1.Color,SelectedItem.Item1.Size,SelectedItem.Item1.CategoryId,SelectedItem.Item1.DiscountPercentage) );
-
-        }
 
 
 
@@ -198,11 +185,6 @@ namespace AdministratorApp.ViewModels
             OnPropertyChanged(nameof(PriceAfterDiscount));
             SelectedItem = FilteredItems[0];
             
-        }
-
-        private void NavigateToWarehouse()
-        {
-            NavigationHandler.NavigateToPage(typeof(StoreStockPage));
         }
 
         private void NavigateToAddItemToStock()

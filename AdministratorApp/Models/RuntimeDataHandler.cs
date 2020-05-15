@@ -10,10 +10,7 @@ namespace AdministratorApp.Models
     public static class RuntimeDataHandler
     {
 
-        public static Stock SelectedStock
-        {
-            get => Data.AllStocks.Values.FirstOrDefault(x => x.StockID == RuntimeDataHandler.SelectedStore.StockId);
-        }
+        public static Stock SelectedStock { get; set; }
         public static Store SelectedStore { get; set; }
 
 

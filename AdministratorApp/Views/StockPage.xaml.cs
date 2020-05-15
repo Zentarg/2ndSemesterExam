@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -13,10 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using AdministratorApp.Models;
 using AdministratorApp.ViewModels;
-using CommonLibrary.Models;
-using Size = System.Drawing.Size;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -54,16 +50,5 @@ namespace AdministratorApp.Views
             SimpleItemDisplay.Visibility = Visibility.Visible;
             EditableItemDisplay.Visibility = Visibility.Collapsed;
         }
-
-        private async void SaveButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            Item newItem = new Item(Convert.ToInt32(IdText.Text), Convert.ToString(NameInput.Text),
-                Convert.ToSingle(PriceInput.Text), Convert.ToString(CommentInput.Text), PictureInput.Text,
-                Convert.ToInt32(BarcodeInput.Text), Convert.ToString(ColorInput.Text), Convert.ToString(SizeInput.Text),
-                Convert.ToInt32(CategoryInput.Text),
-                Convert.ToSingle(DiscountInput.Text));
-           await APIHandler<Item>.PostOne("items", newItem );
-        }
-
     }
 }
