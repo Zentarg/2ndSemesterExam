@@ -12,5 +12,6 @@ namespace AdministratorApp.ViewModels
         public static AddItemVM AddItemViewModel { get; set; }
         public static EmployeesPageVM EmployeesPageVm { get; set; }
         public static DeleteUserConfirmationVM DeleteUserConfirmationVm { get; set; }
+        public static StockPageVM StockPageVm { get; set; }
     }
 }
