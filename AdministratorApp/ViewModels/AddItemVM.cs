@@ -15,7 +15,7 @@ using GalaSoft.MvvmLight.Command;
 
 namespace AdministratorApp.ViewModels
 {
-    public class AddItemViewModel : INotifyPropertyChanged
+    public class AddItemVM : INotifyPropertyChanged
     {
         private string _name;
         private float _price;
@@ -29,7 +29,7 @@ namespace AdministratorApp.ViewModels
         private int _barcode;
         private string _errorMessage;
 
-        public AddItemViewModel()
+        public AddItemVM()
         {
             LoadDataAsync();
             VMHandler.AddItemViewModel = this;

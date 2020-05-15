@@ -25,11 +25,11 @@ namespace AdministratorApp.Views
     /// </summary>
     public sealed partial class StockPage : Page
     {
-        private StockPageViewModel _vm;
+        private StockPageVM _vm;
         public StockPage()
         {
             this.InitializeComponent();
-            _vm = DataContext as StockPageViewModel;
+            _vm = DataContext as StockPageVM;
         }
 
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)

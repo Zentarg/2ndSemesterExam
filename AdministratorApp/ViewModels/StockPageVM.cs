@@ -17,7 +17,7 @@ using GalaSoft.MvvmLight.Command;
 
 namespace AdministratorApp.ViewModels
 {
-    public class StockPageViewModel : INotifyPropertyChanged
+    public class StockPageVM : INotifyPropertyChanged
     {
         private Tuple<Item, string> _selectedItem;
         private List<Item> _items;
@@ -25,7 +25,7 @@ namespace AdministratorApp.ViewModels
         private string _filterString = "";
         private List<Category> _selectedCategories = new List<Category>();
 
-        public StockPageViewModel()
+        public StockPageVM()
         {
             LoadDataAsync();
             GoToAddItem = new RelayCommand(NavigateToAddItemPage);

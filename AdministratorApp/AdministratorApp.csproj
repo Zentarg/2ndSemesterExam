@@ -135,7 +135,7 @@
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AddItemToStockVM.cs" />
-    <Compile Include="ViewModels\AddItemViewModel.cs" />
+    <Compile Include="ViewModels\AddItemVM.cs" />
     <Compile Include="ViewModels\AddStorePageVM.cs" />
     <Compile Include="ViewModels\ConfirmEditUserVM.cs" />
     <Compile Include="ViewModels\CreateEmployeeVM.cs" />
@@ -185,7 +185,7 @@
     <Compile Include="Views\StockPage.xaml.cs">
       <DependentUpon>StockPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\StockPageViewModel.cs" />
+    <Compile Include="ViewModels\StockPageVM.cs" />
     <Compile Include="Views\StorePage.xaml.cs">
       <DependentUpon>StorePage.xaml</DependentUpon>
     </Compile>
