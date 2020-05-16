@@ -87,10 +87,18 @@ namespace AdministratorApp.Views
 
         private async void DeleteButton_OnClick(object sender, RoutedEventArgs e)
         {
-            _viewModel.DeleteItem();
-            EditableItemDisplay.Visibility = Visibility.Collapsed;
-            SimpleItemDisplay.Visibility = Visibility.Visible;
 
+            ContentDialog dialog = new ContentDialog()
+            {
+                Title = "Delete item",
+                Content =
+                    $"Are you sure that you would like to delete {_viewModel.SelectedItem.Item1.Name} permanently from the system?\nThis will delete the item from each and every stock.",
+                PrimaryButtonText = "Delete",
+                CloseButtonText = "Close",
+                PrimaryButtonCommand = _viewModel.DeleteItemCommand
+            };
+            await dialog.ShowAsync();
         }
+
     }
 }
