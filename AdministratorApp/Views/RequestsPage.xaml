@@ -38,7 +38,8 @@
                 </DropDownButton.Flyout>
             </DropDownButton>
         </StackPanel>
-        <ListView Grid.Row="1" Grid.Column="0" ItemsSource="{Binding FilteredInvoices, Mode=OneWay}" SelectedItem="{Binding SelectedInvoice, Mode=TwoWay}">
+        <ScrollViewer Grid.Row="1" Grid.Column="0">
+            <ListView ItemsSource="{Binding FilteredInvoices, Mode=OneWay}" SelectedItem="{Binding SelectedInvoice, Mode=TwoWay}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -58,11 +59,13 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        </ScrollViewer>
         <Grid Grid.Row="1" Grid.Column="1" Padding="15 0 0 15" ColumnSpacing="10" RowSpacing="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30" />
                 <RowDefinition Height="30" />
                 <RowDefinition Height="150" />
+                <RowDefinition Height="30" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="120" />
                 <RowDefinition Height="30" />
@@ -72,8 +75,9 @@
                 <ColumnDefinition Width="75" />
                 <ColumnDefinition Width="50" />
                 <ColumnDefinition Width="75" />
-                <ColumnDefinition Width="75" />
-                <ColumnDefinition Width="75" />
+                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="150" />
+                <ColumnDefinition Width="40" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <TextBlock Text="Invoice ID:" Grid.Column="0" Grid.Row="0"/>
@@ -87,42 +91,49 @@
                 <TextBlock Text="{Binding SelectedInvoiceAuthor.Id}"></TextBlock>
             </StackPanel>
             <TextBlock Text="{Binding SelectedInvoiceAuthor.Name}" Grid.Column="4" Grid.Row="0"/>
+            <TextBlock Text="Stock:" Grid.Column="5" Grid.Row="0"/>
+            <TextBlock Text="{Binding SelectedInvoice.Item4}" Grid.Column="6" Grid.Row="0"/>
             <TextBlock Text="Comment:" Grid.Column="0" Grid.Row="1"/>
             <TextBlock Text="{Binding SelectedInvoice.Item1.Comment}" TextWrapping="WrapWholeWords" Grid.ColumnSpan="5" Grid.Column="0" Grid.Row="2"/>
-            <ScrollViewer Grid.Row="3" Grid.ColumnSpan="6" Grid.Column="0">
+            <TextBlock Text="List of items:" TextWrapping="WrapWholeWords" Grid.ColumnSpan="5" Grid.Column="0" Grid.Row="3"/>
+            <ScrollViewer Grid.Row="4" Grid.ColumnSpan="7" Grid.Column="0">
                 <ListView ItemsSource="{Binding SelectedInvoiceItems}" SelectionMode="None">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid ColumnSpacing="15">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="75" />
+                                    <ColumnDefinition Width="30" />
                                     <ColumnDefinition Width="50" />
                                     <ColumnDefinition Width="100" />
-                                    <ColumnDefinition Width="75" />
-                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="60" />
+                                    <ColumnDefinition Width="30" />
+                                    <ColumnDefinition Width="120" />
+                                    <ColumnDefinition Width="50" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="Item:" Grid.Column="0"/>
-                                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                <StackPanel Grid.Column="0" Orientation="Horizontal">
                                     <TextBlock Text="#" />
                                     <TextBlock Text="{Binding Item1.Id}" />
                                 </StackPanel>
+                                <TextBlock Text="Name:" Grid.Column="1"/>
                                 <TextBlock Text="{Binding Item1.Name}" Grid.Column="2"/>
                                 <TextBlock Text="Amount:" Grid.Column="3"/>
                                 <TextBlock Text="{Binding Item2}" Grid.Column="4"/>
+                                <TextBlock Text="Stock currently has:" Grid.Column="5"/>
+                                <TextBlock Text="{Binding Item4}" Grid.Column="6"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
             </ScrollViewer>
-            <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5">
+            <StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="5">
                 <TextBlock Text="Admin Comment:" />
                 <TextBox  Height="100" TextWrapping="Wrap" MaxLength="255" Text="{Binding AdminComment, Mode=TwoWay}"/>
             </StackPanel>
-            <TextBlock Text="Price: " Grid.Column="0" Grid.Row="5" TextAlignment="Right"/>
-            <TextBlock Text="{Binding SelectedInvoice.Item1.Price, Mode=OneWay}" Grid.Column="1" Grid.Row="5" TextAlignment="Right"/>
-            <TextBlock Text="Discount: " Grid.Column="0" Grid.Row="6" TextAlignment="Right"/>
-            <TextBlock Text="{Binding SelectedInvoice.Item1.Discount, Mode=OneWay}" Grid.Column="1" Grid.Row="6" TextAlignment="Right"/>
-            <StackPanel Orientation="Horizontal" Grid.Column="5" Grid.Row="6" HorizontalAlignment="Right">
+            <TextBlock Text="Price: " Grid.Column="0" Grid.Row="6" TextAlignment="Right"/>
+            <TextBlock Text="{Binding SelectedInvoice.Item1.Price, Mode=OneWay}" Grid.Column="1" Grid.Row="6" TextAlignment="Right"/>
+            <TextBlock Text="Discount: " Grid.Column="0" Grid.Row="7" TextAlignment="Right"/>
+            <TextBlock Text="{Binding SelectedInvoice.Item1.Discount, Mode=OneWay}" Grid.Column="1" Grid.Row="7" TextAlignment="Right"/>
+            <StackPanel Orientation="Horizontal" Grid.Column="6" Grid.Row="7" HorizontalAlignment="Right">
                 <Button  Content="Deny Invoice" Command="{Binding DoDenyInvoice}" IsEnabled="{Binding EnableButtons}"/>
                 <Button  Content="Accept Invoice" Command="{Binding DoAcceptInvoice}" IsEnabled="{Binding EnableButtons}"/>
             </StackPanel>

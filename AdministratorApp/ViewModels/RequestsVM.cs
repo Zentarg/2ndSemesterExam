@@ -15,7 +15,7 @@ namespace AdministratorApp.ViewModels
 {
     class RequestsVM : INotifyPropertyChanged
     {
-        private Tuple<Invoice, string, string> _selectedInvoice;
+        private Tuple<Invoice, string, string, string> _selectedInvoice;
         private List<Store> _selectedStores = new List<Store>();
         private string _filterString = "";
 
@@ -72,11 +72,11 @@ namespace AdministratorApp.ViewModels
             }
         }
 
-        public ObservableCollection<Tuple<Invoice, string, string>> FilteredInvoices
+        public ObservableCollection<Tuple<Invoice, string, string, string>> FilteredInvoices
         {
             get
             {
-                ObservableCollection<Tuple<Invoice, string, string>> invoices = new ObservableCollection<Tuple<Invoice, string, string>>();
+                ObservableCollection<Tuple<Invoice, string, string, string>> invoices = new ObservableCollection<Tuple<Invoice, string, string, string>>();
                 List<Invoice> filteredList = new List<Invoice>();
                 List<Tuple<Invoice, string>> listToFilter = new List<Tuple<Invoice, string>>();
 
@@ -110,14 +110,14 @@ namespace AdministratorApp.ViewModels
 
                 foreach (Invoice invoice in filteredList)
                 {
-                    invoices.Add(new Tuple<Invoice, string, string>(invoice, Data.AllUsers[invoice.AuthorID].Name, Data.AllStores[invoice.StoreID].Name));
+                    invoices.Add(new Tuple<Invoice, string, string, string>(invoice, Data.AllUsers[invoice.AuthorID].Name, Data.AllStores[invoice.StoreID].Name, Data.AllStocks[Data.AllStores[invoice.StoreID].StockId].Name));
                 }
 
                 return invoices;
             }
         }
 
-        public Tuple<Invoice, string, string> SelectedInvoice
+        public Tuple<Invoice, string, string, string> SelectedInvoice
         {
             get { return _selectedInvoice; }
             set
@@ -130,16 +130,16 @@ namespace AdministratorApp.ViewModels
             }
         }
 
-        public ObservableCollection<Tuple<Item, int>> SelectedInvoiceItems
+        public ObservableCollection<Tuple<Item, int, Stock, int>> SelectedInvoiceItems
         {
             get
             {
-                ObservableCollection<Tuple<Item, int>> items = new ObservableCollection<Tuple<Item, int>>();
+                ObservableCollection<Tuple<Item, int, Stock, int>> items = new ObservableCollection<Tuple<Item, int, Stock, int>>();
                 if (SelectedInvoice != null)
                 {
                     foreach (KeyValuePair<int, int> value in Data.InvoiceHasItems[SelectedInvoice.Item1.ID])
                     {
-                        items.Add(new Tuple<Item, int>(Data.AllItems[value.Key], value.Value));
+                        items.Add(new Tuple<Item, int, Stock, int>(Data.AllItems[value.Key], value.Value, Data.AllStocks[Data.AllStores[SelectedInvoice.Item1.StoreID].StockId], Data.StockHasItems[Data.AllStores[SelectedInvoice.Item1.StoreID].StockId][value.Key]));
                     }
                 }
 
@@ -152,7 +152,7 @@ namespace AdministratorApp.ViewModels
             Data.AllInvoices[SelectedInvoice.Item1.ID].InvoiceStatusID = (int) Constants.InvoiceStatus.Accepted;
             Data.AllInvoices[SelectedInvoice.Item1.ID].AdminComment = AdminComment;
 
-            foreach (Tuple<Item, int> tuple in SelectedInvoiceItems)
+            foreach (Tuple<Item, int, Stock, int> tuple in SelectedInvoiceItems)
             {
                 Data.StockHasItems[Data.AllStores[SelectedInvoice.Item1.StoreID].StockId][tuple.Item1.Id] -=
                     tuple.Item2;
@@ -184,6 +184,7 @@ namespace AdministratorApp.ViewModels
 
         public async Task LoadData()
         {
+            await Data.UpdateStock();
             await Data.UpdateUsers();
             await Data.UpdateItems();
             await Data.UpdateInvoices();
