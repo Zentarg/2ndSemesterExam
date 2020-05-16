@@ -151,6 +151,19 @@ namespace AdministratorApp.ViewModels
         {
             Data.AllInvoices[SelectedInvoice.Item1.ID].InvoiceStatusID = (int) Constants.InvoiceStatus.Accepted;
             Data.AllInvoices[SelectedInvoice.Item1.ID].AdminComment = AdminComment;
+
+            foreach (Tuple<Item, int> tuple in SelectedInvoiceItems)
+            {
+                Data.StockHasItems[Data.AllStores[SelectedInvoice.Item1.StoreID].StockId][tuple.Item1.Id] -=
+                    tuple.Item2;
+                StockHasItems stockHasItems = new StockHasItems(
+                    Data.AllStores[SelectedInvoice.Item1.StoreID].StockId,
+                    tuple.Item1.Id,
+                    Data.StockHasItems[Data.AllStores[SelectedInvoice.Item1.StoreID].StockId][tuple.Item1.Id]);
+                await APIHandler<StockHasItems>.PutOne(
+                    $"StockHasItems/{stockHasItems.StockId}/{stockHasItems.ItemId}", stockHasItems);
+            }
+
             await APIHandler<Invoice>.PutOne($"Invoices/{SelectedInvoice.Item1.ID}", Data.AllInvoices[SelectedInvoice.Item1.ID]);
             SelectedInvoice = null;
             AdminComment = "";
@@ -176,6 +189,7 @@ namespace AdministratorApp.ViewModels
             await Data.UpdateInvoices();
             await Data.UpdateInvoiceHasItems();
             await Data.UpdateStore();
+            await Data.UpdateStockHasItems();
             OnPropertyChanged(nameof(FilteredInvoices));
             SelectedInvoice = FilteredInvoices[0];
             OnPropertyChanged(nameof(AllStores));

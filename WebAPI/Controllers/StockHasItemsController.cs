@@ -64,16 +64,18 @@ namespace WebAPI.Controllers
                 return NotFound();
             return Ok(items);
         }
-        // PUT: api/StockHasItems/5
+        // PUT: api/StockHasItems/5/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutStockHasItem(int id, StockHasItem stockHasItem)
+        [Route("api/StockHasItems/{stockID}/{itemID}")]
+        public async Task<IHttpActionResult> PutStockHasItem(int stockID, int itemID, StockHasItem stockHasItem)
         {
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != stockHasItem.StockID)
+            if (stockID != stockHasItem.StockID || itemID != stockHasItem.ItemID)
             {
                 return BadRequest();
             }
@@ -86,7 +88,7 @@ namespace WebAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!StockHasItemExists(id))
+                if (!StockHasItemExists(stockID, itemID))
                 {
                     return NotFound();
                 }
@@ -116,7 +118,7 @@ namespace WebAPI.Controllers
             }
             catch (DbUpdateException)
             {
-                if (StockHasItemExists(stockHasItem.StockID))
+                if (StockHasItemExists(stockHasItem.StockID, stockHasItem.ItemID))
                 {
                     return Conflict();
                 }
@@ -154,9 +156,9 @@ namespace WebAPI.Controllers
             base.Dispose(disposing);
         }
 
-        private bool StockHasItemExists(int id)
+        private bool StockHasItemExists(int stockID, int itemID)
         {
-            return db.StockHasItems.Count(e => e.StockID == id) > 0;
+            return db.StockHasItems.Count(e => e.StockID == stockID && e.ItemID == itemID) > 0;
         }
     }
 }
