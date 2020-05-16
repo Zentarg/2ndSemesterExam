@@ -239,6 +239,7 @@ namespace AdministratorApp.ViewModels
                                 SelectedItem.Item1.Barcode,
                                 SelectedItem.Item1.Color, SelectedItem.Item1.Size, SelectedItemCategory.ID,
                                 SelectedItem.Item1.DiscountPercentage));
+
                         await LoadDataAsync();
                         return true;
                     }

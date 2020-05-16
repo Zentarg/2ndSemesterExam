@@ -237,9 +237,7 @@
                                     <TextBlock Text=">" Margin="10,0,5,0"/>
                                     <TextBlock Text="{Binding Key.Name}"/>
                                     <TextBlock Text=" = " Margin="5,0,5,0"/>
-                                    <Button Name="IncreaseAmount"  Style="{StaticResource ArrowButton}" Height="35" Width="35" Content="&#xE70E;"  />
                                         <TextBox Text="{Binding Value}"  Style="{StaticResource BasicTextBox}" BeforeTextChanging="FilterNonNumeric_OnBeforeTextChanging" Width="75" HorizontalContentAlignment="Center" IsEnabled="True" />
-                                    <Button Name="DecreaseAmount"  Style="{StaticResource ArrowButton}" Height="35" Width="35" Content="&#xE70D;"  />
                                     <TextBlock Text="pcs." Margin="3,0,0,0"/>
                                 </StackPanel>
                             </DataTemplate>

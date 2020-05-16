@@ -33,6 +33,10 @@ namespace AdministratorApp.ViewModels
 
         public ObservableCollection<Item> Items { get => new ObservableCollection<Item>(Data.AllItems.Values);}
         public ObservableCollection<Stock> Stocks { get => new ObservableCollection<Stock>(Data.AllStocks.Values); }
+        public static Dictionary<int, Dictionary<int, int>> StockHasItems
+        {
+            get => Data.StockHasItems;
+        }
 
         public Item SelectedItem
         {
@@ -63,14 +67,21 @@ namespace AdministratorApp.ViewModels
         {
             await Data.UpdateItems();
             await Data.UpdateStock();
+            await Data.UpdateStockHasItems();
             OnPropertyChanged(nameof(Items));
             OnPropertyChanged(nameof(Stocks));
+            OnPropertyChanged(nameof(StockHasItems));
         }
 
         public async void AddItemToStock()
         {
+            
             if (CheckTextFields())
             {
+                if (CheckIfItemAlreadyAdded())
+                {
+                    
+              
                 if (Amount>0)
                 {
                     ErrorMessage = "";
@@ -88,9 +99,32 @@ namespace AdministratorApp.ViewModels
                 {
                     ErrorMessage = "The amount cannot be 0 or negative.";
                 }
+
+                }
             }
             else
             ErrorMessage = "All the fields have to be filled out.";
+        }
+
+        private bool CheckIfItemAlreadyAdded()
+        {
+            foreach (var stockId in StockHasItems.Keys)
+            {
+                if (stockId == SelectedStock.ID)
+                {
+                    foreach (var Item in StockHasItems[stockId])
+                    {
+                        if (Item.Key == SelectedItem.Id)
+                        {
+                            ErrorMessage = "The item has already been added to this store.";
+                            return false;
+
+                        }   
+                    }
+                }
+            }
+
+            return true;
         }
 
         private bool CheckTextFields()
