@@ -102,6 +102,15 @@ namespace AdministratorApp.Models
         public static List<T> FilterListByCategories<T>(List<Tuple<T, int>> list, List<Category> categoryList)
         {
             List<T> returnList = new List<T>();
+            if (categoryList.Count == 0)
+            {
+                foreach (Tuple<T, int> tuple in list)
+                {
+                    returnList.Add(tuple.Item1);
+                }
+
+                return returnList;
+            }
             foreach (Tuple<T, int> tuple in list)
             {
                 foreach (Category category in categoryList)
@@ -125,12 +134,62 @@ namespace AdministratorApp.Models
         public static List<T> FilterListByStores<T>(List<Tuple<T, int>> list, List<Store> storeList)
         {
             List<T> returnList = new List<T>();
+            if (storeList.Count == 0)
+            {
+                foreach (Tuple<T, int> tuple in list)
+                {
+                    returnList.Add(tuple.Item1);
+                }
+
+                return returnList;
+            }
             foreach (Tuple<T, int> tuple in list)
             {
                 foreach (Store store in storeList)
                 {
                     if (store.ID == tuple.Item2)
                         returnList.Add(tuple.Item1);
+                }
+            }
+
+            return returnList;
+        }
+
+        /// <summary>
+        /// Filters a list specified by a list of stocks.
+        /// </summary>
+        /// <typeparam name="T">The object type to use and return.</typeparam>
+        /// <param name="list">The list to filter (Contains a tuple of the T object, and list of int IDs of the stocks T object is part of.)</param>
+        /// <param name="stockList">The list of stocks each item has to contain.</param>
+        /// <returns>A list filtered by stocks.</returns>
+        public static List<T> FilterListByStock<T>(List<Tuple<T, List<int>>> list, List<Stock> stockList)
+        {
+            List<T> returnList = new List<T>();
+            if (stockList.Count == 0)
+            {
+                foreach (Tuple<T, List<int>> tuple in list)
+                {
+                    returnList.Add(tuple.Item1);
+                }
+
+                return returnList;
+            }
+            foreach (Tuple<T, List<int>> tuple in list)
+            {
+                foreach (Stock stock in stockList)
+                {
+                    foreach (int i in tuple.Item2)
+                    {
+                        if (stock.ID == i)
+                        {
+                            returnList.Add(tuple.Item1);
+                            break;
+                        }
+                        
+                    }
+
+                    if (returnList.Contains(tuple.Item1))
+                        break;
                 }
             }
 

@@ -24,7 +24,7 @@ namespace AdministratorApp.ViewModels
         private List<Item> _items;
         private float _priceAfterDiscount;
         private string _errorMessage;
-        private Stock _selectedStock;
+        private List<Stock> _selectedStocks = new List<Stock>();
         private string _filterString = "";
         private List<Category> _selectedCategories = new List<Category>();
 
@@ -59,10 +59,10 @@ namespace AdministratorApp.ViewModels
             get => new ObservableCollection<Category>(Data.AllCategories.Values);
         }
 
-        public Stock SelectedStock
+        public List<Stock> SelectedStocks
         {
-            get => _selectedStock;
-            set { _selectedStock = value; OnPropertyChanged(); }
+            get => _selectedStocks;
+            set { _selectedStocks = value; OnPropertyChanged(); OnPropertyChanged(nameof(FilteredItems)); }
         }
 
         public Tuple<Item, string> SelectedItem
@@ -94,19 +94,28 @@ namespace AdministratorApp.ViewModels
             {
                 ObservableCollection<Tuple<Item, string>> items = new ObservableCollection<Tuple<Item, string>>();
                 List<Item> filteredList = new List<Item>();
-                if (SelectedCategories.Count == 0)
-                    filteredList = CommonMethods.FilterListByString(Data.AllItems.Values.ToList(), FilterString);
-                else
+                List<Tuple<Item, int>> itemsToFilter = new List<Tuple<Item, int>>();
+                foreach (Item item in Data.AllItems.Values)
                 {
-                    List<Tuple<Item, int>> itemsToFilter = new List<Tuple<Item, int>>();
-                    foreach (Item item in Data.AllItems.Values)
-                    {
-                        itemsToFilter.Add(new Tuple<Item, int>(item, item.CategoryId));
-                    }
-
-                    filteredList = CommonMethods.FilterListByString(
-                        CommonMethods.FilterListByCategories(itemsToFilter, SelectedCategories), FilterString);
+                    itemsToFilter.Add(new Tuple<Item, int>(item, item.CategoryId));
                 }
+                filteredList = CommonMethods.FilterListByCategories(itemsToFilter, SelectedCategories);
+                List<Tuple<Item, List<int>>> itemsToFilter2 = new List<Tuple<Item, List<int>>>();
+                foreach (Item item in filteredList)
+                {
+                    if (Data.ItemsInStocks.Count == 0)
+                        break;
+                    List<int> itemStocks = new List<int>();
+                    foreach (KeyValuePair<int, int> pair in Data.ItemsInStocks[item.Id])
+                    {
+                        itemStocks.Add(pair.Key);
+                    }
+                    itemsToFilter2.Add(new Tuple<Item, List<int>>(item, itemStocks));
+                }
+
+                filteredList = CommonMethods.FilterListByStock(itemsToFilter2, SelectedStocks);
+
+                filteredList = CommonMethods.FilterListByString(filteredList, FilterString);
 
                 foreach (Item item in filteredList)
                 {

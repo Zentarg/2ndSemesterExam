@@ -67,6 +67,18 @@ namespace AdministratorApp.Views
             _vm.SelectedCategories = selectedCategories;
         }
 
+        private void StocksGrid_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            List<Stock> selectedStocks = new List<Stock>();
+            foreach (object item in (sender as GridView).SelectedItems)
+            {
+                selectedStocks.Add(item as Stock);
+                Debug.WriteLine(item);
+            }
+
+            _vm.SelectedStocks = selectedStocks;
+        }
+
         private void FilterNonNumeric_OnBeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
         {
             args.Cancel = args.NewText.Any(c => !char.IsDigit(c));
