@@ -24,6 +24,7 @@ namespace AdministratorApp.ViewModels
         private List<Item> _items;
         private float _priceAfterDiscount;
         private string _errorMessage;
+        private Stock _selectedStock;
         private string _filterString = "";
         private List<Category> _selectedCategories = new List<Category>();
 
@@ -56,6 +57,12 @@ namespace AdministratorApp.ViewModels
         public ObservableCollection<Category> AllCategories
         {
             get => new ObservableCollection<Category>(Data.AllCategories.Values);
+        }
+
+        public Stock SelectedStock
+        {
+            get => _selectedStock;
+            set { _selectedStock = value; OnPropertyChanged(); }
         }
 
         public Tuple<Item, string> SelectedItem
@@ -103,8 +110,7 @@ namespace AdministratorApp.ViewModels
 
                 foreach (Item item in filteredList)
                 {
-                    items.Add(new Tuple<Item, string>(item,
-                        Data.AllCategories.Count != 0 ? Data.AllCategories[item.CategoryId].Name : "No Category."));
+                    items.Add(new Tuple<Item, string>(item, Data.AllCategories.Count != 0 ? Data.AllCategories[item.CategoryId].Name : "No Category."));
                 }
 
                 return items;
@@ -168,6 +174,7 @@ namespace AdministratorApp.ViewModels
 
                 if (SelectedItem == null)
                     return stocks;
+
                 if (Data.ItemsInStocks.ContainsKey(SelectedItem.Item1.Id))
                 { foreach (KeyValuePair<int, int> pair in Data.ItemsInStocks[SelectedItem.Item1.Id])
                 {
@@ -181,8 +188,16 @@ namespace AdministratorApp.ViewModels
                 return new ObservableCollection<KeyValuePair<Stock, int>>()
                 {
                     new KeyValuePair<Stock, int>(
-                        new Stock(0, "This item has not been placed to any store yet.      "), 0)
+                        new Stock(0, "This item has not been placed to any store yet.\t\t\t\t"), 0)
                 };
+
+            }
+            set
+            {
+                if (Data.ItemsInStocks.ContainsKey(SelectedItem.Item1.Id))
+                {
+                  //  KeyValuePair<>
+                }
             }
         }
 
@@ -239,6 +254,10 @@ namespace AdministratorApp.ViewModels
                                 SelectedItem.Item1.Barcode,
                                 SelectedItem.Item1.Color, SelectedItem.Item1.Size, SelectedItemCategory.ID,
                                 SelectedItem.Item1.DiscountPercentage));
+                        foreach (var ItemInStock in SelectedItemInStocks )
+                        {
+                            await APIHandler<StockHasItems>.PostOne($"ItemsInStocks/{ItemInStock.Key.ID}/{SelectedItem.Item1.Id}", new StockHasItems(ItemInStock.Key.ID, SelectedItem.Item1.Id, ItemInStock.Value));
+                        }  
 
                         await LoadDataAsync();
                         return true;
