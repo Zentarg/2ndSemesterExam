@@ -141,7 +141,7 @@ namespace AdministratorApp.ViewModels
         }
 
         /// <summary>
-        /// Method that erases current text fields
+        /// Method that erases current text fields and navigates back to Store page
         /// </summary>
         private void Cancel()
         {
@@ -151,6 +151,7 @@ namespace AdministratorApp.ViewModels
             SelectedManager = null;
             SelectedStock = null;
             ErrorText = "";
+            NavigationHandler.NavigateBackwards();
         }
 
         /// <summary>

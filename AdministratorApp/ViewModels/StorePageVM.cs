@@ -11,6 +11,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using AdministratorApp.Views;
 
 namespace AdministratorApp.ViewModels
 {
@@ -48,7 +49,7 @@ namespace AdministratorApp.ViewModels
             DoConfirm = new RelayCommand(Confirm);
             DoDelete = new RelayCommand(Delete);
             DoCancel = new RelayCommand(Cancel);
-
+            DoAddStore = new RelayCommand(AddStore);
         }
 
         #region Properties
@@ -57,6 +58,7 @@ namespace AdministratorApp.ViewModels
         public RelayCommand DoConfirm { get; set; }
         public RelayCommand DoDelete { get; set; }
         public RelayCommand DoCancel { get; set; }
+        public RelayCommand DoAddStore { get; set; }
 
         //Property for search filtering strings in the search bar
         public string FilterString
@@ -266,6 +268,11 @@ namespace AdministratorApp.ViewModels
             SelectedManager = null;
             SelectedStock = null;
             ErrorText = "";
+        }
+
+        private void AddStore()
+        {
+            NavigationHandler.NavigateToPage(typeof(AddStorePage));
         }
 
         /// <summary>

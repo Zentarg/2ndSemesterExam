@@ -27,6 +27,11 @@ namespace AdministratorApp.Views
             this.InitializeComponent();
         }
 
+        /// <summary>
+        /// Disables confirm button if input text fields are empty
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ConfirmIsVisible_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             if (!string.IsNullOrEmpty(Name.Text) && !string.IsNullOrEmpty(Address.Text) && !string.IsNullOrEmpty(Phone.Text) && Manager.SelectedItem != null)
@@ -34,7 +39,11 @@ namespace AdministratorApp.Views
             else ConfirmButton.IsEnabled = false;
         }
 
-
+        /// <summary>
+        /// Disables confirm button if manager combo box is empty
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Manager_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (!string.IsNullOrEmpty(Name.Text) && !string.IsNullOrEmpty(Address.Text) && !string.IsNullOrEmpty(Phone.Text) && Manager.SelectedItem != null)

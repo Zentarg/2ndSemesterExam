@@ -25,28 +25,28 @@
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" FontSize="40" Text="Add New Store" Margin="50,50,0,0"/>
+        <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" FontSize="20" Text="Add New Store" Margin="30,30,0,0"/>
 
         <StackPanel Grid.Column="0" Grid.Row="1" Spacing="40" HorizontalAlignment="Center" Margin="0,50,0,0">
-            <TextBlock FontSize="25" Text="Name"/>
-            <TextBlock FontSize="25" Text="Address"/>
-            <TextBlock FontSize="25" Text="Telephone"/>
-            <TextBlock FontSize="25" Text="Manager"/>
-            <TextBlock FontSize="25" Text="Stock"/>
+            <TextBlock FontSize="15" Text="Name"/>
+            <TextBlock FontSize="15" Text="Address"/>
+            <TextBlock FontSize="15" Text="Telephone"/>
+            <TextBlock FontSize="15" Text="Manager"/>
+            <TextBlock FontSize="15" Text="Stock"/>
         </StackPanel>
 
-        <StackPanel Grid.Column="1" Grid.Row="1" Spacing="29" Margin="0,45,0,0" HorizontalAlignment="Left">
-            <TextBox x:Name="Name" PlaceholderText="Name" Text="{Binding Name, Mode=TwoWay}" FontSize="25" Height="45" Width="400" TextChanged="ConfirmIsVisible_OnTextChanged"/>
-            <TextBox x:Name="Address" PlaceholderText="Address" Text="{Binding Address, Mode=TwoWay}" FontSize="25" Height="45" TextChanged="ConfirmIsVisible_OnTextChanged"/>
-            <TextBox x:Name="Phone" PlaceholderText="Telephone" Text="{Binding Phone, Mode=TwoWay}" FontSize="25" Height="45" TextChanged="ConfirmIsVisible_OnTextChanged"/>
-            <ComboBox x:Name="Manager" FontSize="20" ItemsSource="{Binding AllManagers, Mode=TwoWay}" SelectedItem="{Binding SelectedManager, Mode=TwoWay}" SelectionChanged="Manager_OnSelectionChanged" Height="40" Width="400" />
-            <ComboBox x:Name="Stock" FontSize="20" ItemsSource="{Binding AllStocks, Mode=TwoWay}" SelectedItem="{Binding SelectedStock, Mode=TwoWay}" SelectionChanged="Manager_OnSelectionChanged" Height="40" Width="400" Margin="0,5,0,0" />
+        <StackPanel Grid.Column="1" Grid.Row="1" Spacing="27" Margin="0,45,0,0" HorizontalAlignment="Left">
+            <TextBox x:Name="Name" PlaceholderText="Name" Text="{Binding Name, Mode=TwoWay}" FontSize="15" Height="33" Width="200" TextChanged="ConfirmIsVisible_OnTextChanged"/>
+            <TextBox x:Name="Address" PlaceholderText="Address" Text="{Binding Address, Mode=TwoWay}" FontSize="15" Height="33" TextChanged="ConfirmIsVisible_OnTextChanged"/>
+            <TextBox x:Name="Phone" PlaceholderText="Telephone" Text="{Binding Phone, Mode=TwoWay}" FontSize="15" Height="33" TextChanged="ConfirmIsVisible_OnTextChanged"/>
+            <ComboBox x:Name="Manager" FontSize="20" ItemsSource="{Binding AllManagers, Mode=TwoWay}" SelectedItem="{Binding SelectedManager, Mode=TwoWay}" SelectionChanged="Manager_OnSelectionChanged" Height="33" Width="200" />
+            <ComboBox x:Name="Stock" FontSize="20" ItemsSource="{Binding AllStocks, Mode=TwoWay}" SelectedItem="{Binding SelectedStock, Mode=TwoWay}" SelectionChanged="Manager_OnSelectionChanged" Height="33" Width="200" Margin="0,0,0,0" />
             <TextBlock FontSize="25" Foreground="Red" Text="{Binding ErrorText, Mode=TwoWay}"/>
         </StackPanel>
 
         <StackPanel Grid.Column="2" Grid.Row="2" Orientation="Horizontal" FlowDirection="RightToLeft" Spacing="50" Margin="0,0,60,40">
-            <Button x:Name="ConfirmButton" Width="125" Height="60" FontSize="20" Command="{Binding DoCreate}" Content="Confirm" IsEnabled="False"/>
-                <Button x:Name="CancelButton" Width="125" Height="60" FontSize="20" Command="{Binding DoCancel}" Content="Cancel"/>
+            <Button x:Name="ConfirmButton" Width="80" Height="40" FontSize="15" Command="{Binding DoCreate}" Content="Confirm" IsEnabled="False"/>
+                <Button x:Name="CancelButton" Width="80" Height="40" FontSize="15" Command="{Binding DoCancel}" Content="Cancel"/>
         </StackPanel>
     </Grid>
 </Page>
