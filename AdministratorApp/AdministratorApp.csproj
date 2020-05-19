@@ -149,6 +149,7 @@
     <Compile Include="ViewModels\RequestsVM.cs" />
     <Compile Include="ViewModels\StorePageVM.cs" />
     <Compile Include="Models\VMHandler.cs" />
+    <Compile Include="ViewModels\SupplierVM.cs" />
     <Compile Include="Views\AddItemPage.xaml.cs">
       <DependentUpon>AddItemPage.xaml</DependentUpon>
     </Compile>
@@ -188,6 +189,9 @@
     <Compile Include="ViewModels\StockPageVM.cs" />
     <Compile Include="Views\StorePage.xaml.cs">
       <DependentUpon>StorePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SupplierPage.xaml.cs">
+      <DependentUpon>SupplierPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -314,6 +318,10 @@
     <Page Include="Views\StorePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SupplierPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

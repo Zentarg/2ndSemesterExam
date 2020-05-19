@@ -49,6 +49,11 @@ namespace AdministratorApp.Models
         /// <summary>
         /// A User that is the selected user in the users page
         /// </summary>
+
+        public static Dictionary<int, Dictionary<int, int>> InvoiceHasItems { get; set; } =
+            new Dictionary<int, Dictionary<int, int>>();
+
+        public static Dictionary<int, Supplier> AllSuppliers { get; set; } = new Dictionary<int, Supplier>();
         public static User SelectedUser { get; set; }
 
         /// <summary>
@@ -60,7 +65,7 @@ namespace AdministratorApp.Models
         /// A salary that has been edited for the selected user from the users page
         /// </summary>
         public static Salary EditedSalary { get; set; }
-        
+
 
 
         public static async Task UpdateItems()
@@ -100,6 +105,7 @@ namespace AdministratorApp.Models
         {
             ItemsInStocks = await APIHandler<Dictionary<int, Dictionary<int, int>>>.GetOne("ItemsInStocks");
         }
+
         public static async Task UpdateCategories()
         {
             AllCategories = await APIHandler<Dictionary<int, Category>>.GetOne("Categories");
@@ -131,7 +137,7 @@ namespace AdministratorApp.Models
         {
             AllLevels = await APIHandler<Dictionary<int, UserLevel>>.GetOne("UserLevels");
             OwnerID = AllLevels.FirstOrDefault(l => l.Value.Name == "Owner").Value.Id;
-            ObservableCollection<UserLevel> userLevels =  new ObservableCollection<UserLevel>();
+            ObservableCollection<UserLevel> userLevels = new ObservableCollection<UserLevel>();
             foreach (UserLevel uL in Data.AllLevels.Values)
             {
                 if (AuthHandler.ActiveUser.UserLevelId != uL.Id)
@@ -157,8 +163,13 @@ namespace AdministratorApp.Models
             InvoiceHasItems = await APIHandler<Dictionary<int, Dictionary<int, int>>>.GetOne("InvoicesHasItems");
         }
 
+        public static async Task UpdateSuppliers()
+        {
+            AllSuppliers = await APIHandler<Dictionary<int, Supplier>>.GetOne("Suppliers");
+        }
     }
+}
 
 
     
-}
+
