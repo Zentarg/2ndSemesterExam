@@ -13,20 +13,25 @@ namespace AdministratorApp.ViewModels
 {
     public class AddStorePageVM : INotifyPropertyChanged
     {
-        ObservableCollection<Store> _stores = new ObservableCollection<Store>();
-        ObservableCollection<string> _managers = new ObservableCollection<string>();
-        ObservableCollection<User> _users = new ObservableCollection<User>();
+        #region InstanceFields
+
+        //Instance fields of object types
         private User _selectedManager;
         private Stock _selectedStock;
-
         Store _store = new Store();
 
+        //Instance fields of primitive types
         private string _name = "";
         private string _address = "";
         private int _phone = 0;
         private int _storeId = 0;
         private string _errorText = "";
 
+        #endregion
+
+        /// <summary>
+        /// Constructor for setting up commands, properties and retrieving data from Data.cs
+        /// </summary>
         public AddStorePageVM()
         {
             LoadDataAsync();
@@ -34,9 +39,58 @@ namespace AdministratorApp.ViewModels
             DoCancel = new RelayCommand(Cancel);
         }
 
+        #region Properties
+
+        //Properties for relay commands
         public RelayCommand DoCreate { get; set; }
         public RelayCommand DoCancel { get; set; }
 
+        //Observable Collection for retrieving all managers in the database using Data.cs
+        public ObservableCollection<User> AllManagers
+        {
+            get
+            {
+                ObservableCollection<User> managers = new ObservableCollection<User>();
+                foreach (User user in Data.AllUsers.Values)
+                {
+                    if (user.UserLevelId == 1)
+                    {
+                        managers.Add(user);
+                    }
+                }
+                return managers;
+            }
+        }
+
+        //Observable Collection for retrieving all stores in the database using Data.cs
+        public ObservableCollection<Store> AllStores
+        {
+            get
+            {
+                return new ObservableCollection<Store>(Data.AllStores.Values);
+            }
+        }
+
+        //Observable Collection for retrieving all stocks in the database using Data.cs
+        public ObservableCollection<Stock> AllStocks
+        {
+            get { return new ObservableCollection<Stock>(Data.AllStocks.Values); }
+        }
+
+        //Object type properties
+        public User SelectedManager
+        {
+            get { return _selectedManager; }
+            set { _selectedManager = value; OnPropertyChanged(); }
+        }
+
+        public Stock SelectedStock
+        {
+            get { return _selectedStock; }
+            set { _selectedStock = value; OnPropertyChanged(); }
+        }
+
+        //Primitive type properties
         public string Name
         {
             get { return _name; }
@@ -54,11 +108,6 @@ namespace AdministratorApp.ViewModels
             get { return _phone; }
             set { _phone = value; OnPropertyChanged(); }
         }
-        public int StoreId
-        {
-            get { return _storeId; }
-            set { _storeId = value; OnPropertyChanged(); }
-        }
 
         public string ErrorText
         {
@@ -66,47 +115,13 @@ namespace AdministratorApp.ViewModels
             set { _errorText = value; OnPropertyChanged(); }
         }
 
-        public ObservableCollection<User> AllManagers
-        {
-            get
-            {
-                ObservableCollection<User> managers = new ObservableCollection<User>();
-                foreach (User user in Data.AllUsers.Values)
-                {
-                    if (user.UserLevelId == 1)
-                    {
-                        managers.Add(user);
-                    }
-                }
-                return managers;
-            }
-        }
+        #endregion
 
-        public ObservableCollection<Store> AllStores
-        {
-            get
-            {
-                return new ObservableCollection<Store>(Data.AllStores.Values);
-            }
-        }
+        #region Methods
 
-        public ObservableCollection<Stock> AllStocks
-        {
-            get { return new ObservableCollection<Stock>(Data.AllStocks.Values);}
-        }
-
-        public User SelectedManager
-        {
-            get { return _selectedManager; }
-            set { _selectedManager = value; OnPropertyChanged(); }
-        }
-
-        public Stock SelectedStock
-        {
-            get { return _selectedStock; }
-            set { _selectedStock = value; OnPropertyChanged(); }
-        }
-
+        /// <summary>
+        /// Method for creating new stores and storing them in the database
+        /// </summary>
         private async void Create()
         {
             if (CheckTextFields())
@@ -125,6 +140,9 @@ namespace AdministratorApp.ViewModels
             }
         }
 
+        /// <summary>
+        /// Method that erases current text fields
+        /// </summary>
         private void Cancel()
         {
             Name = "";
@@ -135,6 +153,10 @@ namespace AdministratorApp.ViewModels
             ErrorText = "";
         }
 
+        /// <summary>
+        /// Method for checking the text field inputs to make sure they are not empty
+        /// </summary>
+        /// <returns>returns true when there is data in the fields, false when empty</returns>
         public bool CheckTextFields()
         {
             bool expression = !string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Address) &&
@@ -148,6 +170,10 @@ namespace AdministratorApp.ViewModels
             return false;
         }
 
+        /// <summary>
+        /// Method for updating properties in Data.cs and loading some of the properties in StorePageVM.cs
+        /// </summary>
+        /// <returns></returns>
         private async Task LoadDataAsync()
         {
             await Data.UpdateUsers();
@@ -160,6 +186,9 @@ namespace AdministratorApp.ViewModels
             OnPropertyChanged(nameof(AllStocks));
         }
 
+        #endregion
+
+        #region PropertyChanged
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -168,5 +197,8 @@ namespace AdministratorApp.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        #endregion
+
     }
 }

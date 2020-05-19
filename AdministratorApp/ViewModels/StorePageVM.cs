@@ -16,15 +16,17 @@ namespace AdministratorApp.ViewModels
 {
     public class StorePageVM : INotifyPropertyChanged
     {
-        private Store _store = new Store();
+        #region InstanceFields
+
+        //Instance fields of object types
         private Store _selectedStore = new Store();
-        private ObservableCollection<Store> _allStores = new ObservableCollection<Store>();
-        private ObservableCollection<string> _managers = new ObservableCollection<string>();
         private User _selectedManager;
         private Stock _selectedStock;
 
+        //Instance field for search bar
         private string _filterString = "";
 
+        //Instance field for primitive types
         private string _name = "";
         private string _address = "";
         private int _phone = 0;
@@ -34,22 +36,29 @@ namespace AdministratorApp.ViewModels
         private string _stock = "";
         private string _errorText = "";
 
+        #endregion
+
+        /// <summary>
+        /// Constructor for setting up commands, properties and retrieving data from Data.cs
+        /// </summary>
         public StorePageVM()
         {
             LoadDataAsync();
 
-            GoToStockPage = new RelayCommand(StockPage);
             DoConfirm = new RelayCommand(Confirm);
             DoDelete = new RelayCommand(Delete);
             DoCancel = new RelayCommand(Cancel);
 
         }
 
-        public RelayCommand GoToStockPage { get; set; }
+        #region Properties
+
+        //Properties for Relay commands
         public RelayCommand DoConfirm { get; set; }
         public RelayCommand DoDelete { get; set; }
         public RelayCommand DoCancel { get; set; }
 
+        //Property for search filtering strings in the search bar
         public string FilterString
         {
             get => _filterString;
@@ -60,6 +69,7 @@ namespace AdministratorApp.ViewModels
             }
         }
 
+        //Property for using the method in CommonMethods.cs for the search bar
         public ObservableCollection<Store> FilteredStores
         {
             get
@@ -77,6 +87,85 @@ namespace AdministratorApp.ViewModels
 
         }
 
+        //Observable Collection for retrieving all stores in the database using Data.cs
+        public ObservableCollection<Store> StoreList
+        {
+            get
+            {
+                ObservableCollection<Store> stores = new ObservableCollection<Store>(Data.AllStores.Values);
+
+                if (stores.Count > 0)
+                {
+                    if (stores[0].ID == 0)
+                    {
+                        stores.RemoveAt(0);
+                    }
+                }
+
+                return stores;
+            }
+        }
+
+        //Observable Collection for retrieving all managers in the database using Data.cs
+        public ObservableCollection<User> AllManagers
+        {
+            get
+            {
+                ObservableCollection<User> managers = new ObservableCollection<User>();
+                foreach (User user in Data.AllUsers.Values)
+                {
+                    if (user.UserLevelId == 1)
+                    {
+                        managers.Add(user);
+                    }
+                }
+                return managers;
+            }
+        }
+
+        //Observable Collection for retrieving all stocks in the database using Data.cs
+        public ObservableCollection<Stock> AllStocks
+        {
+            get { return new ObservableCollection<Stock>(Data.AllStocks.Values);}
+        }
+
+        //Object type properties
+        public Store SelectedStore
+        {
+            get
+            {
+                return _selectedStore;
+            }
+            set
+            {
+                _selectedStore = value;
+                if (_selectedStore != null)
+                {
+                    Name = _selectedStore.Name;
+                    Address = _selectedStore.Address;
+                    Phone = _selectedStore.Phone;
+                    ManagerID = Data.AllStores[SelectedStore.ID].ManagerID;
+                    Manager = Data.AllUsers[ManagerID].Name;
+                    StockID = Data.AllStores[SelectedStore.ID].StockId;
+                    Stock = Data.AllStocks[StockID].Name;
+                }
+                OnPropertyChanged();
+            }
+        }
+
+        public User SelectedManager
+        {
+            get { return _selectedManager; }
+            set { _selectedManager = value; OnPropertyChanged(); }
+        }
+
+        public Stock SelectedStock
+        {
+            get { return _selectedStock; }
+            set { _selectedStock = value; OnPropertyChanged(); }
+        }
+
+        //Primitive type properties
         public string Name
         {
             get { return _name; }
@@ -125,80 +214,13 @@ namespace AdministratorApp.ViewModels
             set { _errorText = value; OnPropertyChanged(); }
         }
 
-        public ObservableCollection<Store> StoreList
-        {
-            get
-            {
-                ObservableCollection<Store> stores = new ObservableCollection<Store>(Data.AllStores.Values);
+        #endregion
 
-                if (stores.Count > 0)
-                {
-                    if (stores[0].ID == 0)
-                    {
-                        stores.RemoveAt(0);
-                    }
-                }
+        #region Methods
 
-                return stores;
-            }
-        }
-
-        public ObservableCollection<User> AllManagers
-        {
-            get
-            {
-                ObservableCollection<User> managers = new ObservableCollection<User>();
-                foreach (User user in Data.AllUsers.Values)
-                {
-                    if (user.UserLevelId == 1)
-                    {
-                        managers.Add(user);
-                    }
-                }
-                return managers;
-            }
-        }
-
-        public ObservableCollection<Stock> AllStocks
-        {
-            get { return new ObservableCollection<Stock>(Data.AllStocks.Values);}
-        }
-
-        public Store SelectedStore
-        {
-            get
-            {
-                return _selectedStore;
-            }
-            set
-            {
-                _selectedStore = value;
-                if (_selectedStore != null)
-                {
-                    Name = _selectedStore.Name;
-                    Address = _selectedStore.Address;
-                    Phone = _selectedStore.Phone;
-                    ManagerID = Data.AllStores[SelectedStore.ID].ManagerID;
-                    Manager = Data.AllUsers[ManagerID].Name;
-                    StockID = Data.AllStores[SelectedStore.ID].StockId;
-                    Stock = Data.AllStocks[StockID].Name;
-                }
-                OnPropertyChanged();
-            }
-        }
-
-        public User SelectedManager
-        {
-            get { return _selectedManager; }
-            set { _selectedManager = value; OnPropertyChanged(); }
-        }
-
-        public Stock SelectedStock
-        {
-            get { return _selectedStock; }
-            set { _selectedStock = value; OnPropertyChanged(); }
-        }
-
+        /// <summary>
+        /// Method that edits the current selected store and stores it in the database
+        /// </summary>
         private async void Confirm()
         {
             if (CheckTextFields())
@@ -219,6 +241,9 @@ namespace AdministratorApp.ViewModels
                 ErrorText = "All text fields must be filled\nand all selections must be made.";
         }
 
+        /// <summary>
+        /// Method that deletes current selected store and removes it from the database
+        /// </summary>
         private async void Delete()
         {
             if (SelectedStore != null)
@@ -230,7 +255,10 @@ namespace AdministratorApp.ViewModels
             }
         }
 
-        private async void Cancel()
+        /// <summary>
+        /// Method that erases current text fields
+        /// </summary>
+        private void Cancel()
         {
             Name = "";
             Address = "";
@@ -240,13 +268,10 @@ namespace AdministratorApp.ViewModels
             ErrorText = "";
         }
 
-        private void StockPage()
-        {
-            RuntimeDataHandler.SelectedStore = SelectedStore;
-            Frame mainFrame = Window.Current.Content as Frame;
-            mainFrame?.Navigate(Type.GetType($"{Application.Current.GetType().Namespace}.Views.StoreStockPage"));
-        }
-
+        /// <summary>
+        /// Method for updating properties in Data.cs and loading some of the properties in StorePageVM.cs
+        /// </summary>
+        /// <returns></returns>
         private async Task LoadDataAsync()
         {
             await Data.UpdateUsers();
@@ -258,6 +283,10 @@ namespace AdministratorApp.ViewModels
             OnPropertyChanged(nameof(AllStocks));
         }
 
+        /// <summary>
+        /// Method for checking the text field inputs to make sure they are not empty
+        /// </summary>
+        /// <returns>returns true when there is data in the fields, false when empty</returns>
         public bool CheckTextFields()
         {
             bool expression = (!string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Address) &&
@@ -270,10 +299,18 @@ namespace AdministratorApp.ViewModels
             return false;
         }
 
+        /// <summary>
+        /// ToString method for listing store's name, address and phone
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return $"{Name} {Address} {Phone}";
         }
+
+        #endregion
+
+        #region PropertyChanged
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -282,5 +319,8 @@ namespace AdministratorApp.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        #endregion
+
     }
 }
