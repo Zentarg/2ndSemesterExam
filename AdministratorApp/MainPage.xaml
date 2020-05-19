@@ -78,7 +78,7 @@
                         <Button Style="{StaticResource HamburgerButton}" Content="&#xE700;" Command="{Binding DoToggleHamburger}"/>
                         <Button Style="{StaticResource HamburgerButton}" Tag="StockPage" Click="NavigateFrame">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE700;"/>
+                                <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE82D;"/>
                                 <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Stock"/>
                             </StackPanel>
                         </Button>
@@ -99,7 +99,7 @@
                         <Button Style="{StaticResource HamburgerButton}" Content="&#xE700;" Command="{Binding DoToggleHamburger}"/>
                         <Button Style="{StaticResource HamburgerButton}" Tag="StockPage" Click="NavigateFrame">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE700;"/>
+                                <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE82D;"/>
                                 <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Stock"/>
                             </StackPanel>
                         </Button>
@@ -115,7 +115,7 @@
                                 <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Employees"/>
                             </StackPanel>
                         </Button>
-                        <Button Style="{StaticResource HamburgerButton}" Tag="SuppliersPage" Click="NavigateFrame">
+                        <Button Style="{StaticResource HamburgerButton}" Tag="SupplierPage" Click="NavigateFrame">
                             <StackPanel Orientation="Horizontal" Margin="3,0,-3,0">
                                 <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE707;"/>
                                 <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Suppliers"/>

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CommonLibrary.Models
 {
-    class Supplier
+    public class Supplier
     {
         public Supplier(int id, string name, string address, string email, int phone)
         {
@@ -19,5 +19,9 @@ namespace CommonLibrary.Models
         public string Address { get; set; }
         public string Email { get; set; }
         public int Phone { get; set; }
+        public override string ToString()
+        {
+            return $"#{Id}\t {Name}";
+        }
     }
 }
