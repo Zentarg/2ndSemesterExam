@@ -45,16 +45,14 @@ namespace AdministratorApp.Models
         public static Dictionary<int, UserLevel> AllLevels { get; set; } = new Dictionary<int, UserLevel>();
         public static Dictionary<int, Invoice> AllInvoices { get; set; } = new Dictionary<int, Invoice>();
         public static Dictionary<int, Dictionary<int, int>> InvoiceHasItems { get; set; } = new Dictionary<int, Dictionary<int, int>>();
-
+        public static Dictionary<int, Supplier> AllSuppliers { get; set; } = new Dictionary<int, Supplier>();
         /// <summary>
         /// A User that is the selected user in the users page
         /// </summary>
-
-        public static Dictionary<int, Dictionary<int, int>> InvoiceHasItems { get; set; } =
-            new Dictionary<int, Dictionary<int, int>>();
-
-        public static Dictionary<int, Supplier> AllSuppliers { get; set; } = new Dictionary<int, Supplier>();
         public static User SelectedUser { get; set; }
+
+        
+        
 
         /// <summary>
         /// A user that has been edited for the selected user from the users page
