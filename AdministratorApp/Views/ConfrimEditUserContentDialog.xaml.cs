@@ -34,6 +34,11 @@ namespace AdministratorApp.Views
         {
         }
 
+        /// <summary>
+        /// Method that is called when a user clicks on confirm in the dialogue box and confirms the edit of the user
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private async void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             Constants.PutErrors error = vm.CanUserUpdate();

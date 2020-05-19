@@ -34,6 +34,11 @@ namespace AdministratorApp.Views
         {
         }
 
+        /// <summary>
+        /// Method that is called when a user clicks on confirm for creating a new role
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private async void ContentDialog_OnConfirmClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             var error = vm.CheckRoleForErrors();

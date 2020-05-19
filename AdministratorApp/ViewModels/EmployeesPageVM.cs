@@ -19,10 +19,11 @@ namespace AdministratorApp.ViewModels
 {
     public class EmployeesPageVM : INotifyPropertyChanged
     {
+        #region InstanceFields
         private ObservableCollection<UserLevel> _accountTypes = new ObservableCollection<UserLevel>();
         private ObservableCollection<Store> _stores = new ObservableCollection<Store>();
         private ObservableCollection<Role> _roles = new ObservableCollection<Role>();
-        ObservableCollection<User> _users = new ObservableCollection<User>();
+
         private Salary _objSalary;
         private UserLevel _initialUserLevel;
         private UserLevel _selectedUserLevel;
@@ -35,28 +36,27 @@ namespace AdministratorApp.ViewModels
         private string _name = "";
         private string _address = "";
         private int _telephone = 0;
-        
         private bool _IES = false;
-
         private float _salary;
         private float _salaryWTax;
         private int _userId = -1;
         private int _tajNumber;
         private int _taxNumber;
         private float _workingHours;
-
         private string _userName;
         private string _email;
         private bool _showEdit = false;
         private bool _showNormal = true;
         private bool _showUserLevelEdit = false;
         private bool _showUserLevelNormal = true;
-
-
         private string _filterString = "";
         private string _password = "********";
         private string _feedbackText = "";
+        #endregion
 
+        /// <summary>
+        /// Constructor that sets up the methods and properties and calls LoadDataAsync()
+        /// </summary>
         public EmployeesPageVM()
         {
             LoadDataAsync();
@@ -70,6 +70,8 @@ namespace AdministratorApp.ViewModels
             VMHandler.EmployeesPageVm = this;
         }
 
+        #region Properties
+        #region RelayCommandProperities
         public RelayCommand DoShowUserName { get; set; }
         public RelayCommand DoCancel { get; set; }
         public RelayCommand DoDelete { get; set; }
@@ -77,39 +79,9 @@ namespace AdministratorApp.ViewModels
         public RelayCommand DoCancelEdit { get; set; }
         public RelayCommand DoConfirmEdit { get; set; }
         public RelayCommand DoGenerateAuth { get; set; }
-        public string UserName
-        {
-            get { return _userName; }
-            set
-            {
-                _userName = value; OnPropertyChanged(); }
-        }
-        public Dictionary<int, Salary> DictSalaries
-        {
-            get { return Data.AllSalaries; }
-            set { Data.AllSalaries = value; OnPropertyChanged(); }
-        }
+        #endregion
 
-
-        public ObservableCollection<User> Users
-        {
-            get
-            { 
-                return _users;
-            }
-            set { _users = value; OnPropertyChanged(); }
-        }
-
-        public string FilterString
-        {
-            get => _filterString;
-            set
-            {
-                _filterString = value;
-                OnPropertyChanged(nameof(FilteredUsers));
-            }
-        }
-
+        #region ObservableCollectionProperties
         public ObservableCollection<User> FilteredUsers
         {
             get
@@ -124,7 +96,33 @@ namespace AdministratorApp.ViewModels
                 return users;
             }
         }
+        public ObservableCollection<Store> Stores
+        {
+            get { return _stores; }
+            set { _stores = value; OnPropertyChanged(); }
+        }
+        public ObservableCollection<Role> Roles
+        {
+            get { return _roles; }
+            set { _roles = value; OnPropertyChanged(); }
 
+        }
+        public ObservableCollection<UserLevel> AccountTypes
+        {
+            get { return _accountTypes; }
+            set { _accountTypes = value; OnPropertyChanged(); }
+        }
+        #endregion
+
+        #region DictionaryProperties
+        public Dictionary<int, Salary> DictSalaries
+        {
+            get { return Data.AllSalaries; }
+            set { Data.AllSalaries = value; OnPropertyChanged(); }
+        }
+        #endregion
+
+        #region ObjectTypeProperties
         public User SelectedEmp
         {
             set
@@ -159,12 +157,63 @@ namespace AdministratorApp.ViewModels
                         FeedBackText = "";
                         Password = "********";
                     }
-                    
+
                 }
-                OnPropertyChanged();}
+                OnPropertyChanged();
+            }
             get { return _sEmp; }
         }
+        public Role InitialRole
+        {
+            get { return _role; }
+            set { _role = value; OnPropertyChanged(); }
+        }
+        public Role SelectedRole
+        {
+            get { return _selectedRole; }
+            set
+            { _selectedRole = value; OnPropertyChanged(); }
+        }
+        public Store SelectedStore
+        {
+            get { return _selectedStore; }
+            set { _selectedStore = value; OnPropertyChanged(); }
+        }
+        public UserLevel InitialUserLevel
+        {
+            get { return _initialUserLevel; }
+            set { _initialUserLevel = value; OnPropertyChanged(); }
+        }
+        public UserLevel SelectedUserLevel
+        {
+            get { return _selectedUserLevel; }
+            set { _selectedUserLevel = value; OnPropertyChanged(); }
+        }
+        public Store InitialStore
+        {
+            get { return _initialStore; }
+            set { _initialStore = value; OnPropertyChanged(); }
+        }
+        #endregion
 
+        #region PrimitiveTypeProperties
+        public string UserName
+        {
+            get { return _userName; }
+            set
+            {
+                _userName = value; OnPropertyChanged();
+            }
+        }
+        public string FilterString
+        {
+            get => _filterString;
+            set
+            {
+                _filterString = value;
+                OnPropertyChanged(nameof(FilteredUsers));
+            }
+        }
         public string Name
         {
             set { _name = value; OnPropertyChanged(); }
@@ -175,154 +224,84 @@ namespace AdministratorApp.ViewModels
             set { _address = value; OnPropertyChanged(); }
             get { return _address; }
         }
-
         public int Telephone
         {
-            set { _telephone = value; OnPropertyChanged();}
+            set { _telephone = value; OnPropertyChanged(); }
             get { return _telephone; }
         }
-
-        public Role InitialRole
-        {
-            get { return _role; }
-            set { _role = value; OnPropertyChanged(); }
-        }
-
-        public ObservableCollection<Store> Stores
-        {
-            get { return _stores; }
-            set { _stores = value; OnPropertyChanged(); }
-        }
-
-        public ObservableCollection<Role> Roles
-        {
-            get { return _roles; }
-            set { _roles = value; OnPropertyChanged(); }
-
-        }
-
         public bool IsEmployeeSelected
         {
             get { return _IES; }
             set { _IES = value; OnPropertyChanged(); }
         }
-
-        public Role SelectedRole
-        {
-            get { return _selectedRole; }
-            set
-            { _selectedRole = value; OnPropertyChanged(); }
-        }
-
         public float Salary
         {
             get { return _salary; }
             set { _salary = value; OnPropertyChanged(); }
         }
-
         public float SalaryWTax
         {
             get { return _salaryWTax; }
             set { _salaryWTax = value; OnPropertyChanged(); }
         }
-
         public int TajNumber
         {
             get { return _tajNumber; }
-            set { _tajNumber = value; OnPropertyChanged();}
+            set { _tajNumber = value; OnPropertyChanged(); }
         }
-
         public int TaxNumber
         {
             get { return _taxNumber; }
-            set { _taxNumber = value; OnPropertyChanged();}
+            set { _taxNumber = value; OnPropertyChanged(); }
         }
-
         public float WorkingHours
         {
             get { return _workingHours; }
-            set { _workingHours = value; OnPropertyChanged();}
+            set { _workingHours = value; OnPropertyChanged(); }
         }
-
-        public Store SelectedStore
-        {
-            get { return _selectedStore; }
-            set { _selectedStore = value; OnPropertyChanged(); }
-        }
-
         public string Email
         {
             get { return _email; }
             set { _email = value; OnPropertyChanged(); }
         }
-
         public string FeedBackText
         {
             get { return _feedbackText; }
             set { _feedbackText = value; OnPropertyChanged(); }
         }
-
         public bool ShowEdit
         {
             get { return _showEdit; }
             set { _showEdit = value; OnPropertyChanged(); }
         }
-
         public bool ShowNormal
         {
             get { return _showNormal; }
             set { _showNormal = value; OnPropertyChanged(); }
         }
-
         public bool ShowUserLevelEdit
         {
             get { return _showUserLevelEdit; }
             set { _showUserLevelEdit = value; OnPropertyChanged(); }
         }
-
         public bool ShowUserLevelNormal
         {
             get { return _showUserLevelNormal; }
             set { _showUserLevelNormal = value; OnPropertyChanged(); }
         }
-
-        public UserLevel InitialUserLevel
-        {
-            get { return _initialUserLevel; }
-            set { _initialUserLevel = value; OnPropertyChanged(); }
-        }
-
-        public UserLevel SelectedUserLevel
-        {
-            get { return _selectedUserLevel; }
-            set { _selectedUserLevel = value; OnPropertyChanged(); }
-        }
-
-        public Store InitialStore
-        {
-            get { return _initialStore; }
-            set { _initialStore = value; OnPropertyChanged(); }
-        }
-
-        public ObservableCollection<UserLevel> AccountTypes
-        {
-            get { return _accountTypes; }
-            set { _accountTypes = value; OnPropertyChanged(); }
-        }
-
         public string Password
         {
             get { return _password; }
             set { _password = value; OnPropertyChanged(); }
         }
+        #endregion
+        #endregion
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
+        #region Methods
+        /// <summary>
+        /// Method that updates the Data in Data.cs and updates some of the internal properties
+        /// </summary>
+        /// <returns></returns>
         public async Task LoadDataAsync()
         {
             await Data.UpdateUsers();
@@ -331,7 +310,6 @@ namespace AdministratorApp.ViewModels
             await Data.UpdateStore();
             AccountTypes = await Data.UpdateUserLevels();
             Roles = new ObservableCollection<Role>(Data.AllRoles.Values);
-            Users = new ObservableCollection<User>(Data.AllUsers.Values);
             foreach (Store s in Data.AllStores.Values)
             {
                 Stores.Add(s);
@@ -339,13 +317,19 @@ namespace AdministratorApp.ViewModels
             OnPropertyChanged(nameof(FilteredUsers));
         }
 
-
+        /// <summary>
+        /// Method that only updates the roles when called
+        /// </summary>
+        /// <returns></returns>
         public async Task LoadRolesAsync()
         {
             await Data.UpdateRoles();
             Roles = new ObservableCollection<Role>(Data.AllRoles.Values);
         }
 
+        /// <summary>
+        /// Method that sets the UserName property for a user when called
+        /// </summary>
         private async void GetUserName()
         {
             if (_userId != -1)
@@ -353,6 +337,11 @@ namespace AdministratorApp.ViewModels
                 UserName = await APIHandler<string>.GetOne($"auth/getusername/{_userId}");
             }
         }
+
+        /// <summary>
+        /// A method that gets the username for a user when called
+        /// </summary>
+        /// <returns>returns the username if found otherwise returns ""</returns>
         private async Task<string> GetUserNameForPassword()
         {
             if (_userId != -1)
@@ -363,7 +352,9 @@ namespace AdministratorApp.ViewModels
             return "";
         }
 
-
+        /// <summary>
+        /// Method that sets all properties to default values
+        /// </summary>
         public void Cancel()
         {
             Name = "";
@@ -389,6 +380,9 @@ namespace AdministratorApp.ViewModels
             Password = "********";
         }
 
+        /// <summary>
+        /// A method that when called opens a confirmation window to confirm the deletion of a selected user
+        /// </summary>
         public async void DeleteUser()
         {
             Data.SelectedUser = SelectedEmp;
@@ -397,6 +391,9 @@ namespace AdministratorApp.ViewModels
             await deleteUserConfirmationContentDialog.ShowAsync();
         }
 
+        /// <summary>
+        /// A method when called that shows the field edits for the user
+        /// </summary>
         public void ShowEditMethod()
         {
             if (SelectedEmp.UserLevelId < AuthHandler.ActiveUser.UserLevelId)
@@ -426,12 +423,18 @@ namespace AdministratorApp.ViewModels
                 FeedBackText = "You cannot edit data for\nusers with the same or\nhigher access level";
         }
 
+        /// <summary>
+        /// A method that cancels the editing process as well as sets the feedbacktext property to ""
+        /// </summary>
         public void CancelEditMethod()
         {
             CloseEdit();
             FeedBackText = "";
         }
 
+        /// <summary>
+        /// A method that when called opens a dialog box to confirm any edits the user has made
+        /// </summary>
         public async void ConfirmEditMethod()
         {
             FeedBackText = "";
@@ -443,6 +446,9 @@ namespace AdministratorApp.ViewModels
             await cEUCD.ShowAsync();
         }
 
+        /// <summary>
+        /// A method that closes the editing fields and returns the view back to normal
+        /// </summary>
         public void CloseEdit()
         {
             ShowEdit = false;
@@ -451,6 +457,9 @@ namespace AdministratorApp.ViewModels
             ShowUserLevelEdit = false;
         }
 
+        /// <summary>
+        /// A method that generates a password for a selected user, and a username if they do not have one yet
+        /// </summary>
         public async void GeneratePassword()
         {
             Password = AuthHandler.GenerateString(8);
@@ -468,14 +477,35 @@ namespace AdministratorApp.ViewModels
             }
         }
 
+        /// <summary>
+        /// A method for updating an Auth in the database via the API
+        /// </summary>
+        /// <param name="username">the username of the account</param>
+        /// <param name="encryptedPassword">the encrypted password for the account</param>
+        /// <param name="salt">the password salt for the account</param>
+        /// <returns>Returns a Task of type HttpResponseMessage</returns>
         public async Task<HttpResponseMessage> PutAuth(string username, string encryptedPassword, string salt)
         {
             return await APIHandler<Auth>.PutOne($"Auth/PutAuth/{SelectedEmp.Id}", new Auth(username, encryptedPassword, salt, SelectedEmp.Id));
         }
 
+        /// <summary>
+        /// A method to create a new auth for a user
+        /// </summary>
+        /// <param name="username">the username for the account</param>
+        /// <param name="encryptedPassword">the encrypted password for the account</param>
+        /// <param name="salt">the password salt for the account</param>
+        /// <returns>Returns a task of type Auth</returns>
         public async Task<Auth> PostAuth(string username, string encryptedPassword, string salt)
         {
             return await APIHandler<Auth>.PostOne("Auth/PostAuth", new Auth(username, encryptedPassword, salt, SelectedEmp.Id));
         }
+        #endregion
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

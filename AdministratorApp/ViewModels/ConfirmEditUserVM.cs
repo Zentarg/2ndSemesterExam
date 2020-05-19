@@ -10,7 +10,9 @@ namespace AdministratorApp.ViewModels
 {
     public class ConfirmEditUserVM
     {
-
+        /// <summary>
+        /// Constructor that loads all the properties up with the correct information
+        /// </summary>
         public ConfirmEditUserVM()
         {
             LoadDataAsync();
@@ -41,6 +43,9 @@ namespace AdministratorApp.ViewModels
         public float SalaryWTaxBefore { get; set; }
         public float SalaryWTaxAfter { get; set; }
 
+        /// <summary>
+        /// A method that updates all the data in the Data.cs file that is relevant to editing a user
+        /// </summary>
         public async void LoadDataAsync()
         {
             await Data.UpdateRoles();
@@ -49,6 +54,10 @@ namespace AdministratorApp.ViewModels
             await Data.UpdateSalaries();
         }
 
+        /// <summary>
+        /// Checks if the email is in use for an edited user, but allows the user to keep their current email
+        /// </summary>
+        /// <returns>Returns an email check error from the enum EmailCheckErrors</returns>
         public Constants.EmailCheckErrors IsEmailInUse()
         {
             if (AfterEdit.Email == BeforeEdit.Email)
@@ -62,6 +71,10 @@ namespace AdministratorApp.ViewModels
             return Constants.EmailCheckErrors.OK;
         }
 
+        /// <summary>
+        /// A method that checks if a user can be updated depending on their email
+        /// </summary>
+        /// <returns>Returns an error from an enum saying if the user can be updated in the api or not</returns>
         public Constants.PutErrors CanUserUpdate()
         {
             if (IsEmailInUse() == Constants.EmailCheckErrors.EMAIL_NOT_EDITED || IsEmailInUse() == Constants.EmailCheckErrors.OK)
@@ -71,6 +84,10 @@ namespace AdministratorApp.ViewModels
             return Constants.PutErrors.CONTENT_DID_NOT_PUT;
         }
 
+        /// <summary>
+        /// Method that updates a user in the system via the API
+        /// </summary>
+        /// <returns></returns>
         public async Task PutUser()
         {
             await APIHandler<Salary>.PutOne($"Salaries/UpdateSalary/{BeforeEdit.Id}", SalaryAfter);

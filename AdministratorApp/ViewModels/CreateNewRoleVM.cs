@@ -23,33 +23,26 @@ namespace AdministratorApp.ViewModels
 
         public CreateNewRoleVM()
         {
-            
-            
         }
 
         public string Role
         {
             get { return _role; }
-            set
-            {
-                _role = value; 
-                OnPropertyChanged();
-            }
+            set { _role = value; OnPropertyChanged(); }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
+        /// <summary>
+        /// Method that when called updates the roles in Data.cs
+        /// </summary>
         public async void LoadDataAsync()
         {
            await Data.UpdateRoles();
         }
 
+        /// <summary>
+        /// A method that checks the inputted string for errors
+        /// </summary>
+        /// <returns>returns an error from the enum RoleErrors that is located within Constants.cs</returns>
         public Constants.RoleErrors CheckRoleForErrors()
         {
             LoadDataAsync();
@@ -68,6 +61,11 @@ namespace AdministratorApp.ViewModels
             return Constants.RoleErrors.OK;
         }
 
+        /// <summary>
+        /// A method that when called will return a string for error text depending on the provided error
+        /// </summary>
+        /// <param name="roleErrors">a RoleError that comes from Constants.RoleErrors</param>
+        /// <returns>A string that says what the error is</returns>
         public string SetErrorText(Constants.RoleErrors roleErrors)
         {
             if (roleErrors == Constants.RoleErrors.INCORRECT_FORMAT)
@@ -83,6 +81,11 @@ namespace AdministratorApp.ViewModels
             return "";
         }
 
-
+        public event PropertyChangedEventHandler PropertyChanged;
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

@@ -19,18 +19,22 @@ namespace AdministratorApp.ViewModels
 {
     public class CreateEmployeeVM : INotifyPropertyChanged
     {
-        private User _tempUser = new User();
+        #region InstanceFields
+        //Instance fields of type observable collection
         private ObservableCollection<Store> _stores = new ObservableCollection<Store>();
         private ObservableCollection<UserLevel> _accountTypes = new ObservableCollection<UserLevel>();
         private ObservableCollection<Role> _roles = new ObservableCollection<Role>();
 
+        //Instance fields of object types
         private UserLevel _selectedUserLevel;
         private Store _selectedStore;
+        private Role _selectedRole;
+        private User _tempUser = new User();
 
+        //Instance fields of more primitive types
         private string _name = "";
         private string _address = "";
         private int _telephone = 0;
-        private Role _selectedRole;
         private float _salary;
         private float _salaryWTax;
         private int _tajNumber;
@@ -40,7 +44,11 @@ namespace AdministratorApp.ViewModels
         private string _email;
         private string _password = "********";
         private string _errorText = "";
+        #endregion
 
+        /// <summary>
+        /// Constructor that sets up the needed methods and property and calls a method to update the relevant data in Data.cs
+        /// </summary>
         public CreateEmployeeVM()
         {
             LoadDataAsync();
@@ -51,38 +59,60 @@ namespace AdministratorApp.ViewModels
             VMHandler.CreateEmployeeVm = this;
         }
 
+        #region Properties
+        //Relay Command Properties
         public RelayCommand DoConfirm { get; set; }
         public RelayCommand DoGenerateUserName { get; set; }
         public RelayCommand DoGeneratePassword { get; set; }
         public RelayCommand DoUpdateComboBoxRoles { get; set; }
-        public string Salt { get; set; }
 
+        //Observable Collection Properties
         public ObservableCollection<Role> Roles
         {
-            get
-            {
-                return _roles;
-            }
-            set
-            {
-                _roles = value;
-                OnPropertyChanged();
-            }
+            get { return _roles; }
+            set { _roles = value; OnPropertyChanged(); }
+        }
+        public ObservableCollection<UserLevel> AccountTypes
+        {
+            get { return _accountTypes; }
+            set { _accountTypes = value; OnPropertyChanged(); }
+        }
+        public ObservableCollection<Store> Stores
+        {
+            get { return _stores; }
+            set { _stores = value; OnPropertyChanged(); }
         }
 
+        //Dictionary Properties
         public Dictionary<int, Store> DictStore
         {
             get { return Data.AllStores; }
         }
+
+        //Object Type Properties
+        public Role SelectedRole
+        {
+            get { return _selectedRole; }
+            set { _selectedRole = value; OnPropertyChanged(); CheckTextFields(); }
+        }
+        public UserLevel SelectedUserLevel
+        {
+            get { return _selectedUserLevel; }
+            set { _selectedUserLevel = value; OnPropertyChanged(); }
+        }
+        public Store SelectedStore
+        {
+            get { return _selectedStore; }
+            set { _selectedStore = value; OnPropertyChanged(); }
+        }
+
+        //Primitive Type Properties
+        public string Salt { get; set; }
         public string UserName
         {
             get { return _userName; }
-            set
-            {
-                _userName = value; OnPropertyChanged();
-            }
+            set { _userName = value; OnPropertyChanged(); }
         }
-
         public string Password
         {
             get { return _password; }
@@ -105,93 +135,48 @@ namespace AdministratorApp.ViewModels
             set { _telephone = value; OnPropertyChanged(); }
             get { return _telephone; }
         }
-
-        public ObservableCollection<Store> Stores
-        {
-            get { return _stores; }
-            set { _stores = value; OnPropertyChanged(); }
-        }
-
-
-        public ObservableCollection<UserLevel> AccountTypes
-        {
-            get { return _accountTypes; }
-            set { _accountTypes = value; OnPropertyChanged(); }
-        }
-
-        public Role SelectedRole
-        {
-            get { return _selectedRole; }
-            set
-            {
-                _selectedRole = value;
-                OnPropertyChanged();
-                CheckTextFields();
-            }
-        }
-
-        public UserLevel SelectedUserLevel
-        {
-            get { return _selectedUserLevel; }
-            set { _selectedUserLevel = value; OnPropertyChanged(); }
-        }
-
         public float Salary
         {
             get { return _salary; }
             set { _salary = value; OnPropertyChanged(); }
         }
-
         public float SalaryWTax
         {
             get { return _salaryWTax; }
             set { _salaryWTax = value; OnPropertyChanged(); }
         }
-
         public int TajNumber
         {
             get { return _tajNumber; }
             set { _tajNumber = value; OnPropertyChanged(); }
         }
-
         public int TaxNumber
         {
             get { return _taxNumber; }
             set { _taxNumber = value; OnPropertyChanged(); }
         }
-
         public float WorkingHours
         {
             get { return _workingHours; }
             set { _workingHours = value; OnPropertyChanged(); }
         }
-
-        public Store SelectedStore
-        {
-            get { return _selectedStore; }
-            set { _selectedStore = value; OnPropertyChanged(); }
-        }
-
         public string Email
         {
             get { return _email; }
             set { _email = value; OnPropertyChanged(); }
         }
-
         public string ErrorText
         {
             get { return _errorText; }
-            set { _errorText = value; OnPropertyChanged();}
+            set { _errorText = value; OnPropertyChanged(); }
         }
+        #endregion
 
-        public event PropertyChangedEventHandler PropertyChanged;
 
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
+        
+        /// <summary>
+        /// Method that creates a new user in the system via the api by using the properties
+        /// </summary>
         public async void CreateUser()
         {
             if (CheckTextFields())
@@ -220,7 +205,10 @@ namespace AdministratorApp.ViewModels
 
         }
 
-
+        /// <summary>
+        /// Method for updating the relevant properties in Data.cs and loading some of the properties in CreateEmployeeVM.cs
+        /// </summary>
+        /// <returns></returns>
         public async Task LoadDataAsync()
         {
             await Data.UpdateRoles();
@@ -234,6 +222,10 @@ namespace AdministratorApp.ViewModels
             }
         }
 
+        /// <summary>
+        /// Checks the text fields to make sure that they contain data within them
+        /// </summary>
+        /// <returns>returns a bool, true if all fields contain data and false if they dont</returns>
         public bool CheckTextFields()
         {
             bool expression = (!string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Address) &&
@@ -250,21 +242,40 @@ namespace AdministratorApp.ViewModels
             return false;
         }
 
+        /// <summary>
+        /// Generates a random password and random salt for the new user
+        /// </summary>
         public void GeneratePassword()
         {
             Password = AuthHandler.GenerateString(8);
             Salt = AuthHandler.GenerateString(16);
         }
 
+        /// <summary>
+        /// Generates a username for the user
+        /// </summary>
         public async void GenerateUserName()
         {
             UserName = await AuthHandler.GenerateUserName(Name);
         }
 
+        /// <summary>
+        /// A method that is called to only update the roles, called when a new role is created
+        /// </summary>
         public async void UpdateRoleComboBox()
         {
             await Data.UpdateRoles();
             OnPropertyChanged(nameof(Roles));
         }
+
+        #region PropertyChange Event and Method
+        public event PropertyChangedEventHandler PropertyChanged;
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
+
     }
 }

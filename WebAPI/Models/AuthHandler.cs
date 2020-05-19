@@ -124,12 +124,24 @@ namespace WebAPI.Models
                             s => s.SessionKey == sessionKey).UserID).UserLevelID)?.ID ?? -1;
         }
 
+        /// <summary>
+        /// A method for getting the username for a specific user's userId
+        /// </summary>
+        /// <param name="userID">userID is an int that is used to find the username</param>
+        /// <param name="db">db is the database to be passed to it of type ParknGardenData</param>
+        /// <returns>returns the username of type string, if it can find one for the specified userId</returns>
         public static string GetUserName(int userID, ParknGardenData db)
         {
             var user = db.Auths.FirstOrDefault(u => u.UserID == userID);
             return user?.Username;
         }
 
+        /// <summary>
+        /// A method that checks if a username is in use in the database
+        /// </summary>
+        /// <param name="userName">userName is the string that is used to see if it exists in the database</param>
+        /// <param name="db">db is the database to be passed to it of type ParknGardenData</param>
+        /// <returns>returns true if the username is in use and false if not</returns>
         public static bool CheckUserName(string userName, ParknGardenData db)
         {
             if (db.Auths.FirstOrDefault(u => u.Username == userName) == null)
@@ -137,11 +149,21 @@ namespace WebAPI.Models
             return true;
         }
 
+        /// <summary>
+        /// A method that adds a new auth to the database
+        /// </summary>
+        /// <param name="auth">auth is the auth to be added to the database</param>
+        /// <param name="db">db is the database to be passed to it of type ParknGardenData</param>
         public static void PostNewAuth(Auth auth, ParknGardenData db)
         {
             db.Auths.Add(auth);
         }
 
+        /// <summary>
+        /// A method that deletes a given auth from the database
+        /// </summary>
+        /// <param name="db">db is the database to be passed to it of type ParknGardenData</param>
+        /// <param name="auth">auth is the given auth that is to be deleted from the database</param>
         public static void DeleteUserAuth(ParknGardenData db, Auth auth)
         {
             db.Auths.Remove(auth);

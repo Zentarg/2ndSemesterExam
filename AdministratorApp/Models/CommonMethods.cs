@@ -10,11 +10,23 @@ namespace AdministratorApp.Models
 {
     public static class CommonMethods
     {
+        /// <summary>
+        /// Method that returns a role when given a dictionary of roles and a role ID
+        /// </summary>
+        /// <param name="roleId">The role ID that is used to find a role</param>
+        /// <param name="roles">A dictionary in the format of the key being int and the value being of type Role</param>
+        /// <returns>A role that corresponds to the given roleId</returns>
         public static Role GetRole(int roleId, Dictionary<int, Role> roles)
         {
             return roles[roleId];
         }
 
+        /// <summary>
+        /// Method that returns a salary when given a dictionary of salaries and a user ID, returns an empty salary if the salary was not found
+        /// </summary>
+        /// <param name="userId">Int type value that is the user ID used to find a salary</param>
+        /// <param name="salaries">A dictionary that has the key of int and the value of salary</param>
+        /// <returns>Either returns a salary that corresponds to the given userId if it finds one, otherwise creates a new salary with values 0, and 0 for before tax and tas percentage</returns>
         public static Salary GetSalary(int userId, Dictionary<int, Salary> salaries)
         {
             try
@@ -27,17 +39,34 @@ namespace AdministratorApp.Models
             }
         }
 
+        /// <summary>
+        /// Method that returns a UserLevel given a userLevelID and a dictionary of user levels
+        /// </summary>
+        /// <param name="userLevelId">int, userLevelID is a value used to find a specific userLevel</param>
+        /// <param name="userLevels">Dictionary with key int and value UserLevel</param>
+        /// <returns>Returns the userLevel that corresponds to the given userLevelId</returns>
         public static UserLevel GetUserLevel(int userLevelId, Dictionary<int, UserLevel> userLevels)
         {
             return userLevels[userLevelId];
         }
 
+        /// <summary>
+        /// A method that returns a Store when given a storeId and a dictionary of stores
+        /// </summary>
+        /// <param name="storeId">int type value that is used to find a store</param>
+        /// <param name="stores">a dictionary with key int and value Store</param>
+        /// <returns>returns a store that corresponds to the given storeId</returns>
         public static Store GetStore(int storeId, Dictionary<int, Store> stores)
         {
             return stores[storeId];
         }
 
-        public static string SetErrorTextOnDelete(Constants.UserDeleteErorrs errors)
+        /// <summary>
+        /// Method for setting error text on delete, for trying to delete a user
+        /// </summary>
+        /// <param name="errors">type enum, pass an enum and get back a string for the error text depending on the enum</param>
+        /// <returns>returns a string that contains error text depending on the passed enum</returns>
+        public static string SetErrorTextOnDeleteForUsersPage(Constants.UserDeleteErorrs errors)
         {
             if (errors == Constants.UserDeleteErorrs.NO_SELECTED_USER)
                 return "You must first select a user\nbefore trying to delete one";

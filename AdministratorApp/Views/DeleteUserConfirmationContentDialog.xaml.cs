@@ -33,10 +33,15 @@ namespace AdministratorApp.Views
         {
         }
 
+        /// <summary>
+        /// Method that is called when a user clicks on confirm for deleting a user
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private async void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             Constants.UserDeleteErorrs error = vm.ErrorCheck();
-            ErrorTextBlock.Text = CommonMethods.SetErrorTextOnDelete(error);
+            ErrorTextBlock.Text = CommonMethods.SetErrorTextOnDeleteForUsersPage(error);
             if (error == Constants.UserDeleteErorrs.OK)
             {
                 User user = await APIHandler<User>.DeleteOne($"Users/DeleteUser/{vm.SelectedEmp.Id}");

@@ -64,6 +64,11 @@ namespace AdministratorApp.Models
             await APIHandler<Session>.DeleteOne($"Auth/DeleteSession/{SessionKey}");
         }
 
+        /// <summary>
+        /// Method that generates a username for a user using their name
+        /// </summary>
+        /// <param name="Name">Type string, Name is the string of characters that will be used to create a username</param>
+        /// <returns>returns a Task of type string that contains the generated username</returns>
         public static async Task<string> GenerateUserName(string Name)
         {
             string userNameWTag = "";
@@ -89,6 +94,10 @@ namespace AdministratorApp.Models
             return UserName;
         }
 
+        /// <summary>
+        /// A method that generates a 4 digit combination of digits
+        /// </summary>
+        /// <returns>Returns a string of random 4 digits</returns>
         public static string GenerateTag()
         {
             Random numberGenerator = new Random();
@@ -103,12 +112,22 @@ namespace AdministratorApp.Models
             return identifier;
         }
 
+        /// <summary>
+        /// Generates a random string
+        /// </summary>
+        /// <param name="length">int, how long the string will be</param>
+        /// <returns>A random string of specified length</returns>
         public static string GenerateString(int length)
         {
             string returnString = RandomStringGenerator(length);
             return returnString;
         }
 
+        /// <summary>
+        /// A generator for generating a random string
+        /// </summary>
+        /// <param name="length">length is how long the string will be</param>
+        /// <returns>returns a string of the specified length filled with random alphanumeric characters (upper and lower case)</returns>
         public static string RandomStringGenerator(int length)
         {
             Random randomString = new Random();

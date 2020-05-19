@@ -18,12 +18,13 @@ namespace AdministratorApp.ViewModels
         private User _user;
         private string _errorText = "";
 
+        /// <summary>
+        /// Constructor that sets up the confirmation message with the required data
+        /// </summary>
         public DeleteUserConfirmationVM()
         {
             SelectedEmp = Data.SelectedUser;
-
         }
-
 
         public User SelectedEmp
         {
@@ -37,6 +38,10 @@ namespace AdministratorApp.ViewModels
             set { _errorText = value; OnPropertyChanged(); }
         }
 
+        /// <summary>
+        /// Method that checks for errors when trying to delete a user
+        /// </summary>
+        /// <returns>Returns an error that is contained within Constants.UserDeleteErrors</returns>
         public Constants.UserDeleteErorrs ErrorCheck()
         {
             int id = SelectedEmp.Id;
