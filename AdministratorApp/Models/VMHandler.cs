@@ -21,5 +21,8 @@ namespace AdministratorApp.ViewModels
         public static EmployeesPageVM EmployeesPageVm { get; set; }
 
         public static StockPageVM StockPageVm { get; set; }
+
+        public static AddSupplierVM AddSupplierVm { get; set; }
+        public static SupplierVM SupplierVm { get; set; }
     }
 }

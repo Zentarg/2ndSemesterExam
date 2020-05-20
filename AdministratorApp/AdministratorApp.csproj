@@ -137,6 +137,7 @@
     <Compile Include="ViewModels\AddItemToStockVM.cs" />
     <Compile Include="ViewModels\AddItemVM.cs" />
     <Compile Include="ViewModels\AddStorePageVM.cs" />
+    <Compile Include="ViewModels\AddSupplierVM.cs" />
     <Compile Include="ViewModels\ConfirmEditUserVM.cs" />
     <Compile Include="ViewModels\CreateEmployeeVM.cs" />
     <Compile Include="ViewModels\CreateNewCategoryVM.cs" />
@@ -155,6 +156,9 @@
     </Compile>
     <Compile Include="Views\AddItemToStockPage.xaml.cs">
       <DependentUpon>AddItemToStockPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddNewSupplierContentDialog.xaml.cs">
+      <DependentUpon>AddNewSupplierContentDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AddStorePage.xaml.cs">
       <DependentUpon>AddStorePage.xaml</DependentUpon>
@@ -272,6 +276,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AddItemToStockPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddNewSupplierContentDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

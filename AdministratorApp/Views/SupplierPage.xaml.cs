@@ -26,5 +26,11 @@ namespace AdministratorApp.Views
         {
             this.InitializeComponent();
         }
+
+        private void AddButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            AddNewSupplierContentDialog anscd = new AddNewSupplierContentDialog();
+            anscd.ShowAsync();
+        }
     }
 }

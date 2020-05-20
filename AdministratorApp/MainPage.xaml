@@ -105,7 +105,7 @@
                         </Button>
                         <Button Style="{StaticResource HamburgerButton}" Tag="StorePage" Click="NavigateFrame">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE700;"/>
+                                <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xEC06;"/>
                                 <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Stores"/>
                             </StackPanel>
                         </Button>
@@ -123,7 +123,7 @@
                         </Button>
                         <Button Style="{StaticResource HamburgerButton}" Tag="RequestsPage" Click="NavigateFrame">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE700;"/>
+                                <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xF0E3;"/>
                                 <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Requests"/>
                             </StackPanel>
                         </Button>

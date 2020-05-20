@@ -11,24 +11,38 @@
 <Page.DataContext>
         <viewModel:SupplierVM/>
 </Page.DataContext>
+    <Page.Resources>
+        <Style x:Key="NormalText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Width" Value="55"/>
+            <Setter Property="Margin" Value="15,7,6,7"/>
+        </Style>
+
+            <Style x:Key="BoldText" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Margin" Value="15,7,6,7"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+            </Style>
+
+        </Page.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
-             <ColumnDefinition/>
-            <ColumnDefinition/>
-             <ColumnDefinition/>
+             <ColumnDefinition Width="Auto"/>
+             <ColumnDefinition Width="3*"/>
+             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition/>
+            <RowDefinition Height="50"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Column="0" Grid.Row="0">
-            <TextBlock Text="SUPPLIERS" />
+            <TextBlock Text="Suppliers" FontSize="20" FontWeight="Bold" Margin="15,10,0,15"/>
         </StackPanel>
 
-        <ListView Grid.Column="0" Grid.Row="1" Width="300"  ItemsSource="{Binding Suppliers}">
+        <ListView Grid.Column="0" Grid.Row="1" Width="450" SelectedItem="{Binding SelectedSupplier, Mode=TwoWay}" ItemsSource="{Binding Suppliers}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -39,5 +53,47 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
+        <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="2"  Name="InformationDisplay" Visibility="Visible" >
+            <TextBlock Text="{Binding SelectedSupplier.Name}" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" >
+                <TextBlock Name="AddressText" Style="{StaticResource NormalText}" Text="Address:" />
+                <TextBlock Name="AddressDisplay" Text="{Binding SelectedSupplier.Address}" Style="{StaticResource BoldText}"/>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" >
+                <TextBlock Name="PhoneText" Style="{StaticResource NormalText}" Text="Phone:" />
+                <TextBlock Name="PhoneDisplay" Text="{Binding SelectedSupplier.Phone}" Style="{StaticResource BoldText}"/>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" >
+                <TextBlock Name="EmailText" Style="{StaticResource NormalText}" Text="Email:" />
+                <TextBlock Name="EmailDisplay" Text="{Binding SelectedSupplier.Email}" Style="{StaticResource BoldText}"/>
+            </StackPanel>
+        </StackPanel>
+
+
+
+        <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Right">
+            <Button Name="AddButton" Margin="25,25,25,25" Width="100" Height="100" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="AddButton_OnClick">
+                <StackPanel>
+                    <TextBlock FontFamily="Segoe mdl2 Assets" Text="&#xE8FA;" FontSize="30" Margin="5,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Text="Add supplier" HorizontalAlignment="Center" FontSize="12" VerticalAlignment="Bottom"/>
+                </StackPanel>
+            </Button>
+ 
+
+            <Button Name="RemoveButton" Margin="25,0,25,25" Width="100" Height="100" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+                <StackPanel>
+                    <TextBlock FontFamily="Segoe mdl2 Assets" Text="&#xE74D;" FontSize="30" Margin="5,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Margin="0,5,0,0" Text="Delete supplier" HorizontalAlignment="Center" FontSize="12" VerticalAlignment="Bottom"/>
+                </StackPanel>
+            </Button>
+
+            <Button Name="EditButton" Margin="25,0,25,25" Width="100" Height="100" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+                <StackPanel>
+                    <TextBlock FontFamily="Segoe mdl2 Assets" Text="&#xEB7E;" FontSize="30" Margin="5,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Margin="0,5,0,0" Text="Edit supplier" HorizontalAlignment="Center" FontSize="12" VerticalAlignment="Bottom"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
     </Grid>
 </Page>

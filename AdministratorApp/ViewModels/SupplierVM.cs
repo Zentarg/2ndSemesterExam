@@ -12,13 +12,15 @@ using CommonLibrary.Models;
 
 namespace AdministratorApp.ViewModels
 {
-    class SupplierVM : INotifyPropertyChanged
+    public class SupplierVM : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        private Supplier _selectedSupplier;
 
         public SupplierVM()
         {
             LoadDataAsync();
+            VMHandler.SupplierVm = this;
         }
 
         public ObservableCollection<Supplier> Suppliers
@@ -33,8 +35,21 @@ namespace AdministratorApp.ViewModels
             }
         }
 
+        public Supplier SelectedSupplier { get => _selectedSupplier;
+            set { _selectedSupplier = value; OnPropertyChanged();}
+        }
 
-        private async Task LoadDataAsync()
+        public bool SupplierIsSelected 
+        { get
+        {
+            if (SelectedSupplier == null)
+            {
+                return false;
+            }
+            else return true;
+        } }
+
+        public async Task LoadDataAsync()
         {
             await  Data.UpdateSuppliers();
             OnPropertyChanged(nameof(Suppliers));
