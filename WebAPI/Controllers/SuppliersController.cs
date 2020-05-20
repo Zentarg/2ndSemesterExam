@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebAPI;
+using WebAPI.Models;
 
 namespace WebAPI.Controllers
 {
@@ -18,9 +19,17 @@ namespace WebAPI.Controllers
         private ParknGardenData db = new ParknGardenData();
 
         // GET: api/Suppliers
-        public IQueryable<Supplier> GetSuppliers()
+        [ResponseType(typeof(Dictionary<int,Supplier>))]
+        public IHttpActionResult GetSuppliers()
         {
-            return db.Suppliers;
+            Dictionary<int, Supplier> Suppliers = SupplierHandler.GetAllSupplier(db);
+
+            if (Suppliers.Count==0)
+            {
+                return NotFound();
+            }
+
+            return Ok(Suppliers);
         }
 
         // GET: api/Suppliers/5

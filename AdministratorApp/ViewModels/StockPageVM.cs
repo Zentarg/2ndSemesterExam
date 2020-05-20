@@ -210,39 +210,7 @@ namespace AdministratorApp.ViewModels
             }
         }
 
-        /*public ObservableCollection<KeyValuePair<Item, Dictionary<Store, int>>> ItemsInStocks
-        {
-            get
-            {
-                ObservableCollection<KeyValuePair<Item, Dictionary<Store, int>>> itemsInStocks = new ObservableCollection<KeyValuePair<Item, Dictionary<Store, int>>>();
-                foreach (KeyValuePair<int, Dictionary<int, int>> item in Data.ItemsInStocks)
-                {
-                    itemsInStocks.Add(new KeyValuePair<Item, Dictionary<Store, int>>());
-                    foreach (KeyValuePair<int, int> store in item.Value)
-                    {
-                        itemsInStocks[item.Key].Value.Add(Data.AllStores[store.Key], store.Value);
-                    }
-                }
-
-                return itemsInStocks;
-            }
-        }*/
-
-
-        /*public Dictionary<int, Item> Items { 
-            get => Data.AllItems.Values.;
-            set { Data.AllItems = value; OnPropertyChanged();}
-        }
-        public Dictionary<int, Store> Stores
-        {
-            get => Data.AllStores;
-            set { Data.AllStores = value; OnPropertyChanged(); }
-        }
-        public Dictionary<int, Stock> Stocks
-        {
-            get => Data.AllStocks;
-            set { Data.AllStocks = value; OnPropertyChanged(); }
-        }*/
+   
 
         private void DeselectItem()
         {

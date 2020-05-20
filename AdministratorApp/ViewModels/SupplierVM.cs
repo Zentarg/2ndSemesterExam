@@ -18,13 +18,17 @@ namespace AdministratorApp.ViewModels
 
         public SupplierVM()
         {
-
+            LoadDataAsync();
         }
 
         public ObservableCollection<Supplier> Suppliers
         {
             get
             {
+                if (Data.AllSuppliers == null)
+                {
+                    return  new ObservableCollection<Supplier>();
+                }
                return new ObservableCollection<Supplier>(Data.AllSuppliers.Values);
             }
         }
@@ -32,7 +36,7 @@ namespace AdministratorApp.ViewModels
 
         private async Task LoadDataAsync()
         {
-            Data.UpdateSuppliers();
+            await  Data.UpdateSuppliers();
             OnPropertyChanged(nameof(Suppliers));
         }
 
