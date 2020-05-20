@@ -45,8 +45,9 @@ namespace WebAPI.Controllers
             return Ok(supplier);
         }
 
-        // PUT: api/Suppliers/5
+        // PUT: api/Suppliers/UpdateSupplier/id
         [ResponseType(typeof(void))]
+        [Route("api/Suppliers/UpdateSupplier/{id}")]
         public async Task<IHttpActionResult> PutSupplier(int id, Supplier supplier)
         {
             if (!ModelState.IsValid)
