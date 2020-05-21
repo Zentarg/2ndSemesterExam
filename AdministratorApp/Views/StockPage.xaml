@@ -155,9 +155,9 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text=">" Margin="10,0,5,0"/>
-                                    <TextBlock Text="{Binding Key.Name}"/>
+                                    <TextBlock Text="{Binding Item1.Name}"/>
                                     <TextBlock Text=" = " Margin="5,0,5,0"/>
-                                    <TextBlock Text="{Binding Value}"/>
+                                    <TextBlock Text="{Binding Item2.Amount}"/>
                                     <TextBlock Text="pcs." Margin="3,0,0,0"/>
                                 </StackPanel>
                             </DataTemplate>
@@ -253,14 +253,14 @@
                 <StackPanel Margin="15,15,5,0" HorizontalAlignment="Left">
                         <TextBlock Text="**Amount:" HorizontalAlignment="Left" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
   
-                <ListView Width="350"  ItemsSource="{Binding SelectedItemInStocks}" HorizontalAlignment="Left" SelectionMode="None">
+                <ListView Width="350"  ItemsSource="{Binding SelectedItemInStocks, Mode=TwoWay}" HorizontalAlignment="Left" SelectionMode="None">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text=">" Margin="10,0,5,0"/>
-                                    <TextBlock Text="{Binding Key.Name}"/>
+                                    <TextBlock Text="{Binding Item1.Name}"/>
                                     <TextBlock Text=" = " Margin="5,0,5,0"/>
-                                        <TextBox Text="{Binding Value, Mode=TwoWay}"  Style="{StaticResource BasicTextBox}" BeforeTextChanging="FilterNonNumeric_OnBeforeTextChanging" Width="75" HorizontalContentAlignment="Center" IsEnabled="True" />
+                                    <TextBox Text="{Binding Item2.Amount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource BasicTextBox}" BeforeTextChanging="FilterNonNumeric_OnBeforeTextChanging" Width="75" HorizontalContentAlignment="Center" IsEnabled="True" />
                                     <TextBlock Text="pcs." Margin="3,0,0,0"/>
                                 </StackPanel>
                             </DataTemplate>
