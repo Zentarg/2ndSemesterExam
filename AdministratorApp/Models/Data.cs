@@ -50,20 +50,25 @@ namespace AdministratorApp.Models
         /// A User that is the selected user in the users page
         /// </summary>
         public static User SelectedUser { get; set; }
-
-        
-        
-
         /// <summary>
         /// A user that has been edited for the selected user from the users page
         /// </summary>
         public static User EditedUser { get; set; }
-
         /// <summary>
         /// A salary that has been edited for the selected user from the users page
         /// </summary>
         public static Salary EditedSalary { get; set; }
+        /// <summary>
+        /// A supplier that is the selected supplier in the suppliers page
+        /// </summary>
+        /// <returns></returns>
+        public static Supplier SelectedSupplier { get; set; }
 
+        /// <summary>
+        /// A supplier that has been edited and will be the put supplier
+        /// </summary>
+        /// <returns></returns>
+        public static Supplier EditedSupplier { get; set; }
 
 
         public static async Task UpdateItems()

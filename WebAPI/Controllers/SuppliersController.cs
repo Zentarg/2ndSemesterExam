@@ -45,8 +45,9 @@ namespace WebAPI.Controllers
             return Ok(supplier);
         }
 
-        // PUT: api/Suppliers/5
+        // PUT: api/Suppliers/UpdateSupplier/id
         [ResponseType(typeof(void))]
+        [Route("api/Suppliers/UpdateSupplier/{id}")]
         public async Task<IHttpActionResult> PutSupplier(int id, Supplier supplier)
         {
             if (!ModelState.IsValid)
@@ -95,19 +96,26 @@ namespace WebAPI.Controllers
             return CreatedAtRoute("DefaultApi", new { id = supplier.ID }, supplier);
         }
 
-        // DELETE: api/Suppliers/5
+        // DELETE: api/Suppliers/DeleteSupplier/id
+        [Route("api/Suppliers/DeleteSupplier/{id}")]
         [ResponseType(typeof(Supplier))]
         public async Task<IHttpActionResult> DeleteSupplier(int id)
         {
             Supplier supplier = await db.Suppliers.FindAsync(id);
+            Supplier returnSupplier = supplier;
             if (supplier == null)
             {
                 return NotFound();
             }
 
-            db.Suppliers.Remove(supplier);
-            await db.SaveChangesAsync();
+            if (supplier.ID != 0)
+            {
+                db.Suppliers.Remove(supplier);
+                await db.SaveChangesAsync();
+                return Ok(returnSupplier);
+            }
 
+            supplier.ID = -1;
             return Ok(supplier);
         }
 

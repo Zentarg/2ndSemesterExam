@@ -42,7 +42,7 @@
             <TextBlock Text="Suppliers" FontSize="20" FontWeight="Bold" Margin="15,10,0,15"/>
         </StackPanel>
 
-        <ListView Grid.Column="0" Grid.Row="1" Width="450" SelectedItem="{Binding SelectedSupplier, Mode=TwoWay}" ItemsSource="{Binding Suppliers}">
+        <ListView Grid.Column="0" Grid.Row="1" Width="450" SelectedItem="{Binding SelectedSupplier, Mode=TwoWay}" ItemsSource="{Binding Suppliers}" IsEnabled="{Binding ShowNormal}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -54,46 +54,80 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="2"  Name="InformationDisplay" Visibility="Visible" >
-            <TextBlock Text="{Binding SelectedSupplier.Name}" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center"/>
-            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" >
-                <TextBlock Name="AddressText" Style="{StaticResource NormalText}" Text="Address:" />
-                <TextBlock Name="AddressDisplay" Text="{Binding SelectedSupplier.Address}" Style="{StaticResource BoldText}"/>
-            </StackPanel>
-            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" >
-                <TextBlock Name="PhoneText" Style="{StaticResource NormalText}" Text="Phone:" />
-                <TextBlock Name="PhoneDisplay" Text="{Binding SelectedSupplier.Phone}" Style="{StaticResource BoldText}"/>
-            </StackPanel>
-            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" >
-                <TextBlock Name="EmailText" Style="{StaticResource NormalText}" Text="Email:" />
-                <TextBlock Name="EmailDisplay" Text="{Binding SelectedSupplier.Email}" Style="{StaticResource BoldText}"/>
-            </StackPanel>
-        </StackPanel>
+        <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2"  Name="InformationDisplay" Visibility="Visible" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="200"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Column="1" Text="{Binding SelectedSupplier.Name}" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Column="0" Text="Name" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <TextBox Grid.Column="1" Visibility="{Binding ShowEdit}" Text="{Binding Name, Mode=TwoWay}" PlaceholderText="Enter Name" Width="300"  FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+
+            <TextBlock Grid.Row="1" Name="AddressText" Style="{StaticResource NormalText}" Text="Address:" />
+            <TextBlock Grid.Row="1" Grid.Column="1" Visibility="{Binding ShowNormal}" Name="AddressDisplay" Text="{Binding SelectedSupplier.Address}" Style="{StaticResource BoldText}"/>
+            <TextBox Grid.Row="1" Visibility="{Binding ShowEdit}" Grid.Column="1" Text="{Binding Address, Mode=TwoWay}" PlaceholderText="Enter Address" Width="300" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Left"/>
+
+            <TextBlock Grid.Row="2" Name="PhoneText" Style="{StaticResource NormalText}" Text="Phone:" />
+            <TextBlock Grid.Row="2" Grid.Column="1" Visibility="{Binding ShowNormal}" Name="PhoneDisplay" Text="{Binding SelectedSupplier.Phone}" Style="{StaticResource BoldText}"/>
+            <TextBox BeforeTextChanging="OnlyNumberTextBox" Grid.Row="2" Visibility="{Binding ShowEdit}" Grid.Column="1" Text="{Binding Phone, Mode=TwoWay}" PlaceholderText="Enter Telephone Number" Width="300" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Left"/>
+
+            <TextBlock Grid.Row="3" Name="EmailText" Style="{StaticResource NormalText}" Text="Email:" />
+            <TextBlock Grid.Row="3" Visibility="{Binding ShowNormal}" Grid.Column="1" Name="EmailDisplay" Text="{Binding SelectedSupplier.Email}" Style="{StaticResource BoldText}"/>
+            <TextBox Grid.Row="3" Visibility="{Binding ShowEdit}" Grid.Column="1" Text="{Binding Email, Mode=TwoWay}" PlaceholderText="Enter Email" Width="300" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Left"/>
+
+            <Grid Grid.Column="1" Grid.Row="4" Width="450" Height="45">
+                <TextBlock Text="{Binding FeedBackText}" FontSize="22" Foreground="White" Margin="10,5"></TextBlock>
+            </Grid>
+        </Grid>
 
 
 
-        <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Right">
-            <Button Name="AddButton" Margin="25,25,25,25" Width="100" Height="100" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="AddButton_OnClick">
+        <Grid Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Button Name="AddButton" Visibility="{Binding ShowNormal}" Margin="25,25,25,25" Width="100" Height="100" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="AddButton_OnClick">
                 <StackPanel>
                     <TextBlock FontFamily="Segoe mdl2 Assets" Text="&#xE8FA;" FontSize="30" Margin="5,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     <TextBlock Text="Add supplier" HorizontalAlignment="Center" FontSize="12" VerticalAlignment="Bottom"/>
                 </StackPanel>
             </Button>
- 
+            <Button Visibility="{Binding ShowEdit}" Name="ConfirmEditButton" Margin="25,25,25,25" Width="100" Height="100" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding DoConfirmEdit}">
+                <StackPanel>
+                    <TextBlock FontFamily="Segoe mdl2 Assets" Text="&#xE73E;" FontSize="30" Margin="5,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Text="Confirm Edit" HorizontalAlignment="Center" FontSize="12" VerticalAlignment="Bottom"/>
+                </StackPanel>
+            </Button>
 
-            <Button Name="RemoveButton" Margin="25,0,25,25" Width="100" Height="100" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+
+            <Button Grid.Row="1" IsEnabled="{Binding SupplierIsSelected}" Visibility="{Binding ShowNormal}" Name="RemoveButton" Margin="25,25,25,25" Width="100" Height="100" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding DoDelete}">
                 <StackPanel>
                     <TextBlock FontFamily="Segoe mdl2 Assets" Text="&#xE74D;" FontSize="30" Margin="5,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     <TextBlock Margin="0,5,0,0" Text="Delete supplier" HorizontalAlignment="Center" FontSize="12" VerticalAlignment="Bottom"/>
                 </StackPanel>
             </Button>
+            <Button Grid.Row="1" Visibility="{Binding ShowEdit}" Name="CancelEditButton" Margin="25,25,25,25" Width="100" Height="100" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding DoCancel}">
+                <StackPanel>
+                    <TextBlock FontFamily="Segoe mdl2 Assets" Text="&#xE711;" FontSize="30" Margin="5,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Text="Cancel Edit" HorizontalAlignment="Center" FontSize="12" VerticalAlignment="Bottom"/>
+                </StackPanel>
+            </Button>
 
-            <Button Name="EditButton" Margin="25,0,25,25" Width="100" Height="100" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+            <Button Grid.Row="2" IsEnabled="{Binding SupplierIsSelected}" Visibility="{Binding ShowNormal}" Name="EditButton" Margin="25,25,25,25" Width="100" Height="100" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding DoShowEdit}">
                 <StackPanel>
                     <TextBlock FontFamily="Segoe mdl2 Assets" Text="&#xEB7E;" FontSize="30" Margin="5,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     <TextBlock Margin="0,5,0,0" Text="Edit supplier" HorizontalAlignment="Center" FontSize="12" VerticalAlignment="Bottom"/>
                 </StackPanel>
             </Button>
-        </StackPanel>
+        </Grid>
     </Grid>
 </Page>

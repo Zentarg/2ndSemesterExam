@@ -39,6 +39,8 @@ namespace AdministratorApp.Models
         /// </summary>
         public enum PutErrors {OK = 0, CONTENT_DID_NOT_PUT = 1, API_UNREACHABLE = 2}
 
+        public enum SupplierCheckErrors {OK = 0, NAME_IN_USE = 1, FIELDS_EMPTY = 2}
+
         /// <summary>
         /// A constant string that contains allowed characters for certain fields
         /// </summary>

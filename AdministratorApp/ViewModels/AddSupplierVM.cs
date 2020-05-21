@@ -66,7 +66,6 @@ namespace AdministratorApp.ViewModels
                 return true;
             }
             else ErrorMessage = "All fields have to be filled out."; return false;
-            
         }
 
         private bool CheckIfAlreadyExist(string name)

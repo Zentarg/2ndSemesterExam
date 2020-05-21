@@ -32,5 +32,15 @@ namespace AdministratorApp.Views
             AddNewSupplierContentDialog anscd = new AddNewSupplierContentDialog();
             anscd.ShowAsync();
         }
+
+        /// <summary>
+        /// Method that is called on every key press for a text box that has this method assigned to it on the BeforeTextChangeEvent
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void OnlyNumberTextBox(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
+        {
+            args.Cancel = args.NewText.Any(c => !char.IsDigit(c));
+        }
     }
 }
