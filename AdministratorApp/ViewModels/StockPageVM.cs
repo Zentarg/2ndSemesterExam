@@ -27,6 +27,7 @@ namespace AdministratorApp.ViewModels
         private List<Stock> _selectedStocks = new List<Stock>();
         private string _filterString = "";
         private List<Category> _selectedCategories = new List<Category>();
+        private ObservableCollection<Tuple<Stock, StockHasItems>> _selectedItemInStocks = new ObservableCollection<Tuple<Stock, StockHasItems>>();
 
         public StockPageVM()
         {
@@ -75,6 +76,7 @@ namespace AdministratorApp.ViewModels
                 OnPropertyChanged(nameof(SelectedItemInStocks));
                 OnPropertyChanged(nameof(PriceAfterDiscount));
                 OnPropertyChanged(nameof(SelectedItemCategory));
+                UpdateSelectedItemInStocks();
             }
         }
 
@@ -119,7 +121,7 @@ namespace AdministratorApp.ViewModels
 
                 foreach (Item item in filteredList)
                 {
-                    items.Add(new Tuple<Item, string>(item, Data.AllCategories.Count != 0 ? Data.AllCategories[item.CategoryId].Name : "No Category."));
+                    items.Add(new Tuple<Item, string>(item, Data.AllCategories.Count != 0 ? Data.AllCategories[item.CategoryId]?.Name : "No Category."));
                 }
 
                 return items;
@@ -174,43 +176,45 @@ namespace AdministratorApp.ViewModels
             }
         }
 
-        public ObservableCollection<KeyValuePair<Stock, int>> SelectedItemInStocks
+        public ObservableCollection<Tuple<Stock, StockHasItems>> SelectedItemInStocks
         {
             get
-            {
-                ObservableCollection<KeyValuePair<Stock, int>> stocks =
-                    new ObservableCollection<KeyValuePair<Stock, int>>();
-
-                if (SelectedItem == null)
-                    return stocks;
-
-                if (Data.ItemsInStocks.ContainsKey(SelectedItem.Item1.Id))
-                { foreach (KeyValuePair<int, int> pair in Data.ItemsInStocks[SelectedItem.Item1.Id])
-                {
-                    stocks.Add(new KeyValuePair<Stock, int>(Data.AllStocks[pair.Key], pair.Value));
-                }
-
- 
-                    return stocks;
-                }
-
-                return new ObservableCollection<KeyValuePair<Stock, int>>()
-                {
-                    new KeyValuePair<Stock, int>(
-                        new Stock(0, "This item has not been placed to any store yet.\t\t\t\t"), 0)
-                };
-
+            { 
+                return _selectedItemInStocks;
             }
             set
             {
-                if (Data.ItemsInStocks.ContainsKey(SelectedItem.Item1.Id))
-                {
-                  //  KeyValuePair<>
-                }
+                _selectedItemInStocks = value; 
+                OnPropertyChanged();
             }
         }
 
-   
+        public void UpdateSelectedItemInStocks()
+        {
+
+            ObservableCollection<Tuple<Stock, StockHasItems>> stocks =
+                new ObservableCollection<Tuple<Stock, StockHasItems>>();
+
+            if (SelectedItem == null)
+            {
+                SelectedItemInStocks = stocks;
+                return;
+            }
+                
+
+            if (Data.ItemsInStocks.ContainsKey(SelectedItem.Item1.Id))
+            {
+                foreach (KeyValuePair<int, int> pair in Data.ItemsInStocks[SelectedItem.Item1.Id])
+                {
+                    stocks.Add(new Tuple<Stock, StockHasItems>(Data.AllStocks[pair.Key], new StockHasItems(pair.Key, SelectedItem.Item1.Id, pair.Value)));
+                }
+
+                SelectedItemInStocks = stocks;
+            }
+            if (SelectedItemInStocks.Count == 0)
+                SelectedItemInStocks.Add(new Tuple<Stock, StockHasItems>(new Stock(0, "This item has not been placed to any store yet.\t\t\t\t"), new StockHasItems(0, SelectedItem.Item1.Id, 0)));
+        }
+
 
         private void DeselectItem()
         {
@@ -233,7 +237,7 @@ namespace AdministratorApp.ViewModels
                                 SelectedItem.Item1.DiscountPercentage));
                         foreach (var ItemInStock in SelectedItemInStocks )
                         {
-                            await APIHandler<StockHasItems>.PostOne($"ItemsInStocks/{ItemInStock.Key.ID}/{SelectedItem.Item1.Id}", new StockHasItems(ItemInStock.Key.ID, SelectedItem.Item1.Id, ItemInStock.Value));
+                            await APIHandler<StockHasItems>.PutOne($"StockHasItems/{ItemInStock.Item1.ID}/{SelectedItem.Item1.Id}", ItemInStock.Item2);
                         }  
 
                         await LoadDataAsync();
@@ -297,6 +301,7 @@ namespace AdministratorApp.ViewModels
             OnPropertyChanged(nameof(SelectedItemInStocks));
             OnPropertyChanged(nameof(PriceAfterDiscount));
             SelectedItem = FilteredItems[0];
+            UpdateSelectedItemInStocks();
             
         }
 
