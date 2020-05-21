@@ -38,6 +38,7 @@ namespace AdministratorApp.ViewModels
             DoCancel = new RelayCommand(CancelEdit);
             DoConfirmEdit = new RelayCommand(ConfirmEditMethod);
             DoShowEdit = new RelayCommand(ShowEditMethod);
+            DoDelete = new RelayCommand(ConfirmDeleteMethod);
         }
 
         public RelayCommand DoCancel { get; set; }
@@ -169,6 +170,37 @@ namespace AdministratorApp.ViewModels
                 ConfirmSupplierEditContentDialog cSECD = new ConfirmSupplierEditContentDialog();
                 await cSECD.ShowAsync();
             }
+        }
+
+        /// <summary>
+        /// Method that opens a confirmation window if you can delete a supplier
+        /// </summary>
+        public async void ConfirmDeleteMethod()
+        {
+            FeedBackText = "";
+            if (CheckDeleteSupplier())
+            {
+                Data.SelectedSupplier = SelectedSupplier;
+                VMHandler.SupplierVm = this;
+                ConfirmDeleteSupplierContentDialog cDSCD = new ConfirmDeleteSupplierContentDialog();
+                await cDSCD.ShowAsync();
+            }
+            else
+            {
+                FeedBackText = "Error: You cannot delete the default supplier";
+            }
+            
+        }
+
+        /// <summary>
+        /// Method that checks if you can delete the selected supplier
+        /// </summary>
+        /// <returns>returns true if you can and false if you cant (supplier.id == 0)</returns>
+        public bool CheckDeleteSupplier()
+        {
+            if (SelectedSupplier.Id == 0)
+                return false;
+            return true;
         }
 
         /// <summary>

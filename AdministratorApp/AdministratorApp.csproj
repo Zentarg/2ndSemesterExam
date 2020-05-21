@@ -139,6 +139,7 @@
     <Compile Include="ViewModels\AddStorePageVM.cs" />
     <Compile Include="ViewModels\AddSupplierVM.cs" />
     <Compile Include="ViewModels\ConfirmEditUserVM.cs" />
+    <Compile Include="ViewModels\ConfirmSupplierDeleteVm.cs" />
     <Compile Include="ViewModels\ConfirmSupplierEditVM.cs" />
     <Compile Include="ViewModels\CreateEmployeeVM.cs" />
     <Compile Include="ViewModels\CreateNewCategoryVM.cs" />
@@ -163,6 +164,9 @@
     </Compile>
     <Compile Include="Views\AddStorePage.xaml.cs">
       <DependentUpon>AddStorePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConfirmDeleteSupplierContentDialog.xaml.cs">
+      <DependentUpon>ConfirmDeleteSupplierContentDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ConfirmSupplierEditContentDialog.xaml.cs">
       <DependentUpon>ConfirmSupplierEditContentDialog.xaml</DependentUpon>
@@ -290,6 +294,10 @@
     <Page Include="Views\AddStorePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ConfirmDeleteSupplierContentDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ConfirmSupplierEditContentDialog.xaml">
       <SubType>Designer</SubType>

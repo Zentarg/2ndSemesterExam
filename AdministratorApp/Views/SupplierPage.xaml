@@ -82,7 +82,7 @@
             <TextBlock Grid.Row="3" Visibility="{Binding ShowNormal}" Grid.Column="1" Name="EmailDisplay" Text="{Binding SelectedSupplier.Email}" Style="{StaticResource BoldText}"/>
             <TextBox Grid.Row="3" Visibility="{Binding ShowEdit}" Grid.Column="1" Text="{Binding Email, Mode=TwoWay}" PlaceholderText="Enter Email" Width="300" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Left"/>
 
-            <Grid Grid.Column="1" Grid.Row="4" Width="350" Height="45">
+            <Grid Grid.Column="1" Grid.Row="4" Width="450" Height="45">
                 <TextBlock Text="{Binding FeedBackText}" FontSize="22" Foreground="White" Margin="10,5"></TextBlock>
             </Grid>
         </Grid>
@@ -109,7 +109,7 @@
             </Button>
 
 
-            <Button Grid.Row="1" IsEnabled="{Binding SupplierIsSelected}" Visibility="{Binding ShowNormal}" Name="RemoveButton" Margin="25,25,25,25" Width="100" Height="100" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+            <Button Grid.Row="1" IsEnabled="{Binding SupplierIsSelected}" Visibility="{Binding ShowNormal}" Name="RemoveButton" Margin="25,25,25,25" Width="100" Height="100" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding DoDelete}">
                 <StackPanel>
                     <TextBlock FontFamily="Segoe mdl2 Assets" Text="&#xE74D;" FontSize="30" Margin="5,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     <TextBlock Margin="0,5,0,0" Text="Delete supplier" HorizontalAlignment="Center" FontSize="12" VerticalAlignment="Bottom"/>
