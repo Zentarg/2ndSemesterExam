@@ -129,6 +129,11 @@
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
+
+            <ListView.Resources>
+                <SolidColorBrush x:Key="ListViewItemBackgroundSelected" Color="#899E88" />
+                <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPointerOver" Color="#899E88" />
+            </ListView.Resources>
         </ListView>
       
 
@@ -260,7 +265,7 @@
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>
-                    </ListView>
+                </ListView>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
