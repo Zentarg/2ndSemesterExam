@@ -155,6 +155,18 @@ namespace AdministratorApp.ViewModels
         }
 
         /// <summary>
+        /// Method that sets all properties to default values
+        /// </summary>
+        public void Cancel()
+        {
+            Name = "";
+            Address = "";
+            Phone = 0;
+            Email = "";
+            SelectedSupplier = null;
+        }
+
+        /// <summary>
         /// method that confirms the inputted information and opens a confirmation window
         /// </summary>
         public async void ConfirmEditMethod()
