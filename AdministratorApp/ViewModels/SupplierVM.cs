@@ -157,7 +157,7 @@ namespace AdministratorApp.ViewModels
         /// <summary>
         /// Method that sets all properties to default values
         /// </summary>
-        public void Cancel()
+        public void Deselect()
         {
             Name = "";
             Address = "";

@@ -47,7 +47,7 @@ namespace AdministratorApp.Views
                 User user = await APIHandler<User>.DeleteOne($"Users/DeleteUser/{vm.SelectedEmp.Id}");
                 VMHandler.EmployeesPageVm.LoadDataAsync();
                 VMHandler.EmployeesPageVm.FeedBackText = $"{user.Name} has been deleted";
-                VMHandler.EmployeesPageVm.Cancel();
+                VMHandler.EmployeesPageVm.Deselect();
                 args.Cancel = false;
             }
             else
