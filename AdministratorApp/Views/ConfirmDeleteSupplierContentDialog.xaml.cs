@@ -45,6 +45,7 @@ namespace AdministratorApp.Views
             {
                 await VMHandler.SupplierVm.LoadDataAsync();
                 VMHandler.SupplierVm.FeedBackText = $"{deletedSupplier.Name} has been deleted";
+                VMHandler.SupplierVm.Deselect();
             }
             else
             {

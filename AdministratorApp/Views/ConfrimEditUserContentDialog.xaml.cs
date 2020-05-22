@@ -47,7 +47,7 @@ namespace AdministratorApp.Views
                 await vm.PutUser();
                 VMHandler.EmployeesPageVm.FeedBackText = "User updated successfully";
                 VMHandler.EmployeesPageVm.CloseEdit();
-                VMHandler.EmployeesPageVm.Cancel();
+                VMHandler.EmployeesPageVm.Deselect();
                 VMHandler.EmployeesPageVm.LoadDataAsync();
                 args.Cancel = false;
             }

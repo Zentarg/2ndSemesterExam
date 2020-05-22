@@ -61,7 +61,7 @@ namespace AdministratorApp.ViewModels
         {
             LoadDataAsync();
             DoShowUserName = new RelayCommand(GetUserName);
-            DoCancel = new RelayCommand(Cancel);
+            DoDeselect = new RelayCommand(Deselect);
             DoDelete = new RelayCommand(DeleteUser);
             DoShowEdit = new RelayCommand(ShowEditMethod);
             DoCancelEdit = new RelayCommand(CancelEditMethod);
@@ -73,7 +73,7 @@ namespace AdministratorApp.ViewModels
         #region Properties
         #region RelayCommandProperities
         public RelayCommand DoShowUserName { get; set; }
-        public RelayCommand DoCancel { get; set; }
+        public RelayCommand DoDeselect { get; set; }
         public RelayCommand DoDelete { get; set; }
         public RelayCommand DoShowEdit { get; set; }
         public RelayCommand DoCancelEdit { get; set; }
@@ -355,7 +355,7 @@ namespace AdministratorApp.ViewModels
         /// <summary>
         /// Method that sets all properties to default values
         /// </summary>
-        public void Cancel()
+        public void Deselect()
         {
             Name = "";
             Telephone = 0;
