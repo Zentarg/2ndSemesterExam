@@ -21,11 +21,9 @@
         </Grid.RowDefinitions>
         <Grid Row="0">
             <StackPanel Orientation="Horizontal" Spacing="15">
-                <TextBlock Text ="Sort By:" FontSize="20" VerticalAlignment="Center"/>
-                <TextBlock Text ="Name" FontSize="20" VerticalAlignment="Center"/>
-                <TextBlock Text ="Address" FontSize="20" VerticalAlignment="Center"/>
-                <TextBlock Text ="Telephone" FontSize="20" VerticalAlignment="Center"/>
-                <TextBox PlaceholderText="Search..." Width="250" Height="30" Text="{Binding FilterString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Text ="Search By:" FontSize="20" VerticalAlignment="Center" Margin="15,0"/>
+
+                <TextBox PlaceholderText="Search..." Width="350" Height="32" Text="{Binding FilterString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
         </Grid>
         <Grid Row="1">
@@ -47,7 +45,10 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </Grid>
-            <Grid Column="1" BorderBrush="AliceBlue" BorderThickness="2">
+            <Grid Column="1" Visibility="{Binding IsEmployeeSelected}" BorderThickness="2">
+                <ScrollViewer>
+
+                </ScrollViewer>
                 <StackPanel Margin="25,25,0,0">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -151,7 +152,7 @@
                     <StackPanel Grid.Row="1" VerticalAlignment="Bottom">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,50,50">
                             <Button Command="{Binding DoDelete}" IsEnabled="{Binding IsEmployeeSelected}" Visibility="{Binding ShowNormal}" Content="Delete" Margin="0,0,10,0" Width="75"/>
-                            <Button Content="Deselect" Command="{Binding DoCancel}" Visibility="{Binding ShowNormal}" IsEnabled="{Binding IsEmployeeSelected}" Margin="0,0,10,0" Width="75"/>
+                            <Button Content="Deselect" Command="{Binding DoDeselect}" Visibility="{Binding ShowNormal}" IsEnabled="{Binding IsEmployeeSelected}" Margin="0,0,10,0" Width="75"/>
                             <Button IsEnabled="{Binding IsEmployeeSelected}" Visibility="{Binding ShowNormal}" Command="{Binding DoShowEdit}" Content="Edit" Width="75"/>
                         </StackPanel>
                     </StackPanel>

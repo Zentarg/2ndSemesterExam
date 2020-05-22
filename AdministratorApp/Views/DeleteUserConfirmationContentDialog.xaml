@@ -21,7 +21,7 @@
         <StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Name:" Margin="0,0,15,0" VerticalAlignment="Center"></TextBlock>
-                <TextBlock Text="{Binding Sup}" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Text="{Binding SelectedEmp.Name}" VerticalAlignment="Center"></TextBlock>
             </StackPanel>
             <TextBlock x:Name="ErrorTextBlock"></TextBlock>
         </StackPanel>
