@@ -23,7 +23,7 @@ namespace WebAPI
 
         public double Discount { get; set; }
 
-        [StringLength(255)]
+        [StringLength(999)]
         public string Comment { get; set; }
 
         public virtual User User { get; set; }

@@ -99,10 +99,24 @@ namespace WebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Invoices.Add(invoice);
+            /*Invoice newInvoice = db.Invoices.Add(invoice.Item1);
+            db.SaveChanges();
+            foreach (InvoiceHasItem item in invoice.Item2)
+            {
+                item.InvoiceID = newInvoice.ID;
+                db.InvoiceHasItems.Add(item);
+            }
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = invoice.ID }, invoice);
+
+            return CreatedAtRoute("DefaultApi", new { id = invoice.Item1.ID }, invoice.Item1);*/
+
+            
+            Invoice newInvoice = db.Invoices.Add(invoice);
+            db.SaveChanges();
+
+            return CreatedAtRoute("DefaultApi", new { id = newInvoice.ID }, newInvoice);
+            
         }
 
         // DELETE: api/Invoices/DeleteInvoiceByUser/id

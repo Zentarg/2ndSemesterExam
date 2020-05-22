@@ -142,6 +142,7 @@
     <Compile Include="ViewModels\ConfirmSupplierDeleteVm.cs" />
     <Compile Include="ViewModels\ConfirmSupplierEditVM.cs" />
     <Compile Include="ViewModels\CreateEmployeeVM.cs" />
+    <Compile Include="ViewModels\CreateInvoicePageVM.cs" />
     <Compile Include="ViewModels\CreateNewCategoryVM.cs" />
     <Compile Include="ViewModels\CreateNewRoleVM.cs" />
     <Compile Include="ViewModels\DeleteUserConfirmationVM.cs" />
@@ -176,6 +177,9 @@
     </Compile>
     <Compile Include="Views\CreateEmployeePage.xaml.cs">
       <DependentUpon>CreateEmployeePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CreateInvoicePage.xaml.cs">
+      <DependentUpon>CreateInvoicePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CreateNewCategoryDialog.xaml.cs">
       <DependentUpon>CreateNewCategoryDialog.xaml</DependentUpon>
@@ -308,6 +312,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CreateEmployeePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CreateInvoicePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
