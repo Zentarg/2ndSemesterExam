@@ -73,10 +73,11 @@ namespace AdministratorApp.ViewModels
             {
                 _selectedItem = value;
                 OnPropertyChanged();
+                UpdateSelectedItemInStocks();
                 OnPropertyChanged(nameof(SelectedItemInStocks));
                 OnPropertyChanged(nameof(PriceAfterDiscount));
                 OnPropertyChanged(nameof(SelectedItemCategory));
-                UpdateSelectedItemInStocks();
+
             }
         }
 
@@ -108,10 +109,15 @@ namespace AdministratorApp.ViewModels
                     if (Data.ItemsInStocks.Count == 0)
                         break;
                     List<int> itemStocks = new List<int>();
-                    foreach (KeyValuePair<int, int> pair in Data.ItemsInStocks[item.Id])
+
+                    if (Data.ItemsInStocks.ContainsKey(item.Id))
                     {
-                        itemStocks.Add(pair.Key);
+                        foreach (KeyValuePair<int, int> pair in Data.ItemsInStocks[item.Id])
+                        {
+                            itemStocks.Add(pair.Key);
+                        }
                     }
+
                     itemsToFilter2.Add(new Tuple<Item, List<int>>(item, itemStocks));
                 }
 
@@ -192,16 +198,17 @@ namespace AdministratorApp.ViewModels
         public void UpdateSelectedItemInStocks()
         {
 
-            ObservableCollection<Tuple<Stock, StockHasItems>> stocks =
-                new ObservableCollection<Tuple<Stock, StockHasItems>>();
+            ObservableCollection<Tuple<Stock, StockHasItems>> stocks = new ObservableCollection<Tuple<Stock, StockHasItems>>();
 
             if (SelectedItem == null)
             {
                 SelectedItemInStocks = stocks;
                 return;
             }
-                
 
+            if (!Data.ItemsInStocks.ContainsKey(SelectedItem.Item1.Id))
+                stocks.Add(new Tuple<Stock, StockHasItems>(new Stock(0, "This item has not been placed to any store yet.\t\t\t\t"), new StockHasItems(0, SelectedItem.Item1.Id, 0)));
+            
             if (Data.ItemsInStocks.ContainsKey(SelectedItem.Item1.Id))
             {
                 foreach (KeyValuePair<int, int> pair in Data.ItemsInStocks[SelectedItem.Item1.Id])
@@ -209,10 +216,9 @@ namespace AdministratorApp.ViewModels
                     stocks.Add(new Tuple<Stock, StockHasItems>(Data.AllStocks[pair.Key], new StockHasItems(pair.Key, SelectedItem.Item1.Id, pair.Value)));
                 }
 
-                SelectedItemInStocks = stocks;
             }
-            if (SelectedItemInStocks.Count == 0)
-                SelectedItemInStocks.Add(new Tuple<Stock, StockHasItems>(new Stock(0, "This item has not been placed to any store yet.\t\t\t\t"), new StockHasItems(0, SelectedItem.Item1.Id, 0)));
+            SelectedItemInStocks = stocks;
+
         }
 
 

@@ -243,7 +243,7 @@ namespace AdministratorApp.ViewModels
         /// <summary>
         /// Checks the entered data for editing if, the name matches another, if the name is the same, or if all fields are filled
         /// </summary>
-        /// <returns>Returns an type from an enum depending on what the fields contain</returns>
+        /// <returns>Returns a type from an enum depending on what the fields contain</returns>
         private Constants.SupplierCheckErrors CheckEditFields()
         {
             bool expression = !string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Address) &&

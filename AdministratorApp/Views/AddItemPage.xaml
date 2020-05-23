@@ -92,7 +92,7 @@
                 <TextBlock Style="{StaticResource NormalTextBlock}" Margin="0,0,6,0" Text="Image: "/>
                 <TextBox Width="300" FontSize="13" Text="{Binding PictureUrl, Mode=TwoWay}" PlaceholderText="flower.jpg" />
             </StackPanel>
-            <Image Width="300" Stretch="Fill" Height="300" Source="{Binding PictureUrl, Mode=TwoWay}" Margin="55,5,0,0" HorizontalAlignment="Left"/>
+            <Image Width="300" Stretch="Fill"  Height="300" Source="{Binding PictureUrl, Mode=TwoWay}" Margin="55,5,0,0" HorizontalAlignment="Left"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,20,45,45">
