@@ -24,6 +24,12 @@ namespace AdministratorApp.Models
             ActiveUserAccessLevel == Constants.AccessLevels.Administrator ||
             ActiveUserAccessLevel == Constants.AccessLevels.Owner;
 
+        /// <summary>
+        /// Double encrypts password based on input string and input salt.
+        /// </summary>
+        /// <param name="input">Rawtext password.</param>
+        /// <param name="salt">Rawtext salt.</param>
+        /// <returns>Double encrypted password.</returns>
         public static string EncryptPassword(string input, string salt)
         {
 
@@ -49,6 +55,10 @@ namespace AdministratorApp.Models
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Initializes all the properties that might be needed throughout the program lifecycle.
+        /// </summary>
+        /// <returns>Task, enables await.</returns>
         public static async Task InitializeAuth()
         {
             ActiveUser = await APIHandler<User>.GetOne($"Users/{UserID}");
@@ -56,9 +66,13 @@ namespace AdministratorApp.Models
             ActiveUserAccessLevel = (Constants.AccessLevels) ActiveUser.UserLevelId;
             ActiveUserLevelName = (await APIHandler<UserLevel>.GetOne($"UserLevels/{ActiveUser.UserLevelId}")).Name;
             ActiveUserStore = await APIHandler<Store>.GetOne($"Stores/{ActiveUser.StoreId}");
-
         }
 
+
+        /// <summary>
+        /// Deletes session key from db.
+        /// </summary>
+        /// <returns>Task, enables await.</returns>
         public static async Task Logout()
         {
             await APIHandler<Session>.DeleteOne($"Auth/DeleteSession/{SessionKey}");

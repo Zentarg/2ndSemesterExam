@@ -147,6 +147,9 @@ namespace AdministratorApp.ViewModels
             }
         }
 
+        /// <summary>
+        /// Asynchronously accepts selected invoice. Commits all changes the invoice suggests to db (Changes invoice table and stockhasitems table)
+        /// </summary>
         public async void AcceptInvoice()
         {
             Data.AllInvoices[SelectedInvoice.Item1.ID].InvoiceStatusID = (int) Constants.InvoiceStatus.Accepted;
@@ -171,6 +174,9 @@ namespace AdministratorApp.ViewModels
             OnPropertyChanged(nameof(FilteredInvoices));
         }
 
+        /// <summary>
+        /// Asynchronously denies selected invoice. Changes invoice table.
+        /// </summary>
         public async void DenyInvoice()
         {
             Data.AllInvoices[SelectedInvoice.Item1.ID].InvoiceStatusID = (int)Constants.InvoiceStatus.Denied;
@@ -182,6 +188,10 @@ namespace AdministratorApp.ViewModels
             OnPropertyChanged(nameof(FilteredInvoices));
         }
 
+        /// <summary>
+        /// Loads all data needed, and sets up selectedInvoice.
+        /// </summary>
+        /// <returns>Task, enables await.</returns>
         public async Task LoadData()
         {
             await Data.UpdateStock();

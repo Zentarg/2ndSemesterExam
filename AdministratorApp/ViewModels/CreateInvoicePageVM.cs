@@ -79,7 +79,9 @@ namespace AdministratorApp.ViewModels
         public RelayCommand DoCancel { get; set; }
         public RelayCommand DoConfirm { get; set; }
 
-
+        /// <summary>
+        /// Resets the create invoice view.
+        /// </summary>
         public void Cancel()
         {
             SelectedStore = null;
@@ -90,6 +92,9 @@ namespace AdministratorApp.ViewModels
             OnPropertyChanged(nameof(CanEdit));
         }
 
+        /// <summary>
+        /// Creates a new invoice with items based on the Properties.
+        /// </summary>
         public async void Confirm()
         {
             Invoice newInvoice = new Invoice(0, AuthHandler.UserID, float.Parse(Price), float.Parse(Discount), Comment, SelectedStore.ID, (int) Constants.InvoiceStatus.Open, "");
@@ -144,6 +149,10 @@ namespace AdministratorApp.ViewModels
             }
         }
 
+        /// <summary>
+        /// Loads all data necessary.
+        /// </summary>
+        /// <returns>Task, enables await.</returns>
         public async Task LoadData()
         {
             await Data.UpdateItems();
