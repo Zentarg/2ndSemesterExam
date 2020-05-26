@@ -21,7 +21,7 @@
         </Grid.RowDefinitions>
         <Grid Row="0">
             <StackPanel Orientation="Horizontal" Spacing="15">
-                <TextBlock Text ="Search By:" FontSize="20" VerticalAlignment="Center" Margin="15,0"/>
+                <TextBlock Text ="Search:" FontSize="20" VerticalAlignment="Center" Margin="15,0"/>
 
                 <TextBox PlaceholderText="Search..." Width="350" Height="32" Text="{Binding FilterString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
