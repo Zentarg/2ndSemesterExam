@@ -111,7 +111,7 @@
             <TextBox Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" Text="{Binding Discount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" BeforeTextChanging="FilterNonNumeric_OnBeforeTextChanging" IsEnabled="{Binding CanEdit}"/>
             <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" Spacing="15">
                 <Button Content="Cancel" Width="200" IsEnabled="{Binding CanEdit}" Command="{Binding DoCancel}"/>
-                <Button Content="Confirm" Width="200" IsEnabled="{Binding CanEdit}" Command="{Binding DoConfirm}"/>
+                <Button Content="Confirm" Width="200" IsEnabled="{Binding CanConfirm}" Command="{Binding DoConfirm}"/>
             </StackPanel>
         </Grid>
     </Grid>

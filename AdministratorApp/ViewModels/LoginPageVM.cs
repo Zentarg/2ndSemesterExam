@@ -33,6 +33,9 @@ namespace AdministratorApp.ViewModels
 
         public RelayCommand DoAttemptLogin { get; set; }
 
+        /// <summary>
+        /// Attempts to login using information from properties.
+        /// </summary>
         public async void AttemptLogin()
         {
             DisplayLoginWindow = false;
@@ -66,6 +69,10 @@ namespace AdministratorApp.ViewModels
 
         }
 
+        /// <summary>
+        /// Displays error box with string errortext.
+        /// </summary>
+        /// <param name="errorText">Error text to display.</param>
         public void DisplayLoginError(string errorText)
         {
             DisplayLoading = false;

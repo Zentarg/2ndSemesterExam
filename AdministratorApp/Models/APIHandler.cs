@@ -12,7 +12,11 @@ namespace AdministratorApp.Models
     {
         private static string url = "http://localhost:52889/api/";
         
-
+        /// <summary>
+        /// Requests any T item from API.
+        /// </summary>
+        /// <param name="apiString">API String to request from.</param>
+        /// <returns>T object</returns>
         public static async Task<T> GetOne(string apiString)
         {
             HttpClientHandler handler = new HttpClientHandler() { UseDefaultCredentials = true };
@@ -37,6 +41,11 @@ namespace AdministratorApp.Models
             }
         }
 
+        /// <summary>
+        /// Requests multiple T items from API.
+        /// </summary>
+        /// <param name="apiString">API String to request from.</param>
+        /// <returns>List of T objects</returns>
         public static async Task<List<T>> GetMultiple(string apiString)
         {
             HttpClientHandler handler = new HttpClientHandler() { UseDefaultCredentials = true };
@@ -62,6 +71,11 @@ namespace AdministratorApp.Models
             }
         }
 
+        /// <summary>
+        /// Requests deletion of any T item from API
+        /// </summary>
+        /// <param name="apiString">API string to request deletion of.</param>
+        /// <returns>T Object that was deleted.</returns>
         public static async Task<T> DeleteOne(string apiString)
         {
             HttpClientHandler handler = new HttpClientHandler() { UseDefaultCredentials = true };
@@ -87,6 +101,12 @@ namespace AdministratorApp.Models
             }
         }
 
+        /// <summary>
+        /// Requests posting of any T item to API
+        /// </summary>
+        /// <param name="apiString">API string to request posting to.</param>
+        /// <param name="objectToPost">Object to post to api.</param>
+        /// <returns>T Object posted.</returns>
         public static async Task<T> PostOne(string apiString, T objectToPost)
         {
             HttpClientHandler handler = new HttpClientHandler() {UseDefaultCredentials = true};
@@ -113,6 +133,13 @@ namespace AdministratorApp.Models
             }
         }
 
+
+        /// <summary>
+        /// Requests update of any T item to API.
+        /// </summary>
+        /// <param name="apiString">API String to request updating on.</param>
+        /// <param name="objectToPut">New object to update to.</param>
+        /// <returns>HttpResponseMessage response from API.</returns>
         public static async Task<HttpResponseMessage> PutOne(string apiString, T objectToPut)
         {
             HttpClientHandler handler = new HttpClientHandler() { UseDefaultCredentials = true };

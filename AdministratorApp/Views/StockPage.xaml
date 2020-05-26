@@ -140,9 +140,31 @@
         <ScrollViewer Visibility="Visible" Name="ItemPanel" Grid.Column="1" Grid.Row="1" >
 
             <StackPanel>
+                
                 <StackPanel Width="450"  Name="SimpleItemDisplay" Visibility="Visible">
-            
-                <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
+
+                    <StackPanel  Orientation="Horizontal" Margin="15,0,0,0">
+                        <Button Name="CloseButton" Width="75" Height="35" Content="Close" HorizontalAlignment="left" Margin="0,0,25,0"  Click="CloseButton_OnClick"/>
+                        <Button Name="EditButton" Width="75" Height="35" Content="Edit" HorizontalAlignment="Right" Margin="135,0,25,0"  Click="EditButton_OnClick" />
+                        <Button Width="60" Name="DeleteButton" Height="35" Content="&#xE74D;" FontFamily="Segoe mdl2 assets" HorizontalAlignment="Right" FontSize="20"  Background="#FF6262" Margin="15,0,0,0" Click="DeleteButton_OnClick">
+                            <Button.Resources>
+                                <ResourceDictionary>
+                                    <ResourceDictionary.ThemeDictionaries>
+                                        <ResourceDictionary x:Key="Dark">
+                                            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#FF6262"/>
+                                            <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#CD5252"/>
+                                        </ResourceDictionary>
+                                        <ResourceDictionary x:Key="Light">
+                                            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#FF6262"/>
+                                            <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#CD5252"/>
+                                        </ResourceDictionary>
+                                    </ResourceDictionary.ThemeDictionaries>
+                                </ResourceDictionary>
+                            </Button.Resources>
+                        </Button>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
                     <TextBlock Text="Name:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
                     <TextBlock Text="{Binding SelectedItem.Item1.Name, Mode=TwoWay}" FontSize="18" />
                 </StackPanel>
@@ -166,7 +188,7 @@
                 </StackPanel>
 
                 <StackPanel  Orientation="Horizontal" Margin="15,15,15,0">
-                    <TextBlock Text="Type:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
+                    <TextBlock Text="Category:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
                     <TextBlock Text="{Binding SelectedItemCategory.Name}"   />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
@@ -208,27 +230,6 @@
                 </StackPanel>
 
 
-                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,25,0,0">
-
-                        <Button Width="60" Name="DeleteButton" Height="35" Content="&#xE74D;" FontFamily="Segoe mdl2 assets" HorizontalAlignment="Right" FontSize="20"  Background="#FF6262" Margin="25,0,150,0" Click="DeleteButton_OnClick">
-                            <Button.Resources>
-                                <ResourceDictionary>
-                                    <ResourceDictionary.ThemeDictionaries>
-                                        <ResourceDictionary x:Key="Dark">
-                                            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#FF6262"/>
-                                            <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#CD5252"/>
-                                        </ResourceDictionary>
-                                        <ResourceDictionary x:Key="Light">
-                                            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#FF6262"/>
-                                            <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#CD5252"/>
-                                        </ResourceDictionary>
-                                    </ResourceDictionary.ThemeDictionaries>
-                                </ResourceDictionary>
-                            </Button.Resources>
-                        </Button>
-                        <Button Width="75" Height="35" Content="Edit" HorizontalAlignment="Right" Margin="25,0,25,0" Name="EditButton" Click="EditButton_OnClick" />
-                    <Button Width="75" Height="35" Content="Close" HorizontalAlignment="Right" Margin="0,0,25,0" Command="{Binding DeselectItemCommand}"/>
-                </StackPanel>
             </StackPanel>
 
 
@@ -269,8 +270,8 @@
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
-                    <TextBlock Text="Category:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
-                        <ComboBox ItemsSource="{Binding AllCategories}" SelectedItem="{Binding SelectedItemCategory, Mode=TwoWay}"  />
+                    <TextBlock Text="Category:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" Width="125" />
+                        <ComboBox ItemsSource="{Binding AllCategories}" PlaceholderText="{Binding SelectedItemCategory}" SelectedItem="{Binding SelectedItemCategory, Mode=TwoWay}"  />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
                     <TextBlock Text="**Price:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />

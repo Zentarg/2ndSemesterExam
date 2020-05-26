@@ -63,6 +63,7 @@ namespace AdministratorApp.ViewModels
             {
                 _price = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(CanConfirm));
             }
         }
         public string Discount
@@ -79,7 +80,14 @@ namespace AdministratorApp.ViewModels
         public RelayCommand DoCancel { get; set; }
         public RelayCommand DoConfirm { get; set; }
 
+        public bool CanConfirm
+        {
+            get { return (Price != "" && ItemsToChange.Count > 0); }
+        }
 
+        /// <summary>
+        /// Resets the create invoice view.
+        /// </summary>
         public void Cancel()
         {
             SelectedStore = null;
@@ -90,25 +98,29 @@ namespace AdministratorApp.ViewModels
             OnPropertyChanged(nameof(CanEdit));
         }
 
+        /// <summary>
+        /// Creates a new invoice with items based on the Properties.
+        /// </summary>
         public async void Confirm()
         {
-            Invoice newInvoice = new Invoice(0, AuthHandler.UserID, float.Parse(Price), float.Parse(Discount), Comment, SelectedStore.ID, (int) Constants.InvoiceStatus.Open, "");
-            List<InvoiceHasItem> invoiceHasItems = new List<InvoiceHasItem>();
-            Invoice invoice = await APIHandler<Invoice>.PostOne("Invoices", newInvoice);
-            foreach (Tuple<Item, InvoiceHasItem> tuple in ItemsToChange)
+            if (Price != "" && ItemsToChange.Count > 0)
             {
-                await APIHandler<InvoiceHasItem>.PostOne("InvoiceHasItems", new InvoiceHasItem(invoice.ID, tuple.Item1.Id, tuple.Item2.Amount));
+                Invoice newInvoice = new Invoice(0, AuthHandler.UserID, float.Parse(Price), float.Parse(Discount), Comment, SelectedStore.ID, (int) Constants.InvoiceStatus.Open, "");
+                List<InvoiceHasItem> invoiceHasItems = new List<InvoiceHasItem>();
+                Invoice invoice = await APIHandler<Invoice>.PostOne("Invoices", newInvoice);
+                foreach (Tuple<Item, InvoiceHasItem> tuple in ItemsToChange)
+                {
+                    await APIHandler<InvoiceHasItem>.PostOne("InvoiceHasItems", new InvoiceHasItem(invoice.ID, tuple.Item1.Id, tuple.Item2.Amount));
+                }
+
+
+                SelectedStore = null;
+                Comment = "";
+                Price = "";
+                Discount = "";
+                OnPropertyChanged(nameof(StockHasItems));
+                OnPropertyChanged(nameof(CanEdit));
             }
-
-
-            SelectedStore = null;
-            Comment = "";
-            Price = "";
-            Discount = "";
-            OnPropertyChanged(nameof(StockHasItems));
-            OnPropertyChanged(nameof(CanEdit));
-
-
         }
 
         public bool CanEdit
@@ -141,9 +153,14 @@ namespace AdministratorApp.ViewModels
             {
                 _itemsToChange = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(CanConfirm));
             }
         }
 
+        /// <summary>
+        /// Loads all data necessary.
+        /// </summary>
+        /// <returns>Task, enables await.</returns>
         public async Task LoadData()
         {
             await Data.UpdateItems();

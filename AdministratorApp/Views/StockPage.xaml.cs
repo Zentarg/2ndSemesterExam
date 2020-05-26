@@ -32,6 +32,7 @@ namespace AdministratorApp.Views
             this.InitializeComponent();
             _viewModel = VMHandler.StockPageVm;
             _vm = DataContext as StockPageVM;
+            HideItemPanel();
         }
 
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -91,10 +92,7 @@ namespace AdministratorApp.Views
             {
                 EditableItemDisplay.Visibility = Visibility.Collapsed;
                 SimpleItemDisplay.Visibility = Visibility.Visible;
-
             }
-
-
         }
 
         private async void DeleteButton_OnClick(object sender, RoutedEventArgs e)
@@ -112,5 +110,15 @@ namespace AdministratorApp.Views
             await dialog.ShowAsync();
         }
 
+        private void HideItemPanel()
+        {
+            ItemPanel.Visibility = Visibility.Collapsed;
+        }
+
+        private void CloseButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            _viewModel.DeselectItemCommand.Execute(_viewModel.DeselectItemCommand);
+            ItemPanel.Visibility = Visibility.Collapsed;
+        }
     }
 }

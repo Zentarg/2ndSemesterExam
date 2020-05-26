@@ -17,6 +17,7 @@ namespace AdministratorApp.ViewModels
 {
     public class AddItemVM : INotifyPropertyChanged
     {
+        //Instance fields 
         private string _name;
         private float _price;
         private int _discount;
@@ -25,10 +26,12 @@ namespace AdministratorApp.ViewModels
         private string _color;
         private string _size;
         private string _comment; 
-        private string _pictureUrl = "https://lh3.googleusercontent.com/proxy/H7RfYt-nkhjZ4iyB1bGL4gbUbG5rizq9dEMHT7V3_LB8CxT1kAnGIJf-eBzFemJdl7VzVlh_9ZhYZtoYidLd393lUIFvjmKuOjag2WziBrDZrKDCMr8YzNNI1CKWKpD_xBSKhWA";
+        private string _pictureUrl = "https://image.flaticon.com/icons/svg/809/809130.svg";
         private int _barcode;
         private string _errorMessage;
 
+
+        //Constructor for setting up the commands, loading data from the database using Data.cs and sending the ViewModel to VMHandler
         public AddItemVM()
         {
             LoadDataAsync();
@@ -37,8 +40,11 @@ namespace AdministratorApp.ViewModels
             CancelCommand = new RelayCommand(NavigateBack);
         }
 
+        //Relay commands for addingItem and cancelling action.
+        public RelayCommand AddItemCommand { get; }
         public RelayCommand CancelCommand { get; set; }
 
+        //Observable collection for the list of categories, returns the values from the Data class
 
         public ObservableCollection<Category> Categories
         {
@@ -46,6 +52,16 @@ namespace AdministratorApp.ViewModels
         }
 
         public ObservableCollection<Item> Items { get => new ObservableCollection<Item>(Data.AllItems.Values);}
+
+        //Reference type property for Category
+
+        public Category Category
+        {
+            get => _category;
+            set { _category = value; OnPropertyChanged(); }
+        }
+
+        //Value type properties
 
         public string Name { get => _name;
             set{ _name = value; OnPropertyChanged();} }
@@ -60,11 +76,6 @@ namespace AdministratorApp.ViewModels
             set { _discount = value; OnPropertyChanged(); }
         }
 
-        public Category Category
-        {
-            get => _category;
-            set { _category = value; OnPropertyChanged(); }
-        }
         public int CategoryID
         {
             get => _categoryID;
@@ -101,8 +112,12 @@ namespace AdministratorApp.ViewModels
             get => _errorMessage;
             set { _errorMessage = value; OnPropertyChanged(); }
         }
-        public RelayCommand AddItemCommand { get; }
 
+
+       /// <summary>
+       /// Method for creating new item and adding it to the database trough the API handler.
+       /// </summary>
+        
         private async void AddItem()
         {
 
@@ -153,6 +168,10 @@ namespace AdministratorApp.ViewModels
 
         }
 
+       /// <summary>
+       /// Method for checking if an item with the given name has already been registered to the system.
+       /// </summary>
+       /// <returns></returns>
         public bool CheckIfNameAlreadyExist()
         {
             foreach (var item in Items)
@@ -165,7 +184,11 @@ namespace AdministratorApp.ViewModels
             return true;
         }
 
-        public bool CheckTextFields()
+        /// <summary>
+        ///  Method for checking if all required textbox is filled out.
+        /// </summary>
+        /// <returns> It returns a true or false value depending on if each field is filled out.</returns>
+        private bool CheckTextFields()
         {
             bool expression = (!string.IsNullOrEmpty(Name) &&
                                Category!=null && !string.IsNullOrEmpty(Color) &&
@@ -179,6 +202,10 @@ namespace AdministratorApp.ViewModels
             return false;
         }
 
+
+        /// <summary>
+        /// Method to load relevant data from the database using Data.cs, and updating properties Categories, and Items.
+        /// </summary>
         public async void LoadDataAsync()
         { 
             await Data.UpdateCategories();
@@ -188,6 +215,9 @@ namespace AdministratorApp.ViewModels
 
         }
 
+        /// <summary>
+        /// Method for navigating back to the previous page.
+        /// </summary>
         private void NavigateBack()
         {
             NavigationHandler.NavigateBackwards();

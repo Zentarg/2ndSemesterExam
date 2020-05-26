@@ -14,14 +14,18 @@ namespace AdministratorApp.ViewModels
 {
    public class AddSupplierVM : INotifyPropertyChanged
     {
+        //Instance fields
         private Supplier _newSupplier = new Supplier();
         private string _errorMessage;
 
+        //Constructor of AddSupplierViewModel for sending the ViewModel to VMHandler.
         public AddSupplierVM()
         {
             VMHandler.AddSupplierVm = this;
+            LoadDataAsync();
         }
 
+        //Reference type property for the new supplier.
         public Supplier NewSupplier
         {
             get {
@@ -35,6 +39,7 @@ namespace AdministratorApp.ViewModels
             }
         }
 
+        //Value type string property for error messages.
         public string ErrorMessage
         {
             get => _errorMessage;
@@ -43,6 +48,7 @@ namespace AdministratorApp.ViewModels
         }
     }
 
+        //
         public ObservableCollection<Supplier> AllSuppliers { get => new ObservableCollection<Supplier>(Data.AllSuppliers.Values);}
 
         public event PropertyChangedEventHandler PropertyChanged;
