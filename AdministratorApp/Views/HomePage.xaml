@@ -37,13 +37,13 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="100">
                     <Button Style="{StaticResource NavigateButton}" Tag="StockPage" Click="NavigateFrame">
                         <StackPanel>
-                            <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xE188;" />
+                            <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xE82D;" />
                             <TextBlock Style="{StaticResource ButtonText}"  Text="Stock"/>
                         </StackPanel>
                     </Button>
                     <Button Style="{StaticResource NavigateButton}" Tag="StorePage" Click="NavigateFrame">
                         <StackPanel>
-                            <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xE188;" />
+                            <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xEC06;" />
                             <TextBlock Style="{StaticResource ButtonText}"  Text="Stores"/>
                         </StackPanel>
                     </Button>
@@ -51,7 +51,7 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="100">
                     <Button Style="{StaticResource NavigateButton}" Tag="CreateInvoicePage" Click="NavigateFrame" IsEnabled="True">
                         <StackPanel>
-                            <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xE188;" />
+                            <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xE8F4;" />
                             <TextBlock Style="{StaticResource ButtonText}"  Text="Create Invoice Sale"/>
                         </StackPanel>
                     </Button>
@@ -63,13 +63,13 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="100">
                     <Button Style="{StaticResource NavigateButton}"  Tag="StockPage" Click="NavigateFrame">
                         <StackPanel>
-                            <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xE188;" />
+                            <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xE82D;" />
                             <TextBlock Style="{StaticResource ButtonText}"  Text="Stock"/>
                         </StackPanel>
                     </Button>
                     <Button Style="{StaticResource NavigateButton}" Tag="StorePage" Click="NavigateFrame">
                         <StackPanel>
-                            <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xE188;" />
+                            <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xEC06;" />
                             <TextBlock Style="{StaticResource ButtonText}"  Text="Stores"/>
                         </StackPanel>
                     </Button>

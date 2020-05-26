@@ -134,8 +134,8 @@
             <TextBlock Text="Discount: " Grid.Column="0" Grid.Row="7" TextAlignment="Right"/>
             <TextBlock Text="{Binding SelectedInvoice.Item1.Discount, Mode=OneWay}" Grid.Column="1" Grid.Row="7" TextAlignment="Right"/>
             <StackPanel Orientation="Horizontal" Grid.Column="6" Grid.Row="7" HorizontalAlignment="Right">
-                <Button  Content="Deny Invoice" Command="{Binding DoDenyInvoice}" IsEnabled="{Binding EnableButtons}"/>
-                <Button  Content="Accept Invoice" Command="{Binding DoAcceptInvoice}" IsEnabled="{Binding EnableButtons}"/>
+                <Button  Content="Deny Invoice" Command="{Binding DoDenyInvoice}" IsEnabled="{Binding EnableButtons}" />
+                <Button  Content="Accept Invoice" Command="{Binding DoAcceptInvoice}" IsEnabled="{Binding EnableButtons}" Margin="15,0,15,0"/>
             </StackPanel>
         </Grid>
     </Grid>

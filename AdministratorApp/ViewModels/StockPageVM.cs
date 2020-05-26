@@ -20,6 +20,8 @@ namespace AdministratorApp.ViewModels
 {
     public class StockPageVM : INotifyPropertyChanged
     {
+       
+        //Instance fields
         private Tuple<Item, string> _selectedItem;
         private List<Item> _items;
         private float _priceAfterDiscount;
@@ -29,6 +31,10 @@ namespace AdministratorApp.ViewModels
         private List<Category> _selectedCategories = new List<Category>();
         private ObservableCollection<Tuple<Stock, StockHasItems>> _selectedItemInStocks = new ObservableCollection<Tuple<Stock, StockHasItems>>();
 
+
+        /// <summary>
+        /// Constructor to Load data from database, Update the ViewModel in VMHandler and to initialise the RelayCommands;
+        /// </summary>
         public StockPageVM()
         {
             LoadDataAsync();
@@ -39,6 +45,8 @@ namespace AdministratorApp.ViewModels
             NavigateToAddItemToStockCommand = new RelayCommand(NavigateToAddItemToStock);
         }
 
+        
+        /// Properties
         public string ErrorMessage
         {
             get => _errorMessage;
@@ -200,6 +208,10 @@ namespace AdministratorApp.ViewModels
             get { return AuthHandler.ShowAdministratorFunctions; }
         }
 
+
+        /// <summary>
+        /// Method which is responsible for updating selected item in stock.
+        /// </summary>
         public void UpdateSelectedItemInStocks()
         {
 
@@ -226,12 +238,18 @@ namespace AdministratorApp.ViewModels
 
         }
 
-
+        /// <summary>
+        /// Method which deselects the selected item.
+        /// </summary>
         private void DeselectItem()
         {
             SelectedItem = null;
         }
 
+        /// <summary>
+        /// Method for saving edited item to database.
+        /// </summary>
+        /// <returns>Returns a boolean value. It returns true value if the save was successful. </returns>
         public async Task<bool> SaveEdit()
         {
             try
@@ -268,6 +286,11 @@ namespace AdministratorApp.ViewModels
             }
         }
 
+
+        /// <summary>
+        /// Method responsible for checking if all the required fields are filled out
+        /// </summary>
+        /// <returns>Returns a boolean value, if all the fields are filled out returns true</returns>
         private bool CheckFields()
         {
             bool Experssion = !string.IsNullOrEmpty(SelectedItem.Item1.Name) && SelectedItem.Item1.Price != 0 &&
@@ -282,6 +305,11 @@ namespace AdministratorApp.ViewModels
             return false;
         }
 
+
+
+        /// <summary>
+        /// Method responsible for deleting item from the database. It used the API handler.
+        /// </summary>
         public async void DeleteItem()
         {
             if (SelectedItem != null)
@@ -295,8 +323,10 @@ namespace AdministratorApp.ViewModels
         }
 
 
-
-
+        /// <summary>
+        /// Method responsible for loading all necessary data from the database, and updates properties.
+        /// </summary>
+        /// <returns></returns>
         private async Task LoadDataAsync()
         {
             await Data.UpdateCategories();
@@ -316,11 +346,17 @@ namespace AdministratorApp.ViewModels
             
         }
 
+        /// <summary>
+        /// Method which navigates the frame to AddItemToStock page
+        /// </summary>
         private void NavigateToAddItemToStock()
         {
             NavigationHandler.NavigateToPage(typeof(AddItemToStockPage));
         }
 
+        /// <summary>
+        /// Method which navigates the frame to AddItem page
+        /// </summary>
         private void NavigateToAddItemPage()
         {
             NavigationHandler.NavigateToPage(typeof(AddItemPage));

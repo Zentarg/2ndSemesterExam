@@ -23,6 +23,7 @@ namespace AdministratorApp.ViewModels
         public CreateNewCategoryVM()
         {}
 
+        //Primitive properties
         public string Category
         {
             get { return _category; }
@@ -42,6 +43,10 @@ namespace AdministratorApp.ViewModels
             }
         }
 
+        /// <summary>
+        /// Method which is responsible for checking errors.
+        /// </summary>
+        /// <returns>Returns a true or false value. Returns true if no error was found</returns>
         public bool CheckErrors()
         {
             if (string.IsNullOrEmpty(Category))
@@ -64,7 +69,9 @@ namespace AdministratorApp.ViewModels
         }
 
         
-
+        /// <summary>
+        /// Method for loading data from Database. It updates the categories
+        /// </summary>
         public async void LoadDataAsync()
         {
             await Data.UpdateCategories();

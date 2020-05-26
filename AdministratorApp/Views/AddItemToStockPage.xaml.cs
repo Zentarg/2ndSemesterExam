@@ -18,7 +18,7 @@ using Windows.UI.Xaml.Navigation;
 namespace AdministratorApp.Views
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// Page for adding item to a specific stock.
     /// </summary>
     public sealed partial class AddItemToStockPage : Page
     {
@@ -26,7 +26,11 @@ namespace AdministratorApp.Views
         {
             this.InitializeComponent();
         }
-
+        /// <summary>
+        /// Method for preventing non numeric input;
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void FilterNonNumeric_OnBeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
         {
             args.Cancel = args.NewText.Any(c => !char.IsDigit(c));

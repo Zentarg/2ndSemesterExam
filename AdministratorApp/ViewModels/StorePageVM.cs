@@ -216,6 +216,11 @@ namespace AdministratorApp.ViewModels
             set { _errorText = value; OnPropertyChanged(); }
         }
 
+        public bool IsVisible
+        {
+            get => AuthHandler.ShowAdministratorFunctions;
+        }
+
         #endregion
 
         #region Methods

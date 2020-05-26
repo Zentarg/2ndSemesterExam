@@ -57,7 +57,11 @@ namespace AdministratorApp.Views
             EditableItemDisplay.Visibility = Visibility.Visible;
         }
 
-
+        /// <summary>
+        /// Method which is called on button click. It is responsible for changing the displayed information.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
             StockListView.IsEnabled = true;
@@ -65,6 +69,11 @@ namespace AdministratorApp.Views
             EditableItemDisplay.Visibility = Visibility.Collapsed;
         }
 
+        /// <summary>
+        /// Method responsible for filtering on categories
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CategoriesGrid_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             List<Category> selectedCategories = new List<Category>();
@@ -77,6 +86,11 @@ namespace AdministratorApp.Views
             _vm.SelectedCategories = selectedCategories;
         }
 
+        /// <summary>
+        /// MEthod responsible for filtering and updating selected stock.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StocksGrid_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             List<Stock> selectedStocks = new List<Stock>();
@@ -88,12 +102,21 @@ namespace AdministratorApp.Views
 
             _vm.SelectedStocks = selectedStocks;
         }
-
+        /// <summary>
+        /// Method responsible for preventing non numeric input.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void FilterNonNumeric_OnBeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
         {
             args.Cancel = args.NewText.Any(c => !char.IsDigit(c));
         }
 
+        /// <summary>
+        /// Method called on save button click, responsible for changing GUI panel and calling save method in VM.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void SaveButton_OnClick(object sender, RoutedEventArgs e)
         {
             bool SaveWasSuccessful = await _viewModel.SaveEdit();
@@ -105,6 +128,11 @@ namespace AdministratorApp.Views
             }
         }
 
+        /// <summary>
+        /// Method called on delete button press, calls a content dialog
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void DeleteButton_OnClick(object sender, RoutedEventArgs e)
         {
 
@@ -120,11 +148,18 @@ namespace AdministratorApp.Views
             await dialog.ShowAsync();
         }
 
+        /// <summary>
+        /// Method responsible for hiding item panel
+        /// </summary>
         private void HideItemPanel()
         {
             ItemPanel.Visibility = Visibility.Collapsed;
         }
-
+        /// <summary>
+        /// Method responsible for closing item panel and deselecting item.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CloseButton_OnClick(object sender, RoutedEventArgs e)
         {
             _viewModel.DeselectItemCommand.Execute(_viewModel.DeselectItemCommand);

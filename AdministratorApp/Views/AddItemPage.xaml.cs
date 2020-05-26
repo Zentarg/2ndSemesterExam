@@ -19,7 +19,7 @@ using AdministratorApp.ViewModels;
 namespace AdministratorApp.Views
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// Page for adding item to the database
     /// </summary>
     public sealed partial class AddItemPage : Page
     {
@@ -34,12 +34,22 @@ namespace AdministratorApp.Views
         {
             throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// Method for preventing non numeric input
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void FilterNonNumeric_OnBeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
         {
             args.Cancel = args.NewText.Any(c => !char.IsDigit(c));
         }
 
+
+        /// <summary>
+        /// Method which calls a CreateNewCategoryDialog.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
 

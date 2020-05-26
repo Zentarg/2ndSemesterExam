@@ -76,10 +76,10 @@
             <SplitView.Pane>
                 <Grid Width="260">
                     <StackPanel Visibility="{Binding DontShowAdministratorFunctions}">
-
+                        <Button Style="{StaticResource HamburgerButton}" Content="&#xE700;" Command="{Binding DoToggleHamburger}"/>
                         <Button Style="{StaticResource HamburgerButton}" Tag="StockPage" Click="NavigateFrame">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE700;"/>
+                                <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE82D;"/>
                                 <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Stock"/>
                             </StackPanel>
                         </Button>

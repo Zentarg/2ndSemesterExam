@@ -131,7 +131,6 @@
     <Compile Include="Models\Constants.cs" />
     <Compile Include="Models\Data.cs" />
     <Compile Include="Models\NavigationHandler.cs" />
-    <Compile Include="Models\RuntimeDataHandler.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AddItemToStockVM.cs" />
