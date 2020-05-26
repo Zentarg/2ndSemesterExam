@@ -18,12 +18,13 @@ namespace AdministratorApp.ViewModels
 {
     class AddItemToStockVM : INotifyPropertyChanged
     {
-
+        //Instance fields
         private Item _item;
         private Stock _stock;
         private int _amount;
         private string _errorMessage ="";
 
+        //Constructor to LoadAllData and to initialise RelayCommands
         public AddItemToStockVM()
         {
             LoadAllDataAsync();
@@ -63,6 +64,10 @@ namespace AdministratorApp.ViewModels
 
         public RelayCommand AddItemCommand { get; set; }
 
+
+        /// <summary>
+        /// Method for loading required Data from the Database and update properties.
+        /// </summary>
         private async Task LoadAllDataAsync()
         {
             await Data.UpdateItems();
@@ -73,6 +78,9 @@ namespace AdministratorApp.ViewModels
             OnPropertyChanged(nameof(StockHasItems));
         }
 
+        /// <summary>
+        /// This method is responsible for adding a new item to a stock. This method uses the PostOne method of the APIHandler.
+        /// </summary>
         public async void AddItemToStock()
         {
             
@@ -106,6 +114,10 @@ namespace AdministratorApp.ViewModels
             ErrorMessage = "All the fields have to be filled out.";
         }
 
+        /// <summary>
+        /// This method is responsible for checking if an item has been already added to a specific store.
+        /// </summary>
+        /// <returns>Returns a true or false value depending on if the item already exist in the store. Returns false if the item has already been added.</returns>
         private bool CheckIfItemAlreadyAdded()
         {
             foreach (var stockId in StockHasItems.Keys)
@@ -127,6 +139,11 @@ namespace AdministratorApp.ViewModels
             return true;
         }
 
+        /// <summary>
+        /// This method checks if all the required fields are filled out.
+        /// </summary>
+        /// <returns> Return a true or false value depending on if all the required fields are filled out.
+        /// Returns true if all required field is filled out, false if not.</returns>
         private bool CheckTextFields()
         {
             bool condition = SelectedItem != null && SelectedStock != null && Amount!=0;
@@ -139,14 +156,21 @@ namespace AdministratorApp.ViewModels
             return false;
         }
 
+        /// <summary>
+        /// This method resets the textboxes on the page.
+        /// </summary>
         private void ClearBoxes()
         {
-            SelectedItem = Items[0];
+            SelectedStock = null;
+            SelectedItem = null;
             Amount = 0;
             OnPropertyChanged(nameof(SelectedItem));
             OnPropertyChanged(nameof(Amount));
         }
 
+        /// <summary>
+        /// This method is responsible for navigating back to the previous page. It is using the Navigation handler class.
+        /// </summary>
         private void NavigateBack()
         {
             NavigationHandler.NavigateBackwards();

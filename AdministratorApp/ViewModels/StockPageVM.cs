@@ -195,6 +195,11 @@ namespace AdministratorApp.ViewModels
             }
         }
 
+        public bool IsVisible
+        {
+            get { return AuthHandler.ShowAdministratorFunctions; }
+        }
+
         public void UpdateSelectedItemInStocks()
         {
 

@@ -87,7 +87,7 @@
             </DropDownButton>
 
 
-            <TextBox x:Name="SearchBox" Width="400" Height="35" Margin="50 0 0 0" PlaceholderText="Search..." Text="{Binding FilterString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox x:Name="SearchBox" Width="250" MaxWidth="250" Height="35" Margin="50 0 0 0" PlaceholderText="Search..." Text="{Binding FilterString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <DropDownButton Content="Select Categories">
                 <Button.Flyout>
                     <Flyout>
@@ -101,7 +101,7 @@
                     </Flyout>
                 </Button.Flyout>
             </DropDownButton>
-            <ListView ItemsSource="{Binding SelectedCategories, Mode=OneWay}"></ListView>
+            <ListView ItemsSource="{Binding SelectedCategories, Mode=OneWay}"/>
 
 
         </StackPanel>
@@ -145,8 +145,8 @@
 
                     <StackPanel  Orientation="Horizontal" Margin="15,0,0,0">
                         <Button Name="CloseButton" Width="75" Height="35" Content="Close" HorizontalAlignment="left" Margin="0,0,25,0"  Click="CloseButton_OnClick"/>
-                        <Button Name="EditButton" Width="75" Height="35" Content="Edit" HorizontalAlignment="Right" Margin="135,0,25,0"  Click="EditButton_OnClick" />
-                        <Button Width="60" Name="DeleteButton" Height="35" Content="&#xE74D;" FontFamily="Segoe mdl2 assets" HorizontalAlignment="Right" FontSize="20"  Background="#FF6262" Margin="15,0,0,0" Click="DeleteButton_OnClick">
+                        <Button Visibility="{Binding IsVisible}" Name="EditButton" Width="75" Height="35" Content="Edit" HorizontalAlignment="Right" Margin="135,0,25,0"  Click="EditButton_OnClick" />
+                        <Button Width="60" Name="DeleteButton" Visibility="{Binding IsVisible}" Height="35" Content="&#xE74D;" FontFamily="Segoe mdl2 assets" HorizontalAlignment="Right" FontSize="20"  Background="#FF6262" Margin="15,0,0,0" Click="DeleteButton_OnClick">
                             <Button.Resources>
                                 <ResourceDictionary>
                                     <ResourceDictionary.ThemeDictionaries>
@@ -172,7 +172,7 @@
                     <StackPanel Margin="15,15,5,0" HorizontalAlignment="Left">
                         <TextBlock Text="Amount:" HorizontalAlignment="Left"  Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
 
-                    <ListView Width="350"  ItemsSource="{Binding SelectedItemInStocks}" SelectionMode="None">
+                    <ListView Width="350"   ItemsSource="{Binding SelectedItemInStocks}" SelectionMode="None">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -298,7 +298,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
                     <TextBlock Text="Barcode:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
-                        <TextBox Text="{Binding SelectedItem.Item1.Barcode, Mode=TwoWay}" Style="{StaticResource BasicTextBox}"  Width="250"  BeforeTextChanging="FilterNonNumeric_OnBeforeTextChanging"/>
+                        <TextBox Text="{Binding SelectedItem.Item1.Barcode, Mode=TwoWay}" MaxLength="8" Style="{StaticResource BasicTextBox}"  Width="250"  BeforeTextChanging="FilterNonNumeric_OnBeforeTextChanging"/>
                 </StackPanel>
 
                     <StackPanel Orientation="Horizontal" Margin="15,15,15,0">

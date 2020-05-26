@@ -14,14 +14,14 @@ namespace AdministratorApp.ViewModels
 {
     public class CreateNewCategoryVM : INotifyPropertyChanged
     {
+
+        //Instance fields
         private string _category;
         private string _errorText;
 
 
         public CreateNewCategoryVM()
-        {
-
-        }
+        {}
 
         public string Category
         {

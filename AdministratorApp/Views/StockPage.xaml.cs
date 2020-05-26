@@ -20,9 +20,7 @@ using CommonLibrary.Models;
 
 namespace AdministratorApp.Views
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
+
     public sealed partial class StockPage : Page
     {
         private StockPageVM _vm;
@@ -35,6 +33,9 @@ namespace AdministratorApp.Views
             HideItemPanel();
         }
 
+        /// <summary>
+        /// Method which is called every time the selection changes.
+        /// </summary>
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (StockListView.SelectedItem != null)
@@ -43,8 +44,15 @@ namespace AdministratorApp.Views
             }
         }
 
+
+        /// <summary>
+        /// Method which is called on the press of the Edit button. It is responsible for changing the displayed information.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EditButton_OnClick(object sender, RoutedEventArgs e)
         {
+            StockListView.IsEnabled = false;
             SimpleItemDisplay.Visibility = Visibility.Collapsed;
             EditableItemDisplay.Visibility = Visibility.Visible;
         }
@@ -52,6 +60,7 @@ namespace AdministratorApp.Views
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
+            StockListView.IsEnabled = true;
             SimpleItemDisplay.Visibility = Visibility.Visible;
             EditableItemDisplay.Visibility = Visibility.Collapsed;
         }
@@ -90,6 +99,7 @@ namespace AdministratorApp.Views
             bool SaveWasSuccessful = await _viewModel.SaveEdit();
             if (SaveWasSuccessful)
             {
+                StockListView.IsEnabled = true;
                 EditableItemDisplay.Visibility = Visibility.Collapsed;
                 SimpleItemDisplay.Visibility = Visibility.Visible;
             }

@@ -72,7 +72,7 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0" Style="{StaticResource NormalStackPanel}">
             <TextBlock Text="*Phone:" Style="{StaticResource NormalText}"/>
-            <TextBox  BeforeTextChanging="TextBox_OnBeforeTextChanging" Style="{StaticResource NormalTextbox}" Text="{Binding NewSupplier.Phone, Mode=TwoWay}"/>
+            <TextBox  BeforeTextChanging="TextBox_OnBeforeTextChanging" Style="{StaticResource NormalTextbox}" MaxLength="8" Text="{Binding NewSupplier.Phone, Mode=TwoWay}"/>
         </StackPanel>
         <StackPanel Grid.Row="5" Grid.Column="0" Style="{StaticResource NormalStackPanel}">
             <TextBlock Text="* Only numeric input is accepted."/>

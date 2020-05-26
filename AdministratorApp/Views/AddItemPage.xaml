@@ -77,7 +77,7 @@
             </StackPanel>
             <StackPanel Margin="30,25,0,15" Orientation="Horizontal" VerticalAlignment="Center">
                 <TextBlock Style="{StaticResource NormalTextBlock}" Margin="0,5,20,0" Text="Barcode: "/>
-                    <TextBox  Style="{StaticResource NormalTextBox}" PlaceholderText="e.g. 1111-1111-1111" Text="{Binding Barcode, Mode=TwoWay}" BeforeTextChanging="FilterNonNumeric_OnBeforeTextChanging"/>
+                    <TextBox  Style="{StaticResource NormalTextBox}" MaxLength="8" PlaceholderText="e.g. 1111-1111-1111" Text="{Binding Barcode, Mode=TwoWay}" BeforeTextChanging="FilterNonNumeric_OnBeforeTextChanging"/>
             </StackPanel>
             <StackPanel Margin="30,25,0,15" Orientation="Horizontal" VerticalAlignment="Center">
                 <TextBlock Style="{StaticResource NormalTextBlock}" FontSize="15" Margin="0,5,14,0" Text="Comment: "/>

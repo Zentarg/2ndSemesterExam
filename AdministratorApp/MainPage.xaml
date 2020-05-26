@@ -79,19 +79,19 @@
 
                         <Button Style="{StaticResource HamburgerButton}" Tag="StockPage" Click="NavigateFrame">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE82D;"/>
+                                <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE700;"/>
                                 <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Stock"/>
                             </StackPanel>
                         </Button>
                         <Button Style="{StaticResource HamburgerButton}" Tag="StorePage" Click="NavigateFrame">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE700;"/>
+                                <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xEC06;"/>
                                 <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Stores"/>
                             </StackPanel>
                         </Button>
-                        <Button Style="{StaticResource HamburgerButton}" Tag="InvoicesPage" Click="NavigateFrame">
+                        <Button Style="{StaticResource HamburgerButton}" Tag="CreateInvoicePage" Click="NavigateFrame">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE700;"/>
+                                <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE8F4;"/>
                                 <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Create Invoice"/>
                             </StackPanel>
                         </Button>

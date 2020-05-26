@@ -74,6 +74,11 @@ namespace AdministratorApp.ViewModels
             else ErrorMessage = "All fields have to be filled out."; return false;
         }
 
+        /// <summary>
+        /// This method checks if supplier with the given name already exists.
+        /// </summary>
+        /// <param name="name">The name of the supplier we would like to check.</param>
+        /// <returns>Returns a true or false value depending on if the supplier already exist. Returns false if the supplier already exist.</returns>
         private bool CheckIfAlreadyExist(string name)
         {
             foreach (var Supplier in AllSuppliers)
@@ -87,6 +92,11 @@ namespace AdministratorApp.ViewModels
             return true;
         }
 
+
+        /// <summary>
+        /// This method is responsible for adding new supplier to the database asynchronously with the help of the APIHandler.
+        /// </summary>
+        /// <returns>Returns a true or false value depending on if the supplier was added successfully</returns>
         public async Task<bool> AddSupplier()
         {
             if (CheckFields())
@@ -104,6 +114,11 @@ namespace AdministratorApp.ViewModels
             return false;
 
         }
+
+        /// <summary>
+        /// Method responsible for loading necessary data from Database, with the help of the Data class.
+        /// </summary>
+        /// <returns></returns>
 
         private async Task LoadDataAsync()
         {
