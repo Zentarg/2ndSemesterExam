@@ -125,6 +125,31 @@ namespace WebAPI.Models
         }
 
         /// <summary>
+        /// Method that checks if the logged in user has the correct session key
+        /// </summary>
+        /// <param name="sessionKey">The passed session key which is used to check for existing in db</param>
+        /// <param name="userId">The passed userId which is used to check for existing in db</param>
+        /// <param name="db">The database</param>
+        /// <returns>returns enum type with different errors which can be used to determine if a user can be verified</returns>
+        public static Constants.VerifyUserErrors VerifyUserSession(string sessionKey, int userId, ParknGardenData db)
+        {
+            Session currentSession = db.Sessions.FirstOrDefault(s => s.SessionKey == sessionKey);
+
+            if (!Authenticate(sessionKey, db))
+                return Constants.VerifyUserErrors.SESSION_NOT_FOUND;
+
+            if (currentSession != null)
+            {
+                if (currentSession.UserID == userId)
+                    return Constants.VerifyUserErrors.OK;
+                if (currentSession.UserID != userId)
+                    return Constants.VerifyUserErrors.INCORRECT_SESSION_KEY;
+            }
+
+            return Constants.VerifyUserErrors.SESSION_NOT_FOUND;
+        }
+
+        /// <summary>
         /// A method for getting the username for a specific user's userId
         /// </summary>
         /// <param name="userID">userID is an int that is used to find the username</param>

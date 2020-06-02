@@ -55,10 +55,10 @@ namespace WebAPI.Controllers
             return Ok(users);
         }
 
-        // PUT: api/Users/UpdateUser/id
+        // PUT: api/Users/UpdateUser/id/loggedId/sessionKey
         [ResponseType(typeof(void))]
-        [Route("api/Users/UpdateUser/{id}")]
-        public async Task<IHttpActionResult> PutUser(int id, User user)
+        [Route("api/Users/UpdateUser/{id}/{loggedId}/{sessionKey}")]
+        public async Task<IHttpActionResult> PutUser(int id, User user, int loggedId, string sessionKey)
         {
             if (!ModelState.IsValid)
             {
@@ -70,25 +70,35 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            db.Entry(user).State = EntityState.Modified;
-
-            try
+            Constants.VerifyUserErrors error = AuthHandler.VerifyUserSession(sessionKey, loggedId, db);
+            if (error == Constants.VerifyUserErrors.OK)
             {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(id))
+                db.Entry(user).State = EntityState.Modified;
+
+                try
                 {
-                    return NotFound();
+                    await db.SaveChangesAsync();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (!UserExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
+
+                return StatusCode(HttpStatusCode.NoContent);
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            if (error == Constants.VerifyUserErrors.INCORRECT_SESSION_KEY)
+                return StatusCode(HttpStatusCode.Unauthorized);
+            if (error == Constants.VerifyUserErrors.SESSION_NOT_FOUND)
+                return StatusCode(HttpStatusCode.NotFound);
+            return StatusCode(HttpStatusCode.InternalServerError);
         }
 
         // POST: api/Users
