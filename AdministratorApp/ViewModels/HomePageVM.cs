@@ -15,7 +15,7 @@ namespace AdministratorApp.ViewModels
 
         public HomePageVM()
         {
-            
+            LoadDataAsync();
         }
 
         public bool ShowAdministratorFunctions => AuthHandler.ShowAdministratorFunctions;
@@ -27,6 +27,56 @@ namespace AdministratorApp.ViewModels
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public int NoItems
+        {
+            get => Data.AllItems.Count;
+        }
+        public int NoStores
+        {
+            get => Data.AllStores.Count;
+        }
+
+        public int NoEmployees
+        {
+            get => Data.AllUsers.Count;
+        }
+
+        public int NoSuppliers
+        {
+            get => Data.AllSuppliers.Count;
+        }
+
+        public int NoRequests
+        {
+            get
+            {
+                int No = 0;
+                foreach (var request in Data.AllInvoices.Values)
+                {
+                    if (request.InvoiceStatusID == 0)
+                    {
+                        No++;
+                    }
+                }
+
+                return No;
+            }
+        }
+
+        public async Task LoadDataAsync()
+        {
+            await Data.UpdateItems();
+            await Data.UpdateStore();
+            await Data.UpdateUsers();
+            await Data.UpdateSuppliers();
+            await Data.UpdateInvoices();
+            OnPropertyChanged(nameof(NoItems));
+            OnPropertyChanged(nameof(NoEmployees));
+            OnPropertyChanged(nameof(NoStores));
+            OnPropertyChanged(nameof(NoSuppliers));
+            OnPropertyChanged(nameof(NoRequests));
         }
     }
 }

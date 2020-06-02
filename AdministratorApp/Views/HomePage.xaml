@@ -16,24 +16,28 @@
     <Page.Resources>
         <Style x:Key="ButtonIcon" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
-            <Setter Property="FontSize" Value="150" />
-            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="100" />
+            <Setter Property="TextAlignment" Value="Right" />
+            <Setter Property="Margin" Value="0,0,0,0"/>
         </Style>
         <Style x:Key="ButtonText" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Aloe Vera" />
-            <Setter Property="FontSize" Value="25" />
+            <Setter Property="FontSize" Value="20" />
             <Setter Property="Margin" Value="0 10 0 0" />
-            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="TextAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="160"/>
         </Style>
         <Style x:Key="NavigateButton" TargetType="Button">
-            <Setter Property="Width" Value="300" />
-            <Setter Property="Padding" Value="10" />
+            <Setter Property="Width" Value="400" />
+            <Setter Property="Padding" Value="15" />
         </Style>
     </Page.Resources>
 
     <Grid>
         <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding DontShowAdministratorFunctions}">
             <StackPanel Spacing="100">
+
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="100">
                     <Button Style="{StaticResource NavigateButton}" Tag="StockPage" Click="NavigateFrame">
                         <StackPanel>
@@ -41,6 +45,7 @@
                             <TextBlock Style="{StaticResource ButtonText}"  Text="Stock"/>
                         </StackPanel>
                     </Button>
+
                     <Button Style="{StaticResource NavigateButton}" Tag="StorePage" Click="NavigateFrame">
                         <StackPanel>
                             <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xEC06;" />
@@ -48,6 +53,7 @@
                         </StackPanel>
                     </Button>
                 </StackPanel>
+
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="100">
                     <Button Style="{StaticResource NavigateButton}" Tag="CreateInvoicePage" Click="NavigateFrame" IsEnabled="True">
                         <StackPanel>
@@ -60,38 +66,135 @@
         </Grid>
         <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding ShowAdministratorFunctions}">
             <StackPanel Spacing="100">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="100">
-                    <Button Style="{StaticResource NavigateButton}"  Tag="StockPage" Click="NavigateFrame">
-                        <StackPanel>
-                            <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xE82D;" />
-                            <TextBlock Style="{StaticResource ButtonText}"  Text="Stock"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="50">
+
+                    
+                    <Button Style="{StaticResource NavigateButton}" Background="#00a65a"  Tag="StockPage" Click="NavigateFrame">
+                        <StackPanel Orientation="Horizontal" Width="400">
+                            <StackPanel HorizontalAlignment="Left">
+                                <TextBlock Style="{StaticResource ButtonText}"  FontSize="29" FontWeight="Bold" Text="{Binding NoItems}" Foreground="White"/>
+                                <TextBlock Style="{StaticResource ButtonText}"   Text="Items in stock" Foreground="White"/>
+                            </StackPanel>
+                            <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xE82D;" Margin="120,0,0,0" Foreground="#007840" />
                         </StackPanel>
+
+                        <Button.Resources>
+                            <ResourceDictionary>
+                                <ResourceDictionary.ThemeDictionaries>
+                                    <ResourceDictionary x:Key="Dark">
+                                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#00b562"/>
+                                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#008a4b"/>
+                                    </ResourceDictionary>
+                                    <ResourceDictionary x:Key="Light">
+                                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#00b562"/>
+                                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#008a4b"/>
+                                    </ResourceDictionary>
+                                </ResourceDictionary.ThemeDictionaries>
+                            </ResourceDictionary>
+                        </Button.Resources>
                     </Button>
-                    <Button Style="{StaticResource NavigateButton}" Tag="StorePage" Click="NavigateFrame">
-                        <StackPanel>
-                            <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xEC06;" />
-                            <TextBlock Style="{StaticResource ButtonText}"  Text="Stores"/>
+
+
+                    <Button Style="{StaticResource NavigateButton}"  Background="#009bc2" Tag="StorePage" Click="NavigateFrame">
+                        <StackPanel Orientation="Horizontal" Width="400">
+                            <StackPanel HorizontalAlignment="Left">
+                                <TextBlock Style="{StaticResource ButtonText}"  FontSize="29" FontWeight="Bold" Text="{Binding NoStores}" Foreground="White"/>
+                                <TextBlock Style="{StaticResource ButtonText}"   Text="Stores" Foreground="White"/>
+                            </StackPanel>
+                            <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xEC06;" Margin="100,0,0,0" Foreground="#006882" />
                         </StackPanel>
+
+                        <Button.Resources>
+                            <ResourceDictionary>
+                                <ResourceDictionary.ThemeDictionaries>
+                                    <ResourceDictionary x:Key="Dark">
+                                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#00b1de"/>
+                                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#015c73"/>
+                                    </ResourceDictionary>
+                                    <ResourceDictionary x:Key="Light">
+                                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#00b1de"/>
+                                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#015c73"/>
+                                    </ResourceDictionary>
+                                </ResourceDictionary.ThemeDictionaries>
+                            </ResourceDictionary>
+                        </Button.Resources>
                     </Button>
+
+                    <Button Style="{StaticResource NavigateButton}"  Background="#F5A600"   Tag="EmployeesPage" Click="NavigateFrame">
+                        <StackPanel Orientation="Horizontal" Width="400">
+                            <StackPanel HorizontalAlignment="Left">
+                                <TextBlock Style="{StaticResource ButtonText}"  FontSize="29" FontWeight="Bold" Text="{Binding NoEmployees}" Foreground="White"/>
+                                <TextBlock Style="{StaticResource ButtonText}"   Text="Employees" Foreground="White"/>
+                            </StackPanel>
+                            <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xE716;" Margin="100,0,0,0" Foreground="#B57B00" />
+                        </StackPanel>
+
+                        <Button.Resources>
+                            <ResourceDictionary>
+                                <ResourceDictionary.ThemeDictionaries>
+                                    <ResourceDictionary x:Key="Dark">
+                                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#ffbe36"/>
+                                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#d69100"/>
+                                    </ResourceDictionary>
+                                    <ResourceDictionary x:Key="Light">
+                                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#ffbe36"/>
+                                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#d69100"/>
+                                    </ResourceDictionary>
+                                </ResourceDictionary.ThemeDictionaries>
+                            </ResourceDictionary>
+                        </Button.Resources>
+                    </Button>
+
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="100">
-                    <Button Style="{StaticResource NavigateButton}" Tag="EmployeesPage" Click="NavigateFrame">
-                        <StackPanel>
-                            <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xE716;" />
-                            <TextBlock Style="{StaticResource ButtonText}"  Text="Employees"/>
+
+                    <Button Style="{StaticResource NavigateButton}" Background="#D954FF" Tag="SupplierPage" Click="NavigateFrame" IsEnabled="True">
+                        <StackPanel Orientation="Horizontal" Width="400" >
+                            <StackPanel HorizontalAlignment="Left">
+                                <TextBlock Style="{StaticResource ButtonText}"  FontSize="29" FontWeight="Bold" Text="{Binding NoSuppliers}" Foreground="White"/>
+                                <TextBlock Style="{StaticResource ButtonText}"   Text="Suppliers" Foreground="White"/>
+                            </StackPanel>
+                            <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xE707;" Margin="100,0,0,0" Foreground="#8D39A4" />
                         </StackPanel>
+
+                        <Button.Resources>
+                            <ResourceDictionary>
+                                <ResourceDictionary.ThemeDictionaries>
+                                    <ResourceDictionary x:Key="Dark">
+                                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#df6eff"/>
+                                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#ac39cc"/>
+                                    </ResourceDictionary>
+                                    <ResourceDictionary x:Key="Light">
+                                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#df6eff"/>
+                                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#ac39cc"/>
+                                    </ResourceDictionary>
+                                </ResourceDictionary.ThemeDictionaries>
+                            </ResourceDictionary>
+                        </Button.Resources>
                     </Button>
-                    <Button Style="{StaticResource NavigateButton}" Tag="SuppliersPage" Click="NavigateFrame" IsEnabled="True">
-                        <StackPanel>
-                            <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xE707;" />
-                            <TextBlock Style="{StaticResource ButtonText}"  Text="Suppliers"/>
+                    <Button Style="{StaticResource NavigateButton}" Background="#F60404" Tag="RequestsPage" Click="NavigateFrame" IsEnabled="True">
+                        <StackPanel Orientation="Horizontal" Width="400" >
+                            <StackPanel HorizontalAlignment="Left">
+                                <TextBlock Style="{StaticResource ButtonText}"  FontSize="29" FontWeight="Bold" Text="{Binding NoRequests}" Foreground="White"/>
+                                <TextBlock Style="{StaticResource ButtonText}"   Text="Requests" Foreground="White"/>
+                            </StackPanel>
+                            <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xF0E3;" Margin="100,0,0,0" Foreground="#890101" />
                         </StackPanel>
-                    </Button>
-                    <Button Style="{StaticResource NavigateButton}" Tag="RequestsPage" Click="NavigateFrame" IsEnabled="True">
-                        <StackPanel>
-                            <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xE700;" />
-                            <TextBlock Style="{StaticResource ButtonText}"  Text="Requests"/>
-                        </StackPanel>
+
+                        <Button.Resources>
+                            <ResourceDictionary>
+                                <ResourceDictionary.ThemeDictionaries>
+                                    <ResourceDictionary x:Key="Dark">
+                                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#ff4545"/>
+                                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#c90000"/>
+                                    </ResourceDictionary>
+                                    <ResourceDictionary x:Key="Light">
+                                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#ff4545"/>
+                                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#c90000"/>
+                                    </ResourceDictionary>
+                                </ResourceDictionary.ThemeDictionaries>
+                            </ResourceDictionary>
+                        </Button.Resources>
                     </Button>
                 </StackPanel>
             </StackPanel>

@@ -30,6 +30,11 @@
             <Setter Property="Background" Value="#00000000"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
         </Style>
+        <Style x:Key="SortText" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+
+        </Style>
 
         <Style x:Key="BasicTextBox" TargetType="TextBox">
             <Setter Property="Height" Value="auto"/>
@@ -57,22 +62,21 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal">
-            <TextBlock Text="Sort by:" FontSize="14" Margin="0,0,15,0" />
-            <TextBlock Text="Name" FontSize="14" Margin="0,0,0,0" />
+        <StackPanel Orientation="Horizontal" Background="#2f4959" Margin="-1,0,0,0">
+            
+            <TextBlock Text="Sort by:" Style="{StaticResource SortText}" Margin="7,6,15,0" />
+            <TextBlock Text="Name" Style="{StaticResource SortText}"  Margin="0,6,0,0" />
             <ToggleButton Name="SortNameIncButton"  Style="{StaticResource MenuButton}" Height="35" Width="35" Content="&#xE70D;"  />
-
-
-            <TextBlock Text="Type" FontSize="14" Margin="15,0,0,0" />
+            <TextBlock Text="Type" Style="{StaticResource SortText}"  Margin="7,6,0,0" />
             <ToggleButton Name="SortTypeIncButton"  Style="{StaticResource MenuButton}" Height="35" Width="35" Content="&#xE70D;"  />
 
 
 
-            <TextBlock Text="Price" FontSize="14" Margin="15,0,0,0" />
+            <TextBlock Text="Price" Style="{StaticResource SortText}"  Margin="15,6,0,0" />
             <ToggleButton Name="SortPriceIncButton" Height="35" Width="35" Content="&#xE70D;" Style="{StaticResource MenuButton}" />
 
 
-            <DropDownButton Content="Select Stocks">
+            <DropDownButton Content="Select Stocks" Height="51" Foreground="White">
                 <Button.Flyout>
                     <Flyout>
                         <GridView x:Name="StocksGrid"  ItemsSource="{Binding Stocks, Mode=OneWay}" SelectionMode="Multiple" IsItemClickEnabled="False" SelectionChanged="StocksGrid_OnSelectionChanged">
@@ -85,7 +89,7 @@
                     </Flyout>
                 </Button.Flyout>
             </DropDownButton>
-            <DropDownButton Content="Select Categories" Margin="15,0,0,0">
+            <DropDownButton Content="Select Categories" Margin="15,0,0,0" Height="51" Foreground="White">
                 <Button.Flyout>
                     <Flyout>
                         <GridView x:Name="CategoriesGrid"  ItemsSource="{Binding AllCategories, Mode=OneWay}" SelectionMode="Multiple" IsItemClickEnabled="False" SelectionChanged="CategoriesGrid_OnSelectionChanged">
@@ -99,16 +103,14 @@
                 </Button.Flyout>
             </DropDownButton>
 
-            <TextBox x:Name="SearchBox" Width="300" MaxWidth="300" Height="35" Margin="15 0 0 0" PlaceholderText="Search..." Text="{Binding FilterString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox x:Name="SearchBox" Width="275" MaxWidth="300" Height="35" Margin="15 0 0 0" PlaceholderText="Search..." Text="{Binding FilterString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
             <ListView ItemsSource="{Binding SelectedCategories, Mode=OneWay}"/>
 
 
         </StackPanel>
 
-
-
-        <ListView HorizontalContentAlignment="Stretch" Name="StockListView" Grid.Column="0" Grid.Row="1" ItemsSource="{Binding FilteredItems}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}"  SelectionMode="Single" SelectionChanged="Selector_OnSelectionChanged">
+        <ListView HorizontalContentAlignment="Stretch" Name="StockListView" Grid.Column="0" Grid.Row="1" Margin="-1,0,0,0" ItemsSource="{Binding FilteredItems}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}"  SelectionMode="Single" SelectionChanged="Selector_OnSelectionChanged">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -133,22 +135,20 @@
             </ListView.ItemTemplate>
 
             <ListView.Resources>
-                <SolidColorBrush x:Key="ListViewItemBackgroundSelected" Color="#899E88" />
-                <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPointerOver" Color="#899E88" />
+                <SolidColorBrush x:Key="ListViewItemBackgroundSelected" Color="#67addb" />
+                <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPointerOver" Color="#67addb" />
             </ListView.Resources>
         </ListView>
       
 
-        <ScrollViewer Visibility="Visible" Name="ItemPanel" Grid.Column="1" Grid.Row="1" >
+        <ScrollViewer Visibility="Visible" Name="ItemPanel" Grid.RowSpan="2" Grid.Column="1" Grid.Row="0" >
 
-            <StackPanel>
+            <StackPanel Background="#67addb">
                 
                 <StackPanel Width="450"  Name="SimpleItemDisplay" Visibility="Visible">
 
-                    <StackPanel  Orientation="Horizontal" Margin="15,0,0,0">
-                        <Button Name="CloseButton" Width="75" Height="35" Content="Close" HorizontalAlignment="left" Margin="0,0,25,0"  Click="CloseButton_OnClick"/>
-                        <Button Visibility="{Binding IsVisible}" Name="EditButton" Width="75" Height="35" Content="Edit" HorizontalAlignment="Right" Margin="135,0,25,0"  Click="EditButton_OnClick" />
-                        <Button Width="60" Name="DeleteButton" Visibility="{Binding IsVisible}" Height="35" Content="&#xE74D;" FontFamily="Segoe mdl2 assets" HorizontalAlignment="Right" FontSize="20"  Background="#FF6262" Margin="15,0,0,0" Click="DeleteButton_OnClick">
+                    <StackPanel  Orientation="Horizontal" Margin="0,0,0,0" Background="#2f4959" HorizontalAlignment="Right" Width="450">
+                        <Button Width="60" Name="DeleteButton" Visibility="{Binding IsVisible}" Height="35" Content="&#xE74D;" FontFamily="Segoe mdl2 assets" HorizontalAlignment="Right" FontSize="20"  Background="#FF6262" Margin="0,0,0,0" Click="DeleteButton_OnClick">
                             <Button.Resources>
                                 <ResourceDictionary>
                                     <ResourceDictionary.ThemeDictionaries>
@@ -164,6 +164,9 @@
                                 </ResourceDictionary>
                             </Button.Resources>
                         </Button>
+                        <Button Foreground="White" Visibility="{Binding IsVisible}" Name="EditButton" Width="75" Height="35" Content="Edit" HorizontalAlignment="Right" Margin="15,0,0,0"  Click="EditButton_OnClick" />
+                        <Button Foreground="White" Name="CloseButton" Width="75" Height="35" Content="Close" HorizontalAlignment="left" Margin="225,0,0,0"  Click="CloseButton_OnClick"/>
+
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
@@ -241,14 +244,13 @@
                 <StackPanel Width="450" Name="EditableItemDisplay" Visibility="Collapsed" >
 
 
-
-                    <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
-                        <TextBlock Text="ID  #" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
-                        <TextBlock Text="{Binding SelectedItem.Item1.Id, Mode=TwoWay}" Style="{StaticResource ItemPropertiesHeaderTextBlock}" Margin="0,0,0,0" />
+                    <StackPanel  Orientation="Horizontal" Margin="0,0,0,0" Background="#2f4959" HorizontalAlignment="Right" Width="450" Height="35">
+                        <TextBlock Margin="15,6,0,0" Width="41" FontSize="18" Text="ID  #" Style="{StaticResource ItemPropertiesHeaderTextBlock}" Foreground="White"/>
+                        <TextBlock Text="{Binding SelectedItem.Item1.Id, Mode=TwoWay}" Style="{StaticResource ItemPropertiesHeaderTextBlock}" Foreground="White" FontSize="18" Margin="0,6,0,0" />
+                        <TextBlock Text="(Scroll down for saving changes)" FontSize="10" Margin="155,15,0,0" Foreground="White" />
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
-                   
                         <TextBlock Text="Name:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
                         <TextBox Text="{Binding SelectedItem.Item1.Name, Mode=TwoWay}"  Style="{StaticResource BasicTextBox}" />
                      </StackPanel>
@@ -330,7 +332,7 @@
 
 
 
-                        <Button Width="75" Height="35" Content="Close" HorizontalAlignment="Right" Margin="25,0,25,0" Click="ButtonBase_OnClick">
+                        <Button Width="75" Height="35" Content="Close" HorizontalAlignment="Right" Margin="25,0,25,15" Click="ButtonBase_OnClick">
                         <Button.Resources>
                         <ResourceDictionary>
                             <ResourceDictionary.ThemeDictionaries>
@@ -346,7 +348,7 @@
                         </ResourceDictionary>
                     </Button.Resources>
                     </Button>
-                        <Button Width="75" Height="35" Content="Save" Name="SaveButton" Click="SaveButton_OnClick"  HorizontalAlignment="Right" Margin="0,0,25,0">
+                        <Button Width="75" Height="35" Content="Save" Name="SaveButton" Click="SaveButton_OnClick"  HorizontalAlignment="Right" Margin="0,0,25,15">
                             <Button.Resources>
                                 <ResourceDictionary>
                                     <ResourceDictionary.ThemeDictionaries>
@@ -371,9 +373,9 @@
         </ScrollViewer>
 
 
-            <StackPanel Visibility="{Binding IsVisible}" Grid.Row="2"  Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,5,5,5" Orientation="Horizontal">
-            <TextBlock Foreground="#0CBF0E" Text="Add new item" VerticalAlignment="Center"/>
-            <Button Command="{Binding GoToAddItem}" Foreground="#0CBF0E" Background="Transparent" Content="&#xE82E;" FontFamily="Segoe mdl2 assets" Width="50" Height="50" FontSize="30">
+        <StackPanel Visibility="{Binding IsVisible}" Grid.Row="2"  Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="-1,0,0,0" Orientation="Horizontal" Background="#2f4959" Width="1500">
+            <TextBlock Foreground="#0CBF0E" Text="Add new item" VerticalAlignment="Center" Margin="1180,0,0,0"/>
+            <Button HorizontalAlignment="Right" Command="{Binding GoToAddItem}" Foreground="#0CBF0E" Background="Transparent" Content="&#xE82E;" FontFamily="Segoe mdl2 assets" Width="50" Height="50" FontSize="30">
                 <Button.Resources>
                     <ResourceDictionary>
                         <ResourceDictionary.ThemeDictionaries>
@@ -396,8 +398,8 @@
                 </Button.Resources>
             </Button>
 
-            <TextBlock Foreground="#1275FF" Text="Add item to stock" VerticalAlignment="Center" Margin="25,0,0,0"/>
-            <Button Command="{Binding NavigateToAddItemToStockCommand}" Foreground="#1275FF" Background="Transparent" Content="&#xECC8;" FontFamily="Segoe mdl2 assets" Width="50" Height="50" FontSize="30">
+            <TextBlock HorizontalAlignment="Right" Foreground="#1275FF" Text="Add item to stock" VerticalAlignment="Center" Margin="25,0,0,0"/>
+            <Button HorizontalAlignment="Right" Command="{Binding NavigateToAddItemToStockCommand}" Foreground="#1275FF" Background="Transparent" Content="&#xECC8;" FontFamily="Segoe mdl2 assets" Width="50" Height="50" FontSize="30">
                 <Button.Resources>
                     <ResourceDictionary>
                         <ResourceDictionary.ThemeDictionaries>

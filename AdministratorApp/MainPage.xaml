@@ -19,19 +19,21 @@
             <Setter Property="Width" Value="50" />
             <Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
             <Setter Property="FontSize" Value="30" />
-            <Setter Property="Background" Value="#A6BFA5" />
+            <Setter Property="Background" Value="#038bad" />
         </Style>
         <Style x:Key="HamburgerButton" TargetType="Button">
             <Setter Property="Height" Value="50" />
-            <Setter Property="Width" Value="250" />
+            <Setter Property="Width" Value="220" />
             <Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
             <Setter Property="FontSize" Value="30" />
             <Setter Property="HorizontalContentAlignment" Value="Left"></Setter>
-            <Setter Property="Background" Value="#A6BFA5" />
+            <Setter Property="Background" Value="#2f4959" />
+            <Setter Property="Foreground" Value="#f0f4f5"></Setter>
         </Style>
         <Style x:Key="HamburgerButtonIcon" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
             <Setter Property="FontSize" Value="30" />
+            <Setter Property="Foreground" Value="#f0f4f5"/>
         </Style>
         <Style x:Key="HamburgerButtonText" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Aloe Vera" />
@@ -45,7 +47,7 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Background="#A6BFA5">
+        <Grid Grid.Row="0" Background="#038bad">
             <StackPanel Orientation="Horizontal">
                 <Button Style="{StaticResource MenuButton}" Content="&#xE80F;" Click="NavigateFrame" Tag="HomePage"/>
                 <Button Style="{StaticResource MenuButton}" Content="&#xE76B;" IsEnabled="{Binding FrameCanGoBackwards, Mode=OneWay}" Click="NavigateBackwards"/>
@@ -53,13 +55,13 @@
                 <TextBlock VerticalAlignment="Center" Text="{Binding CurrentPageName, Mode=OneWay}" FontSize="30" Margin="20 0 0 0"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <DropDownButton>
+                <DropDownButton Margin="0,0,15,0" Width="125">
                     <TextBlock Text="{Binding ActiveUser.Name}">
 
                     </TextBlock>
                     <DropDownButton.Flyout>
                         <Flyout>
-                            <StackPanel>
+                            <StackPanel Width="100">
                                 <Button Command="{Binding DoLogout}">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="Log Out"/>
@@ -72,7 +74,7 @@
             </StackPanel>
         </Grid>
 
-        <SplitView Grid.Row="1" IsPaneOpen="{Binding SplitViewVisible, Mode=OneWay}" OpenPaneLength="250" CompactPaneLength="50" DisplayMode="CompactInline" PaneBackground="#A6BFA5">
+        <SplitView Grid.Row="1" IsPaneOpen="{Binding SplitViewVisible, Mode=OneWay}" OpenPaneLength="220" CompactPaneLength="50" DisplayMode="CompactInline" PaneBackground="#2f4959">
             <SplitView.Pane>
                 <Grid Width="260">
                     <StackPanel Visibility="{Binding DontShowAdministratorFunctions}">
@@ -97,7 +99,10 @@
                         </Button>
                     </StackPanel>
                     <StackPanel Visibility="{Binding ShowAdministratorFunctions}">
-                        <Button Style="{StaticResource HamburgerButton}" Content="&#xE700;" Command="{Binding DoToggleHamburger}"/>
+                        <Button Style="{StaticResource HamburgerButton}" Command="{Binding DoToggleHamburger}">
+                            <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE700;"/>
+
+                        </Button>
                         <Button Style="{StaticResource HamburgerButton}" Tag="StockPage" Click="NavigateFrame">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE82D;"/>
