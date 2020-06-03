@@ -45,9 +45,10 @@ namespace WebAPI.Controllers
             return Ok(category);
         }
 
-        // PUT: api/Categories/5
+        // PUT: api/Categories/5/loggedId/sessionKey
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutCategory(int id, Category category)
+        [Route("api/Categories/{id}/{loggedId}/{sessionKey}")]
+        public async Task<IHttpActionResult> PutCategory(int id, Category category, int loggedId, string sessionKey)
         {
             if (!ModelState.IsValid)
             {
@@ -58,57 +59,72 @@ namespace WebAPI.Controllers
             {
                 return BadRequest();
             }
-
-            db.Entry(category).State = EntityState.Modified;
-
-            try
+            Constants.VerifyUserErrors error = AuthHandler.VerifyUserSession(sessionKey, loggedId, db);
+            if (error == Constants.VerifyUserErrors.OK)
             {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CategoryExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                db.Entry(category).State = EntityState.Modified;
 
-            return StatusCode(HttpStatusCode.NoContent);
+                try
+                {
+                    await db.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!CategoryExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+            return StatusCode(CommonMethods.StatusCodeReturn(error));
         }
 
-        // POST: api/Categories
+        // POST: api/Categories/loggedId/sessionKey
         [ResponseType(typeof(Category))]
-        public async Task<IHttpActionResult> PostCategory(Category category)
+        [Route("api/Categories/{loggedId}/{sessionKey}")]
+        public async Task<IHttpActionResult> PostCategory(Category category, int loggedId, string sessionKey)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            Constants.VerifyUserErrors error = AuthHandler.VerifyUserSession(sessionKey, loggedId, db);
+            if (error == Constants.VerifyUserErrors.OK)
+            {
+                db.Categories.Add(category);
+                await db.SaveChangesAsync();
 
-            db.Categories.Add(category);
-            await db.SaveChangesAsync();
-
-            return CreatedAtRoute("DefaultApi", new { id = category.ID }, category);
+                return CreatedAtRoute("DefaultApi", new {id = category.ID}, category);
+            }
+            return StatusCode(CommonMethods.StatusCodeReturn(error));
         }
 
-        // DELETE: api/Categories/5
+        // DELETE: api/Categories/5/loggedId/sessionKey
         [ResponseType(typeof(Category))]
-        public async Task<IHttpActionResult> DeleteCategory(int id)
+        [Route("api/Categories/{id}/{loggedId}/{sessionKey}")]
+        public async Task<IHttpActionResult> DeleteCategory(int id, int loggedId, string sessionKey)
         {
+            Constants.VerifyUserErrors error = AuthHandler.VerifyUserSession(sessionKey, loggedId, db);
             Category category = await db.Categories.FindAsync(id);
-            if (category == null)
+            if (error == Constants.VerifyUserErrors.OK)
             {
-                return NotFound();
+                if (category == null)
+                {
+                    return NotFound();
+                }
+
+                db.Categories.Remove(category);
+                await db.SaveChangesAsync();
+
+                return Ok(category);
             }
-
-            db.Categories.Remove(category);
-            await db.SaveChangesAsync();
-
-            return Ok(category);
+            return StatusCode(CommonMethods.StatusCodeReturn(error));
         }
 
         protected override void Dispose(bool disposing)

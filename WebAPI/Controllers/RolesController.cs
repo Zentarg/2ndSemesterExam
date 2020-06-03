@@ -42,9 +42,10 @@ namespace WebAPI.Controllers
             return Ok(role);
         }
 
-        // PUT: api/Roles/5
+        // PUT: api/Roles/5/loggedId/sessionKey
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutRole(int id, Role role)
+        [Route("api/Roles/{id}/{loggedId}/{sessionKey}")]
+        public IHttpActionResult PutRole(int id, Role role, int loggedId, string sessionKey)
         {
             if (!ModelState.IsValid)
             {
@@ -55,56 +56,72 @@ namespace WebAPI.Controllers
             {
                 return BadRequest();
             }
-
-            db.Entry(role).State = EntityState.Modified;
-
-            try
+            Constants.VerifyUserErrors error = AuthHandler.VerifyUserSession(sessionKey, loggedId, db);
+            if (error == Constants.VerifyUserErrors.OK)
             {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RoleExists(id))
+                db.Entry(role).State = EntityState.Modified;
+
+                try
                 {
-                    return NotFound();
+                    db.SaveChanges();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (!RoleExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
+
+                return StatusCode(HttpStatusCode.NoContent);
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return StatusCode(CommonMethods.StatusCodeReturn(error));
         }
 
-        // POST: api/Roles
+        // POST: api/Roles/loggedId/sessionKey
+        [Route("api/Roles/{loggedId}/{sessionKey}")]
         [ResponseType(typeof(Role))]
-        public IHttpActionResult PostRole(Role role)
+        public IHttpActionResult PostRole(Role role, int loggedId, string sessionKey)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            Constants.VerifyUserErrors error = AuthHandler.VerifyUserSession(sessionKey, loggedId, db);
+            if (error == Constants.VerifyUserErrors.OK)
+            {
+                Role postedRole = RolesHandler.PostRole(db, role);
 
-            Role postedRole = RolesHandler.PostRole(db, role);
-
-            return CreatedAtRoute("DefaultApi", new { id = postedRole.ID }, postedRole);
+                return CreatedAtRoute("DefaultApi", new { id = postedRole.ID }, postedRole);
+            }
+            return StatusCode(CommonMethods.StatusCodeReturn(error));
         }
 
-        // DELETE: api/Roles/5
+        // DELETE: api/Roles/5/loggedId/sessionKey
+        [Route("api/Roles/{id}/{loggedId}/{sessionKey}")]
         [ResponseType(typeof(Role))]
-        public IHttpActionResult DeleteRole(int id)
+        public IHttpActionResult DeleteRole(int id, int loggedId, string sessionKey)
         {
+            Constants.VerifyUserErrors error = AuthHandler.VerifyUserSession(sessionKey, loggedId, db);
             Role role = db.Roles.Find(id);
-            if (role == null)
+            if (error == Constants.VerifyUserErrors.OK)
             {
-                return NotFound();
+                if (role == null)
+                {
+                    return NotFound();
+                }
+
+                db.Roles.Remove(role);
+                db.SaveChanges();
+
+                return Ok(role);
             }
-
-            db.Roles.Remove(role);
-            db.SaveChanges();
-
-            return Ok(role);
+            return StatusCode(CommonMethods.StatusCodeReturn(error));
         }
 
         protected override void Dispose(bool disposing)

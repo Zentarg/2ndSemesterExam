@@ -64,10 +64,10 @@ namespace WebAPI.Controllers
                 return NotFound();
             return Ok(items);
         }
-        // PUT: api/StockHasItems/5/5
+        // PUT: api/StockHasItems/5/5/loggedId/sessionKey
         [ResponseType(typeof(void))]
-        [Route("api/StockHasItems/{stockID}/{itemID}")]
-        public async Task<IHttpActionResult> PutStockHasItem(int stockID, int itemID, StockHasItem stockHasItem)
+        [Route("api/StockHasItems/{stockID}/{itemID}/{loggedId}/{sessionKey}")]
+        public async Task<IHttpActionResult> PutStockHasItem(int stockID, int itemID, StockHasItem stockHasItem, int loggedId, string sessionKey)
         {
 
             if (!ModelState.IsValid)
@@ -80,71 +80,91 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            db.Entry(stockHasItem).State = EntityState.Modified;
-
-            try
+            Constants.VerifyUserErrors error = AuthHandler.VerifyUserSession(sessionKey, loggedId, db);
+            if (error == Constants.VerifyUserErrors.OK)
             {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!StockHasItemExists(stockID, itemID))
+                db.Entry(stockHasItem).State = EntityState.Modified;
+
+                try
                 {
-                    return NotFound();
+                    await db.SaveChangesAsync();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (!StockHasItemExists(stockID, itemID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
+
+                return StatusCode(HttpStatusCode.NoContent);
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return StatusCode(CommonMethods.StatusCodeReturn(error));
         }
 
-        // POST: api/StockHasItems
+        // POST: api/StockHasItems/loggedId/sessionKey
+        [Route("api/StockHasItems/{loggedId}/{sessionKey}")]
         [ResponseType(typeof(StockHasItem))]
-        public async Task<IHttpActionResult> PostStockHasItem(StockHasItem stockHasItem)
+        public async Task<IHttpActionResult> PostStockHasItem(StockHasItem stockHasItem, int loggedId, string sessionKey)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.StockHasItems.Add(stockHasItem);
-
-            try
+            Constants.VerifyUserErrors error = AuthHandler.VerifyUserSession(sessionKey, loggedId, db);
+            if (error == Constants.VerifyUserErrors.OK)
             {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (StockHasItemExists(stockHasItem.StockID, stockHasItem.ItemID))
+                db.StockHasItems.Add(stockHasItem);
+
+                try
                 {
-                    return Conflict();
+                    await db.SaveChangesAsync();
                 }
-                else
+                catch (DbUpdateException)
                 {
-                    throw;
+                    if (StockHasItemExists(stockHasItem.StockID, stockHasItem.ItemID))
+                    {
+                        return Conflict();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
+
+                return CreatedAtRoute("DefaultApi", new { id = stockHasItem.StockID }, stockHasItem);
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = stockHasItem.StockID }, stockHasItem);
+            return StatusCode(CommonMethods.StatusCodeReturn(error));
         }
 
-        // DELETE: api/StockHasItems/5
+        // DELETE: api/StockHasItems/5/loggedId/sessionKey
+        [Route("api/StockHasItems/5/{loggedId}/{sessionKey}")]
         [ResponseType(typeof(StockHasItem))]
-        public async Task<IHttpActionResult> DeleteStockHasItem(int id)
+        public async Task<IHttpActionResult> DeleteStockHasItem(int id, int loggedId, string sessionKey)
         {
+            Constants.VerifyUserErrors error = AuthHandler.VerifyUserSession(sessionKey, loggedId, db);
             StockHasItem stockHasItem = await db.StockHasItems.FindAsync(id);
-            if (stockHasItem == null)
+            if (error == Constants.VerifyUserErrors.OK)
             {
-                return NotFound();
+                if (stockHasItem == null)
+                {
+                    return NotFound();
+                }
+
+                db.StockHasItems.Remove(stockHasItem);
+                await db.SaveChangesAsync();
+
+                return Ok(stockHasItem);
             }
 
-            db.StockHasItems.Remove(stockHasItem);
-            await db.SaveChangesAsync();
-
-            return Ok(stockHasItem);
+            return StatusCode(CommonMethods.StatusCodeReturn(error));
         }
 
         protected override void Dispose(bool disposing)

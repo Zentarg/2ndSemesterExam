@@ -94,50 +94,56 @@ namespace WebAPI.Controllers
                 return StatusCode(HttpStatusCode.NoContent);
             }
 
-            if (error == Constants.VerifyUserErrors.INCORRECT_SESSION_KEY)
-                return StatusCode(HttpStatusCode.Unauthorized);
-            if (error == Constants.VerifyUserErrors.SESSION_NOT_FOUND)
-                return StatusCode(HttpStatusCode.NotFound);
-            return StatusCode(HttpStatusCode.InternalServerError);
+            return StatusCode(CommonMethods.StatusCodeReturn(error));
         }
 
-        // POST: api/Users
+        // POST: api/Users/loggedId/sessionKey
+        [Route("api/Users/{loggedId}/{sessionKey}")]
         [ResponseType(typeof(User))]
-        public IHttpActionResult PostUser(User user)
+        public IHttpActionResult PostUser(User user, int loggedId, string sessionKey)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            Constants.VerifyUserErrors error = AuthHandler.VerifyUserSession(sessionKey, loggedId, db);
+            if (error == Constants.VerifyUserErrors.OK)
+            {
+                User postedUser = UserHandler.PostUser(db, user);
 
-            User postedUser = UserHandler.PostUser(db, user);
+                return CreatedAtRoute("DefaultApi", new { id = postedUser.ID }, postedUser);
+            }
 
-            return CreatedAtRoute("DefaultApi", new { id = postedUser.ID }, postedUser);
+            return StatusCode(CommonMethods.StatusCodeReturn(error));
+
         }
 
-        // DELETE: api/Users/DeleteUser/id
-        [Route("api/Users/DeleteUser/{id}")]
+        // DELETE: api/Users/DeleteUser/id/loggedId/sessionKey
+        [Route("api/Users/DeleteUser/{id}/{loggedId}/{sessionKey}")]
         [ResponseType(typeof(User))]
-        public IHttpActionResult DeleteUser(int id)
+        public IHttpActionResult DeleteUser(int id, int loggedId, string sessionKey)
         {
-            
+            Constants.VerifyUserErrors error = AuthHandler.VerifyUserSession(sessionKey, loggedId, db);
             User user = db.Users.FirstOrDefault(u => u.ID == id);
             User returnUser = user;
-            
-            if (user == null)
+            if (error == Constants.VerifyUserErrors.OK)
             {
-                return NotFound();
-            }
+                if (user == null)
+                {
+                    return NotFound();
+                }
 
-            if (user.ID != 0)
-            {
-                UserHandler.DeleteOneUser(db, user);
-                returnUser.StoreID = 0;
-                return Ok(returnUser);
+                if (user.ID != 0)
+                {
+                    UserHandler.DeleteOneUser(db, user);
+                    returnUser.StoreID = 0;
+                    return Ok(returnUser);
+                }
+
+                user.ID = -1;
+                return Ok(user);
             }
-            
-            user.ID = -1;
-            return Ok(user);
+            return StatusCode(CommonMethods.StatusCodeReturn(error));
         }
 
         protected override void Dispose(bool disposing)

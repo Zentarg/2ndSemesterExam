@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Http.Routing.Constraints;
 using WebAPI;
 using WebAPI.Models;
 
@@ -45,10 +46,10 @@ namespace WebAPI.Controllers
             return Ok(supplier);
         }
 
-        // PUT: api/Suppliers/UpdateSupplier/id
+        // PUT: api/Suppliers/UpdateSupplier/id/loggedId/sessionKey
         [ResponseType(typeof(void))]
-        [Route("api/Suppliers/UpdateSupplier/{id}")]
-        public async Task<IHttpActionResult> PutSupplier(int id, Supplier supplier)
+        [Route("api/Suppliers/UpdateSupplier/{id}/{loggedId}/{sessionKey}")]
+        public async Task<IHttpActionResult> PutSupplier(int id, Supplier supplier, int loggedId, string sessionKey)
         {
             if (!ModelState.IsValid)
             {
@@ -60,63 +61,82 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            db.Entry(supplier).State = EntityState.Modified;
-
-            try
+            Constants.VerifyUserErrors error = AuthHandler.VerifyUserSession(sessionKey, loggedId, db);
+            if (error == Constants.VerifyUserErrors.OK)
             {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!SupplierExists(id))
+                db.Entry(supplier).State = EntityState.Modified;
+
+                try
                 {
-                    return NotFound();
+                    await db.SaveChangesAsync();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (!SupplierExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
+
+                return StatusCode(HttpStatusCode.NoContent);
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return StatusCode(CommonMethods.StatusCodeReturn(error));
         }
 
-        // POST: api/Suppliers
+        // POST: api/Suppliers/loggedId/sessionKey
         [ResponseType(typeof(Supplier))]
-        public async Task<IHttpActionResult> PostSupplier(Supplier supplier)
+        [Route("api/Suppliers/{loggedId}/{sessionKey}")]
+        public async Task<IHttpActionResult> PostSupplier(Supplier supplier, int loggedId, string sessionKey)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Suppliers.Add(supplier);
-            await db.SaveChangesAsync();
+            Constants.VerifyUserErrors error = AuthHandler.VerifyUserSession(sessionKey, loggedId, db);
+            if (error == Constants.VerifyUserErrors.OK)
+            {
+                db.Suppliers.Add(supplier);
+                await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = supplier.ID }, supplier);
+                return CreatedAtRoute("DefaultApi", new { id = supplier.ID }, supplier);
+            }
+
+            return StatusCode(CommonMethods.StatusCodeReturn(error));
         }
 
-        // DELETE: api/Suppliers/DeleteSupplier/id
-        [Route("api/Suppliers/DeleteSupplier/{id}")]
+        // DELETE: api/Suppliers/DeleteSupplier/id/loggedId/sessionKey
+        [Route("api/Suppliers/DeleteSupplier/{id}/{loggedId}/{sessionKey}")]
         [ResponseType(typeof(Supplier))]
-        public async Task<IHttpActionResult> DeleteSupplier(int id)
+        public async Task<IHttpActionResult> DeleteSupplier(int id, int loggedId, string sessionKey)
         {
+            Constants.VerifyUserErrors error = AuthHandler.VerifyUserSession(sessionKey, loggedId, db);
             Supplier supplier = await db.Suppliers.FindAsync(id);
             Supplier returnSupplier = supplier;
-            if (supplier == null)
+            if (error == Constants.VerifyUserErrors.OK)
             {
-                return NotFound();
+                if (supplier == null)
+                {
+                    return NotFound();
+                }
+
+                if (supplier.ID != 0)
+                {
+                    db.Suppliers.Remove(supplier);
+                    await db.SaveChangesAsync();
+                    return Ok(returnSupplier);
+                }
+
+                supplier.ID = -1;
+                return Ok(supplier);
             }
 
-            if (supplier.ID != 0)
-            {
-                db.Suppliers.Remove(supplier);
-                await db.SaveChangesAsync();
-                return Ok(returnSupplier);
-            }
-
-            supplier.ID = -1;
-            return Ok(supplier);
+            return StatusCode(CommonMethods.StatusCodeReturn(error));
         }
 
         protected override void Dispose(bool disposing)

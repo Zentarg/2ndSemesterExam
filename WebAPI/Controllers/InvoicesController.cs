@@ -55,9 +55,10 @@ namespace WebAPI.Controllers
             return Ok(invoice);
         }
 
-        // PUT: api/Invoices/5
+        // PUT: api/Invoices/5/loggedId/sessionKey
+        [Route("api/Invoices/{id}/{loggedId}/{sessionKey}")]
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutInvoice(int id, Invoice invoice)
+        public IHttpActionResult PutInvoice(int id, Invoice invoice, int loggedId, string sessionKey)
         {
             if (!ModelState.IsValid)
             {
@@ -68,31 +69,36 @@ namespace WebAPI.Controllers
             {
                 return BadRequest();
             }
-
-            db.Entry(invoice).State = EntityState.Modified;
-
-            try
+            Constants.VerifyUserErrors error = AuthHandler.VerifyUserSession(sessionKey, loggedId, db);
+            if (error == Constants.VerifyUserErrors.OK)
             {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!InvoiceExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                db.Entry(invoice).State = EntityState.Modified;
 
-            return StatusCode(HttpStatusCode.NoContent);
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!InvoiceExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+            return StatusCode(CommonMethods.StatusCodeReturn(error));
         }
 
-        // POST: api/Invoices
+        // POST: api/Invoices/loggedId/sessionKey
         [ResponseType(typeof(Invoice))]
-        public IHttpActionResult PostInvoice(Invoice invoice)
+        [Route("api/Invoices/{loggedId}/{sessionKey}")]
+        public IHttpActionResult PostInvoice(Invoice invoice, int loggedId, string sessionKey)
         {
             if (!ModelState.IsValid)
             {
@@ -110,46 +116,56 @@ namespace WebAPI.Controllers
 
 
             return CreatedAtRoute("DefaultApi", new { id = invoice.Item1.ID }, invoice.Item1);*/
+            Constants.VerifyUserErrors error = AuthHandler.VerifyUserSession(sessionKey, loggedId, db);
+            if (error == Constants.VerifyUserErrors.OK)
+            {
 
-            
-            Invoice newInvoice = db.Invoices.Add(invoice);
-            db.SaveChanges();
+                Invoice newInvoice = db.Invoices.Add(invoice);
+                db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = newInvoice.ID }, newInvoice);
-            
+                return CreatedAtRoute("DefaultApi", new {id = newInvoice.ID}, newInvoice);
+            }
+            return StatusCode(CommonMethods.StatusCodeReturn(error));
+
         }
 
-        // DELETE: api/Invoices/DeleteInvoiceByUser/id
-        [Route ("api/Invoices/DeleteInvoiceByUser/{id}")]
+        // DELETE: api/Invoices/DeleteInvoiceByUser/id/loggedId/sessionKey
+        [Route ("api/Invoices/DeleteInvoiceByUser/{id}/{loggedId}/{sessionKey}")]
         [ResponseType(typeof(Invoice))]
-        public IHttpActionResult DeleteInvoice(int id)
+        public IHttpActionResult DeleteInvoice(int id, int loggedId, string sessionKey)
         {
+            Constants.VerifyUserErrors error = AuthHandler.VerifyUserSession(sessionKey, loggedId, db);
             Invoice invoice = db.Invoices.Find(id);
-            if (invoice != null)
+            if (error == Constants.VerifyUserErrors.OK)
             {
-                invoice.AuthorID = 0;
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
-                if (id != invoice.ID)
-                    return BadRequest();
-
-                db.Entry(invoice).State = EntityState.Modified;
-
-                try
+                if (invoice != null)
                 {
-                    db.SaveChanges();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!InvoiceExists(id))
-                        return NotFound();
-                    throw;
+                    invoice.AuthorID = 0;
+                    if (!ModelState.IsValid)
+                        return BadRequest(ModelState);
+                    if (id != invoice.ID)
+                        return BadRequest();
 
+                    db.Entry(invoice).State = EntityState.Modified;
+
+                    try
+                    {
+                        db.SaveChanges();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!InvoiceExists(id))
+                            return NotFound();
+                        throw;
+
+                    }
+
+                    return Ok(invoice);
                 }
-                return Ok(invoice);
+
+                return NotFound();
             }
-
-            return NotFound();
+            return StatusCode(CommonMethods.StatusCodeReturn(error));
         }
 
         protected override void Dispose(bool disposing)

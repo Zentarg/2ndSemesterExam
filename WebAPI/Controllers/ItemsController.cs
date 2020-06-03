@@ -41,9 +41,10 @@ namespace WebAPI.Controllers
             return Ok(item);
         }
 
-        // PUT: api/Items/5
+        // PUT: api/Items/5/loggedId/sessionKey
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutItem(int id, Item item)
+        [Route("api/Items/{id}/{loggedId}/{sessionKey}")]
+        public IHttpActionResult PutItem(int id, Item item, int loggedId, string sessionKey)
         {
             if (!ModelState.IsValid)
             {
@@ -54,57 +55,72 @@ namespace WebAPI.Controllers
             {
                 return BadRequest();
             }
-
-            db.Entry(item).State = EntityState.Modified;
-
-            try
+            Constants.VerifyUserErrors error = AuthHandler.VerifyUserSession(sessionKey, loggedId, db);
+            if (error == Constants.VerifyUserErrors.OK)
             {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ItemExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                db.Entry(item).State = EntityState.Modified;
 
-            return StatusCode(HttpStatusCode.NoContent);
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ItemExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+            return StatusCode(CommonMethods.StatusCodeReturn(error));
         }
 
-        // POST: api/Items
+        // POST: api/Items/loggedId/sessionKey
         [ResponseType(typeof(Item))]
-        public IHttpActionResult PostItem(Item item)
+        [Route("api/Items/{loggedId}/{sessionKey}")]
+        public IHttpActionResult PostItem(Item item, int loggedId, string sessionKey)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            Constants.VerifyUserErrors error = AuthHandler.VerifyUserSession(sessionKey, loggedId, db);
+            if (error == Constants.VerifyUserErrors.OK)
+            {
+                db.Items.Add(item);
+                db.SaveChanges();
 
-            db.Items.Add(item);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = item.ID }, item);
+                return CreatedAtRoute("DefaultApi", new { id = item.ID }, item);
+            }
+            return StatusCode(CommonMethods.StatusCodeReturn(error));
         }
 
-        // DELETE: api/Items/5
+        // DELETE: api/Items/5/loggedId/sessionKey
         [ResponseType(typeof(Item))]
-        public IHttpActionResult DeleteItem(int id)
+        [Route("api/Items/{id}/{loggedId}/{sessionKey}")]
+        public IHttpActionResult DeleteItem(int id, int loggedId, string sessionKey)
         {
+            Constants.VerifyUserErrors error = AuthHandler.VerifyUserSession(sessionKey, loggedId, db);
             Item item = db.Items.Find(id);
-            if (item == null)
+            if (error == Constants.VerifyUserErrors.OK)
             {
-                return NotFound();
+                if (item == null)
+                {
+                    return NotFound();
+                }
+
+                db.Items.Remove(item);
+                db.SaveChanges();
+
+                return Ok(item);
             }
-
-            db.Items.Remove(item);
-            db.SaveChanges();
-
-            return Ok(item);
+            return StatusCode(CommonMethods.StatusCodeReturn(error));
         }
 
         protected override void Dispose(bool disposing)

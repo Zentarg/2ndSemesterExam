@@ -43,10 +43,10 @@ namespace WebAPI.Controllers
             return Ok(salary);
         }
 
-        // PUT: api/Salaries/UpdateSalary/id
+        // PUT: api/Salaries/UpdateSalary/id/loggedId/sessionKey
         [ResponseType(typeof(void))]
-        [Route("api/Salaries/UpdateSalary/{id}")]
-        public async Task<IHttpActionResult> PutSalary(int id, Salary salary)
+        [Route("api/Salaries/UpdateSalary/{id}/{loggedId}/{sessionKey}")]
+        public async Task<IHttpActionResult> PutSalary(int id, Salary salary, int loggedId, string sessionKey)
         {
             if (!ModelState.IsValid)
             {
@@ -58,76 +58,95 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            db.Entry(salary).State = EntityState.Modified;
-
-            try
+            Constants.VerifyUserErrors error = AuthHandler.VerifyUserSession(sessionKey, loggedId, db);
+            if (error == Constants.VerifyUserErrors.OK)
             {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!SalaryExists(id))
+                db.Entry(salary).State = EntityState.Modified;
+
+                try
                 {
-                    return NotFound();
+                    await db.SaveChangesAsync();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (!SalaryExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
+
+                return StatusCode(HttpStatusCode.NoContent);
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return StatusCode(CommonMethods.StatusCodeReturn(error));
         }
 
-        // POST: api/Salaries
+        // POST: api/Salaries/loggedId/sessionKey
         [ResponseType(typeof(Salary))]
-        public IHttpActionResult PostSalary(Salary salary)
+        [Route("api/Salaries/{loggedId}/{sessionKey}")]
+        public IHttpActionResult PostSalary(Salary salary, int loggedId, string sessionKey)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Salaries.Add(salary);
-
-            try
+            Constants.VerifyUserErrors error = AuthHandler.VerifyUserSession(sessionKey, loggedId, db);
+            if (error == Constants.VerifyUserErrors.OK)
             {
-                db.SaveChanges();
-            }
-            catch (DbUpdateException)
-            {
-                if (SalaryExists(salary.UserID))
+                db.Salaries.Add(salary);
+
+                try
                 {
-                    return Conflict();
+                    db.SaveChanges();
                 }
-                else
+                catch (DbUpdateException)
                 {
-                    throw;
+                    if (SalaryExists(salary.UserID))
+                    {
+                        return Conflict();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
+
+                return CreatedAtRoute("DefaultApi", new { id = salary.UserID }, salary);
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = salary.UserID }, salary);
+            return StatusCode(CommonMethods.StatusCodeReturn(error));
         }
 
-        // DELETE: api/Salaries/DeleteSalary/id
-        [Route("api/Salaries/DeleteSalary/{id}")]
+        // DELETE: api/Salaries/DeleteSalary/id/loggedId/sessionKey
+        [Route("api/Salaries/DeleteSalary/{id}/{loggedId}/{sessionKey}")]
         [ResponseType(typeof(Salary))]
-        public IHttpActionResult DeleteSalary(int id)
+        public IHttpActionResult DeleteSalary(int id, int loggedId, string sessionKey)
         {
+            Constants.VerifyUserErrors error = AuthHandler.VerifyUserSession(sessionKey, loggedId, db);
             Salary salary = db.Salaries.Find(id);
-            if (salary == null)
+            if (error == Constants.VerifyUserErrors.OK)
             {
-                return NotFound();
-            }
+                if (salary == null)
+                {
+                    return NotFound();
+                }
 
-            if (salary.UserID != 0)
-            {
-                SalaryHandler.DeleteOneSalary(db, salary);
+                if (salary.UserID != 0)
+                {
+                    SalaryHandler.DeleteOneSalary(db, salary);
+                    return Ok(salary);
+                }
+
+                salary.UserID = -1;
                 return Ok(salary);
             }
 
-            salary.UserID = -1;
-            return Ok(salary);
+            return StatusCode(CommonMethods.StatusCodeReturn(error));
         }
 
         protected override void Dispose(bool disposing)

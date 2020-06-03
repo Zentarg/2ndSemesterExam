@@ -38,9 +38,10 @@ namespace WebAPI.Controllers
             return Ok(stock);
         }
 
-        // PUT: api/Stocks/5
+        // PUT: api/Stocks/5/loggedId/sessionKey
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutStock(int id, Stock stock)
+        [Route("api/Stocks/{id}/{loggedId}/{sessionKey}")]
+        public async Task<IHttpActionResult> PutStock(int id, Stock stock, int loggedId, string sessionKey)
         {
             if (!ModelState.IsValid)
             {
@@ -52,56 +53,77 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            db.Entry(stock).State = EntityState.Modified;
-
-            try
+            Constants.VerifyUserErrors error = AuthHandler.VerifyUserSession(sessionKey, loggedId, db);
+            if (error == Constants.VerifyUserErrors.OK)
             {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!StockExists(id))
+                db.Entry(stock).State = EntityState.Modified;
+
+                try
                 {
-                    return NotFound();
+                    await db.SaveChangesAsync();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (!StockExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
+
+                return StatusCode(HttpStatusCode.NoContent);
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return StatusCode(CommonMethods.StatusCodeReturn(error));
         }
 
-        // POST: api/Stocks
+        // POST: api/Stocks/loggedId/sessionKey
         [ResponseType(typeof(Stock))]
-        public async Task<IHttpActionResult> PostStock(Stock stock)
+        [Route("api/Stocks/{loggedId}/{sessionKey}")]
+        public async Task<IHttpActionResult> PostStock(Stock stock, int loggedId, string sessionKey)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Stocks.Add(stock);
-            await db.SaveChangesAsync();
+            Constants.VerifyUserErrors error = AuthHandler.VerifyUserSession(sessionKey, loggedId, db);
+            if (error == Constants.VerifyUserErrors.OK)
+            {
+                db.Stocks.Add(stock);
+                await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = stock.ID }, stock);
+                return CreatedAtRoute("DefaultApi", new { id = stock.ID }, stock);
+            }
+
+            return StatusCode(CommonMethods.StatusCodeReturn(error));
         }
 
         // DELETE: api/Stocks/5
         [ResponseType(typeof(Stock))]
-        public async Task<IHttpActionResult> DeleteStock(int id)
+        [Route("api/Stocks/{id}/{loggedId/{sessionKey}")]
+        public async Task<IHttpActionResult> DeleteStock(int id, int loggedId, string sessionKey)
         {
+
+            Constants.VerifyUserErrors error = AuthHandler.VerifyUserSession(sessionKey, loggedId, db);
             Stock stock = await db.Stocks.FindAsync(id);
-            if (stock == null)
+            if (error == Constants.VerifyUserErrors.OK)
             {
-                return NotFound();
+                if (stock == null)
+                {
+                    return NotFound();
+                }
+
+                db.Stocks.Remove(stock);
+                await db.SaveChangesAsync();
+
+                return Ok(stock);
             }
 
-            db.Stocks.Remove(stock);
-            await db.SaveChangesAsync();
-
-            return Ok(stock);
+            return StatusCode(CommonMethods.StatusCodeReturn(error));
         }
 
         protected override void Dispose(bool disposing)

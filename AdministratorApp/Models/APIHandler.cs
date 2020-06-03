@@ -84,6 +84,8 @@ namespace AdministratorApp.Models
                 client.BaseAddress = new Uri(url);
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                
+                apiString += $"/{AuthHandler.ActiveUser.Id}/{AuthHandler.SessionKey}";
 
                 try
                 {
@@ -115,6 +117,8 @@ namespace AdministratorApp.Models
                 client.BaseAddress = new Uri(url);
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                apiString += $"/{AuthHandler.ActiveUser.Id}/{AuthHandler.SessionKey}";
 
                 try
                 {
@@ -148,6 +152,8 @@ namespace AdministratorApp.Models
                 client.BaseAddress = new Uri(url);
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                apiString += $"/{AuthHandler.ActiveUser.Id}/{AuthHandler.SessionKey}";
 
                 try
                 {

@@ -76,9 +76,9 @@ namespace WebAPI.Controllers
             return NotFound();
         }
 
-        // DELETE: api/Auth/DeleteSession/sessionkey
+        // DELETE: api/Auth/DeleteSession/sessionKey/loggedId/sessionKey
         [ResponseType(typeof(Session))]
-        [Route("api/Auth/DeleteSession/{sessionKey}")]
+        [Route("api/Auth/DeleteSession/{sessionKey}/{loggedId}/{sessionKey}")]
         public IHttpActionResult DeleteSession(string sessionKey)
         {
             Session session = AuthHandler.DeleteSession(sessionKey, db);
@@ -87,10 +87,10 @@ namespace WebAPI.Controllers
             return Ok(session);
         }
 
-        // PUT: api/Auth/PutAuth/id
+        // PUT: api/Auth/PutAuth/id/loggedId/sessionKey
         [ResponseType(typeof(void))]
-        [Route("api/Auth/PutAuth/{id}")]
-        public IHttpActionResult PutAuth(int id, Auth auth)
+        [Route("api/Auth/PutAuth/{id}/{loggedId}/{sessionKey}")]
+        public IHttpActionResult PutAuth(int id, Auth auth, int loggedId, string sessionKey)
         {
             if (!ModelState.IsValid)
             {
@@ -101,76 +101,90 @@ namespace WebAPI.Controllers
             {
                 return BadRequest();
             }
-
-            db.Entry(auth).State = EntityState.Modified;
-
-            try
+            Constants.VerifyUserErrors error = AuthHandler.VerifyUserSession(sessionKey, loggedId, db);
+            if (error == Constants.VerifyUserErrors.OK)
             {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AuthExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                db.Entry(auth).State = EntityState.Modified;
 
-            return StatusCode(HttpStatusCode.NoContent);
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!AuthExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+            return StatusCode(CommonMethods.StatusCodeReturn(error));
         }
 
-        // POST: api/Auths/PostAuth
-        [Route("api/Auth/PostAuth")]
+        // POST: api/Auths/PostAuth/loggedId/sessionKey
+        [Route("api/Auth/PostAuth/{loggedId}/{sessionKey}")]
         [ResponseType(typeof(Auth))]
-        public async Task<IHttpActionResult> PostAuth(Auth auth)
+        public async Task<IHttpActionResult> PostAuth(Auth auth, int loggedId, string sessionKey)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            AuthHandler.PostNewAuth(auth, db);
-            try
+            Constants.VerifyUserErrors error = AuthHandler.VerifyUserSession(sessionKey, loggedId, db);
+            if (error == Constants.VerifyUserErrors.OK)
             {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (AuthExists(auth.UserID))
+                AuthHandler.PostNewAuth(auth, db);
+                try
                 {
-                    return Conflict();
+                    await db.SaveChangesAsync();
                 }
-                else
+                catch (DbUpdateException)
                 {
-                    throw;
+                    if (AuthExists(auth.UserID))
+                    {
+                        return Conflict();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
-            }
 
-            return CreatedAtRoute("DefaultApi", new { id = auth.UserID }, auth);
+                return CreatedAtRoute("DefaultApi", new {id = auth.UserID}, auth);
+            }
+            return StatusCode(CommonMethods.StatusCodeReturn(error));
         }
 
-        // DELETE: api/Auths/DeleteUserAuth/id
-        [Route("api/Auths/DeleteUserAuth/{id}")]
+        // DELETE: api/Auths/DeleteUserAuth/id/loggedId/sessionKey
+        [Route("api/Auths/DeleteUserAuth/{id}/{loggedId}/{sessionKey}")]
         [ResponseType(typeof(Auth))]
-        public IHttpActionResult DeleteAuth(int id)
+        public IHttpActionResult DeleteAuth(int id, int loggedId, string sessionKey)
         {
+            Constants.VerifyUserErrors error = AuthHandler.VerifyUserSession(sessionKey, loggedId, db);
             Auth auth = db.Auths.Find(id);
-            if (auth == null)
+            if (error == Constants.VerifyUserErrors.OK)
             {
-                return NotFound();
-            }
+                if (auth == null)
+                {
+                    return NotFound();
+                }
 
-            if (auth.UserID != 0)
-            {
-                AuthHandler.DeleteUserAuth(db, auth);
+                if (auth.UserID != 0)
+                {
+                    AuthHandler.DeleteUserAuth(db, auth);
+                    return Ok(auth);
+                }
+
+                auth.UserID = -1;
                 return Ok(auth);
             }
-
-            auth.UserID = -1;
-            return Ok(auth);
+            return StatusCode(CommonMethods.StatusCodeReturn(error));
         }
 
         protected override void Dispose(bool disposing)
