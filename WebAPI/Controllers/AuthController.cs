@@ -78,8 +78,8 @@ namespace WebAPI.Controllers
 
         // DELETE: api/Auth/DeleteSession/sessionKey/loggedId/sessionKey
         [ResponseType(typeof(Session))]
-        [Route("api/Auth/DeleteSession/{sessionKey}/{loggedId}/{sessionKey}")]
-        public IHttpActionResult DeleteSession(string sessionKey)
+        [Route("api/Auth/DeleteSession/{loggedId}/{sessionKey}")]
+        public IHttpActionResult DeleteSession(string sessionKey, int loggedId)
         {
             Session session = AuthHandler.DeleteSession(sessionKey, db);
             if (session == null)

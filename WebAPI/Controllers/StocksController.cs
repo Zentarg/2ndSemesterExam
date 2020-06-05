@@ -104,7 +104,7 @@ namespace WebAPI.Controllers
 
         // DELETE: api/Stocks/5
         [ResponseType(typeof(Stock))]
-        [Route("api/Stocks/{id}/{loggedId/{sessionKey}")]
+        [Route("api/Stocks/{id}/{loggedId}/{sessionKey}")]
         public async Task<IHttpActionResult> DeleteStock(int id, int loggedId, string sessionKey)
         {
 

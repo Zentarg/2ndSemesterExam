@@ -75,7 +75,7 @@ namespace AdministratorApp.Models
         /// <returns>Task, enables await.</returns>
         public static async Task Logout()
         {
-            await APIHandler<Session>.DeleteOne($"Auth/DeleteSession/{SessionKey}");
+            await APIHandler<Session>.DeleteOne($"Auth/DeleteSession");
         }
 
         /// <summary>
