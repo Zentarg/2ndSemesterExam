@@ -35,10 +35,10 @@
     </Page.Resources>
 
     <Grid>
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding DontShowAdministratorFunctions}">
-            <StackPanel Spacing="100">
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,25,0,0" Visibility="{Binding DontShowAdministratorFunctions}">
+            <StackPanel>
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="100">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="80">
 
                     <Button Style="{StaticResource NavigateButton}" Background="#00a65a"  Tag="StockPage" Click="NavigateFrame">
                         <StackPanel Orientation="Horizontal" Width="400">
@@ -106,12 +106,12 @@
                             <ResourceDictionary>
                                 <ResourceDictionary.ThemeDictionaries>
                                     <ResourceDictionary x:Key="Dark">
-                                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#00b1de"/>
-                                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#015c73"/>
+                                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#ffde3b"/>
+                                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#deba09"/>
                                     </ResourceDictionary>
                                     <ResourceDictionary x:Key="Light">
-                                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#00b1de"/>
-                                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#015c73"/>
+                                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#ffde3b"/>
+                                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#deba09"/>
                                     </ResourceDictionary>
                                 </ResourceDictionary.ThemeDictionaries>
                             </ResourceDictionary>
@@ -203,6 +203,8 @@
                     </Button>
 
                 </StackPanel>
+
+
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="100">
 
                     <Button Style="{StaticResource NavigateButton}" Background="#D954FF" Tag="SupplierPage" Click="NavigateFrame" IsEnabled="True">
