@@ -46,5 +46,33 @@ namespace AdministratorApp
         {
             NavigationHandler.NavigateForwards();
         }
+
+        private void LanguageButtonHU_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (LanguageButtonHU.IsChecked == false)
+            {
+                LanguageButtonEN.IsChecked = true;
+
+            }
+            else
+            {
+                LanguageButtonEN.IsChecked = false;
+
+            }
+        }
+
+        private void LanguageButtonEN_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (LanguageButtonEN.IsChecked == false)
+            {
+                LanguageButtonHU.IsChecked = true;
+
+            }
+            else
+            {
+                LanguageButtonHU.IsChecked = false;
+
+            }
+        }
     }
 }
