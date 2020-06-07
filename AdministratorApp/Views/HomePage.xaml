@@ -44,7 +44,7 @@
                         <StackPanel Orientation="Horizontal" Width="400">
                             <StackPanel HorizontalAlignment="Left">
                                 <TextBlock Style="{StaticResource ButtonText}"  FontSize="29" FontWeight="Bold" Text="{Binding NoItems}" Foreground="White"/>
-                                <TextBlock Style="{StaticResource ButtonText}"   Text="Items in stock" Foreground="White"/>
+                                <TextBlock Style="{StaticResource ButtonText}"   Text="Items in stock"  x:Uid="lblItemsInStock" Foreground="White"/>
                             </StackPanel>
                             <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xE82D;" Margin="120,0,0,0" Foreground="#007840" />
                         </StackPanel>
@@ -70,7 +70,7 @@
                         <StackPanel Orientation="Horizontal" Width="400">
                             <StackPanel HorizontalAlignment="Left">
                                 <TextBlock Style="{StaticResource ButtonText}"  FontSize="29" FontWeight="Bold" Text="{Binding NoStores}" Foreground="White"/>
-                                <TextBlock Style="{StaticResource ButtonText}"   Text="Stores" Foreground="White"/>
+                                <TextBlock Style="{StaticResource ButtonText}"   Text="Stores" x:Uid="lblStores" Foreground="White"/>
                             </StackPanel>
                             <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xEC06;" Margin="100,0,0,0" Foreground="#006882" />
                         </StackPanel>
@@ -92,13 +92,13 @@
                     </Button>
 
 
-                    <Button Style="{StaticResource NavigateButton}" Background="#ffd505" Tag="CreateInvoicePage" Click="NavigateFrame" IsEnabled="True">
+                    <Button Style="{StaticResource NavigateButton}" Background="#ffb700" Tag="CreateInvoicePage" Click="NavigateFrame" IsEnabled="True">
                         <StackPanel Orientation="Horizontal" Width="400">
                             <StackPanel HorizontalAlignment="Left">
-                                <TextBlock Style="{StaticResource ButtonText}" FontSize="22" FontWeight="Bold" Width="200" Text="Create new Invoice " Foreground="White"/>
+                                <TextBlock Style="{StaticResource ButtonText}" FontSize="22" Margin="0,55,0,0" Width="200" Text="Create new Invoice" x:Uid="lblNewInvoice" Foreground="White"/>
 
                             </StackPanel>
-                            <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xE8F4;" Margin="60,0,0,0" Foreground="#d49f02" />
+                            <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xE8F4;" Margin="60,0,0,0" Foreground="#cf9606" />
                         </StackPanel>
 
 
@@ -106,12 +106,12 @@
                             <ResourceDictionary>
                                 <ResourceDictionary.ThemeDictionaries>
                                     <ResourceDictionary x:Key="Dark">
-                                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#ffde3b"/>
-                                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#deba09"/>
+                                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#ffc942"/>
+                                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#edac09"/>
                                     </ResourceDictionary>
                                     <ResourceDictionary x:Key="Light">
-                                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#ffde3b"/>
-                                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#deba09"/>
+                                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#ffc942"/>
+                                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#edac09"/>
                                     </ResourceDictionary>
                                 </ResourceDictionary.ThemeDictionaries>
                             </ResourceDictionary>
@@ -130,7 +130,7 @@
                         <StackPanel Orientation="Horizontal" Width="400">
                             <StackPanel HorizontalAlignment="Left">
                                 <TextBlock Style="{StaticResource ButtonText}"  FontSize="29" FontWeight="Bold" Text="{Binding NoItems}" Foreground="White"/>
-                                <TextBlock Style="{StaticResource ButtonText}"   Text="Items in stock" Foreground="White"/>
+                                <TextBlock Style="{StaticResource ButtonText}"   Text="Items in stock" x:Uid="lblItemsInStock" Foreground="White"/>
                             </StackPanel>
                             <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xE82D;" Margin="120,0,0,0" Foreground="#007840" />
                         </StackPanel>
@@ -156,7 +156,7 @@
                         <StackPanel Orientation="Horizontal" Width="400">
                             <StackPanel HorizontalAlignment="Left">
                                 <TextBlock Style="{StaticResource ButtonText}"  FontSize="29" FontWeight="Bold" Text="{Binding NoStores}" Foreground="White"/>
-                                <TextBlock Style="{StaticResource ButtonText}"   Text="Stores" Foreground="White"/>
+                                <TextBlock Style="{StaticResource ButtonText}"   Text="Stores" x:Uid="lblStores"  Foreground="White"/>
                             </StackPanel>
                             <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xEC06;" Margin="100,0,0,0" Foreground="#006882" />
                         </StackPanel>
@@ -181,7 +181,7 @@
                         <StackPanel Orientation="Horizontal" Width="400">
                             <StackPanel HorizontalAlignment="Left">
                                 <TextBlock Style="{StaticResource ButtonText}"  FontSize="29" FontWeight="Bold" Text="{Binding NoEmployees}" Foreground="White"/>
-                                <TextBlock Style="{StaticResource ButtonText}"   Text="Employees" Foreground="White"/>
+                                <TextBlock Style="{StaticResource ButtonText}"   Text="Employees" x:Uid="lblEmployees" Foreground="White"/>
                             </StackPanel>
                             <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xE716;" Margin="100,0,0,0" Foreground="#B57B00" />
                         </StackPanel>
@@ -211,7 +211,7 @@
                         <StackPanel Orientation="Horizontal" Width="400" >
                             <StackPanel HorizontalAlignment="Left">
                                 <TextBlock Style="{StaticResource ButtonText}"  FontSize="29" FontWeight="Bold" Text="{Binding NoSuppliers}" Foreground="White"/>
-                                <TextBlock Style="{StaticResource ButtonText}"   Text="Suppliers" Foreground="White"/>
+                                <TextBlock Style="{StaticResource ButtonText}"   Text="Suppliers" x:Uid="lblSuppliers" Foreground="White"/>
                             </StackPanel>
                             <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xE707;" Margin="100,0,0,0" Foreground="#8D39A4" />
                         </StackPanel>
@@ -235,7 +235,7 @@
                         <StackPanel Orientation="Horizontal" Width="400" >
                             <StackPanel HorizontalAlignment="Left">
                                 <TextBlock Style="{StaticResource ButtonText}"  FontSize="29" FontWeight="Bold" Text="{Binding NoRequests}" Foreground="White"/>
-                                <TextBlock Style="{StaticResource ButtonText}"   Text="Requests" Foreground="White"/>
+                                <TextBlock Style="{StaticResource ButtonText}"   Text="Requests" x:Uid="lblInvoices" Foreground="White"/>
                             </StackPanel>
                             <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xF0E3;" Margin="100,0,0,0" Foreground="#890101" />
                         </StackPanel>

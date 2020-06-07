@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="hu" target-language="hu" original="ADMINISTRATORAPP/STRINGS/EN-US/RESOURCES.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.6916.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="ADMINISTRATORAPP/STRINGS/HU/RESOURCES.RESW" datatype="resx">
+        <trans-unit id="lblSuppliers.Text" translate="yes" xml:space="preserve">
+          <source>Beszállítók</source>
+          <target state="new">Beszállítók</target>
+        </trans-unit>
+        <trans-unit id="btnLogOut.Text" translate="yes" xml:space="preserve">
+          <source>Kijelentkezés</source>
+          <target state="new">Kijelentkezés</target>
+        </trans-unit>
+        <trans-unit id="lblEmployees.Text" translate="yes" xml:space="preserve">
+          <source>Munkatársak</source>
+          <target state="new">Munkatársak</target>
+        </trans-unit>
+        <trans-unit id="lblInvoices.Text" translate="yes" xml:space="preserve">
+          <source>Számlák</source>
+          <target state="new">Számlák</target>
+        </trans-unit>
+        <trans-unit id="lblItemsInStock.Text" translate="yes" xml:space="preserve">
+          <source>Termékek raktáron</source>
+          <target state="new">Termékek raktáron</target>
+        </trans-unit>
+        <trans-unit id="lblLogIn.Text" translate="yes" xml:space="preserve">
+          <source>Bejelentkezés</source>
+          <target state="new">Bejelentkezés</target>
+        </trans-unit>
+        <trans-unit id="lblNewInvoice.Text" translate="yes" xml:space="preserve">
+          <source>Új számla rögzítése</source>
+          <target state="new">Új számla rögzítése</target>
+        </trans-unit>
+        <trans-unit id="lblStores.Text" translate="yes" xml:space="preserve">
+          <source>Üzletek</source>
+          <target state="new">Üzletek</target>
+        </trans-unit>
+        <trans-unit id="lblCancel.Text" translate="yes" xml:space="preserve">
+          <source>Mégsem</source>
+          <target state="new">Mégsem</target>
+        </trans-unit>
+        <trans-unit id="lblStock.Text" translate="yes" xml:space="preserve">
+          <source>Leltár</source>
+          <target state="new">Leltár</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+</xliff>

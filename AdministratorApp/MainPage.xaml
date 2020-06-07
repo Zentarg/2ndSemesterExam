@@ -38,7 +38,7 @@
         </Style>
         <Style x:Key="HamburgerButtonText" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Aloe Vera" />
-            <Setter Property="FontSize" Value="30" />
+            <Setter Property="FontSize" Value="25" />
             <Setter Property="Margin" Value="15 0 0 0"></Setter>
         </Style>
     </Page.Resources>
@@ -56,25 +56,10 @@
                 <TextBlock VerticalAlignment="Center" Text="{Binding CurrentPageName, Mode=OneWay}" FontSize="30" Margin="20 0 0 0"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <ToggleButton Content="EN" Click="LanguageButtonEN_OnClick" x:Name="LanguageButtonEN" Foreground="White" >
-                    <ToggleButton.Resources>
-                        <ResourceDictionary>
-                            <ResourceDictionary.ThemeDictionaries>
-                                <ResourceDictionary x:Key="Dark">
-                                        <SolidColorBrush x:Key="ToggleButtonForegroundPointerOver" Color="Red"/>
-                                        <SolidColorBrush x:Key="ToggleButtonBackgroundPointerOver" Color="Black"/>
-                                    </ResourceDictionary>
-                                    <ResourceDictionary x:Key="Light">
-                                        <SolidColorBrush x:Key="ToggleButtonForegroundPointerOver" Color="Red"/>
-                                        <SolidColorBrush x:Key="ToggleButtonBackgroundPointerOver" Color="Black"/>
-                                    </ResourceDictionary>
-                            </ResourceDictionary.ThemeDictionaries>
-                        </ResourceDictionary>
-                    </ToggleButton.Resources>
-                </ToggleButton>
-                <ToggleButton Content="HU" Click="LanguageButtonHU_OnClick" x:Name="LanguageButtonHU" Foreground="White" Margin="0,0,15,0" />
+                <Button Content="EN" Click="LanguageButtonEN_OnClick" x:Name="LanguageButtonEN" Foreground="White" />
+                <Button Content="HU" Click="LanguageButtonHU_OnClick" x:Name="LanguageButtonHU" Foreground="White" Margin="0,0,15,0" />
                 <DropDownButton Margin="0,0,15,0" Width="125">
-                    <TextBlock Text="{Binding ActiveUser.Name}">
+                    <TextBlock Text="{Binding ActiveUser.Name}" Foreground="White" FontWeight="Bold">
 
                     </TextBlock>
                     <DropDownButton.Flyout>
@@ -100,55 +85,54 @@
                         <Button Style="{StaticResource HamburgerButton}" Tag="StockPage" Click="NavigateFrame">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE82D;"/>
-                                <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Stock"/>
+                                <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Stock" x:Uid="lblStock"/>
                             </StackPanel>
                         </Button>
                         <Button Style="{StaticResource HamburgerButton}" Tag="StorePage" Click="NavigateFrame">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xEC06;"/>
-                                <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Stores"/>
+                                <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Stores" x:Uid="lblStores"/>
                             </StackPanel>
                         </Button>
                         <Button Style="{StaticResource HamburgerButton}" Tag="CreateInvoicePage" Click="NavigateFrame">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE8F4;"/>
-                                <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Create Invoice"/>
+                                <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Create Invoice" x:Uid="lblNewInvoice" />
                             </StackPanel>
                         </Button>
                     </StackPanel>
                     <StackPanel Visibility="{Binding ShowAdministratorFunctions}">
                         <Button Style="{StaticResource HamburgerButton}" Command="{Binding DoToggleHamburger}">
                             <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE700;"/>
-
                         </Button>
                         <Button Style="{StaticResource HamburgerButton}" Tag="StockPage" Click="NavigateFrame">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE82D;"/>
-                                <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Stock"/>
+                                <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Stock" x:Uid="lblStock" />
                             </StackPanel>
                         </Button>
                         <Button Style="{StaticResource HamburgerButton}" Tag="StorePage" Click="NavigateFrame">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xEC06;"/>
-                                <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Stores"/>
+                                <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Stores" x:Uid="lblStores" />
                             </StackPanel>
                         </Button>
                         <Button Style="{StaticResource HamburgerButton}" Tag="EmployeesPage" Click="NavigateFrame">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE716;"/>
-                                <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Employees"/>
+                                <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Employees" x:Uid="lblEmployees" />
                             </StackPanel>
                         </Button>
                         <Button Style="{StaticResource HamburgerButton}" Tag="SupplierPage" Click="NavigateFrame">
                             <StackPanel Orientation="Horizontal" Margin="3,0,-3,0">
                                 <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE707;"/>
-                                <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Suppliers"/>
+                                <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Suppliers" x:Uid="lblSuppliers"/>
                             </StackPanel>
                         </Button>
                         <Button Style="{StaticResource HamburgerButton}" Tag="RequestsPage" Click="NavigateFrame">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xF0E3;"/>
-                                <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Requests"/>
+                                <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Requests" x:Uid="lblInvoices"/>
                             </StackPanel>
                         </Button>
                     </StackPanel>

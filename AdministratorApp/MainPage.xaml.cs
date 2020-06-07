@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using AdministratorApp.Models;
 using AdministratorApp.ViewModels;
+using Windows.Globalization;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -49,30 +50,23 @@ namespace AdministratorApp
 
         private void LanguageButtonHU_OnClick(object sender, RoutedEventArgs e)
         {
-            if (LanguageButtonHU.IsChecked == false)
-            {
-                LanguageButtonEN.IsChecked = true;
+            ApplicationLanguages.PrimaryLanguageOverride = "hu";
+            Frame.Navigate(this.GetType());
+            Frame.Navigate(this.GetType());
 
-            }
-            else
-            {
-                LanguageButtonEN.IsChecked = false;
 
-            }
         }
 
         private void LanguageButtonEN_OnClick(object sender, RoutedEventArgs e)
         {
-            if (LanguageButtonEN.IsChecked == false)
-            {
-                LanguageButtonHU.IsChecked = true;
 
-            }
-            else
-            {
-                LanguageButtonHU.IsChecked = false;
 
-            }
+            ApplicationLanguages.PrimaryLanguageOverride = "en-US";
+
+                Frame.Navigate(this.GetType());
+                Frame.Navigate(this.GetType());
+
+
         }
     }
 }

@@ -118,42 +118,33 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="btnLogOut.Text" xml:space="preserve">
-    <value>Log out</value>
-    <comment>Log out text in the dropdown.</comment>
+    <value>Kijelentkezés</value>
   </data>
   <data name="lblCancel.Text" xml:space="preserve">
-    <value>Cancel</value>
-    <comment>Cancel</comment>
+    <value>Mégsem</value>
   </data>
   <data name="lblEmployees.Text" xml:space="preserve">
-    <value>Employees</value>
-    <comment>Home page-employees</comment>
+    <value>Munkatársak</value>
   </data>
   <data name="lblInvoices.Text" xml:space="preserve">
-    <value>Invoices</value>
-    <comment>Home page-Invoices</comment>
+    <value>Számlák</value>
   </data>
   <data name="lblItemsInStock.Text" xml:space="preserve">
-    <value>Items in stock</value>
-    <comment>Home page - Items In Stock button, green</comment>
+    <value>Termékek raktáron</value>
   </data>
   <data name="lblLogIn.Text" xml:space="preserve">
-    <value>Log in</value>
-    <comment>Login</comment>
+    <value>Bejelentkezés</value>
   </data>
   <data name="lblNewInvoice.Text" xml:space="preserve">
-    <value>Create new invoice</value>
-    <comment>Home page - create invoice</comment>
+    <value>Új számla rögzítése</value>
   </data>
   <data name="lblStock.Text" xml:space="preserve">
-    <value>Stock</value>
+    <value>Leltár</value>
   </data>
   <data name="lblStores.Text" xml:space="preserve">
-    <value>Stores</value>
-    <comment>Home Page - Stores</comment>
+    <value>Üzletek</value>
   </data>
   <data name="lblSuppliers.Text" xml:space="preserve">
-    <value>Suppliers</value>
-    <comment>Home page-Suppliers</comment>
+    <value>Beszállítók</value>
   </data>
 </root>
