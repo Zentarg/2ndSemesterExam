@@ -64,6 +64,9 @@ namespace WebAPI.Controllers
                 try
                 {
                     db.SaveChanges();
+                    User loggedUser = db.Users.FirstOrDefault(u => u.ID == loggedId);
+                    if (loggedUser != null)
+                        LogHandler.CreateLogEntry(db, loggedId, $"The user {loggedUser.Name} (ID: {loggedId}) has updated the role {role.Name} (ID: {role.ID})", (int)LogHandler.RequestTypes.PUT);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -96,7 +99,9 @@ namespace WebAPI.Controllers
             if (error == Constants.VerifyUserErrors.OK)
             {
                 Role postedRole = RolesHandler.PostRole(db, role);
-
+                User loggedUser = db.Users.FirstOrDefault(u => u.ID == loggedId);
+                if (loggedUser != null)
+                    LogHandler.CreateLogEntry(db, loggedId, $"The user {loggedUser.Name} (ID: {loggedId}) has created the role {role.Name} (ID: {role.ID})", (int)LogHandler.RequestTypes.POST);
                 return CreatedAtRoute("DefaultApi", new { id = postedRole.ID }, postedRole);
             }
             return StatusCode(CommonMethods.StatusCodeReturn(error));
@@ -118,7 +123,9 @@ namespace WebAPI.Controllers
 
                 db.Roles.Remove(role);
                 db.SaveChanges();
-
+                User loggedUser = db.Users.FirstOrDefault(u => u.ID == loggedId);
+                if (loggedUser != null)
+                    LogHandler.CreateLogEntry(db, loggedId, $"The user {loggedUser.Name} (ID: {loggedId}) has deleted the role {role.Name} (ID: {role.ID})", (int)LogHandler.RequestTypes.DELETE);
                 return Ok(role);
             }
             return StatusCode(CommonMethods.StatusCodeReturn(error));

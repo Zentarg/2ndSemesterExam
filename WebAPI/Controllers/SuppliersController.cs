@@ -69,6 +69,9 @@ namespace WebAPI.Controllers
                 try
                 {
                     await db.SaveChangesAsync();
+                    User loggedUser = db.Users.FirstOrDefault(u => u.ID == loggedId);
+                    if (loggedUser != null)
+                        LogHandler.CreateLogEntry(db, loggedId, $"The user {loggedUser.Name} (ID: {loggedId}) has updated the supplier {supplier.Name} (ID: {supplier.ID})", (int)LogHandler.RequestTypes.PUT);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -103,6 +106,9 @@ namespace WebAPI.Controllers
             {
                 db.Suppliers.Add(supplier);
                 await db.SaveChangesAsync();
+                User loggedUser = db.Users.FirstOrDefault(u => u.ID == loggedId);
+                if (loggedUser != null)
+                    LogHandler.CreateLogEntry(db, loggedId, $"The user {loggedUser.Name} (ID: {loggedId}) has created the supplier {supplier.Name} (ID: {supplier.ID})", (int)LogHandler.RequestTypes.POST);
 
                 return CreatedAtRoute("DefaultApi", new { id = supplier.ID }, supplier);
             }
@@ -129,6 +135,9 @@ namespace WebAPI.Controllers
                 {
                     db.Suppliers.Remove(supplier);
                     await db.SaveChangesAsync();
+                    User loggedUser = db.Users.FirstOrDefault(u => u.ID == loggedId);
+                    if (loggedUser != null)
+                        LogHandler.CreateLogEntry(db, loggedId, $"The user {loggedUser.Name} (ID: {loggedId}) has deleted the supplier {supplier.Name} (ID: {supplier.ID})", (int)LogHandler.RequestTypes.DELETE);
                     return Ok(returnSupplier);
                 }
 

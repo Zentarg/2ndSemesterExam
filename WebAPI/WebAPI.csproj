@@ -173,6 +173,7 @@
     <Compile Include="Controllers\InvoiceHasItemsController.cs" />
     <Compile Include="Controllers\InvoicesController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
+    <Compile Include="Controllers\LogsController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SalariesController.cs" />
     <Compile Include="Controllers\StockHasItemsController.cs" />
@@ -196,6 +197,7 @@
     <Compile Include="Models\Constants.cs" />
     <Compile Include="Models\InvoiceHandler.cs" />
     <Compile Include="Models\ItemsHandler.cs" />
+    <Compile Include="Models\LogHandler.cs" />
     <Compile Include="Models\RolesHandler.cs" />
     <Compile Include="Models\SalaryHandler.cs" />
     <Compile Include="Models\StocksHandler.cs" />

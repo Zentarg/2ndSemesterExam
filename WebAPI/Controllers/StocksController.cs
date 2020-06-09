@@ -61,6 +61,9 @@ namespace WebAPI.Controllers
                 try
                 {
                     await db.SaveChangesAsync();
+                    User loggedUser = db.Users.FirstOrDefault(u => u.ID == loggedId);
+                    if (loggedUser != null)
+                        LogHandler.CreateLogEntry(db, loggedId, $"The user {loggedUser.Name} (ID: {loggedId}) has updated the stock {stock.Name} (ID: {stock.ID})", (int)LogHandler.RequestTypes.PUT);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -95,7 +98,9 @@ namespace WebAPI.Controllers
             {
                 db.Stocks.Add(stock);
                 await db.SaveChangesAsync();
-
+                User loggedUser = db.Users.FirstOrDefault(u => u.ID == loggedId);
+                if (loggedUser != null)
+                    LogHandler.CreateLogEntry(db, loggedId, $"The user {loggedUser.Name} (ID: {loggedId}) has created the stock {stock.Name} (ID: {stock.ID})", (int)LogHandler.RequestTypes.POST);
                 return CreatedAtRoute("DefaultApi", new { id = stock.ID }, stock);
             }
 
@@ -119,7 +124,9 @@ namespace WebAPI.Controllers
 
                 db.Stocks.Remove(stock);
                 await db.SaveChangesAsync();
-
+                User loggedUser = db.Users.FirstOrDefault(u => u.ID == loggedId);
+                if (loggedUser != null)
+                    LogHandler.CreateLogEntry(db, loggedId, $"The user {loggedUser.Name} (ID: {loggedId}) has deleted the stock {stock.Name} (ID: {stock.ID})", (int)LogHandler.RequestTypes.DELETE);
                 return Ok(stock);
             }
 

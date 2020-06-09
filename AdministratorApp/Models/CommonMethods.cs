@@ -21,6 +21,11 @@ namespace AdministratorApp.Models
             return roles[roleId];
         }
 
+        public static User GetUser(int userId, Dictionary<int, User> users)
+        {
+            return users[userId];
+        }
+
         /// <summary>
         /// Method that returns a salary when given a dictionary of salaries and a user ID, returns an empty salary if the salary was not found
         /// </summary>

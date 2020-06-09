@@ -78,6 +78,9 @@ namespace WebAPI.Controllers
                 try
                 {
                     await db.SaveChangesAsync();
+                    User loggedUser = db.Users.FirstOrDefault(u => u.ID == loggedId);
+                    if (loggedUser != null)
+                        LogHandler.CreateLogEntry(db, loggedId, $"The user {loggedUser.Name} (ID: {loggedId}) has updated the user {user.Name} (ID: {user.ID})", (int) LogHandler.RequestTypes.PUT);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -110,7 +113,9 @@ namespace WebAPI.Controllers
             if (error == Constants.VerifyUserErrors.OK)
             {
                 User postedUser = UserHandler.PostUser(db, user);
-
+                User loggedUser = db.Users.FirstOrDefault(u => u.ID == loggedId);
+                if (loggedUser != null)
+                    LogHandler.CreateLogEntry(db, loggedId, $"The user {loggedUser.Name} (ID: {loggedId}) has created the user {user.Name} (ID: {user.ID})", (int)LogHandler.RequestTypes.POST);
                 return CreatedAtRoute("DefaultApi", new { id = postedUser.ID }, postedUser);
             }
 
@@ -137,6 +142,14 @@ namespace WebAPI.Controllers
                 {
                     UserHandler.DeleteOneUser(db, user);
                     returnUser.StoreID = 0;
+                    User loggedUser = db.Users.FirstOrDefault(u => u.ID == loggedId);
+                    if (loggedUser != null)
+                    {
+                        LogHandler.CreateLogEntry(db, loggedId, $"The user {loggedUser.Name} (ID: {loggedId}) has deleted the user {user.Name} (ID: {user.ID})", (int)LogHandler.RequestTypes.DELETE);
+                        LogHandler.CreateLogEntry(db, loggedId, $"The user {loggedUser.Name} (ID: {loggedId}) has deleted the login information for {returnUser.Name} (ID: {user.ID})", (int)LogHandler.RequestTypes.DELETE);
+                        LogHandler.CreateLogEntry(db, loggedId, $"The user {loggedUser.Name} (ID: {loggedId}) has deleted the salary for {returnUser.Name} (ID: {user.ID})", (int)LogHandler.RequestTypes.DELETE);
+                    }
+                    
                     return Ok(returnUser);
                 }
 

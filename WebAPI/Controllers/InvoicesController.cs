@@ -77,6 +77,9 @@ namespace WebAPI.Controllers
                 try
                 {
                     db.SaveChanges();
+                    User loggedUser = db.Users.FirstOrDefault(u => u.ID == loggedId);
+                    if (loggedUser != null)
+                        LogHandler.CreateLogEntry(db, loggedId, $"The user {loggedUser.Name} (ID: {loggedId}) has updated the invoice with an ID of {invoice.ID}", (int)LogHandler.RequestTypes.PUT);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -122,7 +125,9 @@ namespace WebAPI.Controllers
 
                 Invoice newInvoice = db.Invoices.Add(invoice);
                 db.SaveChanges();
-
+                User loggedUser = db.Users.FirstOrDefault(u => u.ID == loggedId);
+                if (loggedUser != null)
+                    LogHandler.CreateLogEntry(db, loggedId, $"The user {loggedUser.Name} (ID: {loggedId}) has created the invoice with an ID of {invoice.ID}", (int)LogHandler.RequestTypes.POST);
                 return CreatedAtRoute("DefaultApi", new {id = newInvoice.ID}, newInvoice);
             }
             return StatusCode(CommonMethods.StatusCodeReturn(error));
@@ -151,6 +156,9 @@ namespace WebAPI.Controllers
                     try
                     {
                         db.SaveChanges();
+                        User loggedUser = db.Users.FirstOrDefault(u => u.ID == loggedId);
+                        if (loggedUser != null)
+                            LogHandler.CreateLogEntry(db, loggedId, $"The user {loggedUser.Name} (ID: {loggedId}) has deleted the invoice with an ID of {invoice.ID}", (int)LogHandler.RequestTypes.DELETE);
                     }
                     catch (DbUpdateConcurrencyException)
                     {

@@ -67,6 +67,9 @@ namespace WebAPI.Controllers
                 try
                 {
                     await db.SaveChangesAsync();
+                    User loggedUser = db.Users.FirstOrDefault(u => u.ID == loggedId);
+                    if (loggedUser != null)
+                        LogHandler.CreateLogEntry(db, loggedId, $"The user {loggedUser.Name} (ID: {loggedId}) has updated the category {category.Name} (ID: {category.ID})", (int)LogHandler.RequestTypes.PUT);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -99,7 +102,9 @@ namespace WebAPI.Controllers
             {
                 db.Categories.Add(category);
                 await db.SaveChangesAsync();
-
+                User loggedUser = db.Users.FirstOrDefault(u => u.ID == loggedId);
+                if (loggedUser != null)
+                    LogHandler.CreateLogEntry(db, loggedId, $"The user {loggedUser.Name} (ID: {loggedId}) has created the category {category.Name} (ID: {category.ID})", (int)LogHandler.RequestTypes.POST);
                 return CreatedAtRoute("DefaultApi", new {id = category.ID}, category);
             }
             return StatusCode(CommonMethods.StatusCodeReturn(error));
@@ -121,7 +126,9 @@ namespace WebAPI.Controllers
 
                 db.Categories.Remove(category);
                 await db.SaveChangesAsync();
-
+                User loggedUser = db.Users.FirstOrDefault(u => u.ID == loggedId);
+                if (loggedUser != null)
+                    LogHandler.CreateLogEntry(db, loggedId, $"The user {loggedUser.Name} (ID: {loggedId}) has deleted the category {category.Name} (ID: {category.ID})", (int)LogHandler.RequestTypes.DELETE);
                 return Ok(category);
             }
             return StatusCode(CommonMethods.StatusCodeReturn(error));

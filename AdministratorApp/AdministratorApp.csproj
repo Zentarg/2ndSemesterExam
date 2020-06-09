@@ -155,6 +155,7 @@
     <Compile Include="ViewModels\EmployeesPageVM.cs" />
     <Compile Include="ViewModels\HomePageVM.cs" />
     <Compile Include="ViewModels\LoginPageVM.cs" />
+    <Compile Include="ViewModels\LogsPageVM.cs" />
     <Compile Include="ViewModels\MainPageVM.cs" />
     <Compile Include="ViewModels\RequestsVM.cs" />
     <Compile Include="ViewModels\StorePageVM.cs" />
@@ -201,6 +202,9 @@
     </Compile>
     <Compile Include="Views\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LogsPage.xaml.cs">
+      <DependentUpon>LogsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RequestsPage.xaml.cs">
       <DependentUpon>RequestsPage.xaml</DependentUpon>
@@ -343,6 +347,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\HomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LogsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

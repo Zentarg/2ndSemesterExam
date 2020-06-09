@@ -63,6 +63,9 @@ namespace WebAPI.Controllers
                 try
                 {
                     db.SaveChanges();
+                    User loggedUser = db.Users.FirstOrDefault(u => u.ID == loggedId);
+                    if (loggedUser != null)
+                        LogHandler.CreateLogEntry(db, loggedId, $"The user {loggedUser.Name} (ID: {loggedId}) has updated the item {item.Name} (ID: {item.ID})", (int)LogHandler.RequestTypes.PUT);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -95,7 +98,9 @@ namespace WebAPI.Controllers
             {
                 db.Items.Add(item);
                 db.SaveChanges();
-
+                User loggedUser = db.Users.FirstOrDefault(u => u.ID == loggedId);
+                if (loggedUser != null)
+                    LogHandler.CreateLogEntry(db, loggedId, $"The user {loggedUser.Name} (ID: {loggedId}) has created the item {item.Name} (ID: {item.ID})", (int)LogHandler.RequestTypes.POST);
                 return CreatedAtRoute("DefaultApi", new { id = item.ID }, item);
             }
             return StatusCode(CommonMethods.StatusCodeReturn(error));
@@ -117,7 +122,9 @@ namespace WebAPI.Controllers
 
                 db.Items.Remove(item);
                 db.SaveChanges();
-
+                User loggedUser = db.Users.FirstOrDefault(u => u.ID == loggedId);
+                if (loggedUser != null)
+                    LogHandler.CreateLogEntry(db, loggedId, $"The user {loggedUser.Name} (ID: {loggedId}) has deleted the item {item.Name} (ID: {item.ID})", (int)LogHandler.RequestTypes.DELETE);
                 return Ok(item);
             }
             return StatusCode(CommonMethods.StatusCodeReturn(error));

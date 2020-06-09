@@ -66,7 +66,17 @@ namespace WebAPI.Controllers
                 try
                 {
                     await db.SaveChangesAsync();
+                    User updatedUserSalary = db.Users.FirstOrDefault(u => u.ID == salary.UserID);
+                    if (updatedUserSalary != null)
+                    {
+                        User loggedUser = db.Users.FirstOrDefault(u => u.ID == loggedId);
+                        if (loggedUser != null)
+                            LogHandler.CreateLogEntry(db, loggedId,
+                            $"The user {loggedUser.Name} (ID: {loggedId}) has updated the salary for {updatedUserSalary.Name} (ID: {updatedUserSalary.ID})",
+                            (int) LogHandler.RequestTypes.PUT);
+                    }
                 }
+
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!SalaryExists(id))
@@ -103,6 +113,14 @@ namespace WebAPI.Controllers
                 try
                 {
                     db.SaveChanges();
+                    User postedUserSalary = db.Users.FirstOrDefault(u => u.ID == salary.UserID);
+                    if (postedUserSalary != null)
+                    {
+                        User loggedUser = db.Users.FirstOrDefault(u => u.ID == loggedId);
+                        if (loggedUser != null)
+                            LogHandler.CreateLogEntry(db, loggedId, $"The user {loggedUser.Name} (ID: {loggedId}) has created the salary for {postedUserSalary.Name} (ID: {postedUserSalary.ID})", (int)LogHandler.RequestTypes.POST);
+                    }
+                        
                 }
                 catch (DbUpdateException)
                 {
@@ -139,6 +157,14 @@ namespace WebAPI.Controllers
                 if (salary.UserID != 0)
                 {
                     SalaryHandler.DeleteOneSalary(db, salary);
+                    User deletedUserSalary = db.Users.FirstOrDefault(u => u.ID == salary.UserID);
+                    if (deletedUserSalary != null)
+                    {
+                        User loggedUser = db.Users.FirstOrDefault(u => u.ID == loggedId);
+                        if (loggedUser != null)
+                            LogHandler.CreateLogEntry(db, loggedId, $"The user {loggedUser.Name} (ID: {loggedId}) has deleted the salary for {deletedUserSalary.Name} (ID: {deletedUserSalary.ID})", (int)LogHandler.RequestTypes.DELETE);
+                    }
+                        
                     return Ok(salary);
                 }
 

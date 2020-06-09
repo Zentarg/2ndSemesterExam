@@ -100,6 +100,7 @@
                                 <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Create Invoice" x:Uid="lblNewInvoice" />
                             </StackPanel>
                         </Button>
+                        
                     </StackPanel>
                     <StackPanel Visibility="{Binding ShowAdministratorFunctions}">
                         <Button Style="{StaticResource HamburgerButton}" Command="{Binding DoToggleHamburger}">
@@ -133,6 +134,12 @@
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xF0E3;"/>
                                 <TextBlock Style="{StaticResource HamburgerButtonText}" Text="Requests" x:Uid="lblInvoices"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource HamburgerButton}" Tag="LogsPage" Click="NavigateFrame">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE8F4;"/>
+                                <TextBlock Style="{StaticResource HamburgerButtonText}" Text="ViewLogs" x:Uid="lblLogs" />
                             </StackPanel>
                         </Button>
                     </StackPanel>

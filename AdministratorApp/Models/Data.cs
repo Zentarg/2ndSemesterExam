@@ -69,6 +69,7 @@ namespace AdministratorApp.Models
         /// </summary>
         /// <returns></returns>
         public static Supplier EditedSupplier { get; set; }
+        public static List<Log> AllLogs { get; set; }
 
 
         public static async Task UpdateItems()
@@ -169,6 +170,11 @@ namespace AdministratorApp.Models
         public static async Task UpdateSuppliers()
         {
             AllSuppliers = await APIHandler<Dictionary<int, Supplier>>.GetOne("Suppliers");
+        }
+
+        public static async Task UpdateLogs()
+        {
+            AllLogs = await APIHandler<List<Log>>.GetOne("Logs");
         }
     }
 }

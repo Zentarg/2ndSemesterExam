@@ -109,6 +109,14 @@ namespace WebAPI.Controllers
                 try
                 {
                     db.SaveChanges();
+                    User foundUser = db.Users.FirstOrDefault(u => u.ID == auth.UserID);
+                    if (foundUser != null)
+                    {
+                        User loggedUser = db.Users.FirstOrDefault(u => u.ID == loggedId);
+                        if (loggedUser != null)
+                            LogHandler.CreateLogEntry(db, loggedId, $"The user {loggedUser.Name} (ID: {loggedId}) has updated the login information for {foundUser.Name} (ID: {foundUser.ID})", (int)LogHandler.RequestTypes.PUT);
+                    }
+                        
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -143,6 +151,14 @@ namespace WebAPI.Controllers
                 try
                 {
                     await db.SaveChangesAsync();
+                    User foundUser = db.Users.FirstOrDefault(u => u.ID == auth.UserID);
+                    if (foundUser != null)
+                    {
+                        User loggedUser = db.Users.FirstOrDefault(u => u.ID == loggedId);
+                        if (loggedUser != null)
+                            LogHandler.CreateLogEntry(db, loggedId, $"The user {loggedUser.Name} (ID: {loggedId}) has created the login information for {foundUser.Name} (ID: {foundUser.ID})", (int)LogHandler.RequestTypes.POST);
+                    }
+                        
                 }
                 catch (DbUpdateException)
                 {
@@ -178,6 +194,14 @@ namespace WebAPI.Controllers
                 if (auth.UserID != 0)
                 {
                     AuthHandler.DeleteUserAuth(db, auth);
+                    User foundUser = db.Users.FirstOrDefault(u => u.ID == auth.UserID);
+                    if (foundUser != null)
+                    {
+                        User loggedUser = db.Users.FirstOrDefault(u => u.ID == loggedId);
+                        if (loggedUser != null)
+                            LogHandler.CreateLogEntry(db, loggedId, $"The user {loggedUser.Name} (ID: {loggedId}) has deleted the login information for {foundUser.Name} (ID: {foundUser.ID})", (int)LogHandler.RequestTypes.DELETE);
+                    }
+                        
                     return Ok(auth);
                 }
 
