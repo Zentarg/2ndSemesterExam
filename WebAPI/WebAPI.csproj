@@ -189,6 +189,7 @@
     <Compile Include="InvoiceHasItem.cs" />
     <Compile Include="InvoiceStatu.cs" />
     <Compile Include="Item.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="Models\AuthHandler.cs" />
     <Compile Include="Models\CategoriesHandler.cs" />
     <Compile Include="Models\CommonMethods.cs" />

@@ -33,6 +33,7 @@ namespace WebAPI
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserLevel> UserLevels { get; set; }
         public virtual DbSet<InvoiceStatu> InvoiceStatus { get; set; }
+        public virtual DbSet<Log> Logs { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -210,6 +211,9 @@ namespace WebAPI
 
             modelBuilder.Entity<InvoiceStatu>()
                 .Property(e => e.Name)
+                .IsUnicode(false);
+            modelBuilder.Entity<Log>()
+                .Property(e => e.LogEntry)
                 .IsUnicode(false);
         }
     }
