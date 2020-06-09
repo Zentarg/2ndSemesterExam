@@ -117,11 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="btnClose.Content" xml:space="preserve">
+    <value>Bezárás</value>
+  </data>
+  <data name="btnEdit.Content" xml:space="preserve">
+    <value>Szerkesztés</value>
+  </data>
   <data name="btnLogOut.Text" xml:space="preserve">
     <value>Kijelentkezés</value>
   </data>
+  <data name="cntSelectStock.Content" xml:space="preserve">
+    <value>Válassz raktárat</value>
+  </data>
+  <data name="cntSelectType.Content" xml:space="preserve">
+    <value>Válassz típust</value>
+  </data>
+  <data name="lblAmount.Text" xml:space="preserve">
+    <value>Készlet</value>
+  </data>
+  <data name="lblBarcode.Text" xml:space="preserve">
+    <value>Vonalkód</value>
+  </data>
   <data name="lblCancel.Text" xml:space="preserve">
     <value>Mégsem</value>
+  </data>
+  <data name="lblColor.Text" xml:space="preserve">
+    <value>Szín</value>
+  </data>
+  <data name="lblComment.Text" xml:space="preserve">
+    <value>Megjegyzés</value>
+  </data>
+  <data name="lblDiscount.Text" xml:space="preserve">
+    <value>Kedvezmény</value>
   </data>
   <data name="lblEmployees.Text" xml:space="preserve">
     <value>Munkatársak</value>
@@ -135,8 +162,26 @@
   <data name="lblLogIn.Text" xml:space="preserve">
     <value>Bejelentkezés</value>
   </data>
+  <data name="lblName.Text" xml:space="preserve">
+    <value>Név</value>
+  </data>
   <data name="lblNewInvoice.Text" xml:space="preserve">
     <value>Új számla rögzítése</value>
+  </data>
+  <data name="lblPicture.Text" xml:space="preserve">
+    <value>Kép</value>
+  </data>
+  <data name="lblPrice.Text" xml:space="preserve">
+    <value>Ár</value>
+  </data>
+  <data name="lblSearch.PlaceholderText" xml:space="preserve">
+    <value>Keresés...</value>
+  </data>
+  <data name="lblSize.Text" xml:space="preserve">
+    <value>Méret</value>
+  </data>
+  <data name="lblSortBy.Text" xml:space="preserve">
+    <value>Rendezés</value>
   </data>
   <data name="lblStock.Text" xml:space="preserve">
     <value>Leltár</value>
@@ -146,5 +191,8 @@
   </data>
   <data name="lblSuppliers.Text" xml:space="preserve">
     <value>Beszállítók</value>
+  </data>
+  <data name="lblType.Text" xml:space="preserve">
+    <value>Típus</value>
   </data>
 </root>

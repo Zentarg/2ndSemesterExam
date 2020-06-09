@@ -45,7 +45,7 @@
 
         <Style x:Key="ItemPropertiesHeaderTextBlock" TargetType="TextBlock">
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Width" Value="75" />
+            <Setter Property="Width" Value="95" />
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="Margin" Value="0,0,6,0"/>
         </Style>
@@ -64,19 +64,16 @@
 
         <StackPanel Orientation="Horizontal" Background="#2f4959" Margin="-1,0,0,0">
             
-            <TextBlock Text="Sort by:" Style="{StaticResource SortText}" Margin="7,6,15,0" />
-            <TextBlock Text="Name" Style="{StaticResource SortText}"  Margin="0,6,0,0" />
+            <TextBlock Text="Sort by:" x:Uid="lblSortBy" Style="{StaticResource SortText}" Margin="7,6,15,0" />
+            <TextBlock Text="Name" x:Uid="lblName" Style="{StaticResource SortText}"  Margin="0,6,0,0" />
             <ToggleButton Name="SortNameIncButton"  Style="{StaticResource MenuButton}" Height="35" Width="35" Content="&#xE70D;"  />
-            <TextBlock Text="Type" Style="{StaticResource SortText}"  Margin="7,6,0,0" />
+            <TextBlock Text="Type" x:Uid="lblType" Style="{StaticResource SortText}"  Margin="7,6,0,0" />
             <ToggleButton Name="SortTypeIncButton"  Style="{StaticResource MenuButton}" Height="35" Width="35" Content="&#xE70D;"  />
-
-
-
-            <TextBlock Text="Price" Style="{StaticResource SortText}"  Margin="15,6,0,0" />
+            <TextBlock Text="Price" x:Uid="lblPrice" Style="{StaticResource SortText}"  Margin="15,6,0,0" />
             <ToggleButton Name="SortPriceIncButton" Height="35" Width="35" Content="&#xE70D;" Style="{StaticResource MenuButton}" />
 
 
-            <DropDownButton Content="Select Stocks" Height="51" Foreground="White">
+            <DropDownButton Content="Select Stocks" x:Uid="cntSelectStock" Height="51" Foreground="White">
                 <Button.Flyout>
                     <Flyout>
                         <GridView x:Name="StocksGrid"  ItemsSource="{Binding Stocks, Mode=OneWay}" SelectionMode="Multiple" IsItemClickEnabled="False" SelectionChanged="StocksGrid_OnSelectionChanged">
@@ -89,7 +86,8 @@
                     </Flyout>
                 </Button.Flyout>
             </DropDownButton>
-            <DropDownButton Content="Select Categories" Margin="15,0,0,0" Height="51" Foreground="White">
+
+            <DropDownButton Content="Select Type" x:Uid="cntSelectType" Margin="15,0,0,0" Height="51" Foreground="White">
                 <Button.Flyout>
                     <Flyout>
                         <GridView x:Name="CategoriesGrid"  ItemsSource="{Binding AllCategories, Mode=OneWay}" SelectionMode="Multiple" IsItemClickEnabled="False" SelectionChanged="CategoriesGrid_OnSelectionChanged">
@@ -103,7 +101,7 @@
                 </Button.Flyout>
             </DropDownButton>
 
-            <TextBox x:Name="SearchBox" Width="275" MaxWidth="300" Height="35" Margin="15 0 0 0" PlaceholderText="Search..." Text="{Binding FilterString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox x:Name="SearchBox" x:Uid="lblSearch" Width="275" MaxWidth="300" Height="35" Margin="15 0 0 0" PlaceholderText="Search..." Text="{Binding FilterString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
             <ListView ItemsSource="{Binding SelectedCategories, Mode=OneWay}"/>
 
@@ -164,18 +162,18 @@
                                 </ResourceDictionary>
                             </Button.Resources>
                         </Button>
-                        <Button Foreground="White" Visibility="{Binding IsVisible}" Name="EditButton" Width="75" Height="35" Content="Edit" HorizontalAlignment="Right" Margin="15,0,0,0"  Click="EditButton_OnClick" />
-                        <Button Foreground="White" Name="CloseButton" Width="75" Height="35" Content="Close" HorizontalAlignment="left" Margin="225,0,0,0"  Click="CloseButton_OnClick"/>
+                        <Button Foreground="White" Visibility="{Binding IsVisible}" Name="EditButton" x:Uid="btnEdit" Width="95" Height="35" Content="Edit" HorizontalAlignment="Right" Margin="15,0,0,0"  Click="EditButton_OnClick" />
+                        <Button x:Uid="btnClose" Foreground="White" Name="CloseButton" Width="75" Height="35" Content="Close" HorizontalAlignment="left" Margin="205,0,0,0"  Click="CloseButton_OnClick"/>
 
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
-                    <TextBlock Text="Name:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
+                    <TextBlock Text="Name:" x:Uid="lblName" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
                     <TextBlock Text="{Binding SelectedItem.Item1.Name, Mode=TwoWay}" FontSize="18" />
                 </StackPanel>
 
                     <StackPanel Margin="15,15,5,0" HorizontalAlignment="Left">
-                        <TextBlock Text="Amount:" HorizontalAlignment="Left"  Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
+                        <TextBlock x:Uid="lblAmount" Text="Amount:" HorizontalAlignment="Left"  Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
 
                     <ListView Width="350"   ItemsSource="{Binding SelectedItemInStocks}" SelectionMode="None">
                         <ListView.ItemTemplate>
@@ -193,11 +191,11 @@
                 </StackPanel>
 
                 <StackPanel  Orientation="Horizontal" Margin="15,15,15,0">
-                    <TextBlock Text="Category:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
+                    <TextBlock x:Uid="lblType" Text="Category:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
                     <TextBlock Text="{Binding SelectedItemCategory.Name}"   />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
-                    <TextBlock Text="Price:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
+                    <TextBlock x:Uid="lblPrice" Text="Price:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
                     <TextBlock Text="{Binding SelectedItem.Item1.Price, Mode=TwoWay}"  />
                     <TextBlock Text="Ft" Margin="0,0,6,0" />
 
@@ -207,30 +205,30 @@
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
-                    <TextBlock Text="Discount:" Style="{StaticResource ItemPropertiesHeaderTextBlock}"/>
+                    <TextBlock x:Uid="lblDiscount" Text="Discount:" Style="{StaticResource ItemPropertiesHeaderTextBlock}"/>
                     <TextBlock Text="{Binding SelectedItem.Item1.DiscountPercentage, Mode=TwoWay}"  />
                     <TextBlock Text="%" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
-                    <TextBlock Text="Color:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
+                    <TextBlock x:Uid="lblColor" Text="Color:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
                     <TextBlock Text="{Binding SelectedItem.Item1.Color, Mode=TwoWay}" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
-                    <TextBlock Text="Size:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
+                    <TextBlock x:Uid="lblSize" Text="Size:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
                     <TextBlock Text="{Binding SelectedItem.Item1.Size, Mode=TwoWay}" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
-                    <TextBlock Text="Barcode:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
+                    <TextBlock x:Uid="lblBarcode" Text="Barcode:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
                     <TextBlock Text="{Binding SelectedItem.Item1.Barcode, Mode=TwoWay}" />
                 </StackPanel>
 
                     <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
-                        <TextBlock Text="Comment:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
+                        <TextBlock x:Uid="lblComment" Text="Comment:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
                     <TextBlock Text="{Binding SelectedItem.Item1.Comment, Mode=TwoWay}"  Height="Auto" MaxHeight="250" />
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
-                    <TextBlock Text="Picture:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
+                    <TextBlock x:Uid="lblPicture" Text="Picture:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
                     <Image Source="{Binding SelectedItem.Item1.PictureSource, Mode=TwoWay}" MaxWidth="250" MaxHeight="250" />
                 </StackPanel>
 

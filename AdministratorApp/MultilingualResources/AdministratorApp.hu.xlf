@@ -46,6 +46,70 @@
           <source>Leltár</source>
           <target state="new">Leltár</target>
         </trans-unit>
+        <trans-unit id="lblName.Text" translate="yes" xml:space="preserve">
+          <source>Név</source>
+          <target state="new">Név</target>
+        </trans-unit>
+        <trans-unit id="lblSortBy.Text" translate="yes" xml:space="preserve">
+          <source>Rendezés</source>
+          <target state="new">Rendezés</target>
+        </trans-unit>
+        <trans-unit id="lblType.Text" translate="yes" xml:space="preserve">
+          <source>Típus</source>
+          <target state="new">Típus</target>
+        </trans-unit>
+        <trans-unit id="lblPrice.Text" translate="yes" xml:space="preserve">
+          <source>Ár</source>
+          <target state="new">Ár</target>
+        </trans-unit>
+        <trans-unit id="cntSelectType.Content" translate="yes" xml:space="preserve">
+          <source>Válassz típust</source>
+          <target state="new">Válassz típust</target>
+        </trans-unit>
+        <trans-unit id="btnClose.Content" translate="yes" xml:space="preserve">
+          <source>Bezárás</source>
+          <target state="new">Bezárás</target>
+        </trans-unit>
+        <trans-unit id="btnEdit.Content" translate="yes" xml:space="preserve">
+          <source>Szerkesztés</source>
+          <target state="new">Szerkesztés</target>
+        </trans-unit>
+        <trans-unit id="cntSelectStock.Content" translate="yes" xml:space="preserve">
+          <source>Válassz raktárat</source>
+          <target state="new">Válassz raktárat</target>
+        </trans-unit>
+        <trans-unit id="lblAmount.Text" translate="yes" xml:space="preserve">
+          <source>Készlet</source>
+          <target state="new">Készlet</target>
+        </trans-unit>
+        <trans-unit id="lblDiscount.Text" translate="yes" xml:space="preserve">
+          <source>Kedvezmény</source>
+          <target state="new">Kedvezmény</target>
+        </trans-unit>
+        <trans-unit id="lblSearch.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Keresés...</source>
+          <target state="new">Keresés...</target>
+        </trans-unit>
+        <trans-unit id="lblBarcode.Text" translate="yes" xml:space="preserve">
+          <source>Vonalkód</source>
+          <target state="new">Vonalkód</target>
+        </trans-unit>
+        <trans-unit id="lblColor.Text" translate="yes" xml:space="preserve">
+          <source>Szín</source>
+          <target state="new">Szín</target>
+        </trans-unit>
+        <trans-unit id="lblComment.Text" translate="yes" xml:space="preserve">
+          <source>Megjegyzés</source>
+          <target state="new">Megjegyzés</target>
+        </trans-unit>
+        <trans-unit id="lblSize.Text" translate="yes" xml:space="preserve">
+          <source>Méret</source>
+          <target state="new">Méret</target>
+        </trans-unit>
+        <trans-unit id="lblPicture.Text" translate="yes" xml:space="preserve">
+          <source>Kép</source>
+          <target state="new">Kép</target>
+        </trans-unit>
       </group>
     </body>
   </file>

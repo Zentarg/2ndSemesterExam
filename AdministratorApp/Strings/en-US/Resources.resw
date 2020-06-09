@@ -117,13 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="btnClose.Content" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="btnEdit.Content" xml:space="preserve">
+    <value>Edit</value>
+  </data>
   <data name="btnLogOut.Text" xml:space="preserve">
     <value>Log out</value>
     <comment>Log out text in the dropdown.</comment>
   </data>
+  <data name="cntSelectStock.Content" xml:space="preserve">
+    <value>Select Stock</value>
+    <comment>Stock page - dropdown</comment>
+  </data>
+  <data name="cntSelectType.Content" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="lblAmount.Text" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="lblBarcode.Text" xml:space="preserve">
+    <value>Barcode</value>
+  </data>
   <data name="lblCancel.Text" xml:space="preserve">
     <value>Cancel</value>
     <comment>Cancel</comment>
+  </data>
+  <data name="lblColor.Text" xml:space="preserve">
+    <value>Color</value>
+  </data>
+  <data name="lblDiscount.Text" xml:space="preserve">
+    <value>Discount</value>
   </data>
   <data name="lblEmployees.Text" xml:space="preserve">
     <value>Employees</value>
@@ -141,9 +166,29 @@
     <value>Log in</value>
     <comment>Login</comment>
   </data>
+  <data name="lblName.Text" xml:space="preserve">
+    <value>Name</value>
+    <comment>StockPage</comment>
+  </data>
   <data name="lblNewInvoice.Text" xml:space="preserve">
     <value>Create new invoice</value>
     <comment>Home page - create invoice</comment>
+  </data>
+  <data name="lblPicture.Text" xml:space="preserve">
+    <value>Picture</value>
+  </data>
+  <data name="lblPrice.Text" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="lblSearch.PlaceholderText" xml:space="preserve">
+    <value>Search...</value>
+  </data>
+  <data name="lblSize.Text" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="lblSortBy.Text" xml:space="preserve">
+    <value>Sort by...</value>
+    <comment>StockPage</comment>
   </data>
   <data name="lblStock.Text" xml:space="preserve">
     <value>Stock</value>
@@ -155,5 +200,8 @@
   <data name="lblSuppliers.Text" xml:space="preserve">
     <value>Suppliers</value>
     <comment>Home page-Suppliers</comment>
+  </data>
+  <data name="lblType.Text" xml:space="preserve">
+    <value>Type</value>
   </data>
 </root>
