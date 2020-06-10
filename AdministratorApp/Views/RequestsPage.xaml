@@ -41,7 +41,7 @@
         <StackPanel Orientation="Horizontal" Grid.Row="1" Spacing="15">
             <TextBlock Text="Sort By:"/>
             <Button Content="ID" Command="{Binding DoToggleIDSort}" />
-            <Button Content="Author Name" Command="{Binding DotoggleAuthorNameSort}" />
+            <Button Content="Author Name" Command="{Binding DoToggleAuthorNameSort}" />
             <Button Content="Store Name" Command="{Binding DoToggleStoreNameSort}" />
         </StackPanel>
         <ScrollViewer Grid.Row="2" Grid.Column="0">

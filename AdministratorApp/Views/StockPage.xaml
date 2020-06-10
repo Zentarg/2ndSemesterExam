@@ -62,15 +62,13 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" Background="#2f4959" Margin="-1,0,0,0">
-            
-            <TextBlock Text="Sort by:" x:Uid="lblSortBy" Style="{StaticResource SortText}" Margin="7,6,15,0" />
-            <TextBlock Text="Name" x:Uid="lblName" Style="{StaticResource SortText}"  Margin="0,6,0,0" />
-            <ToggleButton Name="SortNameIncButton"  Style="{StaticResource MenuButton}" Height="35" Width="35" Content="&#xE70D;"  />
-            <TextBlock Text="Type" x:Uid="lblType" Style="{StaticResource SortText}"  Margin="7,6,0,0" />
-            <ToggleButton Name="SortTypeIncButton"  Style="{StaticResource MenuButton}" Height="35" Width="35" Content="&#xE70D;"  />
-            <TextBlock Text="Price" x:Uid="lblPrice" Style="{StaticResource SortText}"  Margin="15,6,0,0" />
-            <ToggleButton Name="SortPriceIncButton" Height="35" Width="35" Content="&#xE70D;" Style="{StaticResource MenuButton}" />
+        <StackPanel Orientation="Horizontal" Background="#2f4959" Margin="-1,0,0,0" Spacing="15">
+
+            <TextBlock Text="Sort by:" x:Uid="lblSortBy" Style="{StaticResource SortText}" Margin="7,6,0,0" />
+            <Button Content="ID" Command="{Binding DoToggleIDSort}"/>
+            <Button Content="Name" Command="{Binding DoToggleNameSort}"/>
+            <Button Content="Category" Command="{Binding DoToggleTypeSort}"/>
+            <Button Content="Price" Command="{Binding DoTogglePriceSort}"/>
 
 
             <DropDownButton Content="Select Stocks" x:Uid="cntSelectStock" Height="51" Foreground="White">
