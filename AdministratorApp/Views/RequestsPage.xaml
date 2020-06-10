@@ -15,13 +15,13 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="32" />
+            <RowDefinition Height="32" />
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
-
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2">
             <TextBox PlaceholderText="Search..." Width="350" Text="{Binding FilterString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <DropDownButton Content="Select Stores">
@@ -38,7 +38,13 @@
                 </DropDownButton.Flyout>
             </DropDownButton>
         </StackPanel>
-        <ScrollViewer Grid.Row="1" Grid.Column="0">
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Spacing="15">
+            <TextBlock Text="Sort By:"/>
+            <Button Content="ID" Command="{Binding DoToggleIDSort}" />
+            <Button Content="Author Name" Command="{Binding DotoggleAuthorNameSort}" />
+            <Button Content="Store Name" Command="{Binding DoToggleStoreNameSort}" />
+        </StackPanel>
+        <ScrollViewer Grid.Row="2" Grid.Column="0">
             <ListView ItemsSource="{Binding FilteredInvoices, Mode=OneWay}" SelectedItem="{Binding SelectedInvoice, Mode=TwoWay}">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -60,7 +66,7 @@
             </ListView.ItemTemplate>
         </ListView>
         </ScrollViewer>
-        <Grid Grid.Row="1" Grid.Column="1" Padding="15 0 0 15" ColumnSpacing="10" RowSpacing="10">
+        <Grid Grid.Row="0" Grid.Column="1" Padding="15 5 0 15" ColumnSpacing="10" RowSpacing="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30" />
                 <RowDefinition Height="30" />

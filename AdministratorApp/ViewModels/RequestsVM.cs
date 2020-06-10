@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -25,6 +26,9 @@ namespace AdministratorApp.ViewModels
             LoadData();
             DoAcceptInvoice = new RelayCommand(AcceptInvoice);
             DoDenyInvoice = new RelayCommand(DenyInvoice);
+            DoToggleIDSort = new RelayCommand(ToggleIDSort);
+            DotoggleAuthorNameSort = new RelayCommand(ToggleAuthorNameSort);
+            DoToggleStoreNameSort = new RelayCommand(ToggleStoreNameSort);
         }
 
         public RelayCommand DoAcceptInvoice { get; set; }
@@ -72,6 +76,60 @@ namespace AdministratorApp.ViewModels
             }
         }
 
+        public Constants.SortBy SortBy { get; set; } = Constants.SortBy.IDDescending;
+
+        public RelayCommand DoToggleIDSort { get; set; }
+        public RelayCommand DotoggleAuthorNameSort { get; set; }
+        public RelayCommand DoToggleStoreNameSort { get; set; }
+
+        public async void ToggleIDSort()
+        {
+            if (SortBy != Constants.SortBy.IDDescending && SortBy != Constants.SortBy.IDAscending)
+            {
+                SortBy = Constants.SortBy.IDDescending;
+                OnPropertyChanged(nameof(FilteredInvoices));
+                return;
+            }
+
+            if (SortBy == Constants.SortBy.IDDescending)
+                SortBy = Constants.SortBy.IDAscending;
+            else
+                SortBy = Constants.SortBy.IDDescending;
+            OnPropertyChanged(nameof(FilteredInvoices));
+        }
+
+        public async void ToggleAuthorNameSort()
+        {
+            if (SortBy != Constants.SortBy.NameAscending && SortBy != Constants.SortBy.NameDescending)
+            {
+                SortBy = Constants.SortBy.NameDescending;
+                OnPropertyChanged(nameof(FilteredInvoices));
+                return;
+            }
+
+            if (SortBy == Constants.SortBy.NameDescending)
+                SortBy = Constants.SortBy.NameAscending;
+            else
+                SortBy = Constants.SortBy.NameDescending;
+            OnPropertyChanged(nameof(FilteredInvoices));
+        }
+
+        public async void ToggleStoreNameSort()
+        {
+            if (SortBy != Constants.SortBy.StoreAscending && SortBy != Constants.SortBy.StoreDescending)
+            {
+                SortBy = Constants.SortBy.StoreDescending;
+                OnPropertyChanged(nameof(FilteredInvoices));
+                return;
+            }
+
+            if (SortBy == Constants.SortBy.StoreDescending)
+                SortBy = Constants.SortBy.StoreAscending;
+            else
+                SortBy = Constants.SortBy.StoreDescending;
+            OnPropertyChanged(nameof(FilteredInvoices));
+        }
+
         public ObservableCollection<Tuple<Invoice, string, string, string>> FilteredInvoices
         {
             get
@@ -110,7 +168,34 @@ namespace AdministratorApp.ViewModels
 
                 foreach (Invoice invoice in filteredList)
                 {
+                    if (Data.AllUsers.Count == 0 || Data.AllStores.Count == 0 || Data.AllStocks.Count == 0)
+                        break;
                     invoices.Add(new Tuple<Invoice, string, string, string>(invoice, Data.AllUsers[invoice.AuthorID].Name, Data.AllStores[invoice.StoreID].Name, Data.AllStocks[Data.AllStores[invoice.StoreID].StockId].Name));
+                }
+
+                switch (SortBy)
+                {
+                    case Constants.SortBy.IDAscending:
+                        invoices = new ObservableCollection<Tuple<Invoice, string, string, string>>(invoices.OrderBy(x => x.Item1.ID).ToList());
+                        break;
+                    case Constants.SortBy.NameAscending:
+                        invoices = new ObservableCollection<Tuple<Invoice, string, string, string>>(invoices.OrderBy(x => Data.AllUsers[x.Item1.AuthorID].Name).ToList());
+                        break;
+                    case Constants.SortBy.StoreAscending:
+                        invoices = new ObservableCollection<Tuple<Invoice, string, string, string>>(invoices.OrderBy(x => Data.AllStores[x.Item1.StoreID].Name).ToList());
+                        break;
+                    case Constants.SortBy.IDDescending:
+                        invoices = new ObservableCollection<Tuple<Invoice, string, string, string>>(invoices.OrderByDescending(x => x.Item1.ID).ToList());
+                        break;
+                    case Constants.SortBy.NameDescending:
+                        invoices = new ObservableCollection<Tuple<Invoice, string, string, string>>(invoices.OrderByDescending(x => Data.AllUsers[x.Item1.AuthorID].Name).ToList());
+                        break;
+                    case Constants.SortBy.StoreDescending:
+                        invoices = new ObservableCollection<Tuple<Invoice, string, string, string>>(invoices.OrderByDescending(x => Data.AllStores[x.Item1.StoreID].Name).ToList());
+                        break;
+                    default:
+                        invoices = new ObservableCollection<Tuple<Invoice, string, string, string>>(invoices.OrderByDescending(x => x.Item1.ID).ToList());
+                        break;
                 }
 
                 return invoices;
