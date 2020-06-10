@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace CommonLibrary.Models
@@ -8,7 +11,6 @@ namespace CommonLibrary.Models
     {
         public Log()
         {
-
         }
 
         public Log(int id, int userId, string logEntry, DateTime dateAndTime, int requestType)
@@ -17,12 +19,13 @@ namespace CommonLibrary.Models
             UserID = userId;
             LogEntry = logEntry;
             DateAndTime = dateAndTime;
-            RequestType = requestType;
+            RequestType = (Constants.RequestTypes) requestType;
         }
         public int ID { get; set; }
         public int UserID { get; set; }
         public string LogEntry { get; set; }
         public DateTime DateAndTime { get; set; }
-        public int RequestType { get; set; }
+        public Constants.RequestTypes RequestType { get; set; }
+        public string RequestDescription { get; set; }
     }
 }

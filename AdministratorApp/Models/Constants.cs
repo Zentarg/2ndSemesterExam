@@ -45,5 +45,7 @@ namespace AdministratorApp.Models
         /// A constant string that contains allowed characters for certain fields
         /// </summary>
         public const string AllowedCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890ÁÉÍÓÖŐÚÜŰáéíóöőúüű ";
+
+        
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -19,7 +20,6 @@ namespace AdministratorApp.ViewModels
         public LogsPageVM()
         {
             LoadDataAsync();
-
         }
 
         public ObservableCollection<Log> LogEntries
@@ -30,12 +30,21 @@ namespace AdministratorApp.ViewModels
 
         public string LogEntry { get; set; }
 
+        public CommonLibrary.Constants.RequestTypes RequestType
+        {
+            get;
+            set;
+        }
+
+
         public async void LoadDataAsync()
         {
             await Data.UpdateLogs();
             LogEntries = new ObservableCollection<Log>(Data.AllLogs);
         }
 
+
+        
 
         public event PropertyChangedEventHandler PropertyChanged;
 
