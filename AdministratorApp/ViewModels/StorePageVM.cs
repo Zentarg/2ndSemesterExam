@@ -50,6 +50,7 @@ namespace AdministratorApp.ViewModels
             DoDelete = new RelayCommand(Delete);
             DoCancel = new RelayCommand(Cancel);
             DoAddStore = new RelayCommand(AddStore);
+     
         }
 
         #region Properties
@@ -152,6 +153,7 @@ namespace AdministratorApp.ViewModels
                     Stock = Data.AllStocks[StockID].Name;
                 }
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(StoreIsSelected));
             }
         }
 
@@ -219,6 +221,19 @@ namespace AdministratorApp.ViewModels
         public bool IsVisible
         {
             get => AuthHandler.ShowAdministratorFunctions;
+        }
+
+        public bool StoreIsSelected
+        {
+            get
+            {
+                if (SelectedStore.ID == 0)
+                {
+                    return false;
+                }
+
+                return true;
+            } 
         }
 
         #endregion

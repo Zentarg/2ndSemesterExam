@@ -117,15 +117,33 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="btnCancel.Content" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="btnClose.Content" xml:space="preserve">
     <value>Close</value>
+  </data>
+  <data name="btnConfirm.Content" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="btnDelete.Content" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="btnDeselect.Content" xml:space="preserve">
+    <value>Deselect</value>
   </data>
   <data name="btnEdit.Content" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="btnLogin.Content" xml:space="preserve">
+    <value>Login</value>
+  </data>
   <data name="btnLogOut.Text" xml:space="preserve">
     <value>Log out</value>
     <comment>Log out text in the dropdown.</comment>
+  </data>
+  <data name="btnSave.Content" xml:space="preserve">
+    <value>Save</value>
   </data>
   <data name="cntSelectStock.Content" xml:space="preserve">
     <value>Select Stock</value>
@@ -134,8 +152,21 @@
   <data name="cntSelectType.Content" xml:space="preserve">
     <value>Type</value>
   </data>
+  <data name="lblAddNewProduct.Text" xml:space="preserve">
+    <value>Add new product</value>
+  </data>
+  <data name="lblAddProductToStock.Text" xml:space="preserve">
+    <value>Add product to stock</value>
+  </data>
+  <data name="lblAddress.Text" xml:space="preserve">
+    <value>Address</value>
+  </data>
   <data name="lblAmount.Text" xml:space="preserve">
     <value>Amount</value>
+  </data>
+  <data name="lblAmountEdit.Text" xml:space="preserve">
+    <value>**Amount</value>
+    <comment>Editable Amount with comment</comment>
   </data>
   <data name="lblBarcode.Text" xml:space="preserve">
     <value>Barcode</value>
@@ -147,8 +178,14 @@
   <data name="lblColor.Text" xml:space="preserve">
     <value>Color</value>
   </data>
+  <data name="lblComment.Text" xml:space="preserve">
+    <value>Comment</value>
+  </data>
   <data name="lblDiscount.Text" xml:space="preserve">
     <value>Discount</value>
+  </data>
+  <data name="lblDiscountEdit.Text" xml:space="preserve">
+    <value>**Discount</value>
   </data>
   <data name="lblEmployees.Text" xml:space="preserve">
     <value>Employees</value>
@@ -166,6 +203,12 @@
     <value>Log in</value>
     <comment>Login</comment>
   </data>
+  <data name="lblLogs.Text" xml:space="preserve">
+    <value>View logs</value>
+  </data>
+  <data name="lblManager.Text" xml:space="preserve">
+    <value>Manager</value>
+  </data>
   <data name="lblName.Text" xml:space="preserve">
     <value>Name</value>
     <comment>StockPage</comment>
@@ -180,6 +223,9 @@
   <data name="lblPrice.Text" xml:space="preserve">
     <value>Price</value>
   </data>
+  <data name="lblPriceEdit.Text" xml:space="preserve">
+    <value>**Price</value>
+  </data>
   <data name="lblSearch.PlaceholderText" xml:space="preserve">
     <value>Search...</value>
   </data>
@@ -193,6 +239,9 @@
   <data name="lblStock.Text" xml:space="preserve">
     <value>Stock</value>
   </data>
+  <data name="lblStock2.Text" xml:space="preserve">
+    <value>Stock</value>
+  </data>
   <data name="lblStores.Text" xml:space="preserve">
     <value>Stores</value>
     <comment>Home Page - Stores</comment>
@@ -201,7 +250,16 @@
     <value>Suppliers</value>
     <comment>Home page-Suppliers</comment>
   </data>
+  <data name="lblTelephone.Text" xml:space="preserve">
+    <value>Phone nr.</value>
+  </data>
   <data name="lblType.Text" xml:space="preserve">
     <value>Type</value>
+  </data>
+  <data name="placeholderPassword.PlaceholderText" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="placeholderUsername.PlaceholderTexplaceholderUsername.PlaceholderTexplaceholderUsername.PlaceholderText" xml:space="preserve">
+    <value>Username</value>
   </data>
 </root>

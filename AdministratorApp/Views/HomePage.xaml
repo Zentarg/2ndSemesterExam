@@ -130,7 +130,7 @@
                         <StackPanel Orientation="Horizontal" Width="400">
                             <StackPanel HorizontalAlignment="Left">
                                 <TextBlock Style="{StaticResource ButtonText}"  FontSize="29" FontWeight="Bold" Text="{Binding NoItems}" Foreground="White"/>
-                                <TextBlock Style="{StaticResource ButtonText}"   Text="Items in stock" x:Uid="lblItemsInStock" Foreground="White"/>
+                                <TextBlock Style="{StaticResource ButtonText}"  Width="163" Text="Items in stock" x:Uid="lblItemsInStock" Foreground="White"/>
                             </StackPanel>
                             <TextBlock Style="{StaticResource ButtonIcon}" Text="&#xE82D;" Margin="120,0,0,0" Foreground="#007840" />
                         </StackPanel>

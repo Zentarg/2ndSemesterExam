@@ -38,7 +38,7 @@
         </Style>
         <Style x:Key="HamburgerButtonText" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Aloe Vera" />
-            <Setter Property="FontSize" Value="25" />
+            <Setter Property="FontSize" Value="23" />
             <Setter Property="Margin" Value="15 0 0 0"></Setter>
         </Style>
     </Page.Resources>
@@ -138,7 +138,7 @@
                         </Button>
                         <Button Style="{StaticResource HamburgerButton}" Tag="LogsPage" Click="NavigateFrame">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE8F4;"/>
+                                <TextBlock Style="{StaticResource HamburgerButtonIcon}" Text="&#xE81C;"/>
                                 <TextBlock Style="{StaticResource HamburgerButtonText}" Text="ViewLogs" x:Uid="lblLogs" />
                             </StackPanel>
                         </Button>
