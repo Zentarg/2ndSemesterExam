@@ -28,11 +28,18 @@
 
 
         <StackPanel Grid.Column="0">
+            <TextBox x:Name="Search" Height="30" PlaceholderText="Search..." IsFocusEngaged="False" Text="{Binding FilterString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <StackPanel Orientation="Horizontal" Spacing="15">
+                <TextBlock Text="Order By"/>
+                <Button Content="ID" Command="{Binding DoToggleIDSort}" />
+                <Button Content="Name" Command="{Binding DoToggleNameSort}"/>
+            </StackPanel>
             <TextBox x:Name="Search" Height="30" PlaceholderText="Search..." x:Uid="lblSearch" IsFocusEngaged="False" Text="{Binding FilterString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <ListView x:Name="StoreListView" ItemsSource="{Binding FilteredStores, Mode=TwoWay}" SelectedItem="{Binding SelectedStore, Mode=TwoWay}" VerticalAlignment="Center" SelectionChanged="Selector_OnSelectionChanged" Width="auto">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
+                            <TextBlock FontSize="15" VerticalAlignment="Center" Text="{Binding ID}" Margin="0,20,20,0"/>
                             <TextBlock FontSize="15" VerticalAlignment="Center" Text="{Binding Name}" Margin="0,20,20,0"/>
                             <TextBlock FontSize="15" VerticalAlignment="Center" Text="{Binding Address}" Margin="0,20,20,0"/>
                             <TextBlock FontSize="15" VerticalAlignment="Center" Text="{Binding Phone}" Margin="0,20,20,0"/>

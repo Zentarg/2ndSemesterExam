@@ -43,6 +43,10 @@ namespace AdministratorApp.ViewModels
             DeselectItemCommand = new RelayCommand(DeselectItem);
             DeleteItemCommand=new RelayCommand(DeleteItem);
             NavigateToAddItemToStockCommand = new RelayCommand(NavigateToAddItemToStock);
+            DoToggleIDSort = new RelayCommand(ToggleIDSort);
+            DoToggleNameSort = new RelayCommand(ToggleNameSort);
+            DoToggleTypeSort = new RelayCommand(ToggleTypeSort);
+            DoTogglePriceSort = new RelayCommand(TogglePriceSort);
         }
 
         
@@ -99,6 +103,77 @@ namespace AdministratorApp.ViewModels
             }
         }
 
+        public Constants.SortBy SortBy { get; set; } = Constants.SortBy.IDDescending;
+
+        public RelayCommand DoToggleIDSort { get; set; }
+        public RelayCommand DoToggleNameSort { get; set; }
+        public RelayCommand DoToggleTypeSort { get; set; }
+        public RelayCommand DoTogglePriceSort { get; set; }
+
+        public async void ToggleIDSort()
+        {
+            if (SortBy != Constants.SortBy.IDDescending && SortBy != Constants.SortBy.IDAscending)
+            {
+                SortBy = Constants.SortBy.IDDescending;
+                OnPropertyChanged(nameof(FilteredItems));
+                return;
+            }
+
+            if (SortBy == Constants.SortBy.IDDescending)
+                SortBy = Constants.SortBy.IDAscending;
+            else
+                SortBy = Constants.SortBy.IDDescending;
+            OnPropertyChanged(nameof(FilteredItems));
+        }
+
+        public async void ToggleNameSort()
+        {
+            if (SortBy != Constants.SortBy.NameDescending && SortBy != Constants.SortBy.NameAscending)
+            {
+                SortBy = Constants.SortBy.NameDescending;
+                OnPropertyChanged(nameof(FilteredItems));
+                return;
+            }
+
+            if (SortBy == Constants.SortBy.NameDescending)
+                SortBy = Constants.SortBy.NameAscending;
+            else
+                SortBy = Constants.SortBy.NameDescending;
+            OnPropertyChanged(nameof(FilteredItems));
+        }
+
+        public async void ToggleTypeSort()
+        {
+            if (SortBy != Constants.SortBy.TypeDescending && SortBy != Constants.SortBy.TypeAscending)
+            {
+                SortBy = Constants.SortBy.TypeDescending;
+                OnPropertyChanged(nameof(FilteredItems));
+                return;
+            }
+
+            if (SortBy == Constants.SortBy.TypeDescending)
+                SortBy = Constants.SortBy.TypeAscending;
+            else
+                SortBy = Constants.SortBy.TypeDescending;
+            OnPropertyChanged(nameof(FilteredItems));
+        }
+
+        public async void TogglePriceSort()
+        {
+            if (SortBy != Constants.SortBy.PriceDescending && SortBy != Constants.SortBy.PriceAscending)
+            {
+                SortBy = Constants.SortBy.PriceDescending;
+                OnPropertyChanged(nameof(FilteredItems));
+                return;
+            }
+
+            if (SortBy == Constants.SortBy.PriceDescending)
+                SortBy = Constants.SortBy.PriceAscending;
+            else
+                SortBy = Constants.SortBy.PriceDescending;
+            OnPropertyChanged(nameof(FilteredItems));
+        }
+
         public ObservableCollection<Tuple<Item, string>> FilteredItems
         {
             get
@@ -136,6 +211,37 @@ namespace AdministratorApp.ViewModels
                 foreach (Item item in filteredList)
                 {
                     items.Add(new Tuple<Item, string>(item, Data.AllCategories.Count != 0 ? Data.AllCategories[item.CategoryId]?.Name : "No Category."));
+                }
+
+                switch (SortBy)
+                {
+                    case Constants.SortBy.IDAscending:
+                        items = new ObservableCollection<Tuple<Item, string>>(items.OrderBy(x => x.Item1.Id).ToList());
+                        break;
+                    case Constants.SortBy.NameAscending:
+                        items = new ObservableCollection<Tuple<Item, string>>(items.OrderBy(x => x.Item1.Name).ToList());
+                        break;
+                    case Constants.SortBy.TypeAscending:
+                        items = new ObservableCollection<Tuple<Item, string>>(items.OrderBy(x => Data.AllCategories[x.Item1.CategoryId].Name).ToList());
+                        break;
+                    case Constants.SortBy.PriceAscending:
+                        items = new ObservableCollection<Tuple<Item, string>>(items.OrderBy(x => x.Item1.Price).ToList());
+                        break;
+                    case Constants.SortBy.IDDescending:
+                        items = new ObservableCollection<Tuple<Item, string>>(items.OrderByDescending(x => x.Item1.Id).ToList());
+                        break;
+                    case Constants.SortBy.NameDescending:
+                        items = new ObservableCollection<Tuple<Item, string>>(items.OrderByDescending(x => x.Item1.Name).ToList());
+                        break;
+                    case Constants.SortBy.TypeDescending:
+                        items = new ObservableCollection<Tuple<Item, string>>(items.OrderByDescending(x => Data.AllCategories[x.Item1.CategoryId].Name).ToList());
+                        break;
+                    case Constants.SortBy.PriceDescending:
+                        items = new ObservableCollection<Tuple<Item, string>>(items.OrderByDescending(x => x.Item1.Price).ToList());
+                        break;
+                    default:
+                        items = new ObservableCollection<Tuple<Item, string>>(items.OrderByDescending(x => x.Item1.Id).ToList());
+                        break;
                 }
 
                 return items;

@@ -50,7 +50,8 @@ namespace AdministratorApp.ViewModels
             DoDelete = new RelayCommand(Delete);
             DoCancel = new RelayCommand(Cancel);
             DoAddStore = new RelayCommand(AddStore);
-     
+            DoToggleIDSort = new RelayCommand(ToggleIDSort);
+            DoToggleNameSort = new RelayCommand(ToggleNameSort);
         }
 
         #region Properties
@@ -72,6 +73,44 @@ namespace AdministratorApp.ViewModels
             }
         }
 
+        public Constants.SortBy SortBy { get; set; } = Constants.SortBy.IDDescending;
+
+        public RelayCommand DoToggleIDSort { get; set; }
+        public RelayCommand DoToggleNameSort { get; set; }
+
+        public async void ToggleIDSort()
+        {
+            if (SortBy != Constants.SortBy.IDDescending && SortBy != Constants.SortBy.IDAscending)
+            {
+                SortBy = Constants.SortBy.IDDescending;
+                OnPropertyChanged(nameof(FilteredStores));
+                return;
+            }
+
+            if (SortBy == Constants.SortBy.IDDescending)
+                SortBy = Constants.SortBy.IDAscending;
+            else
+                SortBy = Constants.SortBy.IDDescending;
+            OnPropertyChanged(nameof(FilteredStores));
+        }
+
+        public async void ToggleNameSort()
+        {
+            if (SortBy != Constants.SortBy.NameDescending && SortBy != Constants.SortBy.NameAscending)
+            {
+                SortBy = Constants.SortBy.NameDescending;
+                OnPropertyChanged(nameof(FilteredStores));
+                return;
+            }
+
+            if (SortBy == Constants.SortBy.NameDescending)
+                SortBy = Constants.SortBy.NameAscending;
+            else
+                SortBy = Constants.SortBy.NameDescending;
+            OnPropertyChanged(nameof(FilteredStores));
+        }
+
+
         //Property for using the method in CommonMethods.cs for the search bar
         public ObservableCollection<Store> FilteredStores
         {
@@ -83,6 +122,25 @@ namespace AdministratorApp.ViewModels
                 {
                     if (store.ID != 0)
                         stores.Add(store);
+                }
+
+                switch (SortBy)
+                {
+                    case Constants.SortBy.IDAscending:
+                        stores = new ObservableCollection<Store>(stores.OrderBy(x => x.ID).ToList());
+                        break;
+                    case Constants.SortBy.NameAscending:
+                        stores = new ObservableCollection<Store>(stores.OrderBy(x => x.Name).ToList());
+                        break;
+                    case Constants.SortBy.IDDescending:
+                        stores = new ObservableCollection<Store>(stores.OrderByDescending(x => x.ID).ToList());
+                        break;
+                    case Constants.SortBy.NameDescending:
+                        stores = new ObservableCollection<Store>(stores.OrderByDescending(x => x.Name).ToList());
+                        break;
+                    default:
+                        stores = new ObservableCollection<Store>(stores.OrderBy(x => x.ID).ToList());
+                        break;
                 }
 
                 return stores;
@@ -153,7 +211,6 @@ namespace AdministratorApp.ViewModels
                     Stock = Data.AllStocks[StockID].Name;
                 }
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(StoreIsSelected));
             }
         }
 
@@ -221,19 +278,6 @@ namespace AdministratorApp.ViewModels
         public bool IsVisible
         {
             get => AuthHandler.ShowAdministratorFunctions;
-        }
-
-        public bool StoreIsSelected
-        {
-            get
-            {
-                if (SelectedStore.ID == 0)
-                {
-                    return false;
-                }
-
-                return true;
-            } 
         }
 
         #endregion

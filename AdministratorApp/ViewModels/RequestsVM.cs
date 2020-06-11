@@ -27,7 +27,7 @@ namespace AdministratorApp.ViewModels
             DoAcceptInvoice = new RelayCommand(AcceptInvoice);
             DoDenyInvoice = new RelayCommand(DenyInvoice);
             DoToggleIDSort = new RelayCommand(ToggleIDSort);
-            DotoggleAuthorNameSort = new RelayCommand(ToggleAuthorNameSort);
+            DoToggleAuthorNameSort = new RelayCommand(ToggleAuthorNameSort);
             DoToggleStoreNameSort = new RelayCommand(ToggleStoreNameSort);
         }
 
@@ -79,7 +79,7 @@ namespace AdministratorApp.ViewModels
         public Constants.SortBy SortBy { get; set; } = Constants.SortBy.IDDescending;
 
         public RelayCommand DoToggleIDSort { get; set; }
-        public RelayCommand DotoggleAuthorNameSort { get; set; }
+        public RelayCommand DoToggleAuthorNameSort { get; set; }
         public RelayCommand DoToggleStoreNameSort { get; set; }
 
         public async void ToggleIDSort()
