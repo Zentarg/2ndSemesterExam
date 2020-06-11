@@ -40,7 +40,9 @@ namespace AdministratorApp.ViewModels
         public async void LoadDataAsync()
         {
             await Data.UpdateLogs();
-            LogEntries = new ObservableCollection<Log>(Data.AllLogs);
+            List<Log> temp = new List<Log>(Data.AllLogs);
+            temp.Reverse();
+            LogEntries = new ObservableCollection<Log>(temp);
         }
 
 
