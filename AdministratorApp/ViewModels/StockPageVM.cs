@@ -116,14 +116,25 @@ namespace AdministratorApp.ViewModels
             {
                 SortBy = Constants.SortBy.IDDescending;
                 OnPropertyChanged(nameof(FilteredItems));
+                SelectedItem = FilteredItems[0];
+                OnPropertyChanged(nameof(SelectedItem));
                 return;
             }
 
             if (SortBy == Constants.SortBy.IDDescending)
+            {
                 SortBy = Constants.SortBy.IDAscending;
+                SelectedItem = FilteredItems[0];
+                OnPropertyChanged(nameof(SelectedItem));
+            }
+
             else
+            {
                 SortBy = Constants.SortBy.IDDescending;
-            OnPropertyChanged(nameof(FilteredItems));
+                OnPropertyChanged(nameof(FilteredItems));
+                SelectedItem = FilteredItems[0];
+                OnPropertyChanged(nameof(SelectedItem));
+            }
         }
 
         public async void ToggleNameSort()
@@ -132,14 +143,22 @@ namespace AdministratorApp.ViewModels
             {
                 SortBy = Constants.SortBy.NameDescending;
                 OnPropertyChanged(nameof(FilteredItems));
+                SelectedItem = FilteredItems[0];
                 return;
             }
 
-            if (SortBy == Constants.SortBy.NameDescending)
-                SortBy = Constants.SortBy.NameAscending;
+            if (SortBy == Constants.SortBy.NameDescending) 
+            { SortBy = Constants.SortBy.NameAscending;
+                 SelectedItem = FilteredItems[0]; }
+
+
             else
+            {
                 SortBy = Constants.SortBy.NameDescending;
-            OnPropertyChanged(nameof(FilteredItems));
+                OnPropertyChanged(nameof(FilteredItems));
+                SelectedItem = FilteredItems[0];
+            }
+               
         }
 
         public async void ToggleTypeSort()
@@ -148,14 +167,24 @@ namespace AdministratorApp.ViewModels
             {
                 SortBy = Constants.SortBy.TypeDescending;
                 OnPropertyChanged(nameof(FilteredItems));
+                SelectedItem = FilteredItems[0];
                 return;
             }
 
             if (SortBy == Constants.SortBy.TypeDescending)
+            {
                 SortBy = Constants.SortBy.TypeAscending;
+                SelectedItem = FilteredItems[0];
+            }
+
+
             else
+            {
                 SortBy = Constants.SortBy.TypeDescending;
-            OnPropertyChanged(nameof(FilteredItems));
+                OnPropertyChanged(nameof(FilteredItems));
+                SelectedItem = FilteredItems[0];
+            }
+                
         }
 
         public async void TogglePriceSort()
@@ -164,14 +193,24 @@ namespace AdministratorApp.ViewModels
             {
                 SortBy = Constants.SortBy.PriceDescending;
                 OnPropertyChanged(nameof(FilteredItems));
+                SelectedItem = FilteredItems[0];
                 return;
             }
 
             if (SortBy == Constants.SortBy.PriceDescending)
+            {
                 SortBy = Constants.SortBy.PriceAscending;
+                SelectedItem = FilteredItems[0];
+            }
+
+
             else
+            {
                 SortBy = Constants.SortBy.PriceDescending;
-            OnPropertyChanged(nameof(FilteredItems));
+                OnPropertyChanged(nameof(FilteredItems));
+                SelectedItem = FilteredItems[0];
+            }
+             
         }
 
         public ObservableCollection<Tuple<Item, string>> FilteredItems

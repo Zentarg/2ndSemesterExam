@@ -49,6 +49,11 @@
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="Margin" Value="0,0,6,0"/>
         </Style>
+
+        <Style x:Key="SortByButtonsStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
     </Page.Resources>
 
         <Grid>
@@ -65,10 +70,10 @@
         <StackPanel Orientation="Horizontal" Background="#2f4959" Margin="-1,0,0,0" Spacing="15">
 
             <TextBlock Text="Sort by:" x:Uid="lblSortBy" Style="{StaticResource SortText}" Margin="7,6,0,0" />
-            <Button Content="ID" Command="{Binding DoToggleIDSort}"/>
-            <Button Content="Name" Command="{Binding DoToggleNameSort}"/>
-            <Button Content="Category" Command="{Binding DoToggleTypeSort}"/>
-            <Button Content="Price" Command="{Binding DoTogglePriceSort}"/>
+            <Button Content="ID" Background="Transparent" Foreground="White" Style="{StaticResource SortByButtonsStyle}" Command="{Binding DoToggleIDSort}"/>
+            <Button Content="Name" x:Uid="btnName" Style="{StaticResource SortByButtonsStyle}" Command="{Binding DoToggleNameSort}"/>
+            <Button Content="Category" x:Uid="btnCategory" Style="{StaticResource SortByButtonsStyle}" Command="{Binding DoToggleTypeSort}"/>
+            <Button Content="Price" x:Uid="btnPrice" Style="{StaticResource SortByButtonsStyle}" Command="{Binding DoTogglePriceSort}"/>
 
 
             <DropDownButton Content="Select Stocks" x:Uid="cntSelectStock" Height="51" Foreground="White">
@@ -106,14 +111,14 @@
 
         </StackPanel>
 
-        <ListView HorizontalContentAlignment="Stretch" Name="StockListView" Grid.Column="0" Grid.Row="1" Margin="-1,0,0,0" ItemsSource="{Binding FilteredItems}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}"  SelectionMode="Single" SelectionChanged="Selector_OnSelectionChanged">
+        <ListView HorizontalContentAlignment="Stretch" Name="StockListView" Grid.Column="0" Grid.Row="1" Margin="-1,0,0,0" ItemsSource="{Binding FilteredItems}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}"  SelectionMode="Single" SelectionChanged="Selector_OnSelectionChanged" ContainerContentChanging="StockListView_ContainerContentChanging" >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="50" />
-                            <ColumnDefinition Width="85" />
-                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="75" />
+                            <ColumnDefinition Width="185" />
+                            <ColumnDefinition Width="125" />
                             <ColumnDefinition Width="50" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
@@ -123,7 +128,7 @@
                         </StackPanel>
                         <TextBlock  Grid.Column="1" Text="{Binding Item1.Name}"/>
                         <TextBlock  Grid.Column="2" Text="{Binding Item2}"/>
-                        <TextBlock  Grid.Column="3" Text="{Binding Item1.Price}"/>
+                        <TextBlock  Grid.Column="3" HorizontalTextAlignment="Right" Margin="0,0,3,0" Text="{Binding Item1.Price}"/>
                         <TextBlock  Grid.Column="4" Text="Ft"/>
 
 </Grid>
@@ -315,7 +320,7 @@
                     </StackPanel>
 
                     <StackPanel HorizontalAlignment="Left" Margin="10,30,10,0">
-                        <TextBlock Text="** Accepts only numeric input." FontSize="10"/>
+                        <TextBlock Text="** Accepts only numeric input." x:Uid="lblOnlyNumeric" FontSize="10"/>
                     </StackPanel>
                     <StackPanel HorizontalAlignment="Left" Margin="10,10,10,0">
                         <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" FontSize="13"/>

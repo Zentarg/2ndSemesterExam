@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="btnAddNewStore.Content" xml:space="preserve">
+    <value>Új üzlet hozzáadása</value>
+  </data>
   <data name="btnCancel.Content" xml:space="preserve">
     <value>Mégse</value>
+  </data>
+  <data name="btnCategory.Content" xml:space="preserve">
+    <value>Típus</value>
   </data>
   <data name="btnClose.Content" xml:space="preserve">
     <value>Bezárás</value>
@@ -141,6 +147,12 @@
   <data name="btnLogOut.Text" xml:space="preserve">
     <value>Kijelentkezés</value>
   </data>
+  <data name="btnName.Content" xml:space="preserve">
+    <value>Név</value>
+  </data>
+  <data name="btnPrice.Content" xml:space="preserve">
+    <value>Ár</value>
+  </data>
   <data name="btnSave.Content" xml:space="preserve">
     <value>Mentés</value>
   </data>
@@ -149,6 +161,9 @@
   </data>
   <data name="cntSelectType.Content" xml:space="preserve">
     <value>Válassz típust</value>
+  </data>
+  <data name="lblAddEmployee.Text" xml:space="preserve">
+    <value>Új munkatárs hozzáadása</value>
   </data>
   <data name="lblAddNewProduct.Text" xml:space="preserve">
     <value>Új termék hozzáadása</value>
@@ -184,6 +199,12 @@
   <data name="lblDiscountEdit.Text" xml:space="preserve">
     <value>**Kedvezmény</value>
   </data>
+  <data name="lblEditStore.Text" xml:space="preserve">
+    <value>Szerkesztés</value>
+  </data>
+  <data name="lblEditSupplier.Text" xml:space="preserve">
+    <value>Szerkesztés</value>
+  </data>
   <data name="lblEmployees.Text" xml:space="preserve">
     <value>Munkatársak</value>
   </data>
@@ -205,8 +226,20 @@
   <data name="lblName.Text" xml:space="preserve">
     <value>Név</value>
   </data>
+  <data name="lblNewCategory.Text" xml:space="preserve">
+    <value>Új kategória hozzáadása</value>
+  </data>
   <data name="lblNewInvoice.Text" xml:space="preserve">
     <value>Új számla rögzítése</value>
+  </data>
+  <data name="lblOnlyNumeric.Text" xml:space="preserve">
+    <value>** Csak számok bevitele engedélyezett.</value>
+  </data>
+  <data name="lblOr.Text" xml:space="preserve">
+    <value>-- vagy --</value>
+  </data>
+  <data name="lblPcs.Text" xml:space="preserve">
+    <value>db.</value>
   </data>
   <data name="lblPicture.Text" xml:space="preserve">
     <value>Kép</value>
@@ -217,6 +250,12 @@
   <data name="lblPriceEdit.Text" xml:space="preserve">
     <value>**Ár</value>
   </data>
+  <data name="lblProduct.Text" xml:space="preserve">
+    <value>Termék</value>
+  </data>
+  <data name="lblRole.Text" xml:space="preserve">
+    <value>Munkakör</value>
+  </data>
   <data name="lblSearch.PlaceholderText" xml:space="preserve">
     <value>Keresés...</value>
   </data>
@@ -224,7 +263,7 @@
     <value>Méret</value>
   </data>
   <data name="lblSortBy.Text" xml:space="preserve">
-    <value>Rendezés</value>
+    <value>Rendezés:</value>
   </data>
   <data name="lblStock.Text" xml:space="preserve">
     <value>Leltár</value>

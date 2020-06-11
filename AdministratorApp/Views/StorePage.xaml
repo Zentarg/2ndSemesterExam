@@ -28,21 +28,20 @@
 
 
         <StackPanel Grid.Column="0">
-            <TextBox x:Name="Search" Height="30" PlaceholderText="Search..." IsFocusEngaged="False" Text="{Binding FilterString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox x:Name="Search" x:Uid="lblSearch" Height="30" PlaceholderText="Search..." IsFocusEngaged="False" Text="{Binding FilterString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <StackPanel Orientation="Horizontal" Spacing="15">
-                <TextBlock Text="Order By"/>
+                <TextBlock Text="Order By" x:Uid="lblSortBy"/>
                 <Button Content="ID" Command="{Binding DoToggleIDSort}" />
-                <Button Content="Name" Command="{Binding DoToggleNameSort}"/>
+                <Button Content="Name" x:Uid="btnName" Command="{Binding DoToggleNameSort}"/>
             </StackPanel>
-            <TextBox x:Name="Search" Height="30" PlaceholderText="Search..." x:Uid="lblSearch" IsFocusEngaged="False" Text="{Binding FilterString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <ListView x:Name="StoreListView" ItemsSource="{Binding FilteredStores, Mode=TwoWay}" SelectedItem="{Binding SelectedStore, Mode=TwoWay}" VerticalAlignment="Center" SelectionChanged="Selector_OnSelectionChanged" Width="auto">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock FontSize="15" VerticalAlignment="Center" Text="{Binding ID}" Margin="0,20,20,0"/>
-                            <TextBlock FontSize="15" VerticalAlignment="Center" Text="{Binding Name}" Margin="0,20,20,0"/>
-                            <TextBlock FontSize="15" VerticalAlignment="Center" Text="{Binding Address}" Margin="0,20,20,0"/>
-                            <TextBlock FontSize="15" VerticalAlignment="Center" Text="{Binding Phone}" Margin="0,20,20,0"/>
+                            <TextBlock FontSize="15" VerticalAlignment="Center" Text="#" />
+                            <TextBlock FontSize="15" VerticalAlignment="Center" Text="{Binding ID}" Width="50" />
+                            <TextBlock FontSize="15" VerticalAlignment="Center" Text="{Binding Name}" Width="175" Margin="0,0,5,0" />
+                            <TextBlock FontSize="15" VerticalAlignment="Center" Text="{Binding Address}"  />
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -69,7 +68,7 @@
                 <TextBlock FontSize="15" Height="45" Style="{StaticResource TitleFonts}" Text="Stock" x:Uid="lblStock2" />
             </StackPanel>
 
-            <Button x:Name="AddStore" Grid.Column="2" FontSize="15" Content="Add new store" Command="{Binding DoAddStore}" Visibility="Collapsed" VerticalAlignment="top" HorizontalAlignment="Right" Margin="0,20,20,0"/>
+            <Button x:Name="AddStore" x:Uid="btnAddNewStore" Grid.Column="2" FontSize="15" Content="Add new store" Command="{Binding DoAddStore}" Visibility="Collapsed" VerticalAlignment="top" HorizontalAlignment="Right" Margin="0,20,20,0"/>
 
             <Grid Grid.Column="1" Margin="0,50,0,0" HorizontalAlignment="Left">
 
@@ -94,11 +93,11 @@
             <TextBlock Grid.Column="2" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" x:Name="ErrorText" Foreground="Red" Text="{Binding ErrorText}" Margin="0,0,5,0"/>
 
             <Grid Row="2" ColumnSpan="3">
-                <Button x:Name="EditButton" HorizontalAlignment="Right" Grid.ColumnSpan="3" IsEnabled="{Binding StoreIsSelected}" Visibility="{Binding IsVisible}"  Margin="25,25,25,25" Width="100" Height="100" 
+                <Button  x:Name="EditButton" HorizontalAlignment="Right" Grid.ColumnSpan="3" IsEnabled="{Binding StoreIsSelected}" Visibility="{Binding IsVisible}"  Margin="25,25,25,25" Width="100" Height="100" 
                         VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="EditButton_OnClick">
                     <StackPanel>
                         <TextBlock FontFamily="Segoe mdl2 Assets" Text="&#xEB7E;" FontSize="30" Margin="5,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Margin="0,5,0,0" Text="Edit store" x:Uid="lblEdit" HorizontalAlignment="Center" FontSize="12" VerticalAlignment="Bottom"/>
+                        <TextBlock Margin="0,5,0,0" Text="Edit store" x:Uid="lblEditStore" HorizontalAlignment="Center" FontSize="12" VerticalAlignment="Bottom"/>
                     </StackPanel>
                 </Button>
 

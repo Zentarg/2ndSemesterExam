@@ -51,8 +51,8 @@
           <target state="new">Név</target>
         </trans-unit>
         <trans-unit id="lblSortBy.Text" translate="yes" xml:space="preserve">
-          <source>Rendezés</source>
-          <target state="new">Rendezés</target>
+          <source>Rendezés:</source>
+          <target state="new">Rendezés:</target>
         </trans-unit>
         <trans-unit id="lblType.Text" translate="yes" xml:space="preserve">
           <source>Típus</source>
@@ -182,6 +182,58 @@
         <trans-unit id="btnCancel.Content" translate="yes" xml:space="preserve">
           <source>Mégse</source>
           <target state="new">Mégse</target>
+        </trans-unit>
+        <trans-unit id="btnCategory.Content" translate="yes" xml:space="preserve">
+          <source>Típus</source>
+          <target state="new">Típus</target>
+        </trans-unit>
+        <trans-unit id="btnName.Content" translate="yes" xml:space="preserve">
+          <source>Név</source>
+          <target state="new">Név</target>
+        </trans-unit>
+        <trans-unit id="btnPrice.Content" translate="yes" xml:space="preserve">
+          <source>Ár</source>
+          <target state="new">Ár</target>
+        </trans-unit>
+        <trans-unit id="btnAddNewStore.Content" translate="yes" xml:space="preserve">
+          <source>Új üzlet hozzáadása</source>
+          <target state="new">Új üzlet hozzáadása</target>
+        </trans-unit>
+        <trans-unit id="lblOnlyNumeric.Text" translate="yes" xml:space="preserve">
+          <source>** Csak számok bevitele engedélyezett.</source>
+          <target state="new">** Csak számok bevitele engedélyezett.</target>
+        </trans-unit>
+        <trans-unit id="lblEditStore.Text" translate="yes" xml:space="preserve">
+          <source>Szerkesztés</source>
+          <target state="new">Szerkesztés</target>
+        </trans-unit>
+        <trans-unit id="lblEditSupplier.Text" translate="yes" xml:space="preserve">
+          <source>Szerkesztés</source>
+          <target state="new">Szerkesztés</target>
+        </trans-unit>
+        <trans-unit id="lblNewCategory.Text" translate="yes" xml:space="preserve">
+          <source>Új kategória hozzáadása</source>
+          <target state="new">Új kategória hozzáadása</target>
+        </trans-unit>
+        <trans-unit id="lblProduct.Text" translate="yes" xml:space="preserve">
+          <source>Termék</source>
+          <target state="new">Termék</target>
+        </trans-unit>
+        <trans-unit id="lblPcs.Text" translate="yes" xml:space="preserve">
+          <source>db.</source>
+          <target state="new">db.</target>
+        </trans-unit>
+        <trans-unit id="lblAddEmployee.Text" translate="yes" xml:space="preserve">
+          <source>Új munkatárs hozzáadása</source>
+          <target state="new">Új munkatárs hozzáadása</target>
+        </trans-unit>
+        <trans-unit id="lblOr.Text" translate="yes" xml:space="preserve">
+          <source>-- vagy --</source>
+          <target state="new">-- vagy --</target>
+        </trans-unit>
+        <trans-unit id="lblRole.Text" translate="yes" xml:space="preserve">
+          <source>Munkakör</source>
+          <target state="new">Munkakör</target>
         </trans-unit>
       </group>
     </body>

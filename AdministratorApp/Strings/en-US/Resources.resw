@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="btnAddNewStore.Content" xml:space="preserve">
+    <value>Add new store</value>
+  </data>
   <data name="btnCancel.Content" xml:space="preserve">
     <value>Cancel</value>
+  </data>
+  <data name="btnCategory.Content" xml:space="preserve">
+    <value>Category</value>
   </data>
   <data name="btnClose.Content" xml:space="preserve">
     <value>Close</value>
@@ -142,6 +148,12 @@
     <value>Log out</value>
     <comment>Log out text in the dropdown.</comment>
   </data>
+  <data name="btnName.Content" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="btnPrice.Content" xml:space="preserve">
+    <value>Price</value>
+  </data>
   <data name="btnSave.Content" xml:space="preserve">
     <value>Save</value>
   </data>
@@ -151,6 +163,9 @@
   </data>
   <data name="cntSelectType.Content" xml:space="preserve">
     <value>Type</value>
+  </data>
+  <data name="lblAddEmployee.Text" xml:space="preserve">
+    <value>Add new employee</value>
   </data>
   <data name="lblAddNewProduct.Text" xml:space="preserve">
     <value>Add new product</value>
@@ -187,6 +202,12 @@
   <data name="lblDiscountEdit.Text" xml:space="preserve">
     <value>**Discount</value>
   </data>
+  <data name="lblEditStore.Text" xml:space="preserve">
+    <value>Edit store</value>
+  </data>
+  <data name="lblEditSupplier.Text" xml:space="preserve">
+    <value>Edit supplier</value>
+  </data>
   <data name="lblEmployees.Text" xml:space="preserve">
     <value>Employees</value>
     <comment>Home page-employees</comment>
@@ -213,9 +234,21 @@
     <value>Name</value>
     <comment>StockPage</comment>
   </data>
+  <data name="lblNewCategory.Text" xml:space="preserve">
+    <value>New category</value>
+  </data>
   <data name="lblNewInvoice.Text" xml:space="preserve">
     <value>Create new invoice</value>
     <comment>Home page - create invoice</comment>
+  </data>
+  <data name="lblOnlyNumeric.Text" xml:space="preserve">
+    <value>**These fields accept only numeric input</value>
+  </data>
+  <data name="lblOr.Text" xml:space="preserve">
+    <value>-- or --</value>
+  </data>
+  <data name="lblPcs.Text" xml:space="preserve">
+    <value>pcs.</value>
   </data>
   <data name="lblPicture.Text" xml:space="preserve">
     <value>Picture</value>
@@ -225,6 +258,12 @@
   </data>
   <data name="lblPriceEdit.Text" xml:space="preserve">
     <value>**Price</value>
+  </data>
+  <data name="lblProduct.Text" xml:space="preserve">
+    <value>Product</value>
+  </data>
+  <data name="lblRole.Text" xml:space="preserve">
+    <value>Role</value>
   </data>
   <data name="lblSearch.PlaceholderText" xml:space="preserve">
     <value>Search...</value>
