@@ -46,6 +46,11 @@ namespace AdministratorApp.Models
         /// </summary>
         public const string AllowedCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890ÁÉÍÓÖŐÚÜŰáéíóöőúüű ";
 
+        public enum SortBy
+        {
+            IDAscending = 0, NameAscending = 1, StoreAscending = 2, TelephoneAscending = 3, AddressAscending = 4, TypeAscending = 5, AmountAscending = 6, IDDescending = 7, NameDescending = 8, StoreDescending = 9, TelephoneDescending = 10, AddressDescending = 11, TypeDescending = 12, AmountDescending = 13, PriceAscending = 14, PriceDescending = 15
+        }
+
         
     }
 }

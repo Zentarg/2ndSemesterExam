@@ -43,14 +43,14 @@
         </StackPanel>
 
             <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1"  Margin="10,0,0,20" VerticalAlignment="Center">
-                <TextBlock Text="Stock:"  FontSize="14"/>
+                <TextBlock Text="Stock:" x:Uid="lblStock" FontSize="14"/>
             </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2"  Margin="10,0,0,20" VerticalAlignment="Center">
-                <TextBlock Text="Item:" />
+                <TextBlock Text="Item:" x:Uid="lblProduct" />
         </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="3"  Margin="10,0,0,20" VerticalAlignment="Center">
-            <TextBlock Text="Amount:"  />
+            <TextBlock Text="Amount:" x:Uid="lblAmount"  />
         </StackPanel>
 
         <StackPanel Grid.Column="2" Grid.Row="1">
@@ -64,7 +64,7 @@
         <StackPanel Grid.Column="2" Grid.Row="3">
             <StackPanel Orientation="Horizontal">
                 <TextBox Text="{Binding Amount, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" BeforeTextChanging="FilterNonNumeric_OnBeforeTextChanging"/>
-                <TextBlock Text="pcs." Margin="2,5,0,0"/>
+                <TextBlock Text="pcs." x:Uid="lblPcs" Margin="2,5,0,0"/>
             </StackPanel>
         </StackPanel>
 

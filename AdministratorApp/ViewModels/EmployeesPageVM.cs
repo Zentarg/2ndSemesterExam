@@ -67,10 +67,14 @@ namespace AdministratorApp.ViewModels
             DoCancelEdit = new RelayCommand(CancelEditMethod);
             DoConfirmEdit = new RelayCommand(ConfirmEditMethod);
             DoGenerateAuth = new RelayCommand(GeneratePassword);
+            DoToggleIDSort = new RelayCommand(ToggleIDSort);
+            DoToggleNameSort = new RelayCommand(ToggleNameSort);
             VMHandler.EmployeesPageVm = this;
         }
 
         #region Properties
+
+        public Constants.SortBy SortBy { get; set; } = Constants.SortBy.IDDescending;
         #region RelayCommandProperities
         public RelayCommand DoShowUserName { get; set; }
         public RelayCommand DoDeselect { get; set; }
@@ -79,6 +83,9 @@ namespace AdministratorApp.ViewModels
         public RelayCommand DoCancelEdit { get; set; }
         public RelayCommand DoConfirmEdit { get; set; }
         public RelayCommand DoGenerateAuth { get; set; }
+
+        public RelayCommand DoToggleIDSort { get; set; }
+        public RelayCommand DoToggleNameSort { get; set; }
         #endregion
 
         #region ObservableCollectionProperties
@@ -91,6 +98,25 @@ namespace AdministratorApp.ViewModels
                 foreach (User user in CommonMethods.FilterListByString(Data.AllUsers.Values.ToList(), FilterString))
                 {
                     users.Add(user);
+                }
+
+                switch (SortBy)
+                {
+                    case Constants.SortBy.IDAscending:
+                        users = new ObservableCollection<User>(users.OrderBy(x => x.Id).ToList());
+                        break;
+                    case Constants.SortBy.NameAscending:
+                        users = new ObservableCollection<User>(users.OrderBy(x => x.Name).ToList());
+                        break;
+                    case Constants.SortBy.IDDescending:
+                        users = new ObservableCollection<User>(users.OrderByDescending(x => x.Id).ToList());
+                        break;
+                    case Constants.SortBy.NameDescending:
+                        users = new ObservableCollection<User>(users.OrderByDescending(x => x.Name).ToList());
+                        break;
+                    default:
+                        users = new ObservableCollection<User>(users.OrderBy(x => x.Id).ToList());
+                        break;
                 }
 
                 return users;
@@ -298,6 +324,38 @@ namespace AdministratorApp.ViewModels
         #endregion
 
         #region Methods
+        public async void ToggleIDSort()
+        {
+            if (SortBy != Constants.SortBy.IDDescending && SortBy != Constants.SortBy.IDAscending)
+            {
+                SortBy = Constants.SortBy.IDDescending;
+                OnPropertyChanged(nameof(FilteredUsers));
+                return;
+            }
+
+            if (SortBy == Constants.SortBy.IDDescending)
+                SortBy = Constants.SortBy.IDAscending;
+            else
+                SortBy = Constants.SortBy.IDDescending;
+            OnPropertyChanged(nameof(FilteredUsers));
+        }
+
+        public async void ToggleNameSort()
+        {
+            if (SortBy != Constants.SortBy.NameDescending && SortBy != Constants.SortBy.NameAscending)
+            {
+                SortBy = Constants.SortBy.NameDescending;
+                OnPropertyChanged(nameof(FilteredUsers));
+                return;
+            }
+
+            if (SortBy == Constants.SortBy.NameDescending)
+                SortBy = Constants.SortBy.NameAscending;
+            else
+                SortBy = Constants.SortBy.NameDescending;
+            OnPropertyChanged(nameof(FilteredUsers));
+        }
+
         /// <summary>
         /// Method that updates the Data in Data.cs and updates some of the internal properties
         /// </summary>

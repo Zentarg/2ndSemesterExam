@@ -11,21 +11,37 @@
     <Page.DataContext>
         <vm:StorePageVM/>
     </Page.DataContext>
+
+    <Page.Resources>
+        <Style x:Key="TitleFonts" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="17"/>
+        </Style>
+    </Page.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
+
+
         <StackPanel Grid.Column="0">
-            <TextBox x:Name="Search" Height="30" PlaceholderText="Search..." IsFocusEngaged="False" Text="{Binding FilterString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox x:Name="Search" x:Uid="lblSearch" Height="30" PlaceholderText="Search..." IsFocusEngaged="False" Text="{Binding FilterString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <StackPanel Orientation="Horizontal" Spacing="15">
+                <TextBlock Text="Order By" x:Uid="lblSortBy"/>
+                <Button Content="ID" Command="{Binding DoToggleIDSort}" />
+                <Button Content="Name" x:Uid="btnName" Command="{Binding DoToggleNameSort}"/>
+            </StackPanel>
             <ListView x:Name="StoreListView" ItemsSource="{Binding FilteredStores, Mode=TwoWay}" SelectedItem="{Binding SelectedStore, Mode=TwoWay}" VerticalAlignment="Center" SelectionChanged="Selector_OnSelectionChanged" Width="auto">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock FontSize="15" VerticalAlignment="Center" Text="{Binding Name}" Margin="0,20,20,0"/>
-                            <TextBlock FontSize="15" VerticalAlignment="Center" Text="{Binding Address}" Margin="0,20,20,0"/>
-                            <TextBlock FontSize="15" VerticalAlignment="Center" Text="{Binding Phone}" Margin="0,20,20,0"/>
+                            <TextBlock FontSize="15" VerticalAlignment="Center" Text="#" />
+                            <TextBlock FontSize="15" VerticalAlignment="Center" Text="{Binding ID}" Width="50" />
+                            <TextBlock FontSize="15" VerticalAlignment="Center" Text="{Binding Name}" Width="175" Margin="0,0,5,0" />
+                            <TextBlock FontSize="15" VerticalAlignment="Center" Text="{Binding Address}"  />
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -45,19 +61,19 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Column="0" Spacing="25" Margin="50,50,0,0">
-                <TextBlock FontSize="15" Height="45" Text="Name"/>
-                <TextBlock FontSize="15" Height="45" Text="Address"/>
-                <TextBlock FontSize="15" Height="45" Text="Telephone"/>
-                <TextBlock FontSize="15" Height="45" Text="Manager"/>
-                <TextBlock FontSize="15" Height="45" Text="Stock"/>
+                <TextBlock FontSize="15" Height="45" Style="{StaticResource TitleFonts}" Text="Name" x:Uid="lblName"/>
+                <TextBlock FontSize="15" Height="45" Style="{StaticResource TitleFonts}" Text="Address" x:Uid="lblAddress"/>
+                <TextBlock FontSize="15" Height="45" Style="{StaticResource TitleFonts}" Text="Telephone" x:Uid="lblTelephone" />
+                <TextBlock FontSize="15" Height="45" Style="{StaticResource TitleFonts}" Text="Manager" x:Uid="lblManager"/>
+                <TextBlock FontSize="15" Height="45" Style="{StaticResource TitleFonts}" Text="Stock" x:Uid="lblStock2" />
             </StackPanel>
 
-            <Button x:Name="AddStore" Grid.Column="2" FontSize="15" Content="Add new store" Command="{Binding DoAddStore}" Visibility="Collapsed" VerticalAlignment="top" HorizontalAlignment="Right" Margin="0,20,20,0"/>
+            <Button x:Name="AddStore" x:Uid="btnAddNewStore" Grid.Column="2" FontSize="15" Content="Add new store" Command="{Binding DoAddStore}" Visibility="Collapsed" VerticalAlignment="top" HorizontalAlignment="Right" Margin="0,20,20,0"/>
 
             <Grid Grid.Column="1" Margin="0,50,0,0" HorizontalAlignment="Left">
 
                 <StackPanel Name="EditableStackPanel" Visibility="Collapsed" Spacing="33" Width="200">
-                    <TextBox FontSize="15" PlaceholderText="Name" Text="{Binding Name, Mode=TwoWay}" Height="35" Width="200"/>
+                    <TextBox FontSize="15" PlaceholderText="Name"  Text="{Binding Name, Mode=TwoWay}" Height="35" Width="200"/>
                     <TextBox FontSize="15" PlaceholderText="Address" Text="{Binding Address, Mode=TwoWay}" Height="35" Width="200"/>
                     <TextBox FontSize="15" PlaceholderText="Phone" Text="{Binding Phone, Mode=TwoWay}" Height="35" Width="200"/>
                     <ComboBox FontSize="15" ItemsSource="{Binding AllManagers, Mode=TwoWay}" SelectedItem="{Binding SelectedManager, Mode=TwoWay}" Height="35" Width="200" />
@@ -65,7 +81,7 @@
                 </StackPanel>
 
                 <StackPanel Name="SimpleStackPanel" Visibility="Visible" Spacing="30" Width="250" Margin="0,0,0,0">
-                    <TextBlock FontSize="15" Text="{Binding Name}" Height="40" Margin="0,0,0,0"/>
+                    <TextBlock FontSize="15" Text="{Binding Name}"  Height="40" Margin="0,0,0,0"/>
                     <TextBlock FontSize="15" Text="{Binding Address}" Height="40" Margin="0,0,0,0"/>
                     <TextBlock FontSize="15" Text="{Binding Phone}" Height="40" Margin="0,0,0,0"/>
                     <TextBlock FontSize="15" Text="{Binding Manager}" Height="40" Margin="0,0,0,0"/>
@@ -77,15 +93,20 @@
             <TextBlock Grid.Column="2" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" x:Name="ErrorText" Foreground="Red" Text="{Binding ErrorText}" Margin="0,0,5,0"/>
 
             <Grid Row="2" ColumnSpan="3">
+                <Button  x:Name="EditButton" HorizontalAlignment="Right" Grid.ColumnSpan="3" IsEnabled="{Binding StoreIsSelected}" Visibility="{Binding IsVisible}"  Margin="25,25,25,25" Width="100" Height="100" 
+                        VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="EditButton_OnClick">
+                    <StackPanel>
+                        <TextBlock FontFamily="Segoe mdl2 Assets" Text="&#xEB7E;" FontSize="30" Margin="5,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Margin="0,5,0,0" Text="Edit store" x:Uid="lblEditStore" HorizontalAlignment="Center" FontSize="12" VerticalAlignment="Bottom"/>
+                    </StackPanel>
+                </Button>
 
-                <Button x:Name="EditButton" HorizontalAlignment="Right" Grid.ColumnSpan="3" Visibility="{Binding IsVisible}" Content="Edit" Click="EditButton_OnClick" FontSize="15" Width="80" Height="40" Margin="0,0,50,0"/>
-                
                 <StackPanel Name="EditableButtons" Visibility="Collapsed" FlowDirection="RightToLeft" Orientation="Horizontal" Spacing="35">
                     
-                    <Button x:Name="ConfirmButton" Content="Confirm" Command="{Binding DoConfirm}" FontSize="15" Width="80" Height="40" Margin="45,0,0,0"/>
-                    <Button x:Name="DeleteButton" Content="Delete" Command="{Binding DoDelete}" FontSize="15" Width="80" Height="40"/>
-                    <Button x:Name="CancelButton" Content="Cancel" Click="CancelButton_OnClick" FontSize="15" Width="80" Height="40"/>
-                    <Button x:Name="DeselectButton" Click="DeselectButton_OnClick" Content="Deselect" Visibility="Collapsed" Command="{Binding DoCancel}" FontSize="15" Width="80" Height="40"/>
+                    <Button x:Name="ConfirmButton" x:Uid="btnConfirm" Content="Confirm" Command="{Binding DoConfirm}" FontSize="15" Width="80" Height="40" Margin="45,0,0,0"/>
+                    <Button x:Name="DeleteButton" x:Uid="btnDelete" Content="Delete" Command="{Binding DoDelete}" FontSize="15" Width="80" Height="40"/>
+                    <Button x:Name="CancelButton" x:Uid="btnCancel" Content="Cancel" Click="CancelButton_OnClick" FontSize="15" Width="80" Height="40"/>
+                    <Button x:Name="DeselectButton" x:Uid="btnDeselect" Click="DeselectButton_OnClick" Content="Deselect" Visibility="Collapsed" Command="{Binding DoCancel}" FontSize="15" Width="80" Height="40"/>
 
                 </StackPanel>
 

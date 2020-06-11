@@ -52,21 +52,12 @@ namespace AdministratorApp
         {
             ApplicationLanguages.PrimaryLanguageOverride = "hu";
             Frame.Navigate(this.GetType());
-            Frame.Navigate(this.GetType());
-
-
         }
 
         private void LanguageButtonEN_OnClick(object sender, RoutedEventArgs e)
         {
-
-
             ApplicationLanguages.PrimaryLanguageOverride = "en-US";
-
-                Frame.Navigate(this.GetType());
-                Frame.Navigate(this.GetType());
-
-
+            Frame.Navigate(this.GetType());
         }
     }
 }
