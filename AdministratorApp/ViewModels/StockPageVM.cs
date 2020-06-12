@@ -193,14 +193,14 @@ namespace AdministratorApp.ViewModels
             {
                 SortBy = Constants.SortBy.PriceDescending;
                 OnPropertyChanged(nameof(FilteredItems));
-                SelectedItem = FilteredItems[0];
+
                 return;
             }
 
             if (SortBy == Constants.SortBy.PriceDescending)
             {
                 SortBy = Constants.SortBy.PriceAscending;
-                SelectedItem = FilteredItems[0];
+
             }
 
 
@@ -208,7 +208,7 @@ namespace AdministratorApp.ViewModels
             {
                 SortBy = Constants.SortBy.PriceDescending;
                 OnPropertyChanged(nameof(FilteredItems));
-                SelectedItem = FilteredItems[0];
+
             }
              
         }
