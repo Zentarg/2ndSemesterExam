@@ -124,8 +124,8 @@ namespace AdministratorApp.ViewModels
             if (SortBy == Constants.SortBy.IDDescending)
             {
                 SortBy = Constants.SortBy.IDAscending;
+                OnPropertyChanged(nameof(FilteredItems));
                 SelectedItem = FilteredItems[0];
-                OnPropertyChanged(nameof(SelectedItem));
             }
 
             else
@@ -133,7 +133,6 @@ namespace AdministratorApp.ViewModels
                 SortBy = Constants.SortBy.IDDescending;
                 OnPropertyChanged(nameof(FilteredItems));
                 SelectedItem = FilteredItems[0];
-                OnPropertyChanged(nameof(SelectedItem));
             }
         }
 
@@ -148,8 +147,11 @@ namespace AdministratorApp.ViewModels
             }
 
             if (SortBy == Constants.SortBy.NameDescending) 
-            { SortBy = Constants.SortBy.NameAscending;
-                 SelectedItem = FilteredItems[0]; }
+            { 
+                SortBy = Constants.SortBy.NameAscending;
+                OnPropertyChanged(nameof(FilteredItems));
+                SelectedItem = FilteredItems[0];
+            }
 
 
             else
@@ -174,6 +176,7 @@ namespace AdministratorApp.ViewModels
             if (SortBy == Constants.SortBy.TypeDescending)
             {
                 SortBy = Constants.SortBy.TypeAscending;
+                OnPropertyChanged(nameof(FilteredItems));
                 SelectedItem = FilteredItems[0];
             }
 
@@ -200,6 +203,7 @@ namespace AdministratorApp.ViewModels
             if (SortBy == Constants.SortBy.PriceDescending)
             {
                 SortBy = Constants.SortBy.PriceAscending;
+                OnPropertyChanged(nameof(FilteredItems));
                 SelectedItem = FilteredItems[0];
             }
 
