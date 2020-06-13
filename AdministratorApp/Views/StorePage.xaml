@@ -26,14 +26,18 @@
         </Grid.ColumnDefinitions>
 
 
+<StackPanel Margin="-1,0,0,0">
 
-        <StackPanel Grid.Column="0">
-            <TextBox x:Name="Search" x:Uid="lblSearch" Height="30" PlaceholderText="Search..." IsFocusEngaged="False" Text="{Binding FilterString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+        <StackPanel Grid.Column="0" Background="#2f4959" Orientation="Horizontal">
             <StackPanel Orientation="Horizontal" Spacing="15">
-                <TextBlock Text="Order By" x:Uid="lblSortBy"/>
-                <Button Content="ID" Command="{Binding DoToggleIDSort}" />
-                <Button Content="Name" x:Uid="btnName" Command="{Binding DoToggleNameSort}"/>
+                <TextBlock Margin="5,5,0,0" Foreground="White" Text="Order By" x:Uid="lblSortBy"/>
+                <Button Content="ID" Background="Transparent" Command="{Binding DoToggleIDSort}" Foreground="White" />
+                <Button Content="Name" Background="Transparent" Margin="0,0,65,0" Foreground="White" x:Uid="btnName" Command="{Binding DoToggleNameSort}"/>
             </StackPanel>
+            <TextBox x:Name="Search" Width="270" x:Uid="lblSearch" Height="30" PlaceholderText="Search..." IsFocusEngaged="False" Text="{Binding FilterString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+        <StackPanel>
             <ListView x:Name="StoreListView" ItemsSource="{Binding FilteredStores, Mode=TwoWay}" SelectedItem="{Binding SelectedStore, Mode=TwoWay}" VerticalAlignment="Center" SelectionChanged="Selector_OnSelectionChanged" Width="auto">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -47,6 +51,7 @@
                 </ListView.ItemTemplate>
             </ListView>
         </StackPanel>
+</StackPanel>
 
         <Grid Grid.Column="1" BorderBrush="AliceBlue" BorderThickness="2">
             <Grid.ColumnDefinitions>
