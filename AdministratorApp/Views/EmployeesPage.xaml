@@ -15,22 +15,19 @@
     </Page.DataContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="0"/>
             <RowDefinition Height="32"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Spacing="15">
-            <TextBlock Text="Order By" x:Uid="lblSortBy" Padding="0, 5, 0, 0"/>
-            <Button Content="ID" Command="{Binding DoToggleIDSort}"/>
-            <Button Content="Name" x:Uid="btnName" Command="{Binding DoToggleNameSort}"/>
+        <StackPanel Margin="-1,0,0,0" Orientation="Horizontal" Grid.Row="1" Background="#2f4959" Spacing="15">
+            <TextBlock Text="Order By" Foreground="White" Margin="7,2,0,0" x:Uid="lblSortBy" Padding="0, 5, 0, 0"/>
+            <Button Content="ID" Command="{Binding DoToggleIDSort}" Foreground="White"/>
+            <Button Content="Name" x:Uid="btnName" Command="{Binding DoToggleNameSort}" Foreground="White"/>
+            <TextBox PlaceholderText="Search..." x:Uid="lblSearch" Width="350" Height="32" Text="{Binding FilterString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
-        <Grid Row="0">
-            <StackPanel Orientation="Horizontal" Spacing="15">
 
-                <TextBox PlaceholderText="Search..." x:Uid="lblSearch" Width="350" Height="32" Text="{Binding FilterString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            </StackPanel>
-        </Grid>
+
         <Grid Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
@@ -42,19 +39,23 @@
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="dc:EmployeesPageVM">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Margin="10,0,0,0" Text="{Binding Name}"/>
-                                <TextBlock Margin="10,0,0,0" Text="{Binding Address}"/>
-                                <TextBlock Margin="10,0,0,0" Text="{Binding Telephone}"/>
+                                <TextBlock Margin="10,0,0,0" Width="195" FontWeight="Bold"  Text="{Binding Name}"/>
+                                <TextBlock Margin="10,0,0,0" Width="195" Text="{Binding Address}"/>
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
+
+                    <ListView.Resources>
+                        <SolidColorBrush x:Key="ListViewItemBackgroundSelected" Color="#67addb" />
+                        <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPointerOver" Color="#67addb" />
+                    </ListView.Resources>
                 </ListView>
             </Grid>
             <Grid Column="1" Visibility="{Binding IsEmployeeSelected}" BorderThickness="2">
-                <ScrollViewer>
 
-                </ScrollViewer>
-                <StackPanel Margin="25,25,0,0">
+
+                <ScrollViewer>
+                    <StackPanel Margin="25,0,0,0">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -74,6 +75,7 @@
                             <RowDefinition Height="50"/>
                             <RowDefinition Height="50"/>
                         </Grid.RowDefinitions>
+                        
                         <TextBlock Grid.Column="0" Text="Name" x:Uid="lblName" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Name}" Visibility="{Binding ShowNormal}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="12,0,0,4"/>
                         <TextBox IsEnabled="{Binding IsEmployeeSelected}" Visibility="{Binding ShowEdit}" Grid.Row="0" Grid.Column="1" Text="{Binding Name, Mode=TwoWay}" PlaceholderText="Enter Name" VerticalAlignment="Center" Width="300" HorizontalAlignment="Left"></TextBox>
@@ -136,11 +138,11 @@
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Column="0" Visibility="{Binding ShowNormal}"  Text="UserName" VerticalAlignment="Center"/>
                         <TextBlock Grid.Row="0" Grid.Column="1" Visibility="{Binding ShowNormal}"  Text="{Binding UserName}" VerticalAlignment="Center" Width="300" HorizontalAlignment="Left"></TextBlock>
-                        <Button Grid.Row="0" Grid.Column="1" Visibility="{Binding ShowNormal}" Margin="300,0,0,0" Content="Show Username" Width="150" Command="{Binding DoShowUserName}" IsEnabled="{Binding IsEmployeeSelected}"></Button>
+                        <Button Grid.Row="0" Grid.Column="1" Visibility="{Binding ShowNormal}" Margin="170,0,0,0" Content="Show Username" Width="150" Command="{Binding DoShowUserName}" IsEnabled="{Binding IsEmployeeSelected}"></Button>
 
                         <TextBlock Grid.Column="0" Grid.Row="1" Visibility="{Binding ShowNormal}"  Text="Password" VerticalAlignment="Center"/>
                         <TextBlock Grid.Row="1" Grid.Column="1" Visibility="{Binding ShowNormal}"  Text="{Binding Password}"  VerticalAlignment="Center" Width="300" HorizontalAlignment="Left"></TextBlock>
-                        <Button Grid.Row="1" Grid.Column="1" Content="Generate" Visibility="{Binding ShowNormal}" Margin="300,0,0,0" Width="150" IsEnabled="{Binding IsEmployeeSelected}" Command="{Binding DoGenerateAuth}"></Button>
+                        <Button Grid.Row="1" Grid.Column="1" Content="Generate" Visibility="{Binding ShowNormal}" Margin="170,0,0,0" Width="150" IsEnabled="{Binding IsEmployeeSelected}" Command="{Binding DoGenerateAuth}"></Button>
                     </Grid>
 
 
@@ -148,6 +150,7 @@
                     
 
                 </StackPanel>
+                </ScrollViewer>
                 <Grid VerticalAlignment="Bottom" HorizontalAlignment="Right">
                     <Grid.RowDefinitions>
                         <RowDefinition />

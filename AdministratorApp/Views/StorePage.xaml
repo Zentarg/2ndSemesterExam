@@ -29,7 +29,7 @@
 <StackPanel Margin="-1,0,0,0">
 
 
-        <StackPanel Grid.Column="0" Background="#2f4959" Orientation="Horizontal">
+        <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Background="#2f4959" Orientation="Horizontal">
             <StackPanel Orientation="Horizontal" Spacing="15">
                 <TextBlock Margin="5,5,0,0" Foreground="White" Text="Order By" x:Uid="lblSortBy"/>
                 <Button Content="ID" Background="Transparent" Command="{Binding DoToggleIDSort}" Foreground="White" />
