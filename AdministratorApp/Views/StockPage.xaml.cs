@@ -168,12 +168,12 @@ namespace AdministratorApp.Views
 
         private void StockListView_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
         {
-            if (_viewModel.FilteredItems.Count != 0)
-            {
-                _viewModel.SelectedItem = _viewModel.FilteredItems[0];
-            }
+            //if (_viewModel.FilteredItems.Count != 0)
+            //{
+            //    _viewModel.SelectedItem = _viewModel.FilteredItems[0];
+            //}
 
-            else ItemPanel.Visibility = Visibility.Collapsed;
+            //else ItemPanel.Visibility = Visibility.Collapsed;
 
         }
     }

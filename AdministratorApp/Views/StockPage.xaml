@@ -195,7 +195,7 @@
 
                 <StackPanel  Orientation="Horizontal" Margin="15,15,15,0">
                     <TextBlock x:Uid="lblType" Text="Category:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
-                    <TextBlock Text="{Binding SelectedItemCategory.Name}"   />
+                    <TextBlock Text="{Binding SelectedItem.Item2, Mode=TwoWay}"   />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
                     <TextBlock x:Uid="lblPrice" Text="Price:" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />
@@ -276,7 +276,7 @@
 
                 <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
                         <TextBlock Text="Category:" x:Uid="lblType" Style="{StaticResource ItemPropertiesHeaderTextBlock}" Width="125" />
-                        <ComboBox ItemsSource="{Binding AllCategories}"  SelectedItem="{Binding SelectedItemCategory, Mode=TwoWay}"  />
+                        <ComboBox ItemsSource="{Binding AllCategories}" PlaceholderForeground="{Binding SelectedItemCategory.Name}"  SelectedItem="{Binding SelectedItemCategory, Mode=TwoWay}"  />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
                         <TextBlock Text="**Price:" x:Uid="lblPriceEdit" Style="{StaticResource ItemPropertiesHeaderTextBlock}" />

@@ -29,6 +29,7 @@ namespace AdministratorApp.ViewModels
         private List<Stock> _selectedStocks = new List<Stock>();
         private string _filterString = "";
         private List<Category> _selectedCategories = new List<Category>();
+        private Category _selectedItemCategory;
         private ObservableCollection<Tuple<Stock, StockHasItems>> _selectedItemInStocks = new ObservableCollection<Tuple<Stock, StockHasItems>>();
 
 
@@ -86,6 +87,11 @@ namespace AdministratorApp.ViewModels
                 _selectedItem = value;
                 OnPropertyChanged();
                 UpdateSelectedItemInStocks();
+                if (SelectedItem == null)
+                {
+                    _selectedItemCategory = null;
+                }
+                else _selectedItemCategory = new Category(_selectedItem.Item1.CategoryId, SelectedItem.Item2); 
                 OnPropertyChanged(nameof(SelectedItemInStocks));
                 OnPropertyChanged(nameof(PriceAfterDiscount));
                 OnPropertyChanged(nameof(SelectedItemCategory));
@@ -196,6 +202,7 @@ namespace AdministratorApp.ViewModels
             {
                 SortBy = Constants.SortBy.PriceDescending;
                 OnPropertyChanged(nameof(FilteredItems));
+                SelectedItem = FilteredItems[0];
 
                 return;
             }
@@ -212,6 +219,7 @@ namespace AdministratorApp.ViewModels
             {
                 SortBy = Constants.SortBy.PriceDescending;
                 OnPropertyChanged(nameof(FilteredItems));
+                SelectedItem = FilteredItems[0];
 
             }
              
@@ -320,13 +328,9 @@ namespace AdministratorApp.ViewModels
 
         public Category SelectedItemCategory
         {
-            get => SelectedItem != null
-                ? Data.AllCategories[SelectedItem.Item1.CategoryId]
-                : new Category(-1, "loading");
-            set
-            {
-                Data.AllCategories[SelectedItem.Item1.CategoryId] = value ; OnPropertyChanged();
-            }
+            get => _selectedItemCategory;
+            
+            set { _selectedItemCategory = value; OnPropertyChanged(); }
         }
 
         public List<Category> SelectedCategories
@@ -415,7 +419,11 @@ namespace AdministratorApp.ViewModels
                                 SelectedItem.Item1.DiscountPercentage));
                         foreach (var ItemInStock in SelectedItemInStocks )
                         {
-                            await APIHandler<StockHasItems>.PutOne($"StockHasItems/{ItemInStock.Item1.ID}/{SelectedItem.Item1.Id}", ItemInStock.Item2);
+                            if (!ItemInStock.Equals( new Tuple<Stock, StockHasItems>(new Stock(0, "This item has not been placed to any store yet.\t\t\t\t"), new StockHasItems(0, SelectedItem.Item1.Id, 0))))
+                            {
+                                await APIHandler<StockHasItems>.PutOne($"StockHasItems/{ItemInStock.Item1.ID}/{SelectedItem.Item1.Id}", ItemInStock.Item2);
+
+                            }
                         }  
 
                         await LoadDataAsync();
@@ -442,11 +450,11 @@ namespace AdministratorApp.ViewModels
         /// <returns>Returns a boolean value, if all the fields are filled out returns true</returns>
         private bool CheckFields()
         {
-            bool Experssion = !string.IsNullOrEmpty(SelectedItem.Item1.Name) && SelectedItem.Item1.Price != 0 &&
+            bool experssion = !string.IsNullOrEmpty(SelectedItem.Item1.Name) && SelectedItem.Item1.Price != 0 &&
                               SelectedItem.Item1.Barcode != 0 && !string.IsNullOrEmpty(SelectedItem.Item1.Color) &&
-                              !string.IsNullOrEmpty(SelectedItem.Item1.Size);
+                              !string.IsNullOrEmpty(SelectedItem.Item1.Size) && SelectedItemCategory != null;
 
-            if (Experssion)
+            if (experssion)
             {
                 return true;
             }
@@ -483,14 +491,15 @@ namespace AdministratorApp.ViewModels
             await Data.UpdateStock();
             await Data.UpdateStore();
             await Data.UpdateItemsInStocks();
-            OnPropertyChanged(nameof(SelectedItemCategory));
-            OnPropertyChanged(nameof(AllCategories));
             OnPropertyChanged(nameof(FilteredItems));
+            OnPropertyChanged(nameof(AllCategories));
+            SelectedItem = FilteredItems[0];
+            OnPropertyChanged(nameof(SelectedItemCategory));
             OnPropertyChanged(nameof(Stores));
             OnPropertyChanged(nameof(Stocks));
             OnPropertyChanged(nameof(SelectedItemInStocks));
             OnPropertyChanged(nameof(PriceAfterDiscount));
-            SelectedItem = FilteredItems[0];
+
             UpdateSelectedItemInStocks();
             
         }
