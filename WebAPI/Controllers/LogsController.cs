@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebAPI;
+using WebAPI.Models;
 
 namespace WebAPI.Controllers
 {
@@ -17,23 +18,29 @@ namespace WebAPI.Controllers
         private ParknGardenData db = new ParknGardenData();
 
         // GET: api/Logs
-        public IQueryable<Log> GetLogs()
+        [Route("api/Logs/{loggedId}/{sessionKey}")]
+        public IQueryable<Log> GetLogs(int loggedId, string sessionKey)
         {
-            return db.Logs;
+            Constants.VerifyUserErrors error = AuthHandler.VerifyUserSession(sessionKey, loggedId, db);
+            if (error == Constants.VerifyUserErrors.OK)
+            {
+                return db.Logs;
+            }
+            return new EnumerableQuery<Log>(new List<Log>());
         }
 
         // GET: api/Logs/5
-        [ResponseType(typeof(Log))]
-        public IHttpActionResult GetLog(int id)
-        {
-            Log log = db.Logs.Find(id);
-            if (log == null)
-            {
-                return NotFound();
-            }
+        //[ResponseType(typeof(Log))]
+        //public IHttpActionResult GetLog(int id)
+        //{
+        //    Log log = db.Logs.Find(id);
+        //    if (log == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return Ok(log);
-        }
+        //    return Ok(log);
+        //}
 
         // PUT: api/Logs/5
         //[ResponseType(typeof(void))]
