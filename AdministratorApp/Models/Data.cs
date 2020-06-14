@@ -174,7 +174,7 @@ namespace AdministratorApp.Models
 
         public static async Task UpdateLogs()
         {
-            AllLogs = await APIHandler<List<Log>>.GetOne("Logs");
+            AllLogs = await APIHandler<List<Log>>.GetOne($"Logs/{AuthHandler.ActiveUser.Id}/{AuthHandler.SessionKey}");
         }
     }
 }
