@@ -14,13 +14,23 @@
     </Page.DataContext>
 
     <Grid>
-        <ListView ItemsSource="{Binding LogEntries}" SelectionMode="None">
+        <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="-1,0,0,0"  Background="#2f4959" >
+            <TextBlock  Text="TYPE" x:Uid="lblActionType" FontSize="15" FontWeight="Bold" Margin="25,7,30,4" Foreground="White"/>
+            <TextBlock Text="ACTION" x:Uid="lblAction" FontSize="15" FontWeight="Bold" Margin="8,7,30,4" Foreground="White"/>
+        </StackPanel>
+        <ListView Grid.Row="1" Margin="0,0,0,0" ItemsSource="{Binding LogEntries}" SelectionMode="None">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="dc:LogsPageVM">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="10,0,0,0" Text="["/>
-                        <TextBlock Margin="0,0,0,0" Text="{Binding RequestType}" Visibility="Visible"/>
-                        <TextBlock Margin="0,0,0,0" Text="]"/>
+                        <StackPanel Width="75" Orientation="Horizontal">
+                            <TextBlock Margin="10,0,0,0" Text="[" FontWeight="Bold" />
+                            <TextBlock Margin="0,0,0,0" FontWeight="Bold" Text="{Binding RequestType}" Visibility="Visible"/>
+                            <TextBlock Margin="0,0,0,0" FontWeight="Bold" Text="]"/>
+                        </StackPanel>
                         <TextBlock Margin="10,0,0,0" Text="{Binding LogEntry}"/>
                         <TextBlock Margin ="3,0,0,0" Text="{Binding DateAndTime}"/>
                     </StackPanel>

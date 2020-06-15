@@ -164,6 +164,15 @@
   <data name="cntSelectType.Content" xml:space="preserve">
     <value>Type</value>
   </data>
+  <data name="lblAccountType.Text" xml:space="preserve">
+    <value>Account type</value>
+  </data>
+  <data name="lblAction.Text" xml:space="preserve">
+    <value>ACTION</value>
+  </data>
+  <data name="lblActionType.Text" xml:space="preserve">
+    <value>TYPE</value>
+  </data>
   <data name="lblAddEmployee.Text" xml:space="preserve">
     <value>Add new employee</value>
   </data>
@@ -265,6 +274,12 @@
   <data name="lblRole.Text" xml:space="preserve">
     <value>Role</value>
   </data>
+  <data name="lblSalary.Text" xml:space="preserve">
+    <value>Salary</value>
+  </data>
+  <data name="lblSalaryWTax.Text" xml:space="preserve">
+    <value>Salary with tax</value>
+  </data>
   <data name="lblSearch.PlaceholderText" xml:space="preserve">
     <value>Search...</value>
   </data>
@@ -289,11 +304,23 @@
     <value>Suppliers</value>
     <comment>Home page-Suppliers</comment>
   </data>
+  <data name="lblTAJ.Text" xml:space="preserve">
+    <value>TAJ number</value>
+  </data>
+  <data name="lblTAX.Text" xml:space="preserve">
+    <value>Tax number</value>
+  </data>
   <data name="lblTelephone.Text" xml:space="preserve">
     <value>Phone nr.</value>
   </data>
   <data name="lblType.Text" xml:space="preserve">
     <value>Type</value>
+  </data>
+  <data name="lblWorkingHours.Text" xml:space="preserve">
+    <value>Working hours</value>
+  </data>
+  <data name="lblWorksAt.Text" xml:space="preserve">
+    <value>Works at</value>
   </data>
   <data name="placeholderPassword.PlaceholderText" xml:space="preserve">
     <value>Password</value>

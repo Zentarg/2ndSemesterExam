@@ -14,7 +14,7 @@
     </Page.DataContext>
 
     <Grid>
-        <StackPanel Margin="25,25,0,0">
+        <StackPanel Margin="25,0,0,0">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -34,7 +34,8 @@
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Text="Name" VerticalAlignment="Center"/>
+
+                    <TextBlock Grid.Column="0" Text="Name" VerticalAlignment="Center"/>
                 <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name, Mode=TwoWay}" PlaceholderText="Enter Name" VerticalAlignment="Center" Width="300" HorizontalAlignment="Left"></TextBox>
 
                 <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Address"/>
@@ -71,9 +72,10 @@
 
                 <TextBlock Grid.Row="11" Grid.Column="0" VerticalAlignment="Center" Text="Working Hours"/>
                 <TextBox Grid.Row="11" Grid.Column="1" BeforeTextChanging="OnlyFloatTextBox" VerticalAlignment="Center"  Text="{Binding WorkingHours, Mode=TwoWay}" PlaceholderText="Enter the working hours" Width="300" HorizontalAlignment="Left"></TextBox>
+
             </Grid>
 
-            <Grid Margin="0,50,0,0">
+            <Grid Margin="0,0,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="5*"/>
@@ -83,7 +85,7 @@
                     <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" Text="UserName" VerticalAlignment="Center"/>
-                <TextBox IsReadOnly="True" Grid.Row="0" Grid.Column="1" Text="{Binding UserName}" VerticalAlignment="Center" Width="300" HorizontalAlignment="Left"></TextBox>
+                <TextBox IsReadOnly="True" Grid.Row="0" Grid.Column="1" Text="{Binding UserName, Mode=OneWay}" VerticalAlignment="Center" Width="300" HorizontalAlignment="Left"></TextBox>
                 <Button Grid.Row="0" Grid.Column="1" Margin="300,0,0,0" Content="Generate Username" Width="150" Command="{Binding DoGenerateUserName}"></Button>
 
                 <TextBlock Grid.Column="0" Grid.Row="1" Text="Password" VerticalAlignment="Center"/>

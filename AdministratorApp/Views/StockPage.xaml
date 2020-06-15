@@ -70,10 +70,70 @@
         <StackPanel Orientation="Horizontal" Background="#2f4959" Margin="-1,0,0,0" Spacing="15">
 
             <TextBlock Text="Sort by:" x:Uid="lblSortBy" Style="{StaticResource SortText}" Margin="7,6,0,0" />
-            <Button Content="ID" Background="Transparent" Foreground="White" Style="{StaticResource SortByButtonsStyle}" Command="{Binding DoToggleIDSort}"/>
-            <Button Content="Name" x:Uid="btnName" Style="{StaticResource SortByButtonsStyle}" Command="{Binding DoToggleNameSort}"/>
-            <Button Content="Category" x:Uid="btnCategory" Style="{StaticResource SortByButtonsStyle}" Command="{Binding DoToggleTypeSort}"/>
-            <Button Content="Price" x:Uid="btnPrice" Style="{StaticResource SortByButtonsStyle}" Command="{Binding DoTogglePriceSort}"/>
+            <Button Content="ID" Background="Transparent" Foreground="White" Style="{StaticResource SortByButtonsStyle}" Command="{Binding DoToggleIDSort}">
+                <Button.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.ThemeDictionaries>
+                            <ResourceDictionary x:Key="Dark">
+                                <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="White"/>
+                                <SolidColorBrush x:Key="ButtonForegroundPressed" Color="White"/>
+                            </ResourceDictionary>
+                            <ResourceDictionary x:Key="Light">
+                                <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="White"/>
+                                <SolidColorBrush x:Key="ButtonForegroundPressed" Color="White"/>
+                            </ResourceDictionary>
+                        </ResourceDictionary.ThemeDictionaries>
+                    </ResourceDictionary>
+                </Button.Resources>
+            </Button>
+            <Button Content="Name" x:Uid="btnName" Style="{StaticResource SortByButtonsStyle}" Command="{Binding DoToggleNameSort}">
+                <Button.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.ThemeDictionaries>
+                            <ResourceDictionary x:Key="Dark">
+                                <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="White"/>
+                                <SolidColorBrush x:Key="ButtonForegroundPressed" Color="White"/>
+                            </ResourceDictionary>
+                            <ResourceDictionary x:Key="Light">
+                                <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="White"/>
+                                <SolidColorBrush x:Key="ButtonForegroundPressed" Color="White"/>
+                            </ResourceDictionary>
+                        </ResourceDictionary.ThemeDictionaries>
+                    </ResourceDictionary>
+                </Button.Resources>
+            </Button>
+            <Button Content="Category" x:Uid="btnCategory" Style="{StaticResource SortByButtonsStyle}" Command="{Binding DoToggleTypeSort}">
+                <Button.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.ThemeDictionaries>
+                            <ResourceDictionary x:Key="Dark">
+                                <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="White"/>
+                                <SolidColorBrush x:Key="ButtonForegroundPressed" Color="White"/>
+                            </ResourceDictionary>
+                            <ResourceDictionary x:Key="Light">
+                                <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="White"/>
+                                <SolidColorBrush x:Key="ButtonForegroundPressed" Color="White"/>
+                            </ResourceDictionary>
+                        </ResourceDictionary.ThemeDictionaries>
+                    </ResourceDictionary>
+                </Button.Resources>
+            </Button>
+            <Button Content="Price" x:Uid="btnPrice" Style="{StaticResource SortByButtonsStyle}" Command="{Binding DoTogglePriceSort}">
+                <Button.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.ThemeDictionaries>
+                            <ResourceDictionary x:Key="Dark">
+                                <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="White"/>
+                                <SolidColorBrush x:Key="ButtonForegroundPressed" Color="White"/>
+                            </ResourceDictionary>
+                            <ResourceDictionary x:Key="Light">
+                                <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="White"/>
+                                <SolidColorBrush x:Key="ButtonForegroundPressed" Color="White"/>
+                            </ResourceDictionary>
+                        </ResourceDictionary.ThemeDictionaries>
+                    </ResourceDictionary>
+                </Button.Resources>
+            </Button>
 
 
             <DropDownButton Content="Select Stocks" x:Uid="cntSelectStock" Height="51" Foreground="White">
@@ -165,8 +225,38 @@
                                 </ResourceDictionary>
                             </Button.Resources>
                         </Button>
-                        <Button Foreground="White" Visibility="{Binding IsVisible}" Name="EditButton" x:Uid="btnEdit" Width="95" Height="35" Content="Edit" HorizontalAlignment="Right" Margin="15,0,0,0"  Click="EditButton_OnClick" />
-                        <Button x:Uid="btnClose" Foreground="White" Name="CloseButton" Width="75" Height="35" Content="Close" HorizontalAlignment="left" Margin="205,0,0,0"  Click="CloseButton_OnClick"/>
+                        <Button Foreground="White" Visibility="{Binding IsVisible}" Name="EditButton" x:Uid="btnEdit" Width="95" Height="35" Content="Edit" HorizontalAlignment="Right" Margin="15,0,0,0"  Click="EditButton_OnClick" >
+                            <Button.Resources>
+                                <ResourceDictionary>
+                                    <ResourceDictionary.ThemeDictionaries>
+                                        <ResourceDictionary x:Key="Dark">
+                                            <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="White"/>
+                                            <SolidColorBrush x:Key="ButtonForegroundPressed" Color="White"/>
+                                        </ResourceDictionary>
+                                        <ResourceDictionary x:Key="Light">
+                                            <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="White"/>
+                                            <SolidColorBrush x:Key="ButtonForegroundPressed" Color="White"/>
+                                        </ResourceDictionary>
+                                    </ResourceDictionary.ThemeDictionaries>
+                                </ResourceDictionary>
+                            </Button.Resources>
+                        </Button>
+                        <Button x:Uid="btnClose" Foreground="White" Name="CloseButton" Width="75" Height="35" Content="Close" HorizontalAlignment="left" Margin="205,0,0,0"  Click="CloseButton_OnClick">
+                            <Button.Resources>
+                                <ResourceDictionary>
+                                    <ResourceDictionary.ThemeDictionaries>
+                                        <ResourceDictionary x:Key="Dark">
+                                            <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="White"/>
+                                            <SolidColorBrush x:Key="ButtonForegroundPressed" Color="White"/>
+                                        </ResourceDictionary>
+                                        <ResourceDictionary x:Key="Light">
+                                            <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="White"/>
+                                            <SolidColorBrush x:Key="ButtonForegroundPressed" Color="White"/>
+                                        </ResourceDictionary>
+                                    </ResourceDictionary.ThemeDictionaries>
+                                </ResourceDictionary>
+                            </Button.Resources>
+                        </Button>
 
                     </StackPanel>
 
@@ -333,7 +423,7 @@
 
 
 
-                        <Button Width="75" Height="35" Content="Close" x:Uid="btnClose" HorizontalAlignment="Right" Margin="25,0,25,15" Click="ButtonBase_OnClick">
+                        <Button Width="75" Height="35" Content="Close" x:Uid="btnClose" Background="#FF6262" HorizontalAlignment="Right" Margin="25,0,25,15" Click="ButtonBase_OnClick">
                         <Button.Resources>
                         <ResourceDictionary>
                             <ResourceDictionary.ThemeDictionaries>
@@ -349,7 +439,7 @@
                         </ResourceDictionary>
                     </Button.Resources>
                     </Button>
-                        <Button Width="75" Height="35" Content="Save" x:Uid="btnSave" Name="SaveButton" Click="SaveButton_OnClick"  HorizontalAlignment="Right" Margin="0,0,25,15">
+                        <Button Width="75" Height="35" Content="Save" x:Uid="btnSave" Name="SaveButton" Background="#8BD285" Click="SaveButton_OnClick"  HorizontalAlignment="Right" Margin="0,0,25,15">
                             <Button.Resources>
                                 <ResourceDictionary>
                                     <ResourceDictionary.ThemeDictionaries>

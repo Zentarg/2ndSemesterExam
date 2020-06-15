@@ -162,6 +162,15 @@
   <data name="cntSelectType.Content" xml:space="preserve">
     <value>Válassz típust</value>
   </data>
+  <data name="lblAccountType.Text" xml:space="preserve">
+    <value>Jogosultság</value>
+  </data>
+  <data name="lblAction.Text" xml:space="preserve">
+    <value>MŰVELET</value>
+  </data>
+  <data name="lblActionType.Text" xml:space="preserve">
+    <value>TIPUS</value>
+  </data>
   <data name="lblAddEmployee.Text" xml:space="preserve">
     <value>Új munkatárs hozzáadása</value>
   </data>
@@ -256,6 +265,12 @@
   <data name="lblRole.Text" xml:space="preserve">
     <value>Munkakör</value>
   </data>
+  <data name="lblSalary.Text" xml:space="preserve">
+    <value>Fizetés</value>
+  </data>
+  <data name="lblSalaryWTax.Text" xml:space="preserve">
+    <value>Adók után:</value>
+  </data>
   <data name="lblSearch.PlaceholderText" xml:space="preserve">
     <value>Keresés...</value>
   </data>
@@ -277,11 +292,23 @@
   <data name="lblSuppliers.Text" xml:space="preserve">
     <value>Beszállítók</value>
   </data>
+  <data name="lblTAJ.Text" xml:space="preserve">
+    <value>TAJ szám</value>
+  </data>
+  <data name="lblTAX.Text" xml:space="preserve">
+    <value>Adószám</value>
+  </data>
   <data name="lblTelephone.Text" xml:space="preserve">
     <value>Telefonszám</value>
   </data>
   <data name="lblType.Text" xml:space="preserve">
     <value>Típus</value>
+  </data>
+  <data name="lblWorkingHours.Text" xml:space="preserve">
+    <value>Munkaidő</value>
+  </data>
+  <data name="lblWorksAt.Text" xml:space="preserve">
+    <value>Munkahely</value>
   </data>
   <data name="placeholderPassword.PlaceholderText" xml:space="preserve">
     <value>Jelszó</value>

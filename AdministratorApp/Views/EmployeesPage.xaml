@@ -22,8 +22,38 @@
         </Grid.RowDefinitions>
         <StackPanel Margin="-1,0,0,0" Orientation="Horizontal" Grid.Row="1" Background="#2f4959" Spacing="15">
             <TextBlock Text="Order By" Foreground="White" Margin="7,2,0,0" x:Uid="lblSortBy" Padding="0, 5, 0, 0"/>
-            <Button Content="ID" Command="{Binding DoToggleIDSort}" Foreground="White"/>
-            <Button Content="Name" x:Uid="btnName" Command="{Binding DoToggleNameSort}" Foreground="White"/>
+            <Button Content="ID" Command="{Binding DoToggleIDSort}" Foreground="White">
+                <Button.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.ThemeDictionaries>
+                            <ResourceDictionary x:Key="Dark">
+                                <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="White"/>
+                                <SolidColorBrush x:Key="ButtonForegroundPressed" Color="White"/>
+                            </ResourceDictionary>
+                            <ResourceDictionary x:Key="Light">
+                                <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="White"/>
+                                <SolidColorBrush x:Key="ButtonForegroundPressed" Color="White"/>
+                            </ResourceDictionary>
+                        </ResourceDictionary.ThemeDictionaries>
+                    </ResourceDictionary>
+                </Button.Resources>
+            </Button>
+            <Button Content="Name" x:Uid="btnName" Command="{Binding DoToggleNameSort}" Foreground="White">
+                <Button.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.ThemeDictionaries>
+                            <ResourceDictionary x:Key="Dark">
+                                <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="White"/>
+                                <SolidColorBrush x:Key="ButtonForegroundPressed" Color="White"/>
+                            </ResourceDictionary>
+                            <ResourceDictionary x:Key="Light">
+                                <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="White"/>
+                                <SolidColorBrush x:Key="ButtonForegroundPressed" Color="White"/>
+                            </ResourceDictionary>
+                        </ResourceDictionary.ThemeDictionaries>
+                    </ResourceDictionary>
+                </Button.Resources>
+            </Button>
             <TextBox PlaceholderText="Search..." x:Uid="lblSearch" Width="350" Height="32" Text="{Binding FilterString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
 
@@ -52,8 +82,6 @@
                 </ListView>
             </Grid>
             <Grid Column="1" Visibility="{Binding IsEmployeeSelected}" BorderThickness="2">
-
-
                 <ScrollViewer>
                     <StackPanel Margin="25,0,0,0">
                     <Grid>
@@ -84,7 +112,7 @@
                         <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Address}" Visibility="{Binding ShowNormal}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="12,0,0,4"/>
                         <TextBox IsEnabled="{Binding IsEmployeeSelected}" Visibility="{Binding ShowEdit}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Address, Mode=TwoWay}" PlaceholderText="Enter Address" Width="300" HorizontalAlignment="Left"></TextBox>
 
-                        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" x:Uid="lblPhone" Text="Telephone" HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" x:Uid="lblTelephone" Text="Telephone" HorizontalAlignment="Left"/>
                         <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Telephone}" Visibility="{Binding ShowNormal}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="12,0,0,4"/>
                         <TextBox BeforeTextChanging="OnlyNumberTextBox" Visibility="{Binding ShowEdit}" IsEnabled="{Binding IsEmployeeSelected}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Telephone, Mode=TwoWay}" PlaceholderText="Enter Telephone" HorizontalAlignment="Left" Width="300"/>
 
@@ -92,37 +120,37 @@
                         <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding Email}" Visibility="{Binding ShowNormal}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="12,0,0,4"/>
                         <TextBox IsEnabled="{Binding IsEmployeeSelected}" Visibility="{Binding ShowEdit}" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Email, Mode=TwoWay}" PlaceholderText="Enter Email Address" HorizontalAlignment="Left" Width="300"/>
 
-                        <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Text="Role" x:Uid="lblRole" />
+                        <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" x:Uid="lblRole" Text="Role"  />
                         <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding InitialRole}" Visibility="{Binding ShowNormal}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="12,0,0,4"/>
                         <ComboBox IsEnabled="{Binding IsEmployeeSelected}" Visibility="{Binding ShowEdit}" SelectedItem="{Binding SelectedRole, Mode=TwoWay}" ItemsSource="{Binding Roles}" PlaceholderText="Select Role" Grid.Row="4" Grid.Column="1" Width="300" VerticalAlignment="Center"></ComboBox>
                         <TextBlock Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Visibility="{Binding ShowEdit}" Margin="330,0,0,0" x:Uid="lblOr" Text="--Or--"></TextBlock>
                         <Button Content="Create New Role" Visibility="{Binding ShowEdit}" Margin="400,0,0,0" Grid.Column="1" Grid.Row="4" Click="OpenCreateNewRoleContentDialog"></Button>
 
-                        <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Text="Account Type"/>
+                        <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" x:Uid="lblAccountType" Text="Account Type"/>
                         <TextBlock Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" Visibility="{Binding ShowUserLevelNormal}" Text="{Binding InitialUserLevel, Mode=TwoWay}" Margin="12,0,0,4"/>
                         <ComboBox Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" Visibility="{Binding ShowUserLevelEdit}" Width="300" ItemsSource="{Binding AccountTypes}" SelectedItem="{Binding SelectedUserLevel, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Text="Salary"/>
+                        <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" x:Uid="lblSalary" Text="Salary"/>
                         <TextBlock Grid.Column="1" Grid.Row="6" Text="{Binding Salary}" Visibility="{Binding ShowNormal}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="12,0,0,4"/>
                         <TextBox BeforeTextChanging="OnlyFloatTextBox" Visibility="{Binding ShowEdit}" IsEnabled="{Binding IsEmployeeSelected}" Grid.Row="6" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Salary, Mode=TwoWay}" PlaceholderText="Enter Salary" Width="300" HorizontalAlignment="Left"></TextBox>
 
-                        <TextBlock Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Text="Salary with Tax"/>
+                        <TextBlock Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" x:Uid="lblSalaryWTax" Text="Salary with Tax"/>
                         <TextBlock Grid.Column="1" Grid.Row="7" Text="{Binding SalaryWTax}" Visibility="{Binding ShowNormal}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="12,0,0,4"/>
                         <TextBox BeforeTextChanging="OnlyFloatTextBox" Visibility="{Binding ShowEdit}" IsEnabled="{Binding IsEmployeeSelected}" Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" Text="{Binding SalaryWTax, Mode=TwoWay}" PlaceholderText="Enter Salary w/ Tax" Width="300" HorizontalAlignment="Left"></TextBox>
 
-                        <TextBlock Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" Text="Works At"/>
+                        <TextBlock Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" x:Uid="lblWorksAt" Text="Works At"/>
                         <TextBlock Grid.Row="8" Grid.Column="1" VerticalAlignment="Center" Visibility="{Binding ShowNormal}" Text="{Binding InitialStore}" Margin="12,0,0,4"></TextBlock>
                         <ComboBox SelectedItem="{Binding SelectedStore, Mode=TwoWay}" Visibility="{Binding ShowEdit}"  Grid.Row="8" Grid.Column="1" VerticalAlignment="Center" IsEnabled="{Binding IsEmployeeSelected}" ItemsSource="{Binding Stores}" PlaceholderText="Select Place of Work" Width="300" HorizontalAlignment="Left"></ComboBox>
 
-                        <TextBlock Grid.Row="9" Grid.Column="0" VerticalAlignment="Center" Text="TAJ Number"/>
+                        <TextBlock Grid.Row="9" Grid.Column="0" VerticalAlignment="Center" x:Uid="lblTAJ" Text="TAJ Number"/>
                         <TextBlock Grid.Column="1" Grid.Row="9" Text="{Binding TajNumber}" Visibility="{Binding ShowNormal}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="12,0,0,4"/>
                         <TextBox BeforeTextChanging="OnlyNumberTextBox" Visibility="{Binding ShowEdit}" IsEnabled="{Binding IsEmployeeSelected}" Grid.Row="9" Grid.Column="1" VerticalAlignment="Center" Text="{Binding TajNumber, Mode=TwoWay}" PlaceholderText="Enter the TAJ Number" Width="300" HorizontalAlignment="Left"></TextBox>
 
-                        <TextBlock Grid.Row="10" Grid.Column="0" VerticalAlignment="Center" Text="Tax Number"/>
+                        <TextBlock Grid.Row="10" Grid.Column="0" VerticalAlignment="Center" x:Uid="lblTAX" Text="Tax Number"/>
                         <TextBlock Grid.Column="1" Grid.Row="10" Text="{Binding TaxNumber}" Visibility="{Binding ShowNormal}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="12,0,0,4"/>
                         <TextBox BeforeTextChanging="OnlyNumberTextBox" Visibility="{Binding ShowEdit}" IsEnabled="{Binding IsEmployeeSelected}" Grid.Row="10" Grid.Column="1" VerticalAlignment="Center" Text="{Binding TaxNumber, Mode=TwoWay}" PlaceholderText="Enter the Tax Number" Width="300" HorizontalAlignment="Left"></TextBox>
 
-                        <TextBlock Grid.Row="11" Grid.Column="0" VerticalAlignment="Center" Text="Working Hours"/>
+                        <TextBlock Grid.Row="11" Grid.Column="0" VerticalAlignment="Center" x:Uid="lblWorkingHours" Text="Working Hours"/>
                         <TextBlock Grid.Column="1" Grid.Row="11" Text="{Binding WorkingHours}" Visibility="{Binding ShowNormal}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="12,0,0,4"/>
                         <TextBox BeforeTextChanging="OnlyFloatTextBox" Visibility="{Binding ShowEdit}" IsEnabled="{Binding IsEmployeeSelected}" Grid.Row="11" Grid.Column="1" VerticalAlignment="Center"  Text="{Binding WorkingHours, Mode=TwoWay}" PlaceholderText="Enter the working hours" Width="300" HorizontalAlignment="Left"></TextBox>
                     </Grid>
@@ -151,6 +179,7 @@
 
                 </StackPanel>
                 </ScrollViewer>
+
                 <Grid VerticalAlignment="Bottom" HorizontalAlignment="Right">
                     <Grid.RowDefinitions>
                         <RowDefinition />
@@ -159,15 +188,30 @@
                     <TextBlock Grid.Row="0" Width="180" Text="{Binding FeedBackText}" HorizontalAlignment="Right" Margin="0,0,50,15"></TextBlock>
                     <StackPanel Grid.Row="1" VerticalAlignment="Bottom">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,50,50">
-                            <Button Command="{Binding DoDelete}" IsEnabled="{Binding IsEmployeeSelected}" Visibility="{Binding ShowNormal}" Content="Delete" Margin="0,0,10,0" Width="75"/>
-                            <Button Content="Deselect" Command="{Binding DoDeselect}" Visibility="{Binding ShowNormal}" IsEnabled="{Binding IsEmployeeSelected}" Margin="0,0,10,0" Width="75"/>
-                            <Button IsEnabled="{Binding IsEmployeeSelected}" Visibility="{Binding ShowNormal}" Command="{Binding DoShowEdit}" Content="Edit" Width="75"/>
+                            <Button Width="60" Command="{Binding DoDelete}" Name="DeleteButton" IsEnabled="{Binding IsEmployeeSelected}" Visibility="{Binding ShowNormal}" Height="35" Content="&#xE74D;" FontFamily="Segoe mdl2 assets" HorizontalAlignment="Right" FontSize="20"  Background="#FF6262" Margin="0,0,10,0" >
+                                <Button.Resources>
+                                    <ResourceDictionary>
+                                        <ResourceDictionary.ThemeDictionaries>
+                                            <ResourceDictionary x:Key="Dark">
+                                                <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#FF6262"/>
+                                                <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#CD5252"/>
+                                            </ResourceDictionary>
+                                            <ResourceDictionary x:Key="Light">
+                                                <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#FF6262"/>
+                                                <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#CD5252"/>
+                                            </ResourceDictionary>
+                                        </ResourceDictionary.ThemeDictionaries>
+                                    </ResourceDictionary>
+                                </Button.Resources>
+                            </Button>
+                            <Button Content="Deselect" x:Uid="btnDeselect" Command="{Binding DoDeselect}" Visibility="{Binding ShowNormal}" IsEnabled="{Binding IsEmployeeSelected}" Margin="0,0,10,0" Width="75"/>
+                            <Button IsEnabled="{Binding IsEmployeeSelected}" Visibility="{Binding ShowNormal}" x:Uid="btnEdit" Command="{Binding DoShowEdit}" Content="Edit" Width="75"/>
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Grid.Row="1" VerticalAlignment="Bottom">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,50,50">
-                            <Button Content="Cancel" Visibility="{Binding ShowEdit}" Command="{Binding DoCancelEdit}" IsEnabled="{Binding IsEmployeeSelected}" Margin="0,0,10,0" Width="75"/>
-                            <Button IsEnabled="{Binding IsEmployeeSelected}" Command="{Binding DoConfirmEdit}" Visibility="{Binding ShowEdit}" Content="Confirm" Width="75"/>
+                            <Button Content="Cancel" x:Uid="btnCancel" Visibility="{Binding ShowEdit}" Command="{Binding DoCancelEdit}" IsEnabled="{Binding IsEmployeeSelected}" Margin="0,0,10,0" Width="75"/>
+                            <Button IsEnabled="{Binding IsEmployeeSelected}" Command="{Binding DoConfirmEdit}" Visibility="{Binding ShowEdit}" x:Uid="btnConfirm" Content="Confirm" Width="75"/>
                         </StackPanel>
                     </StackPanel>
                 </Grid>

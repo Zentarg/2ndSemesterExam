@@ -235,6 +235,42 @@
           <source>Munkakör</source>
           <target state="new">Munkakör</target>
         </trans-unit>
+        <trans-unit id="lblAction.Text" translate="yes" xml:space="preserve">
+          <source>MŰVELET</source>
+          <target state="new">MŰVELET</target>
+        </trans-unit>
+        <trans-unit id="lblActionType.Text" translate="yes" xml:space="preserve">
+          <source>TIPUS</source>
+          <target state="new">TIPUS</target>
+        </trans-unit>
+        <trans-unit id="lblAccountType.Text" translate="yes" xml:space="preserve">
+          <source>Jogosultság</source>
+          <target state="new">Jogosultság</target>
+        </trans-unit>
+        <trans-unit id="lblSalary.Text" translate="yes" xml:space="preserve">
+          <source>Fizetés</source>
+          <target state="new">Fizetés</target>
+        </trans-unit>
+        <trans-unit id="lblSalaryWTax.Text" translate="yes" xml:space="preserve">
+          <source>Adók után:</source>
+          <target state="new">Adók után:</target>
+        </trans-unit>
+        <trans-unit id="lblTAJ.Text" translate="yes" xml:space="preserve">
+          <source>TAJ szám</source>
+          <target state="new">TAJ szám</target>
+        </trans-unit>
+        <trans-unit id="lblTAX.Text" translate="yes" xml:space="preserve">
+          <source>Adószám</source>
+          <target state="new">Adószám</target>
+        </trans-unit>
+        <trans-unit id="lblWorksAt.Text" translate="yes" xml:space="preserve">
+          <source>Munkahely</source>
+          <target state="new">Munkahely</target>
+        </trans-unit>
+        <trans-unit id="lblWorkingHours.Text" translate="yes" xml:space="preserve">
+          <source>Munkaidő</source>
+          <target state="new">Munkaidő</target>
+        </trans-unit>
       </group>
     </body>
   </file>

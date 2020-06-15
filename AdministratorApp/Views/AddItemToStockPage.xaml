@@ -37,7 +37,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Column="1" Grid.ColumnSpan="2">
-            <TextBlock Text="Add Item to Stock" FontSize="20" FontWeight="Bold" Margin="15,15,0,0"/>
+            <TextBlock Text="Add Item to Stock" x:Uid="lblAddProductToStock" FontSize="20" FontWeight="Bold" Margin="15,15,0,0"/>
             <TextBlock Foreground="Red" Margin="15,5,0,20" Text="{Binding ErrorMessage}" FontSize="14" />
             
         </StackPanel>
@@ -70,7 +70,7 @@
 
             <StackPanel Grid.Column="1" Grid.ColumnSpan="2"  Grid.Row="4" Orientation="Horizontal" VerticalAlignment="Top" >
 
-            <Button Content="Cancel" Width="90" Height="45" Margin="0,20,45,0" Command="{Binding CancelCommand}"  Background="#FF6262" >
+            <Button Content="Cancel" x:Uid="btnCancel" Width="90" Height="45" Margin="0,20,45,0" Command="{Binding CancelCommand}"  Background="#FF6262" >
                     <Button.Resources>
                         <ResourceDictionary>
                             <ResourceDictionary.ThemeDictionaries>
@@ -87,7 +87,7 @@
                     </Button.Resources>
                 </Button>
 
-                <Button Content="Confirm" Width="90" Height="45"   Margin="0,20,0,0" FontWeight="Bold" Background="#8BD285" Command="{Binding AddItemCommand}">
+                <Button Content="Confirm" Width="90" Height="45" x:Uid="btnConfirm"  Margin="0,20,0,0" FontWeight="Bold" Background="#8BD285" Command="{Binding AddItemCommand}">
                     <Button.Resources>
                         <ResourceDictionary>
                             <ResourceDictionary.ThemeDictionaries>
