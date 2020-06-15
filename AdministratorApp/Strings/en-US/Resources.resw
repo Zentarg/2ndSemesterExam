@@ -238,7 +238,7 @@
     <value>New category</value>
   </data>
   <data name="lblNewInvoice.Text" xml:space="preserve">
-    <value>Create new invoice</value>
+    <value>New invoice</value>
     <comment>Home page - create invoice</comment>
   </data>
   <data name="lblOnlyNumeric.Text" xml:space="preserve">

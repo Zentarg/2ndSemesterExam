@@ -33,7 +33,7 @@ namespace AdministratorApp.Models
         public static string EncryptPassword(string input, string salt)
         {
 
-            MD5 md = MD5.Create();
+            MD5 md = MD5.Create(); //Hashing algorithm 
 
             byte[] inputBytes = System.Text.Encoding.UTF8.GetBytes(input);
             byte[] hashBytes = md.ComputeHash(inputBytes);
@@ -41,7 +41,7 @@ namespace AdministratorApp.Models
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < hashBytes.Length; i++)
             {
-                sb.Append(hashBytes[i].ToString("X"));
+                sb.Append(hashBytes[i].ToString("X")); //Hexadec. format
             }
 
             inputBytes = System.Text.Encoding.UTF8.GetBytes(sb.ToString() + salt);
