@@ -36,6 +36,8 @@ namespace AdministratorApp.ViewModels
             set;
         }
 
+        public DateTime DateAndTime { get; set; }
+
 
         public async void LoadDataAsync()
         {

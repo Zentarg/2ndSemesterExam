@@ -13,7 +13,7 @@ namespace WebAPI.Models
         public static void CreateLogEntry(ParknGardenData db, int userId, string logEntry, int requestType)
         {
             Log newLog = new Log(){DateAndTime = DateTime.Now, LogEntry = logEntry, RequestType = requestType, UserID = userId};
-            newLog.LogEntry += " at " + newLog.DateAndTime;
+            newLog.LogEntry += " at ";
             db.Logs.Add(newLog);
             db.SaveChanges();
         }
